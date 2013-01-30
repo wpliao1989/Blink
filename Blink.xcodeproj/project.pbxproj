@@ -18,6 +18,16 @@
 		CE7A78D916B760610072519F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7A78D816B760610072519F /* Default@2x.png */; };
 		CE7A78DB16B760610072519F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7A78DA16B760610072519F /* Default-568h@2x.png */; };
 		CE7A78DE16B760610072519F /* Blink.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78DC16B760610072519F /* Blink.xcdatamodeld */; };
+		CE7A78E516B7607B0072519F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */; };
+		CE7A78E816B762210072519F /* BKMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78E716B762210072519F /* BKMainPageViewController.m */; };
+		CE7A78EB16B762410072519F /* BKShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78EA16B762410072519F /* BKShopListViewController.m */; };
+		CE7A78EF16B764AD0072519F /* BKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78EE16B764AD0072519F /* BKLoginViewController.m */; };
+		CE7A78F216B766CD0072519F /* BKUserToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F116B766CD0072519F /* BKUserToolViewController.m */; };
+		CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F416B7686E0072519F /* BKAccountManager.m */; };
+		CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */; };
+		CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */; };
+		CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; };
+		CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +46,23 @@
 		CE7A78D816B760610072519F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CE7A78DA16B760610072519F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE7A78DD16B760610072519F /* Blink.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Blink.xcdatamodel; sourceTree = "<group>"; };
+		CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		CE7A78E616B762210072519F /* BKMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMainPageViewController.h; sourceTree = "<group>"; };
+		CE7A78E716B762210072519F /* BKMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMainPageViewController.m; sourceTree = "<group>"; };
+		CE7A78E916B762410072519F /* BKShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopListViewController.h; sourceTree = "<group>"; };
+		CE7A78EA16B762410072519F /* BKShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopListViewController.m; sourceTree = "<group>"; };
+		CE7A78ED16B764AD0072519F /* BKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKLoginViewController.h; sourceTree = "<group>"; };
+		CE7A78EE16B764AD0072519F /* BKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKLoginViewController.m; sourceTree = "<group>"; };
+		CE7A78F016B766CD0072519F /* BKUserToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKUserToolViewController.h; sourceTree = "<group>"; };
+		CE7A78F116B766CD0072519F /* BKUserToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKUserToolViewController.m; sourceTree = "<group>"; };
+		CE7A78F316B7686E0072519F /* BKAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKAccountManager.h; sourceTree = "<group>"; };
+		CE7A78F416B7686E0072519F /* BKAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAccountManager.m; sourceTree = "<group>"; };
+		CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
+		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
+		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
+		CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CEF12DD916B923E600EB00C3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +70,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */,
+				CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */,
+				CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */,
 				CE7A78C316B760610072519F /* UIKit.framework in Frameworks */,
 				CE7A78C516B760610072519F /* Foundation.framework in Frameworks */,
 				CE7A78C716B760610072519F /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +103,9 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */,
+				CEF12DD916B923E600EB00C3 /* Security.framework */,
+				CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */,
 				CE7A78C216B760610072519F /* UIKit.framework */,
 				CE7A78C416B760610072519F /* Foundation.framework */,
 				CE7A78C616B760610072519F /* CoreGraphics.framework */,
@@ -87,6 +120,11 @@
 				CE7A78D316B760610072519F /* AppDelegate.h */,
 				CE7A78D416B760610072519F /* AppDelegate.m */,
 				CE7A78DC16B760610072519F /* Blink.xcdatamodeld */,
+				CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */,
+				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
+				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+				CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */,
+				CE7A78EC16B762490072519F /* viewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
 			);
 			path = Blink;
@@ -104,6 +142,23 @@
 				CE7A78DA16B760610072519F /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE7A78EC16B762490072519F /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */,
+				CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */,
+				CE7A78F016B766CD0072519F /* BKUserToolViewController.h */,
+				CE7A78F116B766CD0072519F /* BKUserToolViewController.m */,
+				CE7A78E616B762210072519F /* BKMainPageViewController.h */,
+				CE7A78E716B762210072519F /* BKMainPageViewController.m */,
+				CE7A78E916B762410072519F /* BKShopListViewController.h */,
+				CE7A78EA16B762410072519F /* BKShopListViewController.m */,
+				CE7A78ED16B764AD0072519F /* BKLoginViewController.h */,
+				CE7A78EE16B764AD0072519F /* BKLoginViewController.m */,
+			);
+			name = viewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +216,7 @@
 				CE7A78D716B760610072519F /* Default.png in Resources */,
 				CE7A78D916B760610072519F /* Default@2x.png in Resources */,
 				CE7A78DB16B760610072519F /* Default-568h@2x.png in Resources */,
+				CE7A78E516B7607B0072519F /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +230,12 @@
 				CE7A78D116B760610072519F /* main.m in Sources */,
 				CE7A78D516B760610072519F /* AppDelegate.m in Sources */,
 				CE7A78DE16B760610072519F /* Blink.xcdatamodeld in Sources */,
+				CE7A78E816B762210072519F /* BKMainPageViewController.m in Sources */,
+				CE7A78EB16B762410072519F /* BKShopListViewController.m in Sources */,
+				CE7A78EF16B764AD0072519F /* BKLoginViewController.m in Sources */,
+				CE7A78F216B766CD0072519F /* BKUserToolViewController.m in Sources */,
+				CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */,
+				CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +344,7 @@
 				CE7A78E316B760610072519F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
