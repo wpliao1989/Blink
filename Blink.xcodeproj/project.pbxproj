@@ -26,6 +26,8 @@
 		CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F416B7686E0072519F /* BKAccountManager.m */; };
 		CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */; };
 		CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */; };
+		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
+		CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188B16BBC87F00886331 /* BKMenuViewController.m */; };
 		CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; };
 		CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,10 @@
 		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
 		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
 		CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
+		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
+		CEC0188A16BBC87F00886331 /* BKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuViewController.h; sourceTree = "<group>"; };
+		CEC0188B16BBC87F00886331 /* BKMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuViewController.m; sourceTree = "<group>"; };
 		CEF12DD916B923E600EB00C3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -157,6 +163,10 @@
 				CE7A78EA16B762410072519F /* BKShopListViewController.m */,
 				CE7A78ED16B764AD0072519F /* BKLoginViewController.h */,
 				CE7A78EE16B764AD0072519F /* BKLoginViewController.m */,
+				CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */,
+				CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */,
+				CEC0188A16BBC87F00886331 /* BKMenuViewController.h */,
+				CEC0188B16BBC87F00886331 /* BKMenuViewController.m */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -236,6 +246,8 @@
 				CE7A78F216B766CD0072519F /* BKUserToolViewController.m in Sources */,
 				CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */,
 				CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */,
+				CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */,
+				CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

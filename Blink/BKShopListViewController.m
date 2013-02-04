@@ -49,7 +49,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-//    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];   
+//    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];
+    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,11 +71,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 20;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
 }
 
 #pragma mark - IBActions
