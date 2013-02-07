@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol BKRegisterViewControllerDelegate;
+//@protocol BKRegisterViewControllerDelegate;
 
-@interface BKLoginViewController : UIViewController<BKRegisterViewControllerDelegate>
+@interface BKLoginViewController : UIViewController
 
 @end

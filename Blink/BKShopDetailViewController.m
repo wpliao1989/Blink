@@ -11,6 +11,8 @@
 @interface BKShopDetailViewController ()
 
 - (IBAction)menuButtonPressed:(id)sender;
+- (IBAction)orderDeliverButtonPressed:(id)sender;
+- (IBAction)takeAwayButtonPressed:(id)sender;
 
 @end
 
@@ -28,7 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	// Do any additional setup after loading the view.    
+//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,7 +40,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+//- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+//    [super setEditing:editing animated:animated];
+//    if(editing == YES){
+//        self.editButtonItem.title = @"完成";
+//    }else {
+//        self.editButtonItem.title = @"編輯";
+//    }
+//}
+
 - (IBAction)menuButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"menuSegue" sender:self];
+}
+
+- (IBAction)orderDeliverButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
+}
+
+- (IBAction)takeAwayButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
 }
 @end

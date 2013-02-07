@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKUserToolViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface BKUserToolViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @end

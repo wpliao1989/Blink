@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol BKRegisterViewControllerDelegate <NSObject>
-
-- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack;
-
-@end
+//@protocol BKRegisterViewControllerDelegate <NSObject>
+//
+//- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack;
+//
+//@end
 
 @interface BKRegisterViewController : UIViewController
 
-@property (nonatomic, weak) id<BKRegisterViewControllerDelegate> delegate;
+//@property (nonatomic, weak) id<BKRegisterViewControllerDelegate> delegate;
 
 @end

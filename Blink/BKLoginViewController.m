@@ -14,6 +14,7 @@
 
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)registrationButtonPressed:(id)sender;
+- (IBAction)closeButtonPressed:(id)sender;
 
 @end
 
@@ -43,18 +44,26 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
     [[BKAccountManager sharedBKAccountManager] login];
-    [self.navigationController popViewControllerAnimated:YES];    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"registrationSegue" sender:self];
 }
 
+- (IBAction)closeButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"registrationSegue"]) {
-        BKRegisterViewController *registerViewController = segue.destinationViewController;
-        registerViewController.delegate = self;
-    }    
+//    if ([segue.identifier isEqualToString:@"registrationSegue"]) {
+//        BKRegisterViewController *registerViewController = segue.destinationViewController;
+//        registerViewController.delegate = self;
+//    }    
 }
 
 - (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack {

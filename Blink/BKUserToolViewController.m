@@ -63,11 +63,17 @@ enum BKUserToolSegmentationSelection {
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.userToolTableView deselectRowAtIndexPath:[self.userToolTableView indexPathForSelectedRow] animated:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger dataCount;
@@ -97,6 +103,27 @@ enum BKUserToolSegmentationSelection {
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
+        [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:self];
+    }
+    else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
+        
+    }
+}
+
+#pragma mark - Action Sheet
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    static NSInteger logout = 0;
+    if (buttonIndex == logout) {
+        [[BKAccountManager sharedBKAccountManager] logout];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark - IBActions
+
 - (IBAction)segmentationChanged:(UISegmentedControl *)sender {
     if ((sender.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) || (sender.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) ){
         self.userToolTableView.hidden = NO;
@@ -110,7 +137,9 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (IBAction)logoutButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] logout];
-    [self.navigationController popViewControllerAnimated:YES];
+    UIActionSheet *logoutActionSheet = [[UIActionSheet alloc] initWithTitle:@"確定登出?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
+    [logoutActionSheet showInView:self.view];
+    
+    
 }
 @end

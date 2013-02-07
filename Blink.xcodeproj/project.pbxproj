@@ -26,6 +26,7 @@
 		CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F416B7686E0072519F /* BKAccountManager.m */; };
 		CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */; };
 		CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */; };
+		CE7F8A6716BF883E00BD4D85 /* BKMakeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */; };
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
 		CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188B16BBC87F00886331 /* BKMenuViewController.m */; };
 		CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; };
@@ -63,6 +64,8 @@
 		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
 		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
 		CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMakeOrderViewController.h; sourceTree = "<group>"; };
+		CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMakeOrderViewController.m; sourceTree = "<group>"; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
 		CEC0188A16BBC87F00886331 /* BKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuViewController.h; sourceTree = "<group>"; };
@@ -127,10 +130,9 @@
 				CE7A78D416B760610072519F /* AppDelegate.m */,
 				CE7A78DC16B760610072519F /* Blink.xcdatamodeld */,
 				CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */,
-				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
-				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 				CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */,
-				CE7A78EC16B762490072519F /* viewControllers */,
+				CE805B9516C388F20040095F /* ModelObjects */,
+				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
 			);
 			path = Blink;
@@ -150,7 +152,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CE7A78EC16B762490072519F /* viewControllers */ = {
+		CE7A78EC16B762490072519F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */,
@@ -167,8 +169,19 @@
 				CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */,
 				CEC0188A16BBC87F00886331 /* BKMenuViewController.h */,
 				CEC0188B16BBC87F00886331 /* BKMenuViewController.m */,
+				CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */,
+				CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */,
 			);
-			name = viewControllers;
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CE805B9516C388F20040095F /* ModelObjects */ = {
+			isa = PBXGroup;
+			children = (
+				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
+				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+			);
+			name = ModelObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +261,7 @@
 				CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */,
 				CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */,
 				CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */,
+				CE7F8A6716BF883E00BD4D85 /* BKMakeOrderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

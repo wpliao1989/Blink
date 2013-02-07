@@ -50,7 +50,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 //    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];
-    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
+//    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

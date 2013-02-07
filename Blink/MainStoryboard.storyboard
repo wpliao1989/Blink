@@ -70,8 +70,8 @@
                         <outlet property="loginButton" destination="2rV-N0-H3c" id="Caq-kc-jss"/>
                         <outlet property="userToolButton" destination="9NX-Lk-8Dn" id="yBe-4a-ESk"/>
                         <segue destination="oaA-HK-GSf" kind="push" identifier="shopListSegue" id="wso-nA-m2Q"/>
-                        <segue destination="DyK-JR-YIz" kind="push" identifier="loginSegue" id="wMq-K6-FR3"/>
                         <segue destination="Mpb-6J-6KN" kind="push" identifier="userToolSegue" id="hXK-Fz-ycd"/>
+                        <segue destination="gZU-Sn-msS" kind="modal" identifier="loginSegue" id="Fqf-f2-bQo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d1y-Ag-1D8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -193,11 +193,27 @@
                         <outlet property="segmentaionControl" destination="Hn4-WM-TFl" id="oVz-bj-S91"/>
                         <outlet property="userDataModificationView" destination="Lb3-9i-uK7" id="d2s-3k-cQv"/>
                         <outlet property="userToolTableView" destination="BkM-4H-rPx" id="gAL-MV-5Ta"/>
+                        <segue destination="mgw-hS-r6z" kind="push" identifier="fromFavoriteShopDetailSegue" id="cvb-pK-M3T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyp-KB-QKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="766" y="1371"/>
+            <point key="canvasLocation" x="766" y="-781"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="OjP-K2-hOI">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="gZU-Sn-msS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hv6-tQ-GA3">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DyK-JR-YIz" kind="relationship" relationship="rootViewController" id="KHF-KS-SCN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SlL-Th-hYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1818" y="1350"/>
         </scene>
         <!--Login View Controller - 登入-->
         <scene sceneID="5th-ih-05s">
@@ -261,36 +277,31 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="登入" id="xbQ-Lu-7Xx"/>
+                    <navigationItem key="navigationItem" title="登入" id="xbQ-Lu-7Xx">
+                        <barButtonItem key="leftBarButtonItem" title="關閉" id="LQw-OS-Vek">
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="DyK-JR-YIz" id="Lge-sV-YpO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <segue destination="Ciy-ss-NAw" kind="modal" identifier="registrationSegue" id="16r-ar-F6j"/>
+                        <segue destination="Ciy-ss-NAw" kind="push" identifier="registrationSegue" id="16r-ar-F6j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WX5-i4-Wda" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="766" y="654"/>
+            <point key="canvasLocation" x="2334" y="1350"/>
         </scene>
-        <!--Register View Controller-->
+        <!--Register View Controller - 註冊-->
         <scene sceneID="deN-BR-H1A">
             <objects>
                 <viewController id="Ciy-ss-NAw" customClass="BKRegisterViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wtj-Wa-hS9">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HcG-d7-GFC">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <items>
-                                    <barButtonItem title="關閉" id="Avd-oq-BWR">
-                                        <connections>
-                                            <action selector="closeButtonPressed:" destination="Ciy-ss-NAw" id="App-u5-D3S"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="26n-Qb-67R">
-                                <rect key="frame" x="124" y="444" width="73" height="44"/>
+                                <rect key="frame" x="124" y="405" width="73" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="確認送出">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -304,69 +315,94 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="帳號" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MJ5-L7-HPi">
-                                <rect key="frame" x="49" y="130" width="54" height="21"/>
+                                <rect key="frame" x="49" y="119" width="54" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="密碼" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VZK-e6-MWq">
-                                <rect key="frame" x="49" y="180" width="54" height="21"/>
+                                <rect key="frame" x="49" y="165" width="54" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KHl-j1-SJc">
-                                <rect key="frame" x="49" y="230" width="54" height="21"/>
+                                <rect key="frame" x="49" y="210" width="54" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="電話" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V52-9P-f9e">
-                                <rect key="frame" x="49" y="280" width="54" height="21"/>
+                                <rect key="frame" x="49" y="256" width="54" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EO3-61-LdE">
-                                <rect key="frame" x="49" y="330" width="54" height="21"/>
+                                <rect key="frame" x="49" y="302" width="54" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="N5x-xX-JyX">
-                                <rect key="frame" x="111" y="130" width="155" height="30"/>
+                                <rect key="frame" x="111" y="119" width="155" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="b4S-O0-fDu">
-                                <rect key="frame" x="111" y="176" width="155" height="30"/>
+                                <rect key="frame" x="111" y="161" width="155" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="FuD-vG-0dh">
-                                <rect key="frame" x="111" y="226" width="155" height="30"/>
+                                <rect key="frame" x="111" y="206" width="155" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bwh-Vo-Hg3">
-                                <rect key="frame" x="111" y="276" width="155" height="30"/>
+                                <rect key="frame" x="111" y="252" width="155" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="7Vr-B1-o7d">
-                                <rect key="frame" x="111" y="326" width="155" height="30"/>
+                                <rect key="frame" x="111" y="298" width="155" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="註冊" id="yvu-WN-4Kc"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCM-T6-2hH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1272" y="654"/>
+            <point key="canvasLocation" x="2840" y="1350"/>
+        </scene>
+        <!--Make Order View Controller - 訂單頁面-->
+        <scene sceneID="0Gp-Nq-q0p">
+            <objects>
+                <viewController id="xZP-RZ-ETy" customClass="BKMakeOrderViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9SU-JK-Fza">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="下訂單" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h6N-jQ-Kmb">
+                                <rect key="frame" x="113" y="189" width="94" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="訂單頁面" id="YgF-3Y-ZTU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sW6-gi-eI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1838" y="398"/>
         </scene>
         <!--Shop List View Controller - 搜尋美食-->
         <scene sceneID="bkQ-NF-e52">
@@ -551,6 +587,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="orderDeliverButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="hDV-2V-tIX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="isA-SA-Y60">
                                 <rect key="frame" x="197" y="141" width="73" height="44"/>
@@ -562,6 +601,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="takeAwayButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="bqz-Gz-pHu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -569,6 +611,7 @@
                     <navigationItem key="navigationItem" title="某個店家" id="EKy-V6-B87"/>
                     <connections>
                         <segue destination="af5-GL-RJJ" kind="push" identifier="menuSegue" id="gbK-yU-OOx"/>
+                        <segue destination="xZP-RZ-ETy" kind="push" identifier="makeOrderSegue" id="Qx8-If-flD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbs-td-c22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -603,72 +646,15 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3a0-qq-T6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="-33"/>
+            <point key="canvasLocation" x="1838" y="-257"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="BKLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loginButtonPressed:"/>
-                <relationship kind="action" name="registrationButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKMainPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMainPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loginButtonPressed:"/>
-                <relationship kind="action" name="searchFoodButtonPressed:"/>
-                <relationship kind="action" name="searchShopButtonPressed:"/>
-                <relationship kind="action" name="userToolButtonPressed:"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="userToolButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="BKRegisterViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKRegisterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeButtonPressed:"/>
-                <relationship kind="action" name="confirmRegistrationButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKShopDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="menuButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKShopListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="categoryButtonPressed:"/>
-                <relationship kind="action" name="homeButtonPressed:"/>
-                <relationship kind="action" name="listButtonPressed:"/>
-                <relationship kind="action" name="mapButtonPressed:"/>
-                <relationship kind="action" name="sortButtonPressed:"/>
-                <relationship kind="outlet" name="bottomToolBar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="shopListTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="BKUserToolViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKUserToolViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logoutButtonPressed:"/>
-                <relationship kind="action" name="segmentationChanged:"/>
-                <relationship kind="outlet" name="segmentaionControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="userToolTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="cvb-pK-M3T"/>
+    </inferredMetricsTieBreakers>
 </document>

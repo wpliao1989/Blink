@@ -1,21 +1,18 @@
 //
-//  BKRegisterViewController.m
+//  BKMakeOrderViewController.m
 //  Blink
 //
-//  Created by Wei Ping on 13/1/29.
+//  Created by Wei Ping on 13/2/4.
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
 
-#import "BKRegisterViewController.h"
-#import "BKAccountManager.h"
+#import "BKMakeOrderViewController.h"
 
-@interface BKRegisterViewController ()
-
-- (IBAction)confirmRegistrationButtonPressed:(id)sender;
+@interface BKMakeOrderViewController ()
 
 @end
 
-@implementation BKRegisterViewController
+@implementation BKMakeOrderViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,13 +34,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (IBAction)confirmRegistrationButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] login];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
 
 @end
