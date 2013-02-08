@@ -10,4 +10,6 @@
 
 @interface BKMainPageViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
+
 @end

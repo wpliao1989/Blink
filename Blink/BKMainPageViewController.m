@@ -17,6 +17,7 @@
 - (IBAction)searchFoodButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)userToolButtonPressed:(id)sender;
+- (IBAction)homeButtonPressed:(id)sender;
 
 @end
 
@@ -66,5 +67,9 @@
 
 - (IBAction)userToolButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"userToolSegue" sender:sender];
+}
+
+- (IBAction)homeButtonPressed:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end

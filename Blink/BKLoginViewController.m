@@ -66,11 +66,11 @@
 //    }    
 }
 
-- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    if (isGoingBack) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }
-}
+//- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    if (isGoingBack) {
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+//    }
+//}
 
 @end

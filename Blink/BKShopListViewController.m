@@ -7,10 +7,11 @@
 //
 
 #import "BKShopListViewController.h"
+//#import "BKMainPageViewController.h"
 
 @interface BKShopListViewController ()
 
-- (IBAction)homeButtonPressed:(id)sender;
+//- (IBAction)homeButtonPressed:(id)sender;
 - (IBAction)mapButtonPressed:(id)sender;
 - (IBAction)listButtonPressed:(id)sender;
 - (IBAction)sortButtonPressed:(id)sender;
@@ -51,6 +52,7 @@
 	// Do any additional setup after loading the view.
 //    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];
 //    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
+//    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,9 +87,9 @@
 
 #pragma mark - IBActions
 
-- (IBAction)homeButtonPressed:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
+//- (IBAction)homeButtonPressed:(id)sender {
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//}
 
 - (IBAction)mapButtonPressed:(id)sender {
 //    [UIView transitionFromView:self.mainContentView toView:self.testView duration:1.0 options: UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL finished) {

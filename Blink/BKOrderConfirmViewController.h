@@ -1,5 +1,5 @@
 //
-//  BKMenuViewController.h
+//  BKOrderConfirmViewController.h
 //  Blink
 //
 //  Created by Wei Ping on 13/2/7.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMenuViewController : UITableViewController
+@interface BKOrderConfirmViewController : UIViewController
 
 @end

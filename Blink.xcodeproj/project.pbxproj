@@ -27,8 +27,13 @@
 		CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */; };
 		CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */; };
 		CE7F8A6716BF883E00BD4D85 /* BKMakeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */; };
+		CE805B9916C39CDB0040095F /* BKOrderConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9816C39CDA0040095F /* BKOrderConfirmViewController.m */; };
+		CE805B9C16C3A51C0040095F /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9B16C3A51B0040095F /* BKMenuViewController.m */; };
+		CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BAB16C3A9210040095F /* BKNoteViewController.m */; };
+		CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE805BAD16C3AC3E0040095F /* QuartzCore.framework */; };
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
-		CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188B16BBC87F00886331 /* BKMenuViewController.m */; };
+		CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */; };
+		CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */; };
 		CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; };
 		CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -66,10 +71,19 @@
 		CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMakeOrderViewController.h; sourceTree = "<group>"; };
 		CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMakeOrderViewController.m; sourceTree = "<group>"; };
+		CE805B9716C39CDA0040095F /* BKOrderConfirmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderConfirmViewController.h; sourceTree = "<group>"; };
+		CE805B9816C39CDA0040095F /* BKOrderConfirmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderConfirmViewController.m; sourceTree = "<group>"; };
+		CE805B9A16C3A51B0040095F /* BKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuViewController.h; sourceTree = "<group>"; };
+		CE805B9B16C3A51B0040095F /* BKMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuViewController.m; sourceTree = "<group>"; };
+		CE805BA216C3A8010040095F /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		CE805BA416C3A8010040095F /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
+		CE805BAA16C3A9210040095F /* BKNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKNoteViewController.h; sourceTree = "<group>"; };
+		CE805BAB16C3A9210040095F /* BKNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKNoteViewController.m; sourceTree = "<group>"; };
+		CE805BAD16C3AC3E0040095F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
-		CEC0188A16BBC87F00886331 /* BKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuViewController.h; sourceTree = "<group>"; };
-		CEC0188B16BBC87F00886331 /* BKMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuViewController.m; sourceTree = "<group>"; };
 		CEF12DD916B923E600EB00C3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -79,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */,
 				CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */,
 				CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */,
 				CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */,
@@ -112,6 +127,7 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE805BAD16C3AC3E0040095F /* QuartzCore.framework */,
 				CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */,
 				CEF12DD916B923E600EB00C3 /* Security.framework */,
 				CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */,
@@ -131,6 +147,7 @@
 				CE7A78DC16B760610072519F /* Blink.xcdatamodeld */,
 				CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */,
 				CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */,
+				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
 				CE805B9516C388F20040095F /* ModelObjects */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
@@ -167,10 +184,14 @@
 				CE7A78EE16B764AD0072519F /* BKLoginViewController.m */,
 				CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */,
 				CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */,
-				CEC0188A16BBC87F00886331 /* BKMenuViewController.h */,
-				CEC0188B16BBC87F00886331 /* BKMenuViewController.m */,
 				CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */,
 				CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */,
+				CE805B9716C39CDA0040095F /* BKOrderConfirmViewController.h */,
+				CE805B9816C39CDA0040095F /* BKOrderConfirmViewController.m */,
+				CE805B9A16C3A51B0040095F /* BKMenuViewController.h */,
+				CE805B9B16C3A51B0040095F /* BKMenuViewController.m */,
+				CE805BAA16C3A9210040095F /* BKNoteViewController.h */,
+				CE805BAB16C3A9210040095F /* BKNoteViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -182,6 +203,17 @@
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 			);
 			name = ModelObjects;
+			sourceTree = "<group>";
+		};
+		CE805BA116C3A7EA0040095F /* MJPopupViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CE805BA216C3A8010040095F /* MJPopupBackgroundView.h */,
+				CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */,
+				CE805BA416C3A8010040095F /* UIViewController+MJPopupViewController.h */,
+				CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */,
+			);
+			name = MJPopupViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,8 +292,12 @@
 				CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */,
 				CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */,
 				CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */,
-				CEC0188C16BBC87F00886331 /* BKMenuViewController.m in Sources */,
 				CE7F8A6716BF883E00BD4D85 /* BKMakeOrderViewController.m in Sources */,
+				CE805B9916C39CDB0040095F /* BKOrderConfirmViewController.m in Sources */,
+				CE805B9C16C3A51C0040095F /* BKMenuViewController.m in Sources */,
+				CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */,
+				CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */,
+				CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
