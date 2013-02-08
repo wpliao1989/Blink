@@ -391,20 +391,23 @@
             <objects>
                 <viewController storyboardIdentifier="BKNoteVC" autoresizesArchivedViewToFullSize="NO" id="YaH-NC-9Dw" customClass="BKNoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jVS-kA-BsN">
-                        <rect key="frame" x="0.0" y="20" width="220" height="220"/>
+                        <rect key="frame" x="0.0" y="20" width="220" height="200"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="在這邊輸入文字" textAlignment="center" id="kHf-A3-FCr">
-                                <rect key="frame" x="20" y="20" width="185" height="180"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="在這邊輸入文字" id="kHf-A3-FCr">
+                                <rect key="frame" x="20" y="20" width="185" height="160"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="noteText" destination="kHf-A3-FCr" id="WPt-HV-DtP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqO-sN-BhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -480,6 +483,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="orderConfirmButtonPressed:" destination="pr9-DW-WBx" eventType="touchUpInside" id="yfb-Ke-VJa"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -528,6 +534,9 @@
                                     <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="5Yb-hh-5QI">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="oaA-HK-GSf" id="nQE-WT-Ypa"/>
+                                        </connections>
                                     </mapView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wSo-1a-mB0">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
@@ -597,6 +606,7 @@
                     <connections>
                         <outlet property="bottomToolBar" destination="R4i-wJ-KYj" id="P5r-Y2-nBH"/>
                         <outlet property="listButton" destination="O6q-Pv-Tho" id="lKk-dA-RWj"/>
+                        <outlet property="locateUserButton" destination="593-lc-0CZ" id="yUQ-VS-Rnj"/>
                         <outlet property="mainContentView" destination="NCr-hP-u26" id="ysq-T7-fg3"/>
                         <outlet property="mapButton" destination="6tm-dq-BMG" id="Xm1-S6-5c4"/>
                         <outlet property="searchDisplayController" destination="YgZ-y2-eli" id="8DX-Ma-lMA"/>
@@ -610,6 +620,11 @@
                 <barButtonItem title="列表顯示" id="O6q-Pv-Tho">
                     <connections>
                         <action selector="listButtonPressed:" destination="oaA-HK-GSf" id="m9A-a7-U9G"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="我的位置" id="593-lc-0CZ">
+                    <connections>
+                        <action selector="locateUserButtonPressed:" destination="oaA-HK-GSf" id="B31-3n-1fO"/>
                     </connections>
                 </barButtonItem>
                 <searchDisplayController id="YgZ-y2-eli">
@@ -763,9 +778,15 @@
         </class>
         <class className="BKNoteViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKNoteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="noteText" candidateClass="UITextView"/>
+            </relationships>
         </class>
         <class className="BKOrderConfirmViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKOrderConfirmViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="orderConfirmButtonPressed:"/>
+            </relationships>
         </class>
         <class className="BKRegisterViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKRegisterViewController.h"/>
@@ -786,10 +807,12 @@
             <relationships>
                 <relationship kind="action" name="categoryButtonPressed:"/>
                 <relationship kind="action" name="listButtonPressed:"/>
+                <relationship kind="action" name="locateUserButtonPressed:"/>
                 <relationship kind="action" name="mapButtonPressed:"/>
                 <relationship kind="action" name="sortButtonPressed:"/>
                 <relationship kind="outlet" name="bottomToolBar" candidateClass="UIToolbar"/>
                 <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="locateUserButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>

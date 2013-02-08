@@ -16,6 +16,7 @@
 - (IBAction)listButtonPressed:(id)sender;
 - (IBAction)sortButtonPressed:(id)sender;
 - (IBAction)categoryButtonPressed:(id)sender;
+- (IBAction)locateUserButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *mainContentView;
 @property (strong, nonatomic) IBOutlet MKMapView *shopListMapView;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *listButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
 @property (strong, nonatomic) IBOutlet UIToolbar *bottomToolBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *locateUserButton;
 
 @end
 
@@ -85,6 +87,12 @@
     [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
 }
 
+#pragma mark - Mapview delegate
+
+- (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
+    self.locateUserButton.enabled = !(mode == MKUserTrackingModeFollow);
+}
+
 #pragma mark - IBActions
 
 //- (IBAction)homeButtonPressed:(id)sender {
@@ -99,6 +107,7 @@
     self.mapButton.enabled = NO;
     self.sortButton.enabled = NO;
     
+    
     [UIView transitionWithView:self.mainContentView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
         self.shopListMapView.hidden = NO;
         self.shopListTableView.hidden = YES;
@@ -108,7 +117,8 @@
         NSMutableArray *bottomToolBarItems = [self.bottomToolBar.items mutableCopy];
         [bottomToolBarItems replaceObjectAtIndex:0 withObject:self.listButton];
         self.bottomToolBar.items = [NSArray arrayWithArray:bottomToolBarItems];
-        self.mapButton.enabled = YES;        
+        self.mapButton.enabled = YES;
+        self.navigationItem.rightBarButtonItem = self.locateUserButton;
     }];
 }
 
@@ -117,6 +127,8 @@
 //        
 //    }];
     self.listButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem = nil;
+    
     [UIView transitionWithView:self.mainContentView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         self.shopListMapView.hidden = YES;
         self.shopListTableView.hidden = NO;
@@ -128,7 +140,7 @@
         [bottomToolBarItems replaceObjectAtIndex:0 withObject:self.mapButton];
         self.bottomToolBar.items = [NSArray arrayWithArray:bottomToolBarItems];
         self.listButton.enabled = YES;
-        self.sortButton.enabled = YES;
+        self.sortButton.enabled = YES;        
     }];    
 }
 
@@ -142,5 +154,9 @@
     UIActionSheet *categorySheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"飲料", @"中式", @"西式", nil];
     [categorySheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     [categorySheet showInView:self.mainContentView];
+}
+
+- (IBAction)locateUserButtonPressed:(id)sender {
+    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
 }
 @end

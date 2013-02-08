@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MKMapViewDelegate>
 
 @end

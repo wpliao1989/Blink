@@ -145,7 +145,9 @@ static void * const keypath = (void*)&keypath;
     
     while (recentView.parentViewController != nil) {
         recentView = recentView.parentViewController;
+//        NSLog(@"%@", recentView);
     }
+//    NSLog(@"%@", recentView.view);
     return recentView.view;
 }
 
