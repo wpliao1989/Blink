@@ -11,8 +11,7 @@
 #import "BKAccountManager.h"
 #import "BKMainPageViewController.h"
 #import "BKNoteViewController.h"
-
-
+#import "BKOrderManager.h"
 
 @interface BKMakeOrderViewController ()
 
@@ -43,6 +42,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
+    cell.textLabel.text = [NSString stringWithFormat:@"Item %d", indexPath.row];
+    return cell;
 }
 
 - (IBAction)makeOrderButtonPressed:(id)sender {

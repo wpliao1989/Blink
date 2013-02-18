@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMakeOrderViewController : UIViewController
+@interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
 
 @end

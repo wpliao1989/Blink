@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
 		CE7A78C316B760610072519F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C216B760610072519F /* UIKit.framework */; };
 		CE7A78C516B760610072519F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C416B760610072519F /* Foundation.framework */; };
 		CE7A78C716B760610072519F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C616B760610072519F /* CoreGraphics.framework */; };
@@ -39,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE78482B16D20CEB00A80031 /* BKOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderManager.h; sourceTree = "<group>"; };
+		CE78482C16D20CEB00A80031 /* BKOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderManager.m; sourceTree = "<group>"; };
 		CE7A78BE16B760610072519F /* Blink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7A78C216B760610072519F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CE7A78C416B760610072519F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -201,6 +204,8 @@
 			children = (
 				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
+				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */,
 				CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */,
 				CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */,
+				CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
