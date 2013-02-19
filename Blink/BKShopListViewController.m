@@ -7,6 +7,7 @@
 //
 
 #import "BKShopListViewController.h"
+#import "BKAPIManager.h"
 //#import "BKMainPageViewController.h"
 
 @interface BKShopListViewController ()
@@ -59,6 +60,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];
+    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

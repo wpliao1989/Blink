@@ -32,6 +32,8 @@
 		CE805B9C16C3A51C0040095F /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9B16C3A51B0040095F /* BKMenuViewController.m */; };
 		CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BAB16C3A9210040095F /* BKNoteViewController.m */; };
 		CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE805BAD16C3AC3E0040095F /* QuartzCore.framework */; };
+		CE8ED96A16D32FB200307FF1 /* BKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96916D32FB200307FF1 /* BKAPIManager.m */; };
+		CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */; };
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
 		CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */; };
 		CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */; };
@@ -85,6 +87,10 @@
 		CE805BAA16C3A9210040095F /* BKNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKNoteViewController.h; sourceTree = "<group>"; };
 		CE805BAB16C3A9210040095F /* BKNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKNoteViewController.m; sourceTree = "<group>"; };
 		CE805BAD16C3AC3E0040095F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE8ED96816D32FB200307FF1 /* BKAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKAPIManager.h; sourceTree = "<group>"; };
+		CE8ED96916D32FB200307FF1 /* BKAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAPIManager.m; sourceTree = "<group>"; };
+		CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSConnectionManager.h; sourceTree = "<group>"; };
+		CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSConnectionManager.m; sourceTree = "<group>"; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
 		CEF12DD916B923E600EB00C3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -206,6 +212,10 @@
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
+				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
+				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
+				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
+				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -304,6 +314,8 @@
 				CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */,
 				CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */,
 				CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */,
+				CE8ED96A16D32FB200307FF1 /* BKAPIManager.m in Sources */,
+				CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
