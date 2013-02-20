@@ -25,5 +25,6 @@ typedef NS_ENUM(NSInteger, BKListCriteria) {
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)listWithListCriteria:(BKListCriteria)criteria;
+- (void)searchWithShopName:(NSString *)shopName;
 
 @end

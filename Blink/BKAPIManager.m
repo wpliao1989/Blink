@@ -59,15 +59,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)listWithListCriteria:(BKListCriteria)criteria {
     static NSString *kListCriteria = @"listCriteria";
-    static NSString *kLongitudeKey = @"longitude";
-    static NSString *kLatitudeKey = @"latitude";
+    static NSString *kLongitude = @"longitude";
+    static NSString *kLatitude = @"latitude";
     NSString *criteriaString;    
     NSDictionary *parameterDictionary;
     
     switch (criteria) {
         case BKListCriteriaDistant:
             criteriaString = @"distant";
-            parameterDictionary = @{ kListCriteria : criteriaString, kLongitudeKey : [[NSString alloc] initWithFormat:@"%f", 120.65768], kLatitudeKey : [[NSString alloc] initWithFormat:@"%f", 24.14598]};
+            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", 120.65768], kLatitude : [[NSString alloc] initWithFormat:@"%f", 24.14598]};
             break;
         case BKListCriteriaPrice:
             criteriaString = @"price";
@@ -85,8 +85,20 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
     
-    NSDictionary *result = [self service:@"list" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:nil];
-    NSLog(@"result = %@", result);
+    [self service:@"list" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSLog(@"%@", data);
+    }];    
+}
+
+- (void)searchWithShopName:(NSString *)shopName {
+    static NSString *kShopName = @"ShopName";
+    
+    NSDictionary *parameterDictionary = @{kShopName : shopName};
+    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];
+    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
+   [self service:@"search" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSLog(@"%@", data);
+    }];    
 }
 
 @end
