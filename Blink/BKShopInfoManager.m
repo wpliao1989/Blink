@@ -1,0 +1,42 @@
+//
+//  BKShopInfoManager.m
+//  Blink
+//
+//  Created by Wei Ping on 13/2/20.
+//  Copyright (c) 2013年 flyingman. All rights reserved.
+//
+
+#import "BKShopInfoManager.h"
+#import "BKShopInfo.h"
+
+@implementation BKShopInfoManager
+
+CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
+
+@synthesize shopInfos = _shopInfos;
+
+- (NSMutableArray *)shopInfos {
+    if (_shopInfos == nil) {
+        _shopInfos = [NSMutableArray array];
+    }
+    return _shopInfos;
+}
+
+- (NSUInteger)shopCount {
+    return self.shopInfos.count;
+}
+
+- (NSString *)shopNameAtIndex:(NSUInteger)index {
+    return ((BKShopInfo *)[self.shopInfos objectAtIndex:index]).name;    
+}
+
+- (void)addShopInfoWithRawData:(id)rawData {
+    // Translate rawData
+    
+    BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithName:rawData];
+//    NSLog(@"newShopInfo %@", newShopInfo);
+    [self.shopInfos addObject:newShopInfo];
+//    NSLog(@"add %@", self.shopInfos);
+}
+
+@end

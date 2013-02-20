@@ -32,6 +32,10 @@
 		CE805B9C16C3A51C0040095F /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9B16C3A51B0040095F /* BKMenuViewController.m */; };
 		CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BAB16C3A9210040095F /* BKNoteViewController.m */; };
 		CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE805BAD16C3AC3E0040095F /* QuartzCore.framework */; };
+		CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81758416D46AB4002FA6BB /* CoreLocation.framework */; };
+		CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */; };
+		CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758B16D47C2F002FA6BB /* BKShopInfo.m */; };
+		CE81758F16D47CE7002FA6BB /* BKOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758E16D47CE7002FA6BB /* BKOrder.m */; };
 		CE8ED96A16D32FB200307FF1 /* BKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96916D32FB200307FF1 /* BKAPIManager.m */; };
 		CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */; };
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
@@ -87,6 +91,13 @@
 		CE805BAA16C3A9210040095F /* BKNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKNoteViewController.h; sourceTree = "<group>"; };
 		CE805BAB16C3A9210040095F /* BKNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKNoteViewController.m; sourceTree = "<group>"; };
 		CE805BAD16C3AC3E0040095F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE81758416D46AB4002FA6BB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfoManager.h; sourceTree = "<group>"; };
+		CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfoManager.m; sourceTree = "<group>"; };
+		CE81758A16D47C2F002FA6BB /* BKShopInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfo.h; sourceTree = "<group>"; };
+		CE81758B16D47C2F002FA6BB /* BKShopInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfo.m; sourceTree = "<group>"; };
+		CE81758D16D47CE6002FA6BB /* BKOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrder.h; sourceTree = "<group>"; };
+		CE81758E16D47CE7002FA6BB /* BKOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrder.m; sourceTree = "<group>"; };
 		CE8ED96816D32FB200307FF1 /* BKAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKAPIManager.h; sourceTree = "<group>"; };
 		CE8ED96916D32FB200307FF1 /* BKAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAPIManager.m; sourceTree = "<group>"; };
 		CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSConnectionManager.h; sourceTree = "<group>"; };
@@ -102,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */,
 				CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */,
 				CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */,
 				CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */,
@@ -136,6 +148,7 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE81758416D46AB4002FA6BB /* CoreLocation.framework */,
 				CE805BAD16C3AC3E0040095F /* QuartzCore.framework */,
 				CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */,
 				CEF12DD916B923E600EB00C3 /* Security.framework */,
@@ -210,12 +223,18 @@
 			children = (
 				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+				CE81758D16D47CE6002FA6BB /* BKOrder.h */,
+				CE81758E16D47CE7002FA6BB /* BKOrder.m */,
 				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
 				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
 				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
 				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
+				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
+				CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */,
+				CE81758A16D47C2F002FA6BB /* BKShopInfo.h */,
+				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -316,6 +335,9 @@
 				CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */,
 				CE8ED96A16D32FB200307FF1 /* BKAPIManager.m in Sources */,
 				CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */,
+				CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */,
+				CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */,
+				CE81758F16D47CE7002FA6BB /* BKOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,33 @@
 
 #import "BKShopListViewController.h"
 #import "BKAPIManager.h"
+#import "BKShopInfoManager.h"
+#import "BKShopInfo.h"
 //#import "BKMainPageViewController.h"
+
+//@interface UITableView (CustomAnimation)
+//
+//- (void)reloadData:(BOOL)animated;
+//
+//@end
+//
+//@implementation UITableView (CustomAnimation)
+//
+//- (void)reloadData:(BOOL)animated {
+//    [self reloadData];
+//    
+//    if (animated) {
+//        CATransition *animation = [CATransition animation];
+//        [animation setType:kCATransitionFromTop];
+////        [animation setSubtype:kCATransitionFromBottom];
+//        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//        [animation setFillMode:kCAFillModeBoth];
+//        [animation setDuration:.3];
+//        [self.layer addAnimation:animation forKey:@"UITableviewReloadDataAnimationKey"];        
+//    }
+//}
+//
+//@end
 
 @interface BKShopListViewController ()
 
@@ -43,6 +69,13 @@ typedef enum  {
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) UIActionSheet *listActionSheet;
 @property (strong, nonatomic) UIActionSheet *sortActionSheet;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationCoordinate2D userCoordinate;
+@property (nonatomic) BOOL isLoadingNewData;
+
+//@property (strong, nonatomic) NSMutableArray *shopInfos;
+
+- (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs;
 
 @end
 
@@ -58,6 +91,11 @@ typedef enum  {
 @synthesize listActionSheet = _listActionSheet;
 @synthesize sortActionSheet = _sortActionSheet;
 @synthesize searchBar = _searchBar;
+@synthesize locationManager = _locationManager;
+@synthesize userCoordinate = _userCoordinate;
+//@synthesize shopInfos = _shopInfos;
+
+#pragma mark - Setters, late instantiation
 
 - (UIActionSheet *)listActionSheet {
     if (_listActionSheet == nil) {
@@ -72,6 +110,18 @@ typedef enum  {
     [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     return _sortActionSheet;
 }
+
+- (CLLocationManager *)locationManager {
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+//        _locationManager.distanceFilter = 10;
+    }
+    return _locationManager;
+}
+
+#pragma mark - View Controller Life Cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -89,7 +139,13 @@ typedef enum  {
 //    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];
 //    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
 //    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
-    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant];
+    NSLog(@"viewDidLoad");
+    
+//    NSLog(@"%d", [BKShopInfoManager sharedBKShopInfoManager].shopInfos.count);    
+    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
+        self.isLoadingNewData = YES;
+        [self.locationManager startUpdatingLocation];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,26 +163,104 @@ typedef enum  {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"shopDetailSegue"]) {
+        NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
+        UIViewController *shopDetailViewController = segue.destinationViewController;
+        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
+    }
+}
+
+#pragma mark - Utility methods
+
+- (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
+    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = nil;
+    
+    // Test
+    NSArray *testShopInfos = [NSArray arrayWithObjects:[[BKShopInfo alloc] initWithName:@"王品"],
+                              [[BKShopInfo alloc] initWithName:@"舒果"],
+                              [[BKShopInfo alloc] initWithName:@"原燒"], nil];
+//    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
+    for (BKShopInfo *testShopInfo in testShopInfos) {
+//        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopInfo.name];
+        NSLog(@"%@", testShopInfo);
+    }
+    // End of Test]
+    
+//    for (NSString *shopID in shopIDs) {
+//       [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//           
+//       }];
+//    }
+    NSLog(@"%@", [BKShopInfoManager sharedBKShopInfoManager].shopInfos);
+    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            [self.shopListTableView reloadData:YES];    
+}
+
 #pragma mark - TableViewDataSource, TableViewDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    UITableViewCell *cell;
+    if (self.isLoadingNewData == YES) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+    }
+    else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0){
+         
+            cell = [tableView dequeueReusableCellWithIdentifier:@"noResultCell"];            
+    }
+    else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:indexPath.row];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    }       
+    
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    if (self.isLoadingNewData == YES) {
+        return 1;
+    }
+    else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
+        return 1;
+    }
+    
+    return [[BKShopInfoManager sharedBKShopInfoManager] shopCount];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
+    if ([[tableView cellForRowAtIndexPath:indexPath].reuseIdentifier isEqualToString:@"cell"]) {
+        [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
+    }
 }
 
 #pragma mark - Mapview delegate
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
     self.locateUserButton.enabled = !(mode == MKUserTrackingModeFollow);
+}
+
+#pragma mark - CLLocationManager delegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    NSDate *eventDate = location.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    if (abs(howRecent) < 15.0) {
+        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
+        self.userCoordinate = location.coordinate;
+        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+            NSLog(@"%@", data);
+            
+            self.isLoadingNewData = NO;
+            [self saveShopInfosWithShopIDs:data];
+        }];
+        [manager stopUpdatingLocation];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"LocationManager failed with error :%@", error);
 }
 
 #pragma mark - Action Sheet delegate
@@ -137,13 +271,26 @@ typedef enum  {
     if (actionSheet == self.listActionSheet) {
         switch (buttonIndex) {
             case BKListActionSheetButtonIndexDistant:
-                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant];
+//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant
+//                                                         userCoordinate:self.userCoordinate
+//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                    NSLog(@"%@", data);
+//                }];
+                [self.locationManager startUpdatingLocation];
                 break;
             case BKListActionSheetButtonIndexPrice:
-                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaPrice];
+                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaPrice
+                                                         userCoordinate:self.userCoordinate
+                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+                    NSLog(@"%@", data);
+                }];
                 break;
             case BKListActionSheetButtonIndexScore:
-                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaScore];
+                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaScore
+                                                         userCoordinate:self.userCoordinate
+                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+                    NSLog(@"%@", data);
+                }];
                 break;
             default:                
                 break;
@@ -226,7 +373,9 @@ typedef enum  {
 
 - (IBAction)searchButtonPressed:(id)sender {
     if ([self.searchBar.text length] > 0) {
-        [[BKAPIManager sharedBKAPIManager] searchWithShopName:self.searchBar.text];
+        [[BKAPIManager sharedBKAPIManager] searchWithShopName:self.searchBar.text completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+            NSLog(@"%@", data);
+        }];
     }
 }
 @end

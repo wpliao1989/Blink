@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "OSConnectionManager.h"
 #import "CWLSynthesizeSingleton.h"
 
@@ -24,7 +25,8 @@ typedef NS_ENUM(NSInteger, BKListCriteria) {
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
-- (void)listWithListCriteria:(BKListCriteria)criteria;
-- (void)searchWithShopName:(NSString *)shopName;
+- (void)listWithListCriteria:(BKListCriteria)criteria userCoordinate:(CLLocationCoordinate2D)userCoordinate completionHandler:(asynchronousCompleteHandler)completeHandler;
+- (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
+- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 @end

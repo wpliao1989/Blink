@@ -11,6 +11,7 @@
 @interface BKAPIManager ()
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
+- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
 
 @end
 
@@ -57,7 +58,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return encodedData;
 }
 
-- (void)listWithListCriteria:(BKListCriteria)criteria {
+- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler {
+    NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
+    NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
+    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        //        NSLog(@"%@", data);
+        completeHandler(response, data, error);
+    }];
+}
+
+#pragma mark - APIs
+
+- (void)listWithListCriteria:(BKListCriteria)criteria userCoordinate:(CLLocationCoordinate2D)userCoordinate completionHandler:(asynchronousCompleteHandler)completeHandler {
     static NSString *kListCriteria = @"listCriteria";
     static NSString *kLongitude = @"longitude";
     static NSString *kLatitude = @"latitude";
@@ -67,7 +79,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     switch (criteria) {
         case BKListCriteriaDistant:
             criteriaString = @"distant";
-            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", 120.65768], kLatitude : [[NSString alloc] initWithFormat:@"%f", 24.14598]};
+            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", userCoordinate.latitude]};
             break;
         case BKListCriteriaPrice:
             criteriaString = @"price";
@@ -80,25 +92,35 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         default:
             NSLog(@"Warning: criteria is undefined, value: %d", criteria);
             break;
-    }   
-    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];
+    }
     
-    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
-    
-    [self service:@"list" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSLog(@"%@", data);
-    }];    
+    [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
+//    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];    
+//    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);    
+//    [self service:@"list" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//        NSLog(@"%@", data);
+//        completeHandler(response, data, error);
+//    }];    
 }
 
-- (void)searchWithShopName:(NSString *)shopName {
+- (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler)completeHandler{
     static NSString *kShopName = @"ShopName";
     
     NSDictionary *parameterDictionary = @{kShopName : shopName};
-    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];
-    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
-   [self service:@"search" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSLog(@"%@", data);
-    }];    
+    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
+//    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];
+//    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
+//   [self service:@"search" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//        NSLog(@"%@", data);
+//       completeHandler(response, data, error);
+//    }];    
+}
+
+- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler)completeHandler {
+    static NSString *kShopID = @"sShopID";
+    
+    NSDictionary *parameterDictionary = @{kShopID : shopID};
+    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
 @end
