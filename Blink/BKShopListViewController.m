@@ -115,7 +115,7 @@ typedef enum  {
     if (_locationManager == nil) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
 //        _locationManager.distanceFilter = 10;
     }
     return _locationManager;
@@ -182,7 +182,7 @@ typedef enum  {
                               [[BKShopInfo alloc] initWithName:@"原燒"], nil];
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
     for (BKShopInfo *testShopInfo in testShopInfos) {
-//        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopInfo.name];
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopInfo.name];
         NSLog(@"%@", testShopInfo);
     }
     // End of Test]
@@ -221,7 +221,7 @@ typedef enum  {
     if (self.isLoadingNewData == YES) {
         return 1;
     }
-    else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
+    else if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] == 0) {
         return 1;
     }
     
@@ -232,6 +232,10 @@ typedef enum  {
     if ([[tableView cellForRowAtIndexPath:indexPath].reuseIdentifier isEqualToString:@"cell"]) {
         [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Mapview delegate
@@ -248,13 +252,13 @@ typedef enum  {
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0) {
         NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-        self.userCoordinate = location.coordinate;
-        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-            NSLog(@"%@", data);
-            
-            self.isLoadingNewData = NO;
-            [self saveShopInfosWithShopIDs:data];
-        }];
+//        self.userCoordinate = location.coordinate;
+//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//            NSLog(@"%@", data);
+//            
+//            self.isLoadingNewData = NO;
+//            [self saveShopInfosWithShopIDs:data];
+//        }];
         [manager stopUpdatingLocation];
     }
 }

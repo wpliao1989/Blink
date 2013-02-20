@@ -84,6 +84,9 @@ enum BKUserToolSegmentationSelection {
     else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
         dataCount = self.orderlist.count;
     }
+    else {
+        dataCount = 0;
+    }
     return dataCount;
 }
 

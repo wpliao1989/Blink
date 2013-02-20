@@ -11,6 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
+@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 
 @end
