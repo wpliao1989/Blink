@@ -34,10 +34,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return [self.shopInfos objectAtIndex:index];
 }
 
-- (void)addShopInfoWithRawData:(id)rawData {
+- (void)addShopInfoWithRawData:(NSDictionary *)rawData {
     // Translate rawData
+    NSLog(@"rawData is %@", rawData);
     
-    BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithName:rawData];
+    BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
 //    NSLog(@"newShopInfo %@", newShopInfo);
     [self.shopInfos addObject:newShopInfo];
 //    NSLog(@"add %@", self.shopInfos);

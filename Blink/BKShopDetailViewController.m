@@ -8,6 +8,8 @@
 
 #import "BKShopDetailViewController.h"
 #import "BKMainPageViewController.h"
+#import "BKShopInfo.h"
+#import "BKMenuViewController.h"
 
 @interface BKShopDetailViewController ()
 
@@ -18,6 +20,8 @@
 @end
 
 @implementation BKShopDetailViewController
+
+@synthesize shopInfo = _shopInfo;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,12 +38,21 @@
 	// Do any additional setup after loading the view.    
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
+    self.navigationItem.title = self.shopInfo.name;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"menuSegue"]) {
+        BKMenuViewController *menuVC = segue.destinationViewController;
+        menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
+        menuVC.menu = self.shopInfo.menu;
+    }
 }
 
 //- (void)setEditing:(BOOL)editing animated:(BOOL)animated {

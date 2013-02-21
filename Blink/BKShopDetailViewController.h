@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BKShopInfo;
+
 @interface BKShopDetailViewController : UIViewController
+
+@property (nonatomic, strong) BKShopInfo *shopInfo;
 
 @end

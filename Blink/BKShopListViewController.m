@@ -9,6 +9,7 @@
 #import "BKShopListViewController.h"
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
+#import "BKShopDetailViewController.h"
 //#import "BKShopInfo.h"
 //#import "BKMainPageViewController.h"
 
@@ -169,8 +170,9 @@ typedef enum  {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"shopDetailSegue"]) {
         NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
-        UIViewController *shopDetailViewController = segue.destinationViewController;
-        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
+        BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
+//        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
+        shopDetailViewController.shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:selectedIndex];
     }
 }
 
@@ -180,11 +182,15 @@ typedef enum  {
 //    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
     // Test
-    NSArray *testShopInfos = [NSArray arrayWithObjects:@"王品",@"舒果",@"原燒",nil];                              
+    NSDictionary *shop1Info = @{@"name": @"王品", @"menu": @[@"好", @"吃", @"牛", @"排"]};
+    NSDictionary *shop2Info = @{@"name": @"舒果", @"menu": @[@"素", @"食", @"新", @"鮮"]};
+    NSDictionary *shop3Info = @{@"name": @"原燒", @"menu": @[@"極", @"品", @"燒", @"肉"]};
+    
+    NSArray *testShopInfos = [NSArray arrayWithObjects:shop1Info,shop2Info,shop3Info,nil];                              
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
-    for (NSString *testShopName in testShopInfos) {
-        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopName];
-        NSLog(@"%@", testShopName);
+    for (NSDictionary *shopInfo in testShopInfos) {
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];
+        NSLog(@"%@", shopInfo);
     }
     // End of Test]
     

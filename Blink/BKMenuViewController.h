@@ -10,4 +10,6 @@
 
 @interface BKMenuViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *menu;
+
 @end
