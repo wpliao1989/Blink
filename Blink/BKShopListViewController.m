@@ -9,7 +9,7 @@
 #import "BKShopListViewController.h"
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
-#import "BKShopInfo.h"
+//#import "BKShopInfo.h"
 //#import "BKMainPageViewController.h"
 
 //@interface UITableView (CustomAnimation)
@@ -76,6 +76,8 @@ typedef enum  {
 //@property (strong, nonatomic) NSMutableArray *shopInfos;
 
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs;
+// Methods for reloading data based on list criteria
+- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
 
 @end
 
@@ -143,8 +145,9 @@ typedef enum  {
     
 //    NSLog(@"%d", [BKShopInfoManager sharedBKShopInfoManager].shopInfos.count);    
     if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
-        self.isLoadingNewData = YES;
-        [self.locationManager startUpdatingLocation];
+//        self.isLoadingNewData = YES;
+//        [self.locationManager startUpdatingLocation];
+        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
     }
 }
 
@@ -174,16 +177,14 @@ typedef enum  {
 #pragma mark - Utility methods
 
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
-    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = nil;
+//    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
     // Test
-    NSArray *testShopInfos = [NSArray arrayWithObjects:[[BKShopInfo alloc] initWithName:@"王品"],
-                              [[BKShopInfo alloc] initWithName:@"舒果"],
-                              [[BKShopInfo alloc] initWithName:@"原燒"], nil];
+    NSArray *testShopInfos = [NSArray arrayWithObjects:@"王品",@"舒果",@"原燒",nil];                              
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
-    for (BKShopInfo *testShopInfo in testShopInfos) {
-        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopInfo.name];
-        NSLog(@"%@", testShopInfo);
+    for (NSString *testShopName in testShopInfos) {
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:testShopName];
+        NSLog(@"%@", testShopName);
     }
     // End of Test]
     
@@ -195,6 +196,25 @@ typedef enum  {
     NSLog(@"%@", [BKShopInfoManager sharedBKShopInfoManager].shopInfos);
     [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     //            [self.shopListTableView reloadData:YES];    
+}
+
+- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
+    self.isLoadingNewData = YES;
+    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
+    [self.shopListTableView reloadData];
+    
+    if (criteria == BKListCriteriaDistant) {
+        [self.locationManager startUpdatingLocation];
+    }
+    else if (criteria == BKListCriteriaPrice || criteria == BKListCriteriaScore){
+        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
+                                                 userCoordinate:self.userCoordinate
+                                              completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+                                                  NSLog(@"%@", data);
+                                                  self.isLoadingNewData = NO;
+                                                  [self saveShopInfosWithShopIDs:data];
+                                              }];
+    }     
 }
 
 #pragma mark - TableViewDataSource, TableViewDelegate
@@ -252,13 +272,13 @@ typedef enum  {
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0) {
         NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-//        self.userCoordinate = location.coordinate;
-//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//            NSLog(@"%@", data);
-//            
-//            self.isLoadingNewData = NO;
-//            [self saveShopInfosWithShopIDs:data];
-//        }];
+        self.userCoordinate = location.coordinate;
+        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+            NSLog(@"%@", data);
+            
+            self.isLoadingNewData = NO;
+            [self saveShopInfosWithShopIDs:data];
+        }];
         [manager stopUpdatingLocation];
     }
 }
@@ -280,21 +300,24 @@ typedef enum  {
 //                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //                    NSLog(@"%@", data);
 //                }];
-                [self.locationManager startUpdatingLocation];
+//                [self.locationManager startUpdatingLocation];
+                [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
                 break;
             case BKListActionSheetButtonIndexPrice:
-                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaPrice
-                                                         userCoordinate:self.userCoordinate
-                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-                    NSLog(@"%@", data);
-                }];
+//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaPrice
+//                                                         userCoordinate:self.userCoordinate
+//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                    NSLog(@"%@", data);
+//                }];
+                [self reloadDataAccordingToListCriteria:BKListCriteriaPrice];
                 break;
             case BKListActionSheetButtonIndexScore:
-                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaScore
-                                                         userCoordinate:self.userCoordinate
-                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-                    NSLog(@"%@", data);
-                }];
+//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaScore
+//                                                         userCoordinate:self.userCoordinate
+//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                    NSLog(@"%@", data);
+//                }];
+                [self reloadDataAccordingToListCriteria:BKListCriteriaScore];
                 break;
             default:                
                 break;

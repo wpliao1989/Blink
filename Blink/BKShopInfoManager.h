@@ -19,6 +19,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 - (NSUInteger)shopCount;
 - (NSString *)shopNameAtIndex:(NSUInteger)index;
+- (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;
 - (void)addShopInfoWithRawData:(id)rawData;
+- (void)clearShopInfos;
 
 @end

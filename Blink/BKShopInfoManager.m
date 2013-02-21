@@ -27,7 +27,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (NSString *)shopNameAtIndex:(NSUInteger)index {
-    return ((BKShopInfo *)[self.shopInfos objectAtIndex:index]).name;    
+    return ((BKShopInfo *)[self.shopInfos objectAtIndex:index]).name;
+}
+
+- (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index {
+    return [self.shopInfos objectAtIndex:index];
 }
 
 - (void)addShopInfoWithRawData:(id)rawData {
@@ -37,6 +41,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 //    NSLog(@"newShopInfo %@", newShopInfo);
     [self.shopInfos addObject:newShopInfo];
 //    NSLog(@"add %@", self.shopInfos);
+}
+
+- (void)clearShopInfos {
+    self.shopInfos = nil;
 }
 
 @end
