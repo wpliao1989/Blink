@@ -16,6 +16,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @synthesize isLogin = _isLogin;
 @synthesize favoriteShops = _favoriteShops;
+@synthesize userToken = _userToken;
+@synthesize userName = _userName;
+@synthesize userEmail = _userEmail;
+@synthesize userPhone = _userPhone;
 
 - (NSArray *)favoriteShops {
     if (_favoriteShops == nil) {
@@ -35,6 +39,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 - (void)login {
     // fetch user personal info
+    self.userToken = @"123";
     // fetch user favorite shop IDs
     // fetch user order history
     

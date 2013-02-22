@@ -212,4 +212,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
+- (void)orderWithData:(NSDictionary *)order completionHandler:(asynchronousCompleteHandler)completeHandler {
+    
+    [self callAPI:@"order" withPostBody:order completionHandler:completeHandler];
+}
+
 @end

@@ -9,6 +9,8 @@
 #import "BKTestCenter.h"
 #import "BKShopInfo.h"
 #import "BKMenuItem.h"
+#import "BKOrderManager.h"
+#import "BKOrderContent.h"
 
 #define menu(dictionary) [[BKMenuItem alloc] initWithData:dictionary]
 
@@ -69,6 +71,31 @@
     
     NSArray *testShopInfos = [NSArray arrayWithObjects:shop1,shop2,shop3,nil];
     return testShopInfos;
+}
+
++ (NSDictionary *)testOrder {
+    NSArray *testContent = @[@{kBKOrderContentUUID: @1000,
+                               kBKOrderContentName: @"123",
+                               kBKOrderContentSize: @"big",
+                               kBKOrderContentIce: @"normal",
+                               kBKOrderContentSweetness: @"half",
+                               kBKOrderContentQuantity: @10}];
+    
+    NSDictionary *testDict = @{kBKOrderUserToken: @"123",
+                               kBKOrderShopID: @"123",
+                               kBKOrderRecordTime: @"123",
+                               kBKOrderUserAddress: @"123",
+                               kBKOrderUserPhone: @"123",
+                               kBKOrderContent: testContent};
+    return testDict;
+}
+
++ (void)testPrint {
+    NSArray *testArray = @[@"123", @10, [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO]];
+    NSDictionary *testDi = @{@"1": @"123", @"2": @10, @"3": [NSNumber numberWithBool:YES], @"4": [NSNumber numberWithBool:NO]};
+    
+    NSLog(@"testArray = %@", testArray);
+    NSLog(@"testDict = %@", testDi);
 }
 
 @end

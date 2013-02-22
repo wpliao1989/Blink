@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 
 - (id)initWithData:(NSDictionary *)data;
 
-@property (strong, nonatomic) NSString *UUID;
+@property (nonatomic) NSInteger UUID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSDictionary *price;
 @property (strong, nonatomic) NSArray *iceLevels;

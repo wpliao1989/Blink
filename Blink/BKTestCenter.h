@@ -12,5 +12,7 @@
 
 + (NSArray *)testShopInfos;
 + (NSArray *)testFavoriteShopInfos;
++ (NSDictionary *)testOrder;
++ (void)testPrint;
 
 @end

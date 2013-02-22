@@ -8,6 +8,7 @@
 
 #import "BKOrderConfirmViewController.h"
 #import "BKShopDetailViewController.h"
+#import "BKOrderManager.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -40,6 +41,8 @@
 
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
+    [[BKOrderManager sharedBKOrderManager] sendOrder];
+    
     UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
     if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];

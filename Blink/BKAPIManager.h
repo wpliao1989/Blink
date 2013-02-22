@@ -39,6 +39,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
+- (void)orderWithData:(NSDictionary *)order completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 @end
 
