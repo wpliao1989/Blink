@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3616D715E50005C70F /* BKMenuItem.m */; };
 		CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3A16D718600005C70F /* BKTestCenter.m */; };
+		CE55EA3E16D765990005C70F /* BKOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3D16D765990005C70F /* BKOrder.m */; };
 		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
 		CE7A78C316B760610072519F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C216B760610072519F /* UIKit.framework */; };
 		CE7A78C516B760610072519F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C416B760610072519F /* Foundation.framework */; };
@@ -52,6 +53,8 @@
 		CE55EA3616D715E50005C70F /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; };
 		CE55EA3916D718600005C70F /* BKTestCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKTestCenter.h; sourceTree = "<group>"; };
 		CE55EA3A16D718600005C70F /* BKTestCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKTestCenter.m; sourceTree = "<group>"; };
+		CE55EA3C16D765990005C70F /* BKOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrder.h; sourceTree = "<group>"; };
+		CE55EA3D16D765990005C70F /* BKOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrder.m; sourceTree = "<group>"; };
 		CE78482B16D20CEB00A80031 /* BKOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderManager.h; sourceTree = "<group>"; };
 		CE78482C16D20CEB00A80031 /* BKOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderManager.m; sourceTree = "<group>"; };
 		CE7A78BE16B760610072519F /* Blink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +244,8 @@
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 				CE81758D16D47CE6002FA6BB /* BKOrderContent.h */,
 				CE81758E16D47CE7002FA6BB /* BKOrderContent.m */,
+				CE55EA3C16D765990005C70F /* BKOrder.h */,
+				CE55EA3D16D765990005C70F /* BKOrder.m */,
 				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
@@ -358,6 +363,7 @@
 				CE81758F16D47CE7002FA6BB /* BKOrderContent.m in Sources */,
 				CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */,
 				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
+				CE55EA3E16D765990005C70F /* BKOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

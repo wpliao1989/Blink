@@ -7,6 +7,7 @@
 //
 
 #import "BKAPIManager.h"
+#import "BKOrder.h"
 
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
@@ -212,9 +213,22 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
-- (void)orderWithData:(NSDictionary *)order completionHandler:(asynchronousCompleteHandler)completeHandler {
+- (void)orderWithData:(BKOrder *)order completionHandler:(asynchronousCompleteHandler)completeHandler {
+    NSString *kBKOrderUserToken = @"userToken";
+    NSString *kBKOrderShopID = @"sShopID";
+    NSString *kBKOrderRecordTime = @"recordTime";
+    NSString *kBKOrderUserAddress = @"address";
+    NSString *kBKOrderUserPhone = @"phone";
+    NSString *kBKOrderContent = @"content";
     
-    [self callAPI:@"order" withPostBody:order completionHandler:completeHandler];
+    NSDictionary *parameterDictionary = @{kBKOrderUserToken: order.userToken,
+                                          kBKOrderShopID : order.shopID,
+                                          kBKOrderRecordTime : order.recordTime,
+                                          kBKOrderUserAddress : order.address,
+                                          kBKOrderUserPhone : order.phone,
+                                          kBKOrderContent :order.content};
+    
+    [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
 @end

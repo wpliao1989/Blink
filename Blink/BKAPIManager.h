@@ -15,6 +15,8 @@
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
+@class BKOrder;
+
 typedef NS_ENUM(NSInteger, BKListCriteria) {
   BKListCriteriaDistant = 1,
   BKListCriteriaPrice = 2,
@@ -39,7 +41,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
-- (void)orderWithData:(NSDictionary *)order completionHandler:(asynchronousCompleteHandler) completeHandler;
+- (void)orderWithData:(BKOrder *)order completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 @end
 

@@ -9,15 +9,9 @@
 #import "BKOrderManager.h"
 #import "BKAccountManager.h"
 #import "BKAPIManager.h"
+#import "BKOrder.h"
 
 #import "BKTestCenter.h"
-
-NSString *const kBKOrderUserToken = @"userToken";
-NSString *const kBKOrderShopID = @"sShopID";
-NSString *const kBKOrderRecordTime = @"recordTime";
-NSString *const kBKOrderUserAddress = @"address";
-NSString *const kBKOrderUserPhone = @"phone";
-NSString *const kBKOrderContent = @"content";
 
 @interface BKOrderManager ()
 

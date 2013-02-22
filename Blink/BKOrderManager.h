@@ -9,26 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
 
-FOUNDATION_EXPORT NSString *const kBKOrderUserToken;
-FOUNDATION_EXPORT NSString *const kBKOrderShopID;
-FOUNDATION_EXPORT NSString *const kBKOrderRecordTime;
-FOUNDATION_EXPORT NSString *const kBKOrderUserAddress;
-FOUNDATION_EXPORT NSString *const kBKOrderUserPhone;
-FOUNDATION_EXPORT NSString *const kBKOrderContent;
+@class BKOrder;
 
 @interface BKOrderManager : NSObject
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 
-@property (nonatomic, strong) NSString *shopID;
-@property (nonatomic, strong) NSDate *recordTime;
-@property (nonatomic, strong) NSString *phone;
-@property (nonatomic, strong) NSString *address;
-@property (nonatomic, strong) NSString *note;
-
-@property (nonatomic, strong) NSMutableDictionary *order;
-//
-@property (nonatomic, strong) NSMutableArray *content;
+@property (nonatomic, strong) BKOrder *order;
 
 - (BOOL)isValidOrder;
 - (void)sendOrder;

@@ -11,6 +11,7 @@
 #import "BKMenuItem.h"
 #import "BKOrderManager.h"
 #import "BKOrderContent.h"
+#import "BKOrder.h"
 
 #define menu(dictionary) [[BKMenuItem alloc] initWithData:dictionary]
 
@@ -73,7 +74,7 @@
     return testShopInfos;
 }
 
-+ (NSDictionary *)testOrder {
++ (BKOrder *)testOrder {
     NSArray *testContent = @[@{kBKOrderContentUUID: @1000,
                                kBKOrderContentName: @"123",
                                kBKOrderContentSize: @"big",
@@ -81,13 +82,16 @@
                                kBKOrderContentSweetness: @"half",
                                kBKOrderContentQuantity: @10}];
     
-    NSDictionary *testDict = @{kBKOrderUserToken: @"123",
-                               kBKOrderShopID: @"123",
-                               kBKOrderRecordTime: @"123",
-                               kBKOrderUserAddress: @"123",
-                               kBKOrderUserPhone: @"123",
-                               kBKOrderContent: testContent};
-    return testDict;
+    BKOrder *testOrder = [[BKOrder alloc] init];
+    testOrder.userToken = @"test";
+    testOrder.shopID = @"123";
+    testOrder.recordTime = @"123";
+    testOrder.address = @"123";
+    testOrder.phone = @"123";
+    testOrder.content = testContent;
+    testOrder.note = @"123";
+
+    return testOrder;
 }
 
 + (void)testPrint {

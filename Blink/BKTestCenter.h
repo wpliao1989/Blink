@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class BKOrder;
+
 @interface BKTestCenter : NSObject
 
 + (NSArray *)testShopInfos;
 + (NSArray *)testFavoriteShopInfos;
-+ (NSDictionary *)testOrder;
++ (BKOrder *)testOrder;
 + (void)testPrint;
 
 @end
