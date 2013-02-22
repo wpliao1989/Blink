@@ -821,6 +821,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="某個店家" id="EKy-V6-B87"/>
                     <connections>
+                        <outlet property="discountInformation" destination="20m-iF-Qoz" id="h76-hF-aWh"/>
                         <outlet property="shopAddressLabel" destination="dOZ-HX-Deg" id="Gb7-ih-63R"/>
                         <outlet property="shopNameLabel" destination="xrQ-T8-HGU" id="AVw-vT-ihg"/>
                         <outlet property="shopOpenTimeLabel" destination="fN6-rh-uw8" id="JnZ-hF-tla"/>
@@ -873,99 +874,6 @@
             <point key="canvasLocation" x="1838" y="-257"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="BKLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeButtonPressed:"/>
-                <relationship kind="action" name="loginButtonPressed:"/>
-                <relationship kind="action" name="registrationButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKMainPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMainPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="homeButtonPressed:"/>
-                <relationship kind="action" name="loginButtonPressed:"/>
-                <relationship kind="action" name="searchFoodButtonPressed:"/>
-                <relationship kind="action" name="searchShopButtonPressed:"/>
-                <relationship kind="action" name="userToolButtonPressed:"/>
-                <relationship kind="outlet" name="homeButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="userToolButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="BKMakeOrderViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMakeOrderViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="makeOrderButtonPressed:"/>
-                <relationship kind="action" name="noteButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKMenuViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMenuViewController.h"/>
-        </class>
-        <class className="BKNoteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKNoteViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="noteText" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="BKOrderConfirmViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKOrderConfirmViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="orderConfirmButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKRegisterViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKRegisterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="confirmRegistrationButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="BKShopDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="menuButtonPressed:"/>
-                <relationship kind="action" name="orderDeliverButtonPressed:"/>
-                <relationship kind="action" name="takeAwayButtonPressed:"/>
-                <relationship kind="outlet" name="shopAddressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shopOpenTimeLable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shopPhoneLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="BKShopListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="categoryButtonPressed:"/>
-                <relationship kind="action" name="listButtonPressed:"/>
-                <relationship kind="action" name="locateUserButtonPressed:"/>
-                <relationship kind="action" name="mapButtonPressed:"/>
-                <relationship kind="action" name="searchButtonPressed:"/>
-                <relationship kind="action" name="sortButtonPressed:"/>
-                <relationship kind="outlet" name="bottomToolBar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="locateUserButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="shopListTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="BKUserToolViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKUserToolViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logoutButtonPressed:"/>
-                <relationship kind="action" name="segmentationChanged:"/>
-                <relationship kind="outlet" name="segmentaionControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="userToolTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

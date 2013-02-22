@@ -15,6 +15,22 @@ FOUNDATION_EXPORT NSString *const kBKShopPhone;
 FOUNDATION_EXPORT NSString *const kBKShopAddress;
 FOUNDATION_EXPORT NSString *const kBKShopOpenHour;
 
+FOUNDATION_EXPORT NSString *const kBKShopID;
+FOUNDATION_EXPORT NSString *const kBKShopExternalID;
+FOUNDATION_EXPORT NSString *const kBKShopRegion;
+FOUNDATION_EXPORT NSString *const kBKShopLongitude;
+FOUNDATION_EXPORT NSString *const kBKShopLatitude;
+FOUNDATION_EXPORT NSString *const kBKShopURL;
+FOUNDATION_EXPORT NSString *const kBKShopCommerceType;
+FOUNDATION_EXPORT NSString *const kBKShopManagerName;
+FOUNDATION_EXPORT NSString *const kBKShopManagerPhone;
+FOUNDATION_EXPORT NSString *const kBKShopManagerEmail;
+FOUNDATION_EXPORT NSString *const kBKShopServicesProviding;
+FOUNDATION_EXPORT NSString *const kBKShopIsProvidingReceipt;
+FOUNDATION_EXPORT NSString *const kBKShopCoWorkChannel;
+FOUNDATION_EXPORT NSString *const kBKShopDescription;
+FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
+
 @interface BKShopInfo : NSObject
 
 - (id)initWithName:(NSString *)shopName;
@@ -30,6 +46,7 @@ FOUNDATION_EXPORT NSString *const kBKShopOpenHour;
 
 @property (strong, nonatomic) NSString *shopID;
 @property (strong, nonatomic) NSString *externalID;
+@property (strong, nonatomic) NSString *region;
 @property (nonatomic) CLLocationCoordinate2D shopCoordinate;
 @property (strong, nonatomic) NSString *shopURL;
 @property (strong, nonatomic) NSString *commerceType;

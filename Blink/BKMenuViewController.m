@@ -8,6 +8,7 @@
 
 #import "BKMenuViewController.h"
 #import "BKMainPageViewController.h"
+#import "BKMenuItem.h"
 
 @interface BKMenuViewController ()
 
@@ -64,7 +65,7 @@
 {
     static NSString *CellIdentifier = @"menuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = [self.menu objectAtIndex:indexPath.row];
+    cell.textLabel.text = ((BKMenuItem *)[self.menu objectAtIndex:indexPath.row]).name;
     // Configure the cell...
     
     return cell;

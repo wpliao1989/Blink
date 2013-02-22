@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
+@property (strong, nonatomic) IBOutlet UITextView *discountInformation;
 
 - (void)initShop;
 
@@ -68,6 +69,7 @@
     self.shopAddressLabel.text = self.shopInfo.address;
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.openHours;
+    self.discountInformation.text = self.shopInfo.shopDescription;
 }
 
 //- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
