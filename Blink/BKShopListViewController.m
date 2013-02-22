@@ -10,8 +10,8 @@
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
-//#import "BKShopInfo.h"
-//#import "BKMainPageViewController.h"
+
+#import "BKTestCenter.h"
 
 //@interface UITableView (CustomAnimation)
 //
@@ -211,12 +211,9 @@ typedef enum  {
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
-    // Test
-    NSDictionary *shop1Info = @{@"name": @"王品", @"menu": @[@"好", @"吃", @"牛", @"排"], @"phone": @"04-00000000", @"address": @"台中市0號", @"businessHours": @"10:00~21:00"};
-    NSDictionary *shop2Info = @{@"name": @"舒果", @"menu": @[@"素", @"食", @"新", @"鮮"], @"phone": @"04-11111111", @"address": @"台中市1號", @"businessHours": @"10:10~21:10"};
-    NSDictionary *shop3Info = @{@"name": @"原燒", @"menu": @[@"極", @"品", @"燒", @"肉"], @"phone": @"04-22222222", @"address": @"台中市2號", @"businessHours": @"10:20~21:20"};
-    
-    NSArray *testShopInfos = [NSArray arrayWithObjects:shop1Info,shop2Info,shop3Info,nil];                              
+#warning Test shops inserted here
+    // Test        
+    NSArray *testShopInfos = [BKTestCenter testShopInfos];
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
     for (NSDictionary *shopInfo in testShopInfos) {
         [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3616D715E50005C70F /* BKMenuItem.m */; };
+		CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3A16D718600005C70F /* BKTestCenter.m */; };
 		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
 		CE7A78C316B760610072519F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C216B760610072519F /* UIKit.framework */; };
 		CE7A78C516B760610072519F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C416B760610072519F /* Foundation.framework */; };
@@ -46,6 +48,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE55EA3516D715E50005C70F /* BKMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuItem.h; sourceTree = "<group>"; };
+		CE55EA3616D715E50005C70F /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; };
+		CE55EA3916D718600005C70F /* BKTestCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKTestCenter.h; sourceTree = "<group>"; };
+		CE55EA3A16D718600005C70F /* BKTestCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKTestCenter.m; sourceTree = "<group>"; };
 		CE78482B16D20CEB00A80031 /* BKOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderManager.h; sourceTree = "<group>"; };
 		CE78482C16D20CEB00A80031 /* BKOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderManager.m; sourceTree = "<group>"; };
 		CE7A78BE16B760610072519F /* Blink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +134,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE55EA3816D718490005C70F /* TestCenter */ = {
+			isa = PBXGroup;
+			children = (
+				CE55EA3916D718600005C70F /* BKTestCenter.h */,
+				CE55EA3A16D718600005C70F /* BKTestCenter.m */,
+			);
+			name = TestCenter;
+			sourceTree = "<group>";
+		};
 		CE7A78B316B760610072519F = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +185,7 @@
 				CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */,
 				CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */,
 				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
+				CE55EA3816D718490005C70F /* TestCenter */,
 				CE805B9516C388F20040095F /* ModelObjects */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
@@ -235,6 +251,8 @@
 				CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */,
 				CE81758A16D47C2F002FA6BB /* BKShopInfo.h */,
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
+				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
+				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -338,6 +356,8 @@
 				CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */,
 				CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */,
 				CE81758F16D47CE7002FA6BB /* BKOrder.m in Sources */,
+				CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */,
+				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

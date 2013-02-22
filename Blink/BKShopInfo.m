@@ -8,8 +8,8 @@
 
 #import "BKShopInfo.h"
 
-NSString *const kBKShopInfoName = @"name";
-NSString *const kBKShopInfoMenu = @"menu";
+NSString *const kBKShopName = @"name";
+NSString *const kBKShopMenu = @"menu";
 NSString *const kBKShopPhone = @"phone";
 NSString *const kBKShopAddress = @"address";
 NSString *const kBKShopOpenHour = @"businessHours";
@@ -30,8 +30,8 @@ NSString *const kBKShopOpenHour = @"businessHours";
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        self.name = [data objectForKey:kBKShopInfoName];
-        self.menu = [data objectForKey:kBKShopInfoMenu];
+        self.name = [data objectForKey:kBKShopName];
+        self.menu = [data objectForKey:kBKShopMenu];
         self.phone = [data objectForKey:kBKShopPhone];
         self.address = [data objectForKey:kBKShopAddress];
         self.openHours = [data objectForKey:kBKShopOpenHour];

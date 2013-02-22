@@ -8,6 +8,8 @@
 
 #import "BKUserToolViewController.h"
 #import "BKAccountManager.h"
+#import "BKShopInfo.h"
+#import "BKShopDetailViewController.h"
 
 @interface BKUserToolViewController ()
 
@@ -20,8 +22,8 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)segmentationChanged:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
 @property (strong, nonatomic) IBOutlet UITableView *userToolTableView;
-@property (strong, nonatomic) NSMutableArray *shopList;
-@property (strong, nonatomic) NSMutableArray *orderlist;
+@property (strong, nonatomic) NSArray *shopList;
+@property (strong, nonatomic) NSArray *orderlist;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
 @property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
 
@@ -34,15 +36,18 @@ enum BKUserToolSegmentationSelection {
 @synthesize shopList = _shopList;
 @synthesize orderlist = _orderlist;
 
-- (NSMutableArray *)shopList {
+- (NSArray *)shopList {
     if (_shopList == nil) {
-        _shopList = [NSMutableArray arrayWithObjects:@"50藍", @"成時", @"王品", nil];
+#warning Test shop list
+//        _shopList = [NSMutableArray arrayWithObjects:@"50藍", @"成時", @"王品", nil];
+        _shopList = [BKAccountManager sharedBKAccountManager].favoriteShops;
     }
     return  _shopList;
 }
 
-- (NSMutableArray *)orderlist {
+- (NSArray *)orderlist {
     if (_orderlist == nil) {
+#warning Test order list
         _orderlist = [NSMutableArray arrayWithObjects:@"雞排", @"紅茶", @"小雞腿", nil];
     }
     return _orderlist;
@@ -73,6 +78,13 @@ enum BKUserToolSegmentationSelection {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"fromFavoriteShopDetailSegue"]) {
+        BKShopDetailViewController *detailVC = segue.destinationViewController;
+        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
+    }
+}
+
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -94,8 +106,8 @@ enum BKUserToolSegmentationSelection {
     UITableViewCell *cell;
     
     if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];
-        cell.textLabel.text = [self.shopList objectAtIndex:indexPath.row];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];        
+        cell.textLabel.text = ((BKShopInfo *)[self.shopList objectAtIndex:indexPath.row]).name;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Shop #%d", indexPath.row];
     }
     else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {

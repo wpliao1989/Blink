@@ -8,11 +8,22 @@
 
 #import "BKAccountManager.h"
 
+#import "BKTestCenter.h"
+
 @implementation BKAccountManager
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @synthesize isLogin = _isLogin;
+@synthesize favoriteShops = _favoriteShops;
+
+- (NSArray *)favoriteShops {
+    if (_favoriteShops == nil) {
+#warning Test favorite shop infos
+        _favoriteShops = [BKTestCenter testFavoriteShopInfos];
+    }
+    return _favoriteShops;
+}
 
 - (id)init {   
     self = [super init];
@@ -23,6 +34,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 - (void)login {
+    // fetch user personal info
+    // fetch user favorite shop IDs
+    // fetch user order history
+    
+    // change isLogin flag
     self.isLogin = YES;
 }
 
