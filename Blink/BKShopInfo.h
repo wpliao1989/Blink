@@ -10,6 +10,9 @@
 
 FOUNDATION_EXPORT NSString *const kBKShopInfoName;
 FOUNDATION_EXPORT NSString *const kBKShopInfoMenu;
+FOUNDATION_EXPORT NSString *const kBKShopPhone;
+FOUNDATION_EXPORT NSString *const kBKShopAddress;
+FOUNDATION_EXPORT NSString *const kBKShopOpenHour;
 
 @interface BKShopInfo : NSObject
 
@@ -20,5 +23,8 @@ FOUNDATION_EXPORT NSString *const kBKShopInfoMenu;
 // Menu is an array of dictionaries(keys: UUID, name, price)
 // value of price is a dictionary of size and actual price
 @property (strong, nonatomic) NSArray *menu;
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *address;
+@property (strong, nonatomic) NSString *openHours;
 
 @end

@@ -70,15 +70,19 @@ typedef enum  {
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) UIActionSheet *listActionSheet;
 @property (strong, nonatomic) UIActionSheet *sortActionSheet;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationCoordinate2D userCoordinate;
-@property (nonatomic) BOOL isLoadingNewData;
+//@property (strong, nonatomic) CLLocationManager *locationManager;
+//@property (nonatomic) CLLocationCoordinate2D userCoordinate;
+//@property (nonatomic) BOOL isLoadingNewData;
+//@property (nonatomic) BOOL isLocationServiceEnabled;
 
 //@property (strong, nonatomic) NSMutableArray *shopInfos;
 
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs;
 // Methods for reloading data based on list criteria
 - (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
+- (void)locationDidChange;
+- (void)locationBecameAvailable;
+- (void)registerForLocationNotifications;
 
 @end
 
@@ -94,8 +98,8 @@ typedef enum  {
 @synthesize listActionSheet = _listActionSheet;
 @synthesize sortActionSheet = _sortActionSheet;
 @synthesize searchBar = _searchBar;
-@synthesize locationManager = _locationManager;
-@synthesize userCoordinate = _userCoordinate;
+//@synthesize locationManager = _locationManager;
+//@synthesize userCoordinate = _userCoordinate;
 //@synthesize shopInfos = _shopInfos;
 
 #pragma mark - Setters, late instantiation
@@ -114,15 +118,15 @@ typedef enum  {
     return _sortActionSheet;
 }
 
-- (CLLocationManager *)locationManager {
-    if (_locationManager == nil) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-//        _locationManager.distanceFilter = 10;
-    }
-    return _locationManager;
-}
+//- (CLLocationManager *)locationManager {
+//    if (_locationManager == nil) {
+//        _locationManager = [[CLLocationManager alloc] init];
+//        _locationManager.delegate = self;
+//        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//        _locationManager.distanceFilter = 100;
+//    }
+//    return _locationManager;
+//}
 
 #pragma mark - View Controller Life Cycle
 
@@ -144,22 +148,33 @@ typedef enum  {
 //    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
     NSLog(@"viewDidLoad");
     
+    NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);
+    
+    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
+    
 //    NSLog(@"%d", [BKShopInfoManager sharedBKShopInfoManager].shopInfos.count);    
     if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
 //        self.isLoadingNewData = YES;
 //        [self.locationManager startUpdatingLocation];
+        
         [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self registerForLocationNotifications];
     [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];    
 }
 
 //- (void)viewDidAppear:(BOOL)animated {
 //    [super viewDidAppear:animated];
 //}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -176,21 +191,36 @@ typedef enum  {
     }
 }
 
+#pragma mark - Location notification
+
+- (void)registerForLocationNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange) name:kBKLocationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationBecameAvailable) name:kBKLocationBecameAvailableNotification object:nil];
+}
+
+- (void)locationDidChange {
+    NSLog(@"location changed: long %f, lat %f", [BKAPIManager sharedBKAPIManager].userCoordinate.longitude, [BKAPIManager sharedBKAPIManager].userCoordinate.latitude);
+}
+
+- (void)locationBecameAvailable {
+    [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+}
+
 #pragma mark - Utility methods
 
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
-//    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
+    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
     // Test
-    NSDictionary *shop1Info = @{@"name": @"王品", @"menu": @[@"好", @"吃", @"牛", @"排"]};
-    NSDictionary *shop2Info = @{@"name": @"舒果", @"menu": @[@"素", @"食", @"新", @"鮮"]};
-    NSDictionary *shop3Info = @{@"name": @"原燒", @"menu": @[@"極", @"品", @"燒", @"肉"]};
+    NSDictionary *shop1Info = @{@"name": @"王品", @"menu": @[@"好", @"吃", @"牛", @"排"], @"phone": @"04-00000000", @"address": @"台中市0號", @"businessHours": @"10:00~21:00"};
+    NSDictionary *shop2Info = @{@"name": @"舒果", @"menu": @[@"素", @"食", @"新", @"鮮"], @"phone": @"04-11111111", @"address": @"台中市1號", @"businessHours": @"10:10~21:10"};
+    NSDictionary *shop3Info = @{@"name": @"原燒", @"menu": @[@"極", @"品", @"燒", @"肉"], @"phone": @"04-22222222", @"address": @"台中市2號", @"businessHours": @"10:20~21:20"};
     
     NSArray *testShopInfos = [NSArray arrayWithObjects:shop1Info,shop2Info,shop3Info,nil];                              
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
     for (NSDictionary *shopInfo in testShopInfos) {
         [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];
-        NSLog(@"%@", shopInfo);
+//        NSLog(@"%@", shopInfo);
     }
     // End of Test]
     
@@ -205,46 +235,79 @@ typedef enum  {
 }
 
 - (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
-    self.isLoadingNewData = YES;
+//    self.isLoadingNewData = YES;
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     [self.shopListTableView reloadData];
     
-    if (criteria == BKListCriteriaDistant) {
-        [self.locationManager startUpdatingLocation];
-    }
-    else if (criteria == BKListCriteriaPrice || criteria == BKListCriteriaScore){
-        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
-                                                 userCoordinate:self.userCoordinate
-                                              completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-                                                  NSLog(@"%@", data);
-                                                  self.isLoadingNewData = NO;
-                                                  [self saveShopInfosWithShopIDs:data];
-                                              }];
-    }     
+    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
+                                          completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+                                              NSLog(@"%@", data);
+//                                              self.isLoadingNewData = NO;                                              
+                                              [self saveShopInfosWithShopIDs:data];
+                                          }];
+    
+//    if (criteria == BKListCriteriaDistant) {
+//        [self.locationManager startUpdatingLocation];
+//    }
+//    else if (criteria == BKListCriteriaPrice || criteria == BKListCriteriaScore){
+//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
+//                                              completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                                                  NSLog(@"%@", data);
+//                                                  self.isLoadingNewData = NO;
+//                                                  [self saveShopInfosWithShopIDs:data];
+//                                              }];
+//    }     
 }
 
 #pragma mark - TableViewDataSource, TableViewDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    if (self.isLoadingNewData == YES) {
+//    if (self.isLoadingNewData == YES) {
+//        if (self.isLocationServiceEnabled == NO || [CLLocationManager locationServicesEnabled] == NO) {
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"noServiceCell"];
+//        }
+//        else {
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
+//        }        
+//    }
+//    else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0){
+//         
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"noResultCell"];            
+//    }
+//    else {
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+//            cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:indexPath.row];
+//            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+//    }
+    
+    if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"noServiceCell"];
+    }
+    else if ([BKAPIManager sharedBKAPIManager].isLoadingData == YES){
         cell = [tableView dequeueReusableCellWithIdentifier:@"loadingCell"];
     }
     else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0){
-         
-            cell = [tableView dequeueReusableCellWithIdentifier:@"noResultCell"];            
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:@"noResultCell"];
     }
     else {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-            cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:indexPath.row];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
-    }       
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:indexPath.row];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    }  
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.isLoadingNewData == YES) {
+//    if (self.isLoadingNewData == YES) {
+//        return 1;
+//    }
+    if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {
+        return 1;
+    }
+    else if ([BKAPIManager sharedBKAPIManager].isLoadingData == YES) {
         return 1;
     }
     else if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] == 0) {
@@ -270,28 +333,41 @@ typedef enum  {
     self.locateUserButton.enabled = !(mode == MKUserTrackingModeFollow);
 }
 
-#pragma mark - CLLocationManager delegate
+//- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{
+//    NSLog(@"123");
+//}
+//
+//- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+//    NSLog(@"%@", userLocation);
+//}
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    CLLocation *location = [locations lastObject];
-    NSDate *eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-        self.userCoordinate = location.coordinate;
-        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-            NSLog(@"%@", data);
-            
-            self.isLoadingNewData = NO;
-            [self saveShopInfosWithShopIDs:data];
-        }];
-        [manager stopUpdatingLocation];
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"LocationManager failed with error :%@", error);
-}
+//#pragma mark - CLLocationManager delegate
+//
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+//    self.isLocationServiceEnabled = YES;
+//    [self.shopListTableView reloadData];
+//    
+//    CLLocation *location = [locations lastObject];
+//    NSDate *eventDate = location.timestamp;
+//    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+//    if (abs(howRecent) < 15.0) {
+//        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
+//        self.userCoordinate = location.coordinate;
+//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//            NSLog(@"%@", data);
+//            
+//            self.isLoadingNewData = NO;
+//            [self saveShopInfosWithShopIDs:data];
+//        }];
+//        [manager stopUpdatingLocation];
+//    }
+//}
+//
+//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+//    NSLog(@"LocationManager failed with error :%@", error);
+//    self.isLocationServiceEnabled = NO;
+//    [self.shopListTableView reloadData];
+//}
 
 #pragma mark - Action Sheet delegate
 
@@ -301,28 +377,12 @@ typedef enum  {
     if (actionSheet == self.listActionSheet) {
         switch (buttonIndex) {
             case BKListActionSheetButtonIndexDistant:
-//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant
-//                                                         userCoordinate:self.userCoordinate
-//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//                    NSLog(@"%@", data);
-//                }];
-//                [self.locationManager startUpdatingLocation];
                 [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
                 break;
             case BKListActionSheetButtonIndexPrice:
-//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaPrice
-//                                                         userCoordinate:self.userCoordinate
-//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//                    NSLog(@"%@", data);
-//                }];
                 [self reloadDataAccordingToListCriteria:BKListCriteriaPrice];
                 break;
             case BKListActionSheetButtonIndexScore:
-//                [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaScore
-//                                                         userCoordinate:self.userCoordinate
-//                                                      completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//                    NSLog(@"%@", data);
-//                }];
                 [self reloadDataAccordingToListCriteria:BKListCriteriaScore];
                 break;
             default:                

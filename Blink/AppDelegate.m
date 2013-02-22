@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "BKAPIManager.h"
 
 @implementation AppDelegate
 
@@ -22,7 +23,7 @@
 //    [self.window makeKeyAndVisible];
     
 //    [[UINavigationBar appearance] setBackgroundImage:<#(UIImage *)#>];  
-    
+    [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
     return YES;
 }
 

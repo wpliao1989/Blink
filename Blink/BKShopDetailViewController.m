@@ -17,6 +17,13 @@
 - (IBAction)orderDeliverButtonPressed:(id)sender;
 - (IBAction)takeAwayButtonPressed:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
+
+- (void)initShop;
+
 @end
 
 @implementation BKShopDetailViewController
@@ -39,6 +46,7 @@
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
     self.navigationItem.title = self.shopInfo.name;
+    [self initShop];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,6 +61,13 @@
         menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
         menuVC.menu = self.shopInfo.menu;
     }
+}
+
+- (void)initShop {
+    self.shopNameLabel.text = self.shopInfo.name;
+    self.shopAddressLabel.text = self.shopInfo.address;
+    self.shopPhoneLabel.text = self.shopInfo.phone;
+    self.shopOpenTimeLabel.text = self.shopInfo.openHours;
 }
 
 //- (void)setEditing:(BOOL)editing animated:(BOOL)animated {

@@ -10,6 +10,9 @@
 
 NSString *const kBKShopInfoName = @"name";
 NSString *const kBKShopInfoMenu = @"menu";
+NSString *const kBKShopPhone = @"phone";
+NSString *const kBKShopAddress = @"address";
+NSString *const kBKShopOpenHour = @"businessHours";
 
 @implementation BKShopInfo
 
@@ -29,6 +32,9 @@ NSString *const kBKShopInfoMenu = @"menu";
     if (self) {
         self.name = [data objectForKey:kBKShopInfoName];
         self.menu = [data objectForKey:kBKShopInfoMenu];
+        self.phone = [data objectForKey:kBKShopPhone];
+        self.address = [data objectForKey:kBKShopAddress];
+        self.openHours = [data objectForKey:kBKShopOpenHour];
     }
     return self;
 }

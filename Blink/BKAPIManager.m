@@ -8,10 +8,18 @@
 
 #import "BKAPIManager.h"
 
+NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
+NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
+
 @interface BKAPIManager ()
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) BOOL isLocationFailed;
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
+
+- (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
 
 @end
 
@@ -19,8 +27,81 @@
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
+@synthesize isLoadingData = _isLoadingData;
+@synthesize locationManager = _locationManager;
+@synthesize isLocationServiceAvailable = _isServiceAvailable;
+@synthesize userCoordinate = _userCoordinate;
+@synthesize isLocationFailed = _isLocationFailed;
+
+- (CLLocationManager *)locationManager {
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 100.0;
+    }
+    return _locationManager;
+}
+
+- (void)setUserCoordinate:(CLLocationCoordinate2D)userCoordinate {
+    if ([self isEmptyCoordinate:_userCoordinate]&&(![self isEmptyCoordinate:userCoordinate])) {
+        NSLog(@"userCoordinate became available!");
+        _userCoordinate = userCoordinate;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationBecameAvailableNotification object:nil];
+    }
+    _userCoordinate = userCoordinate;
+}
+
+- (BOOL)isLocationServiceAvailable {
+//    NSLog(@"%d, %d", [CLLocationManager locationServicesEnabled], [CLLocationManager authorizationStatus]);    
+    return ([CLLocationManager locationServicesEnabled]) &&
+    ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized);
+//    &&(self.isLocationFailed == NO);
+}
+
 - (NSURL *)hostURL {
     return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
+}
+
+#pragma mark - Location Manager
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    self.isLocationFailed = NO;
+    
+    CLLocation *location = [locations lastObject];
+    NSDate *eventDate = location.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    if (abs(howRecent) < 15.0) {
+        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
+        self.userCoordinate = location.coordinate;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationDidChangeNotification object:nil];
+//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//            NSLog(@"%@", data);            
+//        }];
+//        [manager stopUpdatingLocation];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Locatoin manager failed with error %@", error);
+    self.isLocationFailed = YES;
+}
+
+- (void)startUpdatingUserLocation {
+    NSLog(@"isLocationFailed = %d", self.isLocationFailed);
+    NSLog(@"%f %f", self.userCoordinate.longitude, self.userCoordinate.latitude);
+    NSLog([self isEmptyCoordinate:self.userCoordinate]? @"YES":@"NO");
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)stopUpdatingUserLocation {
+    [self.locationManager stopUpdatingLocation];
+}
+
+#pragma mark - Utility methods
+
+- (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate {
+    return (cooridnate.latitude == 0.0) && (cooridnate.longitude == 0.0);
 }
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject {   
@@ -63,23 +144,31 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
     [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         //        NSLog(@"%@", data);
+        self.isLoadingData = NO;
         completeHandler(response, data, error);
     }];
 }
 
 #pragma mark - APIs
 
-- (void)listWithListCriteria:(BKListCriteria)criteria userCoordinate:(CLLocationCoordinate2D)userCoordinate completionHandler:(asynchronousCompleteHandler)completeHandler {
+- (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler {
     static NSString *kListCriteria = @"listCriteria";
     static NSString *kLongitude = @"longitude";
     static NSString *kLatitude = @"latitude";
     NSString *criteriaString;    
-    NSDictionary *parameterDictionary;
+    NSDictionary *parameterDictionary;    
+    
+    self.isLoadingData = YES;
     
     switch (criteria) {
         case BKListCriteriaDistant:
             criteriaString = @"distant";
-            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", userCoordinate.latitude]};
+            if ([self isEmptyCoordinate:self.userCoordinate]) {                
+                NSLog(@"Warning: userCoordinate is empty!");
+                self.isLoadingData = NO;
+                return;
+            }
+            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.latitude]};
             break;
         case BKListCriteriaPrice:
             criteriaString = @"price";

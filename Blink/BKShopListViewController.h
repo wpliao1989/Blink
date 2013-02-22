@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
+//#import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
+@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate/*, CLLocationManagerDelegate*/>
 
 @end

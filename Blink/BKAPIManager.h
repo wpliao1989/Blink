@@ -21,12 +21,24 @@ typedef NS_ENUM(NSInteger, BKListCriteria) {
   BKListCriteriaScore = 3
 };
 
-@interface BKAPIManager : OSConnectionManager
+FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
+FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
+
+@interface BKAPIManager : OSConnectionManager<CLLocationManagerDelegate>
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
-- (void)listWithListCriteria:(BKListCriteria)criteria userCoordinate:(CLLocationCoordinate2D)userCoordinate completionHandler:(asynchronousCompleteHandler)completeHandler;
+@property (nonatomic) BOOL isLocationServiceAvailable;
+@property (nonatomic) CLLocationCoordinate2D userCoordinate;
+
+- (void)startUpdatingUserLocation;
+- (void)stopUpdatingUserLocation;
+
+@property (nonatomic) BOOL isLoadingData;
+
+- (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 @end
+

@@ -36,7 +36,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 - (void)addShopInfoWithRawData:(NSDictionary *)rawData {
     // Translate rawData
-    NSLog(@"rawData is %@", rawData);
+//    NSLog(@"rawData is %@", rawData);
     
     BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
 //    NSLog(@"newShopInfo %@", newShopInfo);
