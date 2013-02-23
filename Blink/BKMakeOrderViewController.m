@@ -22,6 +22,10 @@
 - (IBAction)noteButtonPressed:(id)sender;
 - (IBAction)addOrderContentButtonPressed:(id)sender;
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
+@property (strong, nonatomic) IBOutlet UILabel *totalPrice;
+
+- (void)totalPriceDidChange;
+- (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 
 @end
 
@@ -44,12 +48,41 @@
 	// Do any additional setup after loading the view.
     self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
     [self.orderContent setEditing:YES animated:NO];
+    
+//    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
+//    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
+    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(totalPriceDidChange) name:kBKTotalPriceDidChangeNotification object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Total price did change
+
+- (void)totalPriceDidChange {
+//    NSLog(@"totalPriceDidChange!");
+    NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPrice];
+    self.totalPrice.text = [self stringForTotalPrice:totalPrice];
+}
+
+- (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
+    static NSString *preString = @"總金額: ";
+    static NSString *postString = @"元";
+    NSString *result = [[preString stringByAppendingString:[totalPrice stringValue]] stringByAppendingString:postString];
+    return result;
 }
 
 #pragma mark - Table view

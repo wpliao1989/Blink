@@ -38,8 +38,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
 }
 
 - (NSString *)price {
-    static NSNumberFormatter *currencyFormatter;
-    static NSNumberFormatter *numberFormatter;
+    static NSNumberFormatter *currencyFormatter;    
     
     if (currencyFormatter == nil) {
         currencyFormatter = [[NSNumberFormatter alloc] init];
@@ -51,26 +50,33 @@ NSString *const kBKOrderContentQuantity = @"quantity";
         NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
     }
     
+    NSNumber *price = [self priceValue];
+   
+    NSLog(@"basePrice string is %@", self.basePrice);    
+    NSLog(@"price is %@", price);
+//    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
+- (NSNumber *)priceValue {
+    static NSNumberFormatter *numberFormatter;
     if (numberFormatter == nil) {
         numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];        
+        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     }
     
     NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
     if (basePrice == nil) {
         basePrice = [[NSDecimalNumber alloc] initWithDouble:0.0];
-    }    
+    }
+    
+    NSLog(@"basePrice is %@", basePrice);
     
     double bp = [basePrice doubleValue];
     double q = [self.quantity doubleValue];
     NSNumber *price = [NSNumber numberWithDouble:(bp*q)];
-   
-    NSLog(@"basePrice string is %@", self.basePrice);
-    NSLog(@"basePrice is %@", basePrice);
-    NSLog(@"price is %@", price);
-//    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
-    
-    return [currencyFormatter stringFromNumber:price];
+    return price;
 }
 
 @end

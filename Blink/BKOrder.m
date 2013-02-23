@@ -9,6 +9,8 @@
 #import "BKOrder.h"
 #import "BKOrderContent.h"
 
+NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNotification";
+
 @implementation BKOrder
 
 @synthesize userToken = _userToken;
@@ -18,12 +20,29 @@
 @synthesize phone = _phone;
 @synthesize content = _content;
 @synthesize note = _note;
+@synthesize totalPrice = _totalPrice;
 
 - (NSMutableArray *)content {
     if (_content == nil) {
         _content = [NSMutableArray array];
     }
     return _content;
+}
+
+- (NSNumber *)totalPrice {
+    if (_totalPrice == nil) {
+        _totalPrice = [NSNumber numberWithDouble:0.0];
+    }
+    return _totalPrice;
+}
+
+- (void)setTotalPrice:(NSNumber *)totalPrice {    
+    if ([_totalPrice doubleValue]!=[totalPrice doubleValue]) {
+        _totalPrice = totalPrice;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBKTotalPriceDidChangeNotification object:nil];
+        return;
+    }    
+    _totalPrice = totalPrice;   
 }
 
 - (void)addNewOrderContent:(BKOrderContent *)content {
@@ -70,6 +89,14 @@
     self.content = newContensArray;
     NSLog(@"self.content = %@", self.content);
     return theOrder;
+}
+
+- (void)updateTotalPrice {
+    double totalPrice = 0.0;
+    for (BKOrderContent *orderContent in self.content) {
+        totalPrice = totalPrice + [[orderContent priceValue] doubleValue];
+    }
+    self.totalPrice = [NSNumber numberWithDouble:totalPrice];
 }
 
 - (void)printValuesOfProperties {

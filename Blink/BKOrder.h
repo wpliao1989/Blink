@@ -36,6 +36,9 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContents;
 
+@property (nonatomic, strong) NSNumber *totalPrice;
+- (void)updateTotalPrice;
+
 - (BKOrder *)orderForAPI;
 
 - (void)printValuesOfProperties;

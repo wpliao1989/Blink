@@ -12,6 +12,8 @@
 @class BKOrder;
 @class BKOrderContent;
 
+FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
+
 @interface BKOrderManager : NSObject
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
@@ -26,5 +28,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContents;
+
+- (NSNumber *)totalPrice;
 
 @end

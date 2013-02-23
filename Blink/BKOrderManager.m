@@ -46,12 +46,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (void)addNewOrderContent:(BKOrderContent *)content {
     [self.order addNewOrderContent:content];
+    [self.order updateTotalPrice];
     NSLog(@"number of order content: %d", [self numberOfOrderContents]);
     [self.order printValuesOfProperties];
 }
 
 - (void)deleteOrderContentAtIndex:(NSInteger)index {
     [self.order deleteOrderContentAtIndex:index];
+    [self.order updateTotalPrice];
 }
 
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index {
@@ -64,6 +66,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (NSUInteger)numberOfOrderContents {
     return [self.order numberOfOrderContents];
+}
+
+#pragma Total price
+
+- (NSNumber *)totalPrice {
+    return self.order.totalPrice;
 }
 
 @end

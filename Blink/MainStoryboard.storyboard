@@ -523,12 +523,20 @@
                                     <action selector="addOrderContentButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="5pf-mZ-Uft"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="總金額：10240元" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qMh-gb-Yjg">
+                                <rect key="frame" x="11" y="451" width="125" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="訂單頁面" id="YgF-3Y-ZTU"/>
                     <connections>
                         <outlet property="orderContent" destination="slv-Aq-9Rc" id="sRf-4Y-dgX"/>
+                        <outlet property="totalPrice" destination="qMh-gb-Yjg" id="pVo-Gx-Iit"/>
                         <segue destination="pr9-DW-WBx" kind="push" identifier="orderConfirmSegue" id="7kI-bq-AX4"/>
                         <segue destination="gZU-Sn-msS" kind="modal" identifier="fromOrderToLoginSegue" id="LP2-pZ-FvA"/>
                     </connections>
@@ -947,6 +955,7 @@
                 <relationship kind="action" name="makeOrderButtonPressed:"/>
                 <relationship kind="action" name="noteButtonPressed:"/>
                 <relationship kind="outlet" name="orderContent" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="totalPrice" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="BKMenuViewController" superclassName="UITableViewController">
