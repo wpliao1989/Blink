@@ -68,7 +68,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return [self.order numberOfOrderContents];
 }
 
-#pragma Total price
+#pragma Total price / Note
+
+- (NSString *)note {
+    return self.order.note;
+}
+
+- (void)saveNote:(NSString *)theNote {
+    self.order.note = theNote;    
+}
 
 - (NSNumber *)totalPrice {
     return self.order.totalPrice;

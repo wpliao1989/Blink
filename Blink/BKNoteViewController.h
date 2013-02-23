@@ -10,4 +10,6 @@
 
 @interface BKNoteViewController : UIViewController
 
+@property (strong, nonatomic) NSString *note;
+
 @end

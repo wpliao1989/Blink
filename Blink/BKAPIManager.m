@@ -229,12 +229,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    [parameterDictionary setObject:order.phone forKey:kBKOrderUserPhone];
 //    [parameterDictionary setObject:order.content.count != 0? order.content : [NSNull null] forKey:kBKOrderContent];
     
+//    NSLog(@"order.content.count = %d", order.content.count);
+//    NSLog(@"order.content = %@", order.content);
+    
     NSDictionary *parameterDictionary =   @{kBKOrderUserToken: order.userToken,
                                           kBKOrderShopID : order.shopID,
                                           kBKOrderRecordTime : order.recordTime,
                                           kBKOrderUserAddress : order.address,
                                           kBKOrderUserPhone : order.phone,
                                           kBKOrderContent :order.content.count > 0? order.content : [NSNull null]};
+    
     
     NSLog(@"order = %@", parameterDictionary);
     

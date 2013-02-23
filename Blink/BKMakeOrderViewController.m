@@ -137,7 +137,7 @@
 
 - (IBAction)noteButtonPressed:(id)sender {
     BKNoteViewController *note = [self.storyboard instantiateViewControllerWithIdentifier:@"BKNoteVC"];
-    
+    note.note = [[BKOrderManager sharedBKOrderManager] note];
 //    NSLog(@"%@", NSStringFromCGRect(note.view.frame));
 //    note.view.bounds = CGRectMake(0, 0, 300, 400);
 //    NSLog(@"%@", note);

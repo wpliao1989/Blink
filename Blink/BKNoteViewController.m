@@ -7,6 +7,7 @@
 //
 
 #import "BKNoteViewController.h"
+#import "BKOrderManager.h"
 
 @interface BKNoteViewController ()
 
@@ -33,6 +34,7 @@
 //    NSLog(@"viewDidLoad");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    self.noteText.text = self.note; 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,6 +44,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
 //    NSLog(@"note will disappear");
     [self.noteText resignFirstResponder];
+    [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text];
 }
 
 - (void)didReceiveMemoryWarning

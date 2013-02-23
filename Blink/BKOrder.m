@@ -86,8 +86,8 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
         NSDictionary *newContent = [content contentForAPI];
         [newContensArray addObject:newContent];
     }
-    self.content = newContensArray;
-    NSLog(@"self.content = %@", self.content);
+    theOrder.content = newContensArray;
+//    NSLog(@"theOrder.content = %@", self.content);
     return theOrder;
 }
 

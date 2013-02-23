@@ -29,6 +29,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContents;
 
+- (NSString *)note;
+- (void)saveNote:(NSString *)theNote;
 - (NSNumber *)totalPrice;
 
 @end
