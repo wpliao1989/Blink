@@ -19,4 +19,49 @@
 @synthesize content = _content;
 @synthesize note = _note;
 
+- (void)addNewOrderContent:(BKOrderContent *)content {
+    [self.content addObject:content];
+}
+
+- (void)deleteOrderContentAtIndex:(NSInteger)index {
+    [self.content removeObjectAtIndex:index];
+}
+
+- (BKOrderContent *)orderContentAtIndex:(NSInteger)index {
+    return [self.content objectAtIndex:index];
+}
+
+- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index {
+    BKOrderContent *theContent = [self.content objectAtIndex:index];
+    theContent.quantity = quantity;
+}
+
+- (NSUInteger)numberOfOrderContents {
+    return self.content.count;
+}
+
+- (BKOrder *)orderForAPI {
+    BKOrder *theOrder = [[BKOrder alloc] init];
+    theOrder.userToken = self.userToken != nil ? self.userToken : @"none";
+    theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    formatter.timeStyle = NSDateFormatterShortStyle;
+    theOrder.recordTime = [formatter stringFromDate:[NSDate date]];
+    
+    theOrder.address = self.address != nil ? self.address : @"none";
+    theOrder.phone = self.phone != nil ? self.phone : @"none";
+    theOrder.note = self.note != nil ? self.note : @"none";
+    
+    NSMutableArray *newContensArray = [NSMutableArray array];
+    for (BKOrderContent *content in self.content) {
+        NSDictionary *newContent = [content contentForAPI];
+        [newContensArray addObject:newContent];
+    }
+    self.content = newContensArray;
+    NSLog(@"self.content = %@", self.content);
+    return theOrder;
+}
+
 @end

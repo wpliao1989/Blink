@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class BKOrderContent;
+
 FOUNDATION_EXPORT NSString *const kBKOrderUserToken;
 FOUNDATION_EXPORT NSString *const kBKOrderShopID;
 FOUNDATION_EXPORT NSString *const kBKOrderRecordTime;
@@ -23,9 +25,17 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *address;
 
-// Content is an array of Dictionaries
-@property (nonatomic, strong) NSArray *content;
+// Content is an array of BKOrderContent
+@property (nonatomic, strong) NSMutableArray *content;
 
 @property (nonatomic, strong) NSString *note;
+
+- (void)addNewOrderContent:(BKOrderContent *)content;
+- (void)deleteOrderContentAtIndex:(NSInteger)index;
+- (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
+- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
+- (NSUInteger)numberOfOrderContents;
+
+- (BKOrder *)orderForAPI;
 
 @end

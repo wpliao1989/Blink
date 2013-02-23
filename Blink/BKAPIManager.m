@@ -219,14 +219,24 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSString *kBKOrderRecordTime = @"recordTime";
     NSString *kBKOrderUserAddress = @"address";
     NSString *kBKOrderUserPhone = @"phone";
-    NSString *kBKOrderContent = @"content";
+    NSString *kBKOrderContent = @"content";   
     
-    NSDictionary *parameterDictionary = @{kBKOrderUserToken: order.userToken,
+//    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
+//    [parameterDictionary setObject:order.userToken forKey:kBKOrderUserToken];
+//    [parameterDictionary setObject:order.shopID forKey:kBKOrderShopID];
+//    [parameterDictionary setObject:order.recordTime forKey:kBKOrderRecordTime];
+//    [parameterDictionary setObject:order.address forKey:kBKOrderUserAddress];
+//    [parameterDictionary setObject:order.phone forKey:kBKOrderUserPhone];
+//    [parameterDictionary setObject:order.content.count != 0? order.content : [NSNull null] forKey:kBKOrderContent];
+    
+    NSDictionary *parameterDictionary =   @{kBKOrderUserToken: order.userToken,
                                           kBKOrderShopID : order.shopID,
                                           kBKOrderRecordTime : order.recordTime,
                                           kBKOrderUserAddress : order.address,
                                           kBKOrderUserPhone : order.phone,
-                                          kBKOrderContent :order.content};
+                                          kBKOrderContent :order.content.count > 0? order.content : [NSNull null]};
+    
+    NSLog(@"order = %@", parameterDictionary);
     
     [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:completeHandler];
 }

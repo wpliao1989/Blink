@@ -113,6 +113,7 @@
 		CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSConnectionManager.m; sourceTree = "<group>"; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
+		CEC8656B16D781F9007F7375 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		CEF12DD916B923E600EB00C3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -308,6 +309,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hant",
 			);
 			mainGroup = CE7A78B316B760610072519F;
 			productRefGroup = CE7A78BF16B760610072519F /* Products */;
@@ -374,6 +376,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				CE7A78CE16B760610072519F /* en */,
+				CEC8656B16D781F9007F7375 /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

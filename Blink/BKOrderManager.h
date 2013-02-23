@@ -10,6 +10,7 @@
 #import "CWLSynthesizeSingleton.h"
 
 @class BKOrder;
+@class BKOrderContent;
 
 @interface BKOrderManager : NSObject
 
@@ -19,5 +20,11 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (BOOL)isValidOrder;
 - (void)sendOrder;
+
+- (void)addNewOrderContent:(BKOrderContent *)content;
+- (void)deleteOrderContentAtIndex:(NSInteger)index;
+- (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
+- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
+- (NSUInteger)numberOfOrderContents;
 
 @end

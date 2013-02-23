@@ -90,6 +90,8 @@
     testOrder.phone = @"123";
     testOrder.content = testContent;
     testOrder.note = @"123";
+    
+//    NSLog(@"testOrder.content is valid json object %d", [NSJSONSerialization isValidJSONObject:testOrder.content]);
 
     return testOrder;
 }

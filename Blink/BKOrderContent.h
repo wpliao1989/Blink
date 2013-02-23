@@ -17,11 +17,13 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 
 @interface BKOrderContent : NSObject
 
-@property (nonatomic) NSInteger UUID;
+@property (strong, nonatomic) NSNumber *UUID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *size;
 @property (strong, nonatomic) NSString *ice;
 @property (strong, nonatomic) NSString *sweetness;
-@property (nonatomic) NSInteger quantity;
+@property (strong, nonatomic) NSNumber *quantity;
+
+- (NSDictionary *)contentForAPI;
 
 @end
