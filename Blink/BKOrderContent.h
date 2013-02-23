@@ -24,6 +24,10 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 @property (strong, nonatomic) NSString *sweetness;
 @property (strong, nonatomic) NSNumber *quantity;
 
+// These two properties are not required by API, but will be shown on screen for user
+@property (strong, nonatomic) NSString *basePrice;
+@property (strong, nonatomic) NSString *price;
+
 - (NSDictionary *)contentForAPI;
 
 @end

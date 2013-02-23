@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @class BKOrder;
+@class BKOrderContent;
 
 @interface BKTestCenter : NSObject
 
 + (NSArray *)testShopInfos;
 + (NSArray *)testFavoriteShopInfos;
 + (BKOrder *)testOrder;
++ (BKOrderContent *)testOrderContent;
+
 + (void)testPrint;
 
 @end

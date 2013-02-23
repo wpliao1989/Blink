@@ -46,6 +46,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (void)addNewOrderContent:(BKOrderContent *)content {
     [self.order addNewOrderContent:content];
+    NSLog(@"number of order content: %d", [self numberOfOrderContents]);
+    [self.order printValuesOfProperties];
 }
 
 - (void)deleteOrderContentAtIndex:(NSInteger)index {

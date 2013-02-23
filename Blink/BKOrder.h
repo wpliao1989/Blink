@@ -38,4 +38,6 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 
 - (BKOrder *)orderForAPI;
 
+- (void)printValuesOfProperties;
+
 @end

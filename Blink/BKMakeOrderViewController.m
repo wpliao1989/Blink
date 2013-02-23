@@ -12,15 +12,22 @@
 #import "BKMainPageViewController.h"
 #import "BKNoteViewController.h"
 #import "BKOrderManager.h"
+#import "BKOrderContent.h"
+
+#import "BKTestCenter.h"
 
 @interface BKMakeOrderViewController ()
 
 - (IBAction)makeOrderButtonPressed:(id)sender;
 - (IBAction)noteButtonPressed:(id)sender;
+- (IBAction)addOrderContentButtonPressed:(id)sender;
+@property (strong, nonatomic) IBOutlet UITableView *orderContent;
 
 @end
 
 @implementation BKMakeOrderViewController
+
+@synthesize orderContent = _orderContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,7 +42,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;    
+    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
+    [self.orderContent setEditing:YES animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,13 +55,41 @@
 #pragma mark - Table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [[BKOrderManager sharedBKOrderManager] numberOfOrderContents];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
-    cell.textLabel.text = [NSString stringWithFormat:@"Item %d", indexPath.row];
+    
+    UILabel *name = (UILabel *)[cell viewWithTag:1];
+    UILabel *ice = (UILabel *)[cell viewWithTag:2];
+    UILabel *sweetness = (UILabel *)[cell viewWithTag:3];
+    UILabel *quantity = (UILabel *)[cell viewWithTag:4];
+    UILabel *price = (UILabel *)[cell viewWithTag:5];
+    
+    BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
+    name.text = orderContent.name;
+    ice.text = orderContent.ice;
+    sweetness.text = orderContent.sweetness;
+    quantity.text = [orderContent.quantity stringValue];
+    price.text = orderContent.price;
+    
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [[BKOrderManager sharedBKOrderManager] deleteOrderContentAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (IBAction)makeOrderButtonPressed:(id)sender {
@@ -79,5 +115,14 @@
 //        NSLog(@"NO");
 //    }
     [self presentPopupViewController:note animationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
+- (IBAction)addOrderContentButtonPressed:(id)sender {
+    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
+    
+    NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
+//    NSLog(@"%d", row);
+    NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
+    [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];
 }
 @end

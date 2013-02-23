@@ -88,12 +88,28 @@
     testOrder.recordTime = @"123";
     testOrder.address = @"123";
     testOrder.phone = @"123";
-    testOrder.content = testContent;
+    testOrder.content = [testContent mutableCopy];
     testOrder.note = @"123";
     
 //    NSLog(@"testOrder.content is valid json object %d", [NSJSONSerialization isValidJSONObject:testOrder.content]);
 
     return testOrder;
+}
+
+static NSInteger quantity = 1;
++ (BKOrderContent *)testOrderContent {    
+    BKOrderContent *testOC = [[BKOrderContent alloc] init];
+    testOC.name = @"test a reeeeeeeeaaaaaaally long name";
+    testOC.UUID = [NSNumber numberWithInt:1000];
+    testOC.ice = @"noneqweqweqwe";
+    testOC.size = @"bigqweqweqwe";
+    testOC.sweetness = @"normalqeqweqwe";
+    testOC.quantity = [NSNumber numberWithInt:quantity];
+    quantity = quantity + 1;
+    
+    testOC.basePrice = @"15000";
+    
+    return testOC;
 }
 
 + (void)testPrint {
