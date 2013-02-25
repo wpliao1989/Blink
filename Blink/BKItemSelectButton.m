@@ -39,7 +39,7 @@
         _inputAccessoryView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         [_inputAccessoryView sizeToFit];
         CGRect frame = _inputAccessoryView.frame;
-        frame.size.height = 44.0f;
+        frame.size.height = 36;
         _inputAccessoryView.frame = frame;
 //        NSLog(@"%@", NSStringFromCGRect(frame));
         

@@ -39,6 +39,13 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *sweetnessPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 
+@property (strong, nonatomic) NSArray *quantityLevels;
+@property (strong, nonatomic) BKMenuItem *selectedMenuItem;
+@property (strong, nonatomic) NSString *selectedItemName;
+@property (strong, nonatomic) NSString *selectedIceLevel;
+@property (strong, nonatomic) NSString *selectedSweetness;
+@property (strong, nonatomic) NSNumber *selectedQuantity;
+
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 - (void)initButtons;
@@ -49,6 +56,50 @@
 
 @synthesize orderContent = _orderContent;
 @synthesize menu = _menu;
+@synthesize quantityLevels = _quantityLevels;
+@synthesize selectedItemName = _selectedItemName;
+@synthesize selectedIceLevel = _selectedIceLevel;
+@synthesize selectedSweetness = _selectedSweetness;
+@synthesize selectedQuantity = _selectedQuantity;
+
+- (NSArray *)quantityLevels {
+    if (_quantityLevels == nil) {
+        NSMutableArray *newQLs = [NSMutableArray array];
+        for (int i = 1; i <= 99; i++) {
+            [newQLs addObject:[NSNumber numberWithInt:i]];
+        }
+        _quantityLevels = [NSArray arrayWithArray:newQLs];
+    }
+    return _quantityLevels;
+}
+
+- (void)setSelectedItemName:(NSString *)selectedItemName {
+    _selectedItemName = selectedItemName;
+    [self.itemButton setTitle:selectedItemName forState:UIControlStateNormal];
+    [self.itemButton setTitle:selectedItemName forState:UIControlStateSelected];
+    [self.itemButton setTitle:selectedItemName forState:UIControlStateHighlighted];
+}
+
+- (void)setSelectedIceLevel:(NSString *)selectedIceLevel {
+    _selectedIceLevel = selectedIceLevel;
+    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateNormal];
+    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateSelected];
+    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateHighlighted];
+}
+
+- (void)setSelectedSweetness:(NSString *)selectedSweetness {
+    _selectedSweetness = selectedSweetness;
+    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateNormal];
+    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateSelected];
+    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateHighlighted];
+}
+
+- (void)setSelectedQuantity:(NSNumber *)selectedQuantity {
+    _selectedQuantity = selectedQuantity;
+    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateNormal];
+    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateSelected];
+    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateHighlighted];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -81,6 +132,10 @@
     self.iceButton.inputView = self.icePicker;
     self.sweetnessButton.inputView = self.sweetnessPicker;
     self.quantityButton.inputView = self.quantityPicker;
+//    self.quantityButton.titleLabel.text = [[self.quantityLevels objectAtIndex:0] stringValue];
+//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateNormal];
+//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateSelected];
+//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateHighlighted];
 }
 
 - (void)didReceiveMemoryWarning
@@ -161,18 +216,76 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return self.menu.count;
+    NSInteger count = 1;
+    
+    if (pickerView == self.itemPicker) {
+        count = self.menu.count;
+    }else if (pickerView == self.icePicker) {
+//        count = self.menu
+    }else if (pickerView == self.sweetnessPicker) {
+        
+    }else if (pickerView == self.quantityPicker) {
+        count = self.quantityLevels.count;
+    }
+    
+    return count;
 }
 
 #pragma mark - Picker view delegate
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    BKMenuItem *theItem = [self.menu objectAtIndex:row];
-    return theItem.name;
-}
+//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+//    BKMenuItem *theItem = [self.menu objectAtIndex:row];
+//    return theItem.name;
+//}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSLog(@"picker didSelectRow %d", row);
+    if (pickerView == self.itemPicker) {
+        
+        BKMenuItem *theItem = [self.menu objectAtIndex:row];
+        self.selectedMenuItem = theItem;
+        self.selectedItemName = theItem.name;
+        [self.icePicker reloadAllComponents];
+        [self.sweetnessPicker reloadAllComponents];
+        
+    }else if (pickerView == self.icePicker) {
+        
+    }else if (pickerView == self.sweetnessPicker) {
+        
+    }else if (pickerView == self.quantityPicker) {
+        
+        NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
+        NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
+        self.selectedQuantity = theNumber;
+    }
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
     
+    if (pickerView == self.itemPicker) {
+        
+        BKMenuItem *theItem = [self.menu objectAtIndex:row];
+        label.text = theItem.name;        
+        
+    }else if (pickerView == self.icePicker) {
+        
+        if (self.selectedMenuItem != nil) {
+            NSLog(@"%@", self.selectedMenuItem.iceLevels);
+        }
+        
+    }else if (pickerView == self.sweetnessPicker) {
+        
+    }else if (pickerView == self.quantityPicker) {
+        
+        NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
+        label.text = [theNumber stringValue];
+        
+    }
+    
+    return label;
 }
 
 #pragma IBActions
