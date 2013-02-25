@@ -35,6 +35,7 @@
 		CE805B9C16C3A51C0040095F /* BKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9B16C3A51B0040095F /* BKMenuViewController.m */; };
 		CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BAB16C3A9210040095F /* BKNoteViewController.m */; };
 		CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE805BAD16C3AC3E0040095F /* QuartzCore.framework */; };
+		CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8097E416DB57FC0036C047 /* BKItemSelectButton.m */; };
 		CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81758416D46AB4002FA6BB /* CoreLocation.framework */; };
 		CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */; };
 		CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758B16D47C2F002FA6BB /* BKShopInfo.m */; };
@@ -100,6 +101,8 @@
 		CE805BAA16C3A9210040095F /* BKNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKNoteViewController.h; sourceTree = "<group>"; };
 		CE805BAB16C3A9210040095F /* BKNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKNoteViewController.m; sourceTree = "<group>"; };
 		CE805BAD16C3AC3E0040095F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE8097E316DB57FC0036C047 /* BKItemSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKItemSelectButton.h; sourceTree = "<group>"; };
+		CE8097E416DB57FC0036C047 /* BKItemSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKItemSelectButton.m; sourceTree = "<group>"; };
 		CE81758416D46AB4002FA6BB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfoManager.h; sourceTree = "<group>"; };
 		CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfoManager.m; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
 				CE55EA3816D718490005C70F /* TestCenter */,
 				CE805B9516C388F20040095F /* ModelObjects */,
+				CE8097E216DB57CF0036C047 /* CustomButton */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
 			);
@@ -272,6 +276,15 @@
 				CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */,
 			);
 			name = MJPopupViewController;
+			sourceTree = "<group>";
+		};
+		CE8097E216DB57CF0036C047 /* CustomButton */ = {
+			isa = PBXGroup;
+			children = (
+				CE8097E316DB57FC0036C047 /* BKItemSelectButton.h */,
+				CE8097E416DB57FC0036C047 /* BKItemSelectButton.m */,
+			);
+			name = CustomButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,6 +379,7 @@
 				CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */,
 				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
 				CE55EA3E16D765990005C70F /* BKOrder.m in Sources */,
+				CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

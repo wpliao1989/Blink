@@ -13,6 +13,8 @@
 #import "BKNoteViewController.h"
 #import "BKOrderManager.h"
 #import "BKOrderContent.h"
+#import "BKMenuItem.h"
+#import "BKItemSelectButton.h"
 
 #import "BKTestCenter.h"
 
@@ -21,17 +23,32 @@
 - (IBAction)makeOrderButtonPressed:(id)sender;
 - (IBAction)noteButtonPressed:(id)sender;
 - (IBAction)addOrderContentButtonPressed:(id)sender;
+- (IBAction)selectItemButtonPressed:(id)sender;
+- (IBAction)selectIceButtonPressed:(id)sender;
+- (IBAction)selectSweetnessButtonPressed:(id)sender;
+- (IBAction)selectQuantityButtonPressed:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *itemButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *iceButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *sweetnessButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *quantityButton;
+@property (strong, nonatomic) IBOutlet UIPickerView *itemPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *icePicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *sweetnessPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
+- (void)initButtons;
 
 @end
 
 @implementation BKMakeOrderViewController
 
 @synthesize orderContent = _orderContent;
+@synthesize menu = _menu;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,6 +69,18 @@
 //    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
 //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
     self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
+    [self initButtons];
+    
+    for (BKMenuItem *item in self.menu) {
+        NSLog(@"name of item is %@", item.name);
+    }
+}
+
+- (void)initButtons {
+    self.itemButton.inputView = self.itemPicker;    
+    self.iceButton.inputView = self.icePicker;
+    self.sweetnessButton.inputView = self.sweetnessPicker;
+    self.quantityButton.inputView = self.quantityPicker;
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,6 +154,29 @@
     return UITableViewCellEditingStyleDelete;
 }
 
+#pragma mark - Picker view dataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.menu.count;
+}
+
+#pragma mark - Picker view delegate
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    BKMenuItem *theItem = [self.menu objectAtIndex:row];
+    return theItem.name;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    
+}
+
+#pragma IBActions
+
 - (IBAction)makeOrderButtonPressed:(id)sender {
     if ([BKAccountManager sharedBKAccountManager].isLogin) {
         [self performSegueWithIdentifier:@"orderConfirmSegue" sender:self];
@@ -156,6 +208,24 @@
     NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
 //    NSLog(@"%d", row);
     NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
-    [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];
+    [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];    
+    
+    [self.orderContent scrollToRowAtIndexPath:indexPathToBeInserted atScrollPosition:UITableViewScrollPositionNone animated:YES];
+}
+
+- (IBAction)selectItemButtonPressed:(id)sender {    
+    [self.itemButton becomeFirstResponder];
+}
+
+- (IBAction)selectIceButtonPressed:(id)sender {    
+    [self.iceButton becomeFirstResponder];
+}
+
+- (IBAction)selectSweetnessButtonPressed:(id)sender {    
+    [self.sweetnessButton becomeFirstResponder];
+}
+
+- (IBAction)selectQuantityButtonPressed:(id)sender {    
+    [self.quantityButton becomeFirstResponder];
 }
 @end

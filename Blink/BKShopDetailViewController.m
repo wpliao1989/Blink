@@ -10,6 +10,7 @@
 #import "BKMainPageViewController.h"
 #import "BKShopInfo.h"
 #import "BKMenuViewController.h"
+#import "BKMakeOrderViewController.h"
 
 @interface BKShopDetailViewController ()
 
@@ -61,6 +62,10 @@
         BKMenuViewController *menuVC = segue.destinationViewController;
         menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
         menuVC.menu = self.shopInfo.menu;
+    }
+    else if ([segue.identifier isEqualToString:@"makeOrderSegue"]) {
+        BKMakeOrderViewController *makeOrderVC = segue.destinationViewController;
+        makeOrderVC.menu = self.shopInfo.menu;
     }
 }
 

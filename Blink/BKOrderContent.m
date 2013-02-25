@@ -47,13 +47,13 @@ NSString *const kBKOrderContentQuantity = @"quantity";
         NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
         [currencyFormatter setLocale:twLocale];
         [currencyFormatter setCurrencySymbol:@"$"];
-        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+//        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
     }
     
     NSNumber *price = [self priceValue];
    
-    NSLog(@"basePrice string is %@", self.basePrice);    
-    NSLog(@"price is %@", price);
+//    NSLog(@"basePrice string is %@", self.basePrice);    
+//    NSLog(@"price is %@", price);
 //    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
     
     return [currencyFormatter stringFromNumber:price];
@@ -68,10 +68,10 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     
     NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
     if (basePrice == nil) {
-        basePrice = [[NSDecimalNumber alloc] initWithDouble:0.0];
+        basePrice = [[NSNumber alloc] initWithDouble:0.0];
     }
     
-    NSLog(@"basePrice is %@", basePrice);
+//    NSLog(@"basePrice is %@", basePrice);
     
     double bp = [basePrice doubleValue];
     double q = [self.quantity doubleValue];

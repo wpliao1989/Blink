@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (strong, nonatomic) NSArray *menu;
 
 @end
