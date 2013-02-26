@@ -54,8 +54,8 @@
 }
 
 - (void)done:(id)sender {
-    NSLog(@"%@", sender);
-    NSLog(@"self.text :%@", self.currentTitle);
+//    NSLog(@"%@", sender);
+//    NSLog(@"self.text :%@", self.currentTitle);
     [self resignFirstResponder];
 }
 
@@ -64,12 +64,12 @@
 }
 
 -(BOOL)becomeFirstResponder{
-    NSLog(@"becomeFirstResponder");
+//    NSLog(@"becomeFirstResponder");
     return [super becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-    NSLog(@"resignFirstResponder");
+//    NSLog(@"resignFirstResponder");
     return [super resignFirstResponder];
 }
 

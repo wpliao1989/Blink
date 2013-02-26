@@ -11,10 +11,29 @@
 #import "BKAPIManager.h"
 #import "BKOrder.h"
 #import "BKOrderContent.h"
+#import "BKShopInfo.h"
 
 #import "BKTestCenter.h"
 
+//@interface NSString (ShopIDComparison)
+//
+//- (BOOL)isEqualToShopID:(NSString *)shopID;
+//
+//@end
+//
+//@implementation NSString (ShopIDComparison)
+//
+//- (BOOL)isEqualToShopID:(NSString *)shopID {
+//    if ((self == nil) && (shopID == nil)) {
+//        return YES;
+//    }
+//}
+//
+//@end
+
 @interface BKOrderManager ()
+
+@property (strong, nonatomic) BKShopInfo *shopInfo;
 
 @end
 
@@ -23,12 +42,20 @@
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 @synthesize order = _order;
+@synthesize shopInfo = _shopInfo;
 
 - (BKOrder *)order {
     if (_order == nil) {
         _order = [[BKOrder alloc] init];
     }
     return _order;
+}
+
+- (void)setShopInfo:(BKShopInfo *)shopInfo {
+    if (shopInfo != _shopInfo) {
+        self.order.shopID = shopInfo.shopID;
+    }
+    _shopInfo = shopInfo;
 }
 
 //- (BOOL)isValidOrder {
@@ -44,9 +71,21 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma mark - Order content operations
 
-- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger, BOOL))completeHandler{
-    [self.order addNewOrderContent:content completeHandler:completeHandler];
-    [self.order updateTotalPrice];
+- (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
+//    NSLog(@"%@", self.shopInfo);
+//    NSLog(@"%@", shopInfo);
+    
+    if ((self.shopInfo != nil) && (![self.shopInfo.shopID isEqualToString:shopInfo.shopID])) {
+        NSLog(@"Warning: order exists!");
+        return NO;
+    }
+    else {
+        self.shopInfo = shopInfo;
+        [self.order addNewOrderContent:content completeHandler:completeHandler];
+        [self.order updateTotalPrice];
+        return YES;
+    }
+    
 //    NSLog(@"number of order content: %d", [self numberOfOrderContents]);
 //    [self.order printValuesOfProperties];
 }
@@ -60,11 +99,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return [self.order orderContentAtIndex:index];
 }
 
-- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index {
-    [self.order modifyOrderContentQuantity:quantity AtIndex:index];
-}
+//- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index {
+//    [self.order modifyOrderContentQuantity:quantity AtIndex:index];
+//}
 
-- (NSUInteger)numberOfOrderContents {
+- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo {
+//    NSLog(@"%@", self.shopInfo.shopID);
+//    NSLog(@"%@", shopInfo.shopID);
+    
+    if (![self.shopInfo.shopID isEqualToString:shopInfo.shopID]) {
+//        NSLog(@"123");
+        return 0;
+    }
     return [self.order numberOfOrderContents];
 }
 
@@ -80,6 +126,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (NSNumber *)totalPrice {
     return self.order.totalPrice;
+}
+
+- (NSString *)shopName {
+    return self.shopInfo.name;
+}
+
+- (void)clear {
+    self.order = nil;
+    self.shopInfo = nil;
 }
 
 @end

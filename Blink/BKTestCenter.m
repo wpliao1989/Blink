@@ -27,14 +27,16 @@
                                  
                                  };
     
-    NSDictionary *shop1Info = @{kBKShopName: @"王品",
+    NSDictionary *shop1Info = @{kBKShopID: @"1000",
+                                kBKShopName: @"王品",
                                 kBKShopMenu: @[menu(shop11menu), menu(shop12menu), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
                                 kBKShopDescription: @"王品的優惠"};
     
-    NSDictionary *shop2Info = @{kBKShopName: @"舒果",
+    NSDictionary *shop2Info = @{kBKShopID: @"2000",
+                                kBKShopName: @"舒果",
 //                                kBKShopMenu: @[menu(@{kBKMenuName:@"素"}), menu(@{kBKMenuName:@"食"}), menu(@{kBKMenuName:@"新"}), menu(@{kBKMenuName:@"鮮"})],
                                 kBKShopMenu: @[],
                                 kBKShopPhone: @"04-11111111",
@@ -42,7 +44,8 @@
                                 kBKShopOpenHour: @"10:10~21:10",
                                 kBKShopDescription: @"舒果的優惠"};
     
-    NSDictionary *shop3Info = @{kBKShopName: @"原燒",
+    NSDictionary *shop3Info = @{kBKShopID: @"3000",
+                                kBKShopName: @"原燒",
                                 kBKShopMenu: @[menu(@{kBKMenuName:@"極"}), menu(@{kBKMenuName:@"品"}), menu(@{kBKMenuName:@"燒"}), menu(@{kBKMenuName:@"肉"})],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",
@@ -54,21 +57,26 @@
 }
 
 + (NSArray *)testFavoriteShopInfos {
-    NSDictionary *shop1Info = @{kBKShopName: @"50藍",
+    NSDictionary *shop1Info = @{kBKShopID: @"4000",
+                                kBKShopName: @"50藍",
                                 kBKShopMenu: @[menu(@{kBKMenuName:@"飲"}), menu(@{kBKMenuName:@"料"}), menu(@{kBKMenuName:@"好"}), menu(@{kBKMenuName:@"喝"})],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
                                 kBKShopDescription: @"50藍的優惠"};
     
-    NSDictionary *shop2Info = @{kBKShopName: @"成時",
+    NSDictionary *shop2Info = @{
+                                kBKShopID: @"5000",
+                                kBKShopName: @"成時",
                                 kBKShopMenu: @[menu(@{kBKMenuName:@"創"}), menu(@{kBKMenuName:@"意"}), menu(@{kBKMenuName:@"料"}), menu(@{kBKMenuName:@"理"})],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
                                 kBKShopOpenHour: @"10:10~21:10",
                                 kBKShopDescription: @"成時的優惠"};
     
-    NSDictionary *shop3Info = @{kBKShopName: @"雞排店",
+    NSDictionary *shop3Info = @{
+                                kBKShopID: @"6000",
+                                kBKShopName: @"雞排店",
                                 kBKShopMenu: @[menu(@{kBKMenuName:@"大"}), menu(@{kBKMenuName:@"小"}), menu(@{kBKMenuName:@"雞"}), menu(@{kBKMenuName:@"排"})],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",

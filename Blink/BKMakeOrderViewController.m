@@ -8,6 +8,7 @@
 
 #import "BKMakeOrderViewController.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "BKOrderConfirmViewController.h"
 #import "BKAccountManager.h"
 #import "BKMainPageViewController.h"
 #import "BKNoteViewController.h"
@@ -15,8 +16,16 @@
 #import "BKOrderContent.h"
 #import "BKMenuItem.h"
 #import "BKItemSelectButton.h"
+#import "BKShopInfo.h"
 
 #import "BKTestCenter.h"
+
+typedef NS_ENUM(NSInteger, BKSelectionCode) {
+    BKSelectionValid = 1,
+    BKSelectionItemNotSelected = 2,
+    BKSelectionIceNotSelected = 3,
+    BKSelectionSweetnessNotSelected = 4
+};
 
 @interface BKMakeOrderViewController ()
 
@@ -39,12 +48,17 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *sweetnessPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 
+@property (strong, readonly, nonatomic) NSArray *menu;
 @property (strong, nonatomic) NSArray *quantityLevels;
 @property (strong, nonatomic) BKMenuItem *selectedMenuItem;
 @property (strong, nonatomic) NSString *selectedItemName;
 @property (strong, nonatomic) NSString *selectedIceLevel;
 @property (strong, nonatomic) NSString *selectedSweetness;
 @property (strong, nonatomic) NSNumber *selectedQuantity;
+
+@property (strong, nonatomic) UIAlertView *orderExistAlert;
+@property (strong, nonatomic) UIAlertView *inValidSelectionAlert;
+@property (strong, nonatomic) UIAlertView *notEnoughContentAlert;
 
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
@@ -54,7 +68,8 @@
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row;
 - (void)updateSelectedQuantityWithRow:(NSInteger)row;
 - (void)addOrderContent;
-- (BOOL)isValidSelection;
+- (NSArray *)inValidSelectionCodes;
+- (NSString *)inValidMessage;
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 
 // For test purposes
@@ -63,8 +78,8 @@
 @end
 
 static NSString *noSelectableItem = @"無可選擇項目";
-static NSString *iceUnselected = @"冰量";
-static NSString *sweetnessUnselected = @"糖量";
+//static NSString *iceUnselected = @"冰量";
+//static NSString *sweetnessUnselected = @"糖量";
 
 @implementation BKMakeOrderViewController
 
@@ -75,6 +90,35 @@ static NSString *sweetnessUnselected = @"糖量";
 @synthesize selectedIceLevel = _selectedIceLevel;
 @synthesize selectedSweetness = _selectedSweetness;
 @synthesize selectedQuantity = _selectedQuantity;
+
+@synthesize orderExistAlert = _orderExistAlert;
+@synthesize inValidSelectionAlert = _inValidSelectionAlert;
+@synthesize notEnoughContentAlert = _notEnoughContentAlert;
+
+- (UIAlertView *)orderExistAlert {
+    if (_orderExistAlert == nil) {
+        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"Order exists. Delete order?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Delete", nil];
+    }
+    return _orderExistAlert;
+}
+
+- (UIAlertView *)inValidSelectionAlert {
+    if (_inValidSelectionAlert == nil) {
+        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    }
+    return _inValidSelectionAlert;
+}
+
+- (UIAlertView *)notEnoughContentAlert {
+    if (_notEnoughContentAlert == nil) {
+        _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"Not enough content" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    }
+    return _notEnoughContentAlert;
+}
+
+- (NSArray *)menu {
+    return self.shopInfo.menu;
+}
 
 - (NSArray *)quantityLevels {
     if (_quantityLevels == nil) {
@@ -175,6 +219,13 @@ static NSString *sweetnessUnselected = @"糖量";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"orderConfirmSegue"]) {
+        BKOrderConfirmViewController *orderConfirmVC = segue.destinationViewController;
+        orderConfirmVC.shopInfo = self.shopInfo;
+    }
+}
+
 #pragma mark - Total price did change
 
 - (void)totalPriceDidChange {
@@ -193,7 +244,7 @@ static NSString *sweetnessUnselected = @"糖量";
 #pragma mark - Table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[BKOrderManager sharedBKOrderManager] numberOfOrderContents];
+    return [[BKOrderManager sharedBKOrderManager] numberOfOrderContentsForShopInfo:self.shopInfo];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -354,6 +405,18 @@ static NSString *sweetnessUnselected = @"糖量";
     return label;
 }
 
+#pragma mark - Alert view delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView == self.orderExistAlert) {
+        NSLog(@"orderExistAlert button pressed: %d", buttonIndex);
+        NSInteger confirmDelete = 1;
+        if (buttonIndex == confirmDelete) {
+            [[BKOrderManager sharedBKOrderManager] clear];
+        }
+    }
+}
+
 #pragma mark - Utility methods
 
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row {
@@ -413,14 +476,14 @@ static NSString *sweetnessUnselected = @"糖量";
 
 - (void)addOrderContent {
 //    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
-    if ([self isValidSelection]){
+    if ([self inValidSelectionCodes] == nil){
         [self testPrint];
         
         BKOrderContent *newOrderContent = [[BKOrderContent alloc] initWithMenu:self.selectedMenuItem
                                                                            ice:self.selectedIceLevel
                                                                      sweetness:self.selectedSweetness
                                                                       quantity:self.selectedQuantity];
-        [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent completeHandler:^(NSInteger updatedRow, BOOL isNewItemAdded) {
+        BOOL success = [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent forShopInfo:self.shopInfo completeHandler:^(NSInteger updatedRow, BOOL isNewItemAdded) {
             NSIndexPath *indexPathToBeUpdated = [NSIndexPath indexPathForRow:updatedRow inSection:0];
             if (isNewItemAdded) {
                 [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeUpdated] withRowAnimation:UITableViewRowAnimationTop];
@@ -430,6 +493,11 @@ static NSString *sweetnessUnselected = @"糖量";
             }            
             [self.orderContent scrollToRowAtIndexPath:indexPathToBeUpdated atScrollPosition:UITableViewScrollPositionNone animated:YES];
         }];
+        
+        if (!success) {
+            NSLog(@"not success");
+            [self.orderExistAlert show];
+        }
         
 //        [self.orderContent reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 //        NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
@@ -442,22 +510,78 @@ static NSString *sweetnessUnselected = @"糖量";
     else {
         NSLog(@"Not a valid selection!");
         [self testPrint];
+        [self.inValidSelectionAlert setMessage:[self inValidMessage]];
+        [self.inValidSelectionAlert show];
     }   
 }
 
-- (BOOL)isValidSelection {
+- (NSArray *)inValidSelectionCodes {
+    NSMutableArray *result = [NSMutableArray array];
+    
     if (self.selectedMenuItem == nil) {
-        return NO;
+//        NSLog(@"%@", [NSNumber numberWithInt:BKSelectionItemNotSelected]);
+        [result addObject:[NSNumber numberWithInt:BKSelectionItemNotSelected]];
+//        return BKSelectionItemNotSelected;
     }
     else {
         if ((self.selectedMenuItem.iceLevels.count > 0) && (self.selectedIceLevel == nil)) {
-            return NO;
+//            NSLog(@"%@", [NSNumber numberWithInt:BKSelectionIceNotSelected]);
+            [result addObject:[NSNumber numberWithInt:BKSelectionIceNotSelected]];
+//            return BKSelectionIceNotSelected;
         }
         if ((self.selectedMenuItem.sweetnessLevels.count > 0) && (self.selectedSweetness == nil)) {
-            return NO;
+//            NSLog(@"%@", [NSNumber numberWithInt:BKSelectionSweetnessNotSelected]);
+            [result addObject:[NSNumber numberWithInt:BKSelectionSweetnessNotSelected]];
+//            return BKSelectionSweetnessNotSelected;
         }
     }
-    return YES;
+    
+    NSLog(@"inValidSelectionCodes: %@", result);
+    
+    if (result.count == 0) {
+        return nil;
+    }
+    else {
+        return result;
+    }
+}
+
+- (NSString *)inValidMessage {
+    static NSString *itemNotSelected = @"Item not selected";
+    static NSString *iceNotSelected = @"Ice level not selected";
+    static NSString *sweetnessNotSelected = @"Sweetness not selected";
+    static NSString *changeLine = @"\n";
+    
+    NSString *result = @"";
+    
+    NSArray *inValidSelectionCodes = [self inValidSelectionCodes];
+ 
+    for (int i=0 ; i < inValidSelectionCodes.count; i++) {
+        NSNumber *number = [inValidSelectionCodes objectAtIndex:i];
+        
+        switch ([number intValue]) {
+            case BKSelectionItemNotSelected:
+                result = [result stringByAppendingString:itemNotSelected];                
+                break;
+                
+            case BKSelectionIceNotSelected:
+                result = [result stringByAppendingString:iceNotSelected];  
+                break;
+                
+            case BKSelectionSweetnessNotSelected:
+                result = [result stringByAppendingString:sweetnessNotSelected];  
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (i != inValidSelectionCodes.count - 1) {
+            result = [result stringByAppendingString:changeLine];
+        }
+    }
+    
+    return result;
 }
 
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
@@ -476,13 +600,17 @@ static NSString *sweetnessUnselected = @"糖量";
 #pragma mark - IBActions
 
 - (IBAction)makeOrderButtonPressed:(id)sender {
-    if ([BKAccountManager sharedBKAccountManager].isLogin) {
-        [self performSegueWithIdentifier:@"orderConfirmSegue" sender:self];
+    if ([[BKOrderManager sharedBKOrderManager] numberOfOrderContentsForShopInfo:self.shopInfo] == 0) {
+        [self.notEnoughContentAlert show];
     }
-    else{
-        [self performSegueWithIdentifier:@"fromOrderToLoginSegue" sender:self];
+    else {
+        if ([BKAccountManager sharedBKAccountManager].isLogin) {
+            [self performSegueWithIdentifier:@"orderConfirmSegue" sender:self];
+        }
+        else{
+            [self performSegueWithIdentifier:@"fromOrderToLoginSegue" sender:self];
+        }
     }
-
 }
 
 - (IBAction)noteButtonPressed:(id)sender {

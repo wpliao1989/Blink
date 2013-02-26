@@ -40,6 +40,13 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     return self;
 }
 
+- (NSString *)basePrice {
+    if (_basePrice == nil) {
+        _basePrice = [[NSNumber numberWithDouble:0.0] stringValue];
+    }
+    return _basePrice;
+}
+
 - (NSDictionary *)contentForAPI {
     NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID != nil ? self.UUID : @0,
                                  kBKOrderContentName: self.name != nil ? self.name : @"none",
@@ -80,9 +87,9 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     }
     
     NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
-    if (basePrice == nil) {
-        basePrice = [[NSNumber alloc] initWithDouble:0.0];
-    }
+//    if (basePrice == nil) {
+//        basePrice = [[NSNumber alloc] initWithDouble:0.0];
+//    }
     
 //    NSLog(@"basePrice is %@", basePrice);
     

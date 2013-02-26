@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKOrderConfirmViewController : UIViewController
+@class BKShopInfo;
 
+@interface BKOrderConfirmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) BKShopInfo *shopInfo;
 @end

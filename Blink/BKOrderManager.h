@@ -11,6 +11,7 @@
 
 @class BKOrder;
 @class BKOrderContent;
+@class BKShopInfo;
 
 FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
 
@@ -23,14 +24,16 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 //- (BOOL)isValidOrder;
 - (void)sendOrder;
 
-- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
+- (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
-- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
-- (NSUInteger)numberOfOrderContents;
+//- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
+- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo;
 
 - (NSString *)note;
 - (void)saveNote:(NSString *)theNote;
 - (NSNumber *)totalPrice;
+- (NSString *)shopName;
+- (void)clear;
 
 @end

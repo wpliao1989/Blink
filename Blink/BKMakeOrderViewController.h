@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@class BKShopInfo;
 
-@property (strong, nonatomic) NSArray *menu;
+@interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
+
+@property (strong, nonatomic) BKShopInfo *shopInfo;
 
 @end

@@ -65,7 +65,8 @@
     }
     else if ([segue.identifier isEqualToString:@"makeOrderSegue"]) {
         BKMakeOrderViewController *makeOrderVC = segue.destinationViewController;
-        makeOrderVC.menu = self.shopInfo.menu;
+//        makeOrderVC.menu = self.shopInfo.menu;
+        makeOrderVC.shopInfo = self.shopInfo;
     }
 }
 

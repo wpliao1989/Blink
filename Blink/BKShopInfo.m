@@ -64,6 +64,7 @@ NSString *const kBKShopIsDeliverable = @"deliverable";
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
+        self.shopID = [data objectForKey:kBKShopID];
         self.name = [data objectForKey:kBKShopName];
         self.menu = [data objectForKey:kBKShopMenu];
         self.phone = [data objectForKey:kBKShopPhone];
