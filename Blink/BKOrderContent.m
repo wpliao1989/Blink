@@ -92,4 +92,34 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     return price;
 }
 
+- (BOOL)isEqualExceptQuantity:(BKOrderContent *)theOrderContent {
+//    NSLog([self.UUID isEqualToNumber:theOrderContent.UUID]?@"YES":@"NO");
+//    NSLog([self.name isEqualToString:theOrderContent.name]?@"YES":@"NO");
+//    NSLog(([self.ice isEqualToString:theOrderContent.ice]) || ((self.ice == nil) && (theOrderContent.ice == nil))?@"YES":@"NO");
+//    NSLog(([self.sweetness isEqualToString:theOrderContent.sweetness]) || ((self.sweetness == nil) && (theOrderContent.sweetness == nil))?@"YES":@"NO");    
+    
+    if (theOrderContent.UUID == nil) {
+        return NO;
+    }
+    
+    if (([self.UUID isEqualToNumber:theOrderContent.UUID]) &&
+        ([self.name isEqualToString:theOrderContent.name]) &&
+        (([self.ice isEqualToString:theOrderContent.ice]) || ((self.ice == nil) && (theOrderContent.ice == nil))) &&
+        (([self.sweetness isEqualToString:theOrderContent.sweetness]) || ((self.sweetness == nil) && (theOrderContent.sweetness == nil)))) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)printValuesOfProperties {
+    NSLog(@"UUID is: %@", self.UUID);
+    NSLog(@"name is: %@", self.name);
+    NSLog(@"size is: %@", self.size);
+    NSLog(@"ice is: %@", self.ice);
+    NSLog(@"sweetness is: %@", self.sweetness);
+    NSLog(@"quantity is: %@", self.quantity);
+    NSLog(@"basePrice is: %@", self.basePrice);
+    NSLog(@"price is: %@", self.price);
+}
+
 @end

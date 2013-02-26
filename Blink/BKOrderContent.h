@@ -35,5 +35,8 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 - (NSNumber *)priceValue;
 
 - (NSDictionary *)contentForAPI;
+- (BOOL)isEqualExceptQuantity:(BKOrderContent *)theOrderContent;
+
+- (void)printValuesOfProperties;
 
 @end

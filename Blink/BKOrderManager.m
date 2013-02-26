@@ -31,9 +31,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return _order;
 }
 
-- (BOOL)isValidOrder {
-    return YES;
-}
+//- (BOOL)isValidOrder {
+//    return YES;
+//}
 
 - (void)sendOrder {
 //    BKOrder *testDict = [BKTestCenter testOrder];
@@ -44,11 +44,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma mark - Order content operations
 
-- (void)addNewOrderContent:(BKOrderContent *)content {
-    [self.order addNewOrderContent:content];
+- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger, BOOL))completeHandler{
+    [self.order addNewOrderContent:content completeHandler:completeHandler];
     [self.order updateTotalPrice];
-    NSLog(@"number of order content: %d", [self numberOfOrderContents]);
-    [self.order printValuesOfProperties];
+//    NSLog(@"number of order content: %d", [self numberOfOrderContents]);
+//    [self.order printValuesOfProperties];
 }
 
 - (void)deleteOrderContentAtIndex:(NSInteger)index {

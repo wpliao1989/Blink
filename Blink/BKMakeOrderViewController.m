@@ -420,14 +420,24 @@ static NSString *sweetnessUnselected = @"糖量";
                                                                            ice:self.selectedIceLevel
                                                                      sweetness:self.selectedSweetness
                                                                       quantity:self.selectedQuantity];
-        [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent];
+        [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent completeHandler:^(NSInteger updatedRow, BOOL isNewItemAdded) {
+            NSIndexPath *indexPathToBeUpdated = [NSIndexPath indexPathForRow:updatedRow inSection:0];
+            if (isNewItemAdded) {
+                [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeUpdated] withRowAnimation:UITableViewRowAnimationTop];
+            }
+            else {
+                [self.orderContent reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeUpdated] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }            
+            [self.orderContent scrollToRowAtIndexPath:indexPathToBeUpdated atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        }];
         
-        NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
-        //    NSLog(@"%d", row);
-        NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
-        [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];
-        
-        [self.orderContent scrollToRowAtIndexPath:indexPathToBeInserted atScrollPosition:UITableViewScrollPositionNone animated:YES];
+//        [self.orderContent reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
+//         NSLog(@"%d", row);
+//        NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
+//        [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];
+//        
+//        [self.orderContent scrollToRowAtIndexPath:indexPathToBeInserted atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }
     else {
         NSLog(@"Not a valid selection!");

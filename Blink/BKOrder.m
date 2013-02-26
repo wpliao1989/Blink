@@ -11,6 +11,13 @@
 
 NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNotification";
 
+@interface BKOrder ()
+
+// Return already existed orderContent if the UUID, name, ice, sweetness are all the same, return nil otherwise
+- (BKOrderContent *)hasOrderContent:(BKOrderContent *)anotherOrderContent;
+
+@end
+
 @implementation BKOrder
 
 @synthesize userToken = _userToken;
@@ -45,8 +52,17 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     _totalPrice = totalPrice;   
 }
 
-- (void)addNewOrderContent:(BKOrderContent *)content {
-    [self.content addObject:content];
+- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger, BOOL))completeHandler{
+    BKOrderContent *orderContentToBeModified = [self hasOrderContent:content];
+    
+    if (orderContentToBeModified != nil) {
+        orderContentToBeModified.quantity = [NSNumber numberWithInt:([orderContentToBeModified.quantity intValue]+[content.quantity intValue])];
+        completeHandler([self.content indexOfObject:orderContentToBeModified], NO);
+    }
+    else {
+        [self.content addObject:content];
+        completeHandler(self.content.count-1, YES);
+    }    
 }
 
 - (void)deleteOrderContentAtIndex:(NSInteger)index {
@@ -99,6 +115,16 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     self.totalPrice = [NSNumber numberWithDouble:totalPrice];
 }
 
+- (BKOrderContent *)hasOrderContent:(BKOrderContent *)anotherOrderContent {   
+    
+    for (BKOrderContent *theOrderContent in self.content) {
+        if ([theOrderContent isEqualExceptQuantity:anotherOrderContent]) {
+            return theOrderContent;
+        }
+    }
+    return nil;
+}
+
 - (void)printValuesOfProperties {
     NSLog(@"userToken is %@", self.userToken);
     NSLog(@"shopID is %@", self.shopID);
@@ -106,7 +132,10 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     NSLog(@"address is %@", self.address);
     NSLog(@"phone is %@", self.phone);
     NSLog(@"note is %@", self.note);
-    NSLog(@"content is %@", self.content);
+    NSLog(@"content is: ");
+    for (BKOrderContent *content in self.content) {
+        [content printValuesOfProperties];
+    }
 }
 
 @end

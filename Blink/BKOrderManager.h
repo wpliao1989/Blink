@@ -20,10 +20,10 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 @property (nonatomic, strong) BKOrder *order;
 
-- (BOOL)isValidOrder;
+//- (BOOL)isValidOrder;
 - (void)sendOrder;
 
-- (void)addNewOrderContent:(BKOrderContent *)content;
+- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;

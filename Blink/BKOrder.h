@@ -30,7 +30,7 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 
 @property (nonatomic, strong) NSString *note;
 
-- (void)addNewOrderContent:(BKOrderContent *)content;
+- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;

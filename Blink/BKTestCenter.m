@@ -18,12 +18,17 @@
 @implementation BKTestCenter
 
 + (NSArray *)testShopInfos {   
-    NSDictionary *shop11menu = @{kBKMenuName:@"喝的東西",
+    NSDictionary *shop11menu = @{kBKMenuUUID:@1000,
+                                 kBKMenuName:@"喝的東西",
                                    kBKMenuIce: @[@"low", @"normal"],
                                    kBKMenuSweetness: @[@"half"]};
+    NSDictionary *shop12menu = @{kBKMenuUUID:@2000,
+                                 kBKMenuName:@"吃的東西"
+                                 
+                                 };
     
     NSDictionary *shop1Info = @{kBKShopName: @"王品",
-                                kBKShopMenu: @[menu(shop11menu), menu(@{kBKMenuName:@"吃的東西"}), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
+                                kBKShopMenu: @[menu(shop11menu), menu(shop12menu), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
