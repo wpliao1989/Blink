@@ -18,16 +18,20 @@
 @implementation BKTestCenter
 
 + (NSArray *)testShopInfos {   
+    NSDictionary *shop11menu = @{kBKMenuName:@"喝的東西",
+                                   kBKMenuIce: @[@"low", @"normal"],
+                                   kBKMenuSweetness: @[@"half"]};
     
     NSDictionary *shop1Info = @{kBKShopName: @"王品",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"好"}), menu(@{kBKMenuName:@"吃"}), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
+                                kBKShopMenu: @[menu(shop11menu), menu(@{kBKMenuName:@"吃的東西"}), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
                                 kBKShopDescription: @"王品的優惠"};
     
     NSDictionary *shop2Info = @{kBKShopName: @"舒果",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"素"}), menu(@{kBKMenuName:@"食"}), menu(@{kBKMenuName:@"新"}), menu(@{kBKMenuName:@"鮮"})],
+//                                kBKShopMenu: @[menu(@{kBKMenuName:@"素"}), menu(@{kBKMenuName:@"食"}), menu(@{kBKMenuName:@"新"}), menu(@{kBKMenuName:@"鮮"})],
+                                kBKShopMenu: @[],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
                                 kBKShopOpenHour: @"10:10~21:10",

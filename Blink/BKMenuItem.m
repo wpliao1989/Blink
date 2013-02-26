@@ -27,6 +27,7 @@ NSString *const kBKMenuDetail = @"detail";
 - (id)initWithData:(NSDictionary *)data  {
     self = [super init];
     if (self) {
+#warning UUID may need to be converted to NSNumber
         _UUID = [data objectForKey:kBKMenuUUID];
         _name = [data objectForKey:kBKMenuName];
         _price = [data objectForKey:kBKMenuPrice];

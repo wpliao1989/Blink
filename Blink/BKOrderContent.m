@@ -7,6 +7,7 @@
 //
 
 #import "BKOrderContent.h"
+#import "BKMenuItem.h"
 
 NSString *const kBKOrderContentUUID = @"UUID";
 NSString *const kBKOrderContentName = @"name";
@@ -26,6 +27,18 @@ NSString *const kBKOrderContentQuantity = @"quantity";
 
 @synthesize basePrice = _basePrice;
 @synthesize price = _price;
+
+- (id)initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity{
+    self = [super init];
+    if (self) {
+        self.UUID = menu.UUID;
+        self.name = menu.name;
+        self.ice = ice;
+        self.sweetness = sweetness;
+        self.quantity = quantity;
+    }
+    return self;
+}
 
 - (NSDictionary *)contentForAPI {
     NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID != nil ? self.UUID : @0,

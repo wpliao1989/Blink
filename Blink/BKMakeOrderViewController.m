@@ -48,9 +48,23 @@
 
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
-- (void)initButtons;
+- (void)initSettings;
+- (void)updateSelectedMenuItemWithRow:(NSInteger)row;
+- (void)updateSelectedIceWithRow:(NSInteger)row;
+- (void)updateSelectedSweetnessWithRow:(NSInteger)row;
+- (void)updateSelectedQuantityWithRow:(NSInteger)row;
+- (void)addOrderContent;
+- (BOOL)isValidSelection;
+- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
+
+// For test purposes
+- (void)testPrint;
 
 @end
+
+static NSString *noSelectableItem = @"無可選擇項目";
+static NSString *iceUnselected = @"冰量";
+static NSString *sweetnessUnselected = @"糖量";
 
 @implementation BKMakeOrderViewController
 
@@ -75,23 +89,26 @@
 
 - (void)setSelectedItemName:(NSString *)selectedItemName {
     _selectedItemName = selectedItemName;
-    [self.itemButton setTitle:selectedItemName forState:UIControlStateNormal];
-    [self.itemButton setTitle:selectedItemName forState:UIControlStateSelected];
-    [self.itemButton setTitle:selectedItemName forState:UIControlStateHighlighted];
+    [self changeButtonTitleButton:self.itemButton title:selectedItemName];
+//    [self.itemButton setTitle:selectedItemName forState:UIControlStateNormal];
+//    [self.itemButton setTitle:selectedItemName forState:UIControlStateSelected];
+//    [self.itemButton setTitle:selectedItemName forState:UIControlStateHighlighted];
 }
 
 - (void)setSelectedIceLevel:(NSString *)selectedIceLevel {
     _selectedIceLevel = selectedIceLevel;
-    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateNormal];
-    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateSelected];
-    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateHighlighted];
+    [self changeButtonTitleButton:self.iceButton title:selectedIceLevel];
+//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateNormal];
+//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateSelected];
+//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateHighlighted];
 }
 
 - (void)setSelectedSweetness:(NSString *)selectedSweetness {
     _selectedSweetness = selectedSweetness;
-    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateNormal];
-    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateSelected];
-    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateHighlighted];
+    [self changeButtonTitleButton:self.sweetnessButton title:selectedSweetness];
+//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateNormal];
+//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateSelected];
+//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateHighlighted];
 }
 
 - (void)setSelectedQuantity:(NSNumber *)selectedQuantity {
@@ -115,19 +132,20 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
+    [self initSettings];
+}
+
+- (void)initSettings {
     [self.orderContent setEditing:YES animated:NO];
     
-//    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
-//    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
-    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
-    [self initButtons];
+    //    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
+    //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
+    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];    
     
     for (BKMenuItem *item in self.menu) {
         NSLog(@"name of item is %@", item.name);
-    }
-}
-
-- (void)initButtons {
+    }        
+    
     self.itemButton.inputView = self.itemPicker;    
     self.iceButton.inputView = self.icePicker;
     self.sweetnessButton.inputView = self.sweetnessPicker;
@@ -136,6 +154,9 @@
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateNormal];
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateSelected];
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateHighlighted];
+    [self updateSelectedQuantityWithRow:0];
+    
+    [self testPrint];
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,13 +240,28 @@
     NSInteger count = 1;
     
     if (pickerView == self.itemPicker) {
-        count = self.menu.count;
+        
+        if (self.menu.count > 0) {
+            count = self.menu.count;
+        }        
+        
     }else if (pickerView == self.icePicker) {
 //        count = self.menu
+        
+        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
+            count = self.selectedMenuItem.iceLevels.count;
+        }
+        
     }else if (pickerView == self.sweetnessPicker) {
         
+        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
+            count = self.selectedMenuItem.sweetnessLevels.count;
+        }
+        
     }else if (pickerView == self.quantityPicker) {
+        
         count = self.quantityLevels.count;
+        
     }
     
     return count;
@@ -241,42 +277,72 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSLog(@"picker didSelectRow %d", row);
     if (pickerView == self.itemPicker) {
-        
-        BKMenuItem *theItem = [self.menu objectAtIndex:row];
-        self.selectedMenuItem = theItem;
-        self.selectedItemName = theItem.name;
-        [self.icePicker reloadAllComponents];
-        [self.sweetnessPicker reloadAllComponents];
+
+        [self updateSelectedMenuItemWithRow:row];
+//        BKMenuItem *theItem = [self.menu objectAtIndex:row];
+//        self.selectedMenuItem = theItem;
+//        self.selectedItemName = theItem.name;
+//        [self.icePicker reloadAllComponents];
+//        [self.sweetnessPicker reloadAllComponents];
         
     }else if (pickerView == self.icePicker) {
         
+        [self updateSelectedIceWithRow:row];
+//        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
+//            self.selectedIceLevel = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+//        }        
+        
     }else if (pickerView == self.sweetnessPicker) {
+        
+        [self updateSelectedSweetnessWithRow:row];
+//        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
+//            self.selectedSweetness = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+//        }
         
     }else if (pickerView == self.quantityPicker) {
         
-        NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
-        NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
-        self.selectedQuantity = theNumber;
+        [self updateSelectedQuantityWithRow:row];
+//        NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
+//        NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
+//        self.selectedQuantity = theNumber;
     }
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
     label.textAlignment = NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];
+    label.backgroundColor = [UIColor clearColor];    
     
     if (pickerView == self.itemPicker) {
         
-        BKMenuItem *theItem = [self.menu objectAtIndex:row];
-        label.text = theItem.name;        
+        if (self.menu.count > 0) {
+            BKMenuItem *theItem = [self.menu objectAtIndex:row];
+            label.text = theItem.name;
+        }
+        else {
+            label.text = noSelectableItem;
+        }
+        
         
     }else if (pickerView == self.icePicker) {
         
-        if (self.selectedMenuItem != nil) {
+        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
             NSLog(@"%@", self.selectedMenuItem.iceLevels);
+            label.text = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+        }
+        else {
+            label.text = noSelectableItem;
         }
         
     }else if (pickerView == self.sweetnessPicker) {
+        
+        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
+            NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
+            label.text = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+        }
+        else {
+            label.text = noSelectableItem;
+        }
         
     }else if (pickerView == self.quantityPicker) {
         
@@ -288,7 +354,116 @@
     return label;
 }
 
-#pragma IBActions
+#pragma mark - Utility methods
+
+- (void)updateSelectedMenuItemWithRow:(NSInteger)row {
+    if (self.menu.count > 0) {
+        BKMenuItem *theItem = [self.menu objectAtIndex:row];
+        if (theItem != self.selectedMenuItem) {
+            self.selectedMenuItem = theItem;
+            self.selectedItemName = theItem.name;
+            if (theItem.iceLevels.count == 0) {
+//                NSLog(@"1");
+                self.selectedIceLevel = nil;
+                [self.iceButton setEnabled:NO];
+                [self changeButtonTitleButton:self.iceButton title:noSelectableItem];
+            }
+            else {
+//                NSLog(@"2");
+                [self.iceButton setEnabled:YES];
+                [self.icePicker selectRow:0 inComponent:0 animated:NO];
+                [self pickerView:self.icePicker didSelectRow:0 inComponent:0];
+            }
+            if (theItem.sweetnessLevels.count == 0) {
+//                NSLog(@"3");
+                self.selectedSweetness = nil;
+                [self.sweetnessButton setEnabled:NO];
+                [self changeButtonTitleButton:self.sweetnessButton title:noSelectableItem];
+            }
+            else {
+//                NSLog(@"4");
+                [self.sweetnessButton setEnabled:YES];
+                [self.sweetnessPicker selectRow:0 inComponent:0 animated:NO];
+                [self pickerView:self.sweetnessPicker didSelectRow:0 inComponent:0];
+            }
+            
+            [self.icePicker reloadAllComponents];
+            [self.sweetnessPicker reloadAllComponents];
+        }        
+    }    
+}
+
+- (void)updateSelectedIceWithRow:(NSInteger)row {
+    if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
+        self.selectedIceLevel = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+    }
+}
+
+- (void)updateSelectedSweetnessWithRow:(NSInteger)row {
+    if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
+        self.selectedSweetness = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+    }
+}
+
+- (void)updateSelectedQuantityWithRow:(NSInteger)row {
+    NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
+    NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
+    self.selectedQuantity = theNumber;
+}
+
+- (void)addOrderContent {
+//    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
+    if ([self isValidSelection]){
+        [self testPrint];
+        
+        BKOrderContent *newOrderContent = [[BKOrderContent alloc] initWithMenu:self.selectedMenuItem
+                                                                           ice:self.selectedIceLevel
+                                                                     sweetness:self.selectedSweetness
+                                                                      quantity:self.selectedQuantity];
+        [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent];
+        
+        NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
+        //    NSLog(@"%d", row);
+        NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
+        [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];
+        
+        [self.orderContent scrollToRowAtIndexPath:indexPathToBeInserted atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
+    else {
+        NSLog(@"Not a valid selection!");
+        [self testPrint];
+    }   
+}
+
+- (BOOL)isValidSelection {
+    if (self.selectedMenuItem == nil) {
+        return NO;
+    }
+    else {
+        if ((self.selectedMenuItem.iceLevels.count > 0) && (self.selectedIceLevel == nil)) {
+            return NO;
+        }
+        if ((self.selectedMenuItem.sweetnessLevels.count > 0) && (self.selectedSweetness == nil)) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateSelected];
+    [button setTitle:title forState:UIControlStateHighlighted];
+}
+
+- (void)testPrint {
+    NSLog(@"selectedItemName: %@", self.selectedItemName);
+    NSLog(@"selectedIce: %@", self.selectedIceLevel);
+    NSLog(@"selectedSweetness: %@", self.selectedSweetness);
+    NSLog(@"selectedQuantity: %@", self.selectedQuantity);
+}
+
+#pragma mark - IBActions
 
 - (IBAction)makeOrderButtonPressed:(id)sender {
     if ([BKAccountManager sharedBKAccountManager].isLogin) {
@@ -315,30 +490,31 @@
     [self presentPopupViewController:note animationType:MJPopupViewAnimationSlideBottomBottom];
 }
 
-- (IBAction)addOrderContentButtonPressed:(id)sender {
-    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
-    
-    NSInteger row = [[BKOrderManager sharedBKOrderManager] numberOfOrderContents] - 1;
-//    NSLog(@"%d", row);
-    NSIndexPath *indexPathToBeInserted = [NSIndexPath indexPathForRow:row inSection:0];
-    [self.orderContent insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathToBeInserted] withRowAnimation:UITableViewRowAnimationTop];    
-    
-    [self.orderContent scrollToRowAtIndexPath:indexPathToBeInserted atScrollPosition:UITableViewScrollPositionNone animated:YES];
+- (IBAction)addOrderContentButtonPressed:(id)sender {    
+    [self addOrderContent];
 }
 
-- (IBAction)selectItemButtonPressed:(id)sender {    
+- (IBAction)selectItemButtonPressed:(id)sender {
+    NSInteger row = [self.itemPicker selectedRowInComponent:0];
+    [self updateSelectedMenuItemWithRow:row];
     [self.itemButton becomeFirstResponder];
 }
 
-- (IBAction)selectIceButtonPressed:(id)sender {    
+- (IBAction)selectIceButtonPressed:(id)sender {
+    NSInteger row = [self.icePicker selectedRowInComponent:0];
+    [self updateSelectedIceWithRow:row];
     [self.iceButton becomeFirstResponder];
 }
 
-- (IBAction)selectSweetnessButtonPressed:(id)sender {    
+- (IBAction)selectSweetnessButtonPressed:(id)sender {
+    NSInteger row = [self.sweetnessPicker selectedRowInComponent:0];
+    [self updateSelectedSweetnessWithRow:row];
     [self.sweetnessButton becomeFirstResponder];
 }
 
-- (IBAction)selectQuantityButtonPressed:(id)sender {    
+- (IBAction)selectQuantityButtonPressed:(id)sender {
+    NSInteger row = [self.quantityPicker selectedRowInComponent:0];
+    [self updateSelectedQuantityWithRow:row];
     [self.quantityButton becomeFirstResponder];
 }
 @end
