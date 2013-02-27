@@ -33,8 +33,10 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 
 @interface BKShopInfo : NSObject
 
-- (id)initWithName:(NSString *)shopName;
+//- (id)initWithName:(NSString *)shopName;
 - (id)initWithData:(NSDictionary *)data;
+
+- (void)updateWithData:(NSDictionary *)data;
 
 @property (strong, nonatomic) NSString *name;
 // Menu is an array of dictionaries(keys: UUID, name, price)

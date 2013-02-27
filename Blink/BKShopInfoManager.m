@@ -73,9 +73,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID {
-    // Assume rawData is a dictionary
-    BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
-    [self.shopInfoDictionary setObject:newShopInfo forKey:shopID];
+    // Assume rawData is a dictionary    
+    
+    if ([self.shopInfoDictionary objectForKey:shopID] == nil) {
+        NSLog(@"Add new shop info for key %@", shopID);
+        BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
+        [self.shopInfoDictionary setObject:newShopInfo forKey:shopID];
+    }
+    else {
+        BKShopInfo *oldShopInfo = [self.shopInfoDictionary objectForKey:shopID];
+        NSLog(@"oldShopInfo :%@", oldShopInfo);        
+        [oldShopInfo updateWithData:rawData];
+    }
 }
 
 - (void)clearShopIDs {

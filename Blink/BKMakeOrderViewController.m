@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
 - (void)addOrderContent;
 - (NSArray *)inValidSelectionCodes;
 - (NSString *)inValidMessage;
+- (NSString *)orderExistsMessage;
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 
 // For test purposes
@@ -503,6 +504,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
         if (!success) {
             NSLog(@"not success");
+            self.orderExistAlert.message = [self orderExistsMessage];
             [self.orderExistAlert show];
         }
         
@@ -591,6 +593,10 @@ static NSString *noSelectableItem = @"無可選擇項目";
     return result;
 }
 
+- (NSString *)orderExistsMessage {
+    return [NSString stringWithFormat:@"Shop name: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], self.orderExistAlert.message];
+}
+
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateSelected];
@@ -622,7 +628,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (IBAction)noteButtonPressed:(id)sender {
     BKNoteViewController *note = [self.storyboard instantiateViewControllerWithIdentifier:@"BKNoteVC"];
-    note.note = [[BKOrderManager sharedBKOrderManager] note];
+    note.note = [[BKOrderManager sharedBKOrderManager] noteForShopInfo:self.shopInfo];
+    note.shopID = self.shopID;
 //    NSLog(@"%@", NSStringFromCGRect(note.view.frame));
 //    note.view.bounds = CGRectMake(0, 0, 300, 400);
 //    NSLog(@"%@", note);

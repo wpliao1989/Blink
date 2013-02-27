@@ -30,8 +30,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 //- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo;
 
-- (NSString *)note;
-- (void)saveNote:(NSString *)theNote;
+- (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo;
+- (void)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo;
 - (NSNumber *)totalPrice;
 - (NSString *)shopName;
 - (void)clear;

@@ -35,6 +35,8 @@
 
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 
+- (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo;
+
 @end
 
 @implementation BKOrderManager
@@ -71,11 +73,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma mark - Order content operations
 
+- (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo {
+    return (self.shopInfo != nil) && (![self.shopInfo.shopID isEqualToString:anotherShopInfo.shopID]);
+}
+
 - (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
 //    NSLog(@"%@", self.shopInfo);
 //    NSLog(@"%@", shopInfo);
     
-    if ((self.shopInfo != nil) && (![self.shopInfo.shopID isEqualToString:shopInfo.shopID])) {
+    if ([self isDifferentShop:shopInfo]) {
         NSLog(@"Warning: order exists!");
         return NO;
     }
@@ -107,7 +113,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 //    NSLog(@"%@", self.shopInfo.shopID);
 //    NSLog(@"%@", shopInfo.shopID);
     
-    if (![self.shopInfo.shopID isEqualToString:shopInfo.shopID]) {
+    if ([self isDifferentShop:shopInfo]) {
 //        NSLog(@"123");
         return 0;
     }
@@ -116,12 +122,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma Total price / Note
 
-- (NSString *)note {
+- (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo {
+    if ([self isDifferentShop:shopInfo]) {
+        return nil;
+    }
     return self.order.note;
 }
 
-- (void)saveNote:(NSString *)theNote {
-    self.order.note = theNote;    
+- (void)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo{
+    self.shopInfo = shopInfo;
+    self.order.note = theNote;
 }
 
 - (NSNumber *)totalPrice {

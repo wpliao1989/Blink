@@ -8,14 +8,22 @@
 
 #import "BKNoteViewController.h"
 #import "BKOrderManager.h"
+#import "BKShopInfoManager.h"
 
 @interface BKNoteViewController ()
 
 @property (strong, nonatomic) IBOutlet UITextView *noteText;
+@property (strong, nonatomic) BKShopInfo *shopInfo;
 
 @end
 
 @implementation BKNoteViewController
+
+@synthesize shopInfo = _shopInfo;
+
+- (BKShopInfo *)shopInfo {
+    return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,7 +52,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
 //    NSLog(@"note will disappear");
     [self.noteText resignFirstResponder];
-    [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text];
+    [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
 }
 
 - (void)didReceiveMemoryWarning

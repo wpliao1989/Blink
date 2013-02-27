@@ -13,8 +13,6 @@
 #import "BKOrderContent.h"
 #import "BKOrder.h"
 
-#define menu(dictionary) [[BKMenuItem alloc] initWithData:dictionary]
-
 @implementation BKTestCenter
 
 + (NSArray *)testShopInfos {   
@@ -29,7 +27,7 @@
     
     NSDictionary *shop1Info = @{kBKShopID: @"1000",
                                 kBKShopName: @"王品",
-                                kBKShopMenu: @[menu(shop11menu), menu(shop12menu), menu(@{kBKMenuName:@"牛"}), menu(@{kBKMenuName:@"排"})],
+                                kBKShopMenu: @[shop11menu, shop12menu, @{kBKMenuName:@"牛"}, @{kBKMenuName:@"排"}],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
@@ -37,7 +35,7 @@
     
     NSDictionary *shop2Info = @{kBKShopID: @"2000",
                                 kBKShopName: @"舒果",
-//                                kBKShopMenu: @[menu(@{kBKMenuName:@"素"}), menu(@{kBKMenuName:@"食"}), menu(@{kBKMenuName:@"新"}), menu(@{kBKMenuName:@"鮮"})],
+//                                kBKShopMenu: @[@{kBKMenuName:@"素"}, @{kBKMenuName:@"食"}, @{kBKMenuName:@"新"}, @{kBKMenuName:@"鮮"}],
                                 kBKShopMenu: @[],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
@@ -46,7 +44,7 @@
     
     NSDictionary *shop3Info = @{kBKShopID: @"3000",
                                 kBKShopName: @"原燒",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"極"}), menu(@{kBKMenuName:@"品"}), menu(@{kBKMenuName:@"燒"}), menu(@{kBKMenuName:@"肉"})],
+                                kBKShopMenu: @[@{kBKMenuName:@"極"}, @{kBKMenuName:@"品"}, @{kBKMenuName:@"燒"}, @{kBKMenuName:@"肉"}],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",
                                 kBKShopOpenHour: @"10:20~21:20",
@@ -59,7 +57,7 @@
 + (NSArray *)testFavoriteShops {
     NSDictionary *shop1Info = @{kBKShopID: @"4000",
                                 kBKShopName: @"50藍",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"飲"}), menu(@{kBKMenuName:@"料"}), menu(@{kBKMenuName:@"好"}), menu(@{kBKMenuName:@"喝"})],
+                                kBKShopMenu: @[@{kBKMenuName:@"飲"}, @{kBKMenuName:@"料"}, @{kBKMenuName:@"好"}, @{kBKMenuName:@"喝"}],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
                                 kBKShopOpenHour: @"10:00~21:00",
@@ -68,7 +66,7 @@
     NSDictionary *shop2Info = @{
                                 kBKShopID: @"5000",
                                 kBKShopName: @"成時",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"創"}), menu(@{kBKMenuName:@"意"}), menu(@{kBKMenuName:@"料"}), menu(@{kBKMenuName:@"理"})],
+                                kBKShopMenu: @[@{kBKMenuName:@"創"}, @{kBKMenuName:@"意"}, @{kBKMenuName:@"料"}, @{kBKMenuName:@"理"}],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
                                 kBKShopOpenHour: @"10:10~21:10",
@@ -77,7 +75,7 @@
     NSDictionary *shop3Info = @{
                                 kBKShopID: @"6000",
                                 kBKShopName: @"雞排店",
-                                kBKShopMenu: @[menu(@{kBKMenuName:@"大"}), menu(@{kBKMenuName:@"小"}), menu(@{kBKMenuName:@"雞"}), menu(@{kBKMenuName:@"排"})],
+                                kBKShopMenu: @[@{kBKMenuName:@"大"}, @{kBKMenuName:@"小"}, @{kBKMenuName:@"雞"}, @{kBKMenuName:@"排"}],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",
                                 kBKShopOpenHour: @"10:20~21:20",

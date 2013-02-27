@@ -148,7 +148,7 @@ typedef enum  {
 //    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
     NSLog(@"viewDidLoad");
     
-    NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);
+    NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);   
     
     [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
     

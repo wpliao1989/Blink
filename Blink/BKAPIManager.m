@@ -145,7 +145,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
     [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         //        NSLog(@"%@", data);
-        self.isLoadingData = NO;
+//        self.isLoadingData = NO;
         completeHandler(response, data, error);
     }];
 }
@@ -155,17 +155,23 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   
     
     [self listWithListCriteria:criteria completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSLog(@"response: %@", response);
+        NSLog(@"data :%@", data);
+        NSLog(@"error: %@", error);
+        
         __block NSArray *shopIDs = data;
         __block NSMutableArray *shopRawDatas;
         for (__block NSString *theShopID in shopIDs) {
             [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
                 [shopRawDatas addObject:data];                
                 if ([theShopID isEqualToString:[shopIDs lastObject]]) {
-                    completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);
+                    self.isLoadingData = NO;
+                    completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);                    
                 }
             }];
         }
         if (shopIDs.count == 0) {
+            self.isLoadingData = NO;
             completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);
         }
     }];   

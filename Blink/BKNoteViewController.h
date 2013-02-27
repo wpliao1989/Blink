@@ -11,5 +11,6 @@
 @interface BKNoteViewController : UIViewController
 
 @property (strong, nonatomic) NSString *note;
+@property (strong, nonatomic) NSString *shopID;
 
 @end

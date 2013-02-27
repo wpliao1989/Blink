@@ -7,6 +7,7 @@
 //
 
 #import "BKShopInfo.h"
+#import "BKMenuItem.h"
 
 NSString *const kBKShopName = @"name";
 NSString *const kBKShopMenu = @"menu";
@@ -30,7 +31,15 @@ NSString *const kBKShopCoWorkChannel = @"coWorkChannel";
 NSString *const kBKShopDescription = @"intro";
 NSString *const kBKShopIsDeliverable = @"deliverable";
 
+@interface BKShopInfo ()
+
+@property (strong, nonatomic) NSDictionary *data;
+
+@end
+
 @implementation BKShopInfo
+
+@synthesize data = _data;
 
 @synthesize name = _name;
 @synthesize menu = _menu;
@@ -53,26 +62,68 @@ NSString *const kBKShopIsDeliverable = @"deliverable";
 @synthesize shopDescription = _shopDescription;
 @synthesize isDeliverable = _isDeliverable;
 
-- (id)initWithName:(NSString *)shopName {
-    self = [super init];
-    if (self) {
-        self.name = shopName;
+//- (id)initWithName:(NSString *)shopName {
+//    self = [super init];
+//    if (self) {
+//        self.name = shopName;
+//    }
+//    return self;
+//}
+
+- (NSString *)name {
+    return [self.data objectForKey:kBKShopName];
+}
+
+- (NSArray *)menu {
+    if (_menu == nil) {
+        NSMutableArray *newMemuArray = [NSMutableArray array];
+        NSArray *arrayOfDicts = [self.data objectForKey:kBKShopMenu];
+        for (NSDictionary *menuItem in arrayOfDicts) {
+            [newMemuArray addObject:[[BKMenuItem alloc] initWithData:menuItem]];
+        }
+        _menu = [NSArray arrayWithArray:newMemuArray];
     }
-    return self;
+    return _menu;
+}
+
+- (NSString *)phone {
+    return [self.data objectForKey:kBKShopPhone];
+}
+
+- (NSString *)address {
+    return [self.data objectForKey:kBKShopAddress];
+}
+
+- (NSString *)openHours {
+    return [self.data objectForKey:kBKShopOpenHour];
+}
+
+- (NSString *)shopDescription {
+    return [self.data objectForKey:kBKShopDescription];
+}
+
+- (NSString *)shopID {
+    return [self.data objectForKey:kBKShopID];
 }
 
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        self.shopID = [data objectForKey:kBKShopID];
-        self.name = [data objectForKey:kBKShopName];
-        self.menu = [data objectForKey:kBKShopMenu];
-        self.phone = [data objectForKey:kBKShopPhone];
-        self.address = [data objectForKey:kBKShopAddress];
-        self.openHours = [data objectForKey:kBKShopOpenHour];
-        self.shopDescription = [data objectForKey:kBKShopDescription];
+        self.data = data;
+//        self.shopID = [data objectForKey:kBKShopID];
+//        self.name = [data objectForKey:kBKShopName];
+//        self.menu = [data objectForKey:kBKShopMenu];
+//        self.phone = [data objectForKey:kBKShopPhone];
+//        self.address = [data objectForKey:kBKShopAddress];
+//        self.openHours = [data objectForKey:kBKShopOpenHour];
+//        self.shopDescription = [data objectForKey:kBKShopDescription];
     }
     return self;
+}
+
+- (void)updateWithData:(NSDictionary *)data {
+    self.data = data;
+    self.menu = nil;
 }
 
 @end
