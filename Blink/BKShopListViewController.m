@@ -203,6 +203,7 @@ typedef enum  {
 }
 
 - (void)locationBecameAvailable {
+    NSLog(@"locationBecameAvailable");
     [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
 }
 
@@ -223,6 +224,7 @@ typedef enum  {
     [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:testShopIDs];
     for (int i = 0; i < testShopIDs.count; i++) {
         [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testShopInfos objectAtIndex:i] forShopID:[testShopIDs objectAtIndex:i]];
+//        NSLog(@"5456456465");
     }
     // End of Test]
     
@@ -241,24 +243,17 @@ typedef enum  {
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     
-    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
-                                          completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-                                              NSLog(@"%@", data);
-//                                              self.isLoadingNewData = NO;                                              
-                                              [self saveShopInfosWithShopIDs:data];
-                                          }];
-    
-//    if (criteria == BKListCriteriaDistant) {
-//        [self.locationManager startUpdatingLocation];
-//    }
-//    else if (criteria == BKListCriteriaPrice || criteria == BKListCriteriaScore){
-//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
-//                                              completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//                                                  NSLog(@"%@", data);
-//                                                  self.isLoadingNewData = NO;
-//                                                  [self saveShopInfosWithShopIDs:data];
-//                                              }];
-//    }     
+//    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
+//                                          completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                                              NSLog(@"%@", data);
+////                                              self.isLoadingNewData = NO;                                              
+//                                              [self saveShopInfosWithShopIDs:data];
+//                                          }];
+    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *shopRawDatas) {
+        [self saveShopInfosWithShopIDs:shopIDs];
+        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
+//        NSLog(@"123123123123123132");
+    }];
 }
 
 #pragma mark - TableViewDataSource, TableViewDelegate

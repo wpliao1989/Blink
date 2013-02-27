@@ -152,6 +152,25 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 #pragma mark - APIs
 
+- (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   
+    
+    [self listWithListCriteria:criteria completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        __block NSArray *shopIDs = data;
+        __block NSMutableArray *shopRawDatas;
+        for (__block NSString *theShopID in shopIDs) {
+            [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+                [shopRawDatas addObject:data];                
+                if ([theShopID isEqualToString:[shopIDs lastObject]]) {
+                    completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);
+                }
+            }];
+        }
+        if (shopIDs.count == 0) {
+            completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);
+        }
+    }];   
+}
+
 - (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler {
     static NSString *kListCriteria = @"listCriteria";
     static NSString *kLongitude = @"longitude";
