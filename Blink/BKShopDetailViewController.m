@@ -9,6 +9,7 @@
 #import "BKShopDetailViewController.h"
 #import "BKMainPageViewController.h"
 #import "BKShopInfo.h"
+#import "BKShopInfoManager.h"
 #import "BKMenuViewController.h"
 #import "BKMakeOrderViewController.h"
 
@@ -17,6 +18,8 @@
 - (IBAction)menuButtonPressed:(id)sender;
 - (IBAction)orderDeliverButtonPressed:(id)sender;
 - (IBAction)takeAwayButtonPressed:(id)sender;
+
+@property (nonatomic, strong) BKShopInfo *shopInfo;
 
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
@@ -31,6 +34,10 @@
 @implementation BKShopDetailViewController
 
 @synthesize shopInfo = _shopInfo;
+
+- (BKShopInfo *)shopInfo {
+    return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,7 +73,8 @@
     else if ([segue.identifier isEqualToString:@"makeOrderSegue"]) {
         BKMakeOrderViewController *makeOrderVC = segue.destinationViewController;
 //        makeOrderVC.menu = self.shopInfo.menu;
-        makeOrderVC.shopInfo = self.shopInfo;
+//        makeOrderVC.shopInfo = self.shopInfo;
+        makeOrderVC.shopID = self.shopID;
     }
 }
 

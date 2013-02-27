@@ -14,7 +14,7 @@
 @interface BKTestCenter : NSObject
 
 + (NSArray *)testShopInfos;
-+ (NSArray *)testFavoriteShopInfos;
++ (NSArray *)testFavoriteShops;
 + (BKOrder *)testOrder;
 + (BKOrderContent *)testOrderContent;
 

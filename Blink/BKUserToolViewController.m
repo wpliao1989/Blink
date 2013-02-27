@@ -9,6 +9,7 @@
 #import "BKUserToolViewController.h"
 #import "BKAccountManager.h"
 #import "BKShopInfo.h"
+#import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
 
 @interface BKUserToolViewController ()
@@ -22,7 +23,7 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)segmentationChanged:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
 @property (strong, nonatomic) IBOutlet UITableView *userToolTableView;
-@property (strong, nonatomic) NSArray *shopList;
+@property (strong, nonatomic) NSArray *shopIDList;
 @property (strong, nonatomic) NSArray *orderlist;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
 @property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
@@ -33,16 +34,16 @@ enum BKUserToolSegmentationSelection {
 
 @synthesize userToolTableView = _userToolTableView;
 @synthesize segmentaionControl = _segmentaionControl;
-@synthesize shopList = _shopList;
+@synthesize shopIDList = _shopIDList;
 @synthesize orderlist = _orderlist;
 
-- (NSArray *)shopList {
-    if (_shopList == nil) {
+- (NSArray *)shopIDList {
+    if (_shopIDList == nil) {
 #warning Test shop list
 //        _shopList = [NSMutableArray arrayWithObjects:@"50藍", @"成時", @"王品", nil];
-        _shopList = [BKAccountManager sharedBKAccountManager].favoriteShops;
+        _shopIDList = [BKAccountManager sharedBKAccountManager].favoriteShopIDs;
     }
-    return  _shopList;
+    return  _shopIDList;
 }
 
 - (NSArray *)orderlist {
@@ -66,6 +67,7 @@ enum BKUserToolSegmentationSelection {
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSLog(@"self.shopIDs = %@", self.shopIDList);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,7 +83,10 @@ enum BKUserToolSegmentationSelection {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"fromFavoriteShopDetailSegue"]) {
         BKShopDetailViewController *detailVC = segue.destinationViewController;
-        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
+//        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
+        NSInteger selectedIndex = [self.userToolTableView indexPathForSelectedRow].row;
+        detailVC.shopID = [self.shopIDList objectAtIndex:selectedIndex];
+        
     }
 }
 
@@ -91,7 +96,7 @@ enum BKUserToolSegmentationSelection {
     NSInteger dataCount;
     
     if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
-        dataCount = self.shopList.count;
+        dataCount = self.shopIDList.count;
     }
     else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
         dataCount = self.orderlist.count;
@@ -107,7 +112,7 @@ enum BKUserToolSegmentationSelection {
     
     if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];        
-        cell.textLabel.text = ((BKShopInfo *)[self.shopList objectAtIndex:indexPath.row]).name;
+        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:[self.shopIDList objectAtIndex:indexPath.row]].name;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Shop #%d", indexPath.row];
     }
     else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {

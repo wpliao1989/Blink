@@ -7,6 +7,8 @@
 //
 
 #import "BKAccountManager.h"
+#import "BKAPIManager.h"
+#import "BKShopInfoManager.h"
 
 #import "BKTestCenter.h"
 
@@ -15,19 +17,19 @@
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @synthesize isLogin = _isLogin;
-@synthesize favoriteShops = _favoriteShops;
+@synthesize favoriteShopIDs = _favoriteShops;
 @synthesize userToken = _userToken;
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
 @synthesize userPhone = _userPhone;
 
-- (NSArray *)favoriteShops {
-    if (_favoriteShops == nil) {
-#warning Test favorite shop infos
-        _favoriteShops = [BKTestCenter testFavoriteShopInfos];
-    }
-    return _favoriteShops;
-}
+//- (NSArray *)favoriteShopIDs {
+//    if (_favoriteShops == nil) {
+//#warning Test favorite shop infos
+//        _favoriteShops = [BKTestCenter testFavoriteShopInfos];
+//    }
+//    return _favoriteShops;
+//}
 
 - (id)init {   
     self = [super init];
@@ -40,7 +42,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (void)login {
     // fetch user personal info
     self.userToken = @"123";
+    self.userName = @"Flyingman";
+    self.userEmail = @"flyingman@fly.com.tw";
+    self.userPhone = @"987654321";
     // fetch user favorite shop IDs
+    self.favoriteShopIDs = @[@"01", @"02", @"03"];
+    NSArray *testFavShops = [BKTestCenter testFavoriteShops];
+    for (int i = 0; i < self.favoriteShopIDs.count; i++) {
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testFavShops objectAtIndex:i] forShopID:[self.favoriteShopIDs objectAtIndex:i]];
+    }
+    
     // fetch user order history
     
     // change isLogin flag

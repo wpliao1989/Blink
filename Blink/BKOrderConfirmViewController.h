@@ -12,5 +12,6 @@
 
 @interface BKOrderConfirmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) BKShopInfo *shopInfo;
+@property (strong, nonatomic) NSString *shopID;
+
 @end

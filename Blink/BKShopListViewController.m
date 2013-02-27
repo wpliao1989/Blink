@@ -187,7 +187,7 @@ typedef enum  {
         NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
         BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
 //        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
-        shopDetailViewController.shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:selectedIndex];
+        shopDetailViewController.shopID = [[BKShopInfoManager sharedBKShopInfoManager] shopIDAtIndex:selectedIndex];
     }
 }
 

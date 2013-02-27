@@ -17,6 +17,7 @@
 #import "BKMenuItem.h"
 #import "BKItemSelectButton.h"
 #import "BKShopInfo.h"
+#import "BKShopInfoManager.h"
 
 #import "BKTestCenter.h"
 
@@ -48,6 +49,7 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
 @property (strong, nonatomic) IBOutlet UIPickerView *sweetnessPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 
+@property (strong, nonatomic) BKShopInfo *shopInfo;
 @property (strong, readonly, nonatomic) NSArray *menu;
 @property (strong, nonatomic) NSArray *quantityLevels;
 @property (strong, nonatomic) BKMenuItem *selectedMenuItem;
@@ -84,6 +86,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 @implementation BKMakeOrderViewController
 
 @synthesize orderContent = _orderContent;
+@synthesize shopInfo = _shopInfo;
 @synthesize menu = _menu;
 @synthesize quantityLevels = _quantityLevels;
 @synthesize selectedItemName = _selectedItemName;
@@ -114,6 +117,10 @@ static NSString *noSelectableItem = @"無可選擇項目";
         _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"Not enough content" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     }
     return _notEnoughContentAlert;
+}
+
+- (BKShopInfo *)shopInfo {
+    return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
 }
 
 - (NSArray *)menu {
@@ -222,7 +229,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"orderConfirmSegue"]) {
         BKOrderConfirmViewController *orderConfirmVC = segue.destinationViewController;
-        orderConfirmVC.shopInfo = self.shopInfo;
+        orderConfirmVC.shopID = self.shopID;
     }
 }
 

@@ -20,7 +20,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @property (nonatomic) BOOL isLogin;
 // Array of shopInfos
-@property (strong, nonatomic) NSArray *favoriteShops;
+@property (strong, nonatomic) NSArray *favoriteShopIDs;
 
 - (void)login;
 - (void)logout;

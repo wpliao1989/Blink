@@ -12,6 +12,6 @@
 
 @interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) BKShopInfo *shopInfo;
+@property (strong, nonatomic) NSString *shopID;
 
 @end

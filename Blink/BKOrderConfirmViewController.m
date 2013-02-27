@@ -11,6 +11,8 @@
 #import "BKOrderManager.h"
 #import "BKOrderContent.h"
 #import "BKShopInfo.h"
+#import "BKShopInfoManager.h"
+#import "BKAccountManager.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -21,11 +23,19 @@
 @property (strong, nonatomic) IBOutlet UILabel *shopName;
 @property (strong, nonatomic) IBOutlet UILabel *serviceType;
 
+@property (strong, nonatomic) BKShopInfo *shopInfo;
+
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 
 @end
 
 @implementation BKOrderConfirmViewController
+
+@synthesize shopInfo = _shopInfo;
+
+- (BKShopInfo *)shopInfo {
+    return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,6 +52,8 @@
 	// Do any additional setup after loading the view.
     self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
     self.shopName.text = [[BKOrderManager sharedBKOrderManager] shopName];
+    self.userName.text = [BKAccountManager sharedBKAccountManager].userName;
+    self.userPhone.text = [BKAccountManager sharedBKAccountManager].userPhone;
 }
 
 - (void)didReceiveMemoryWarning

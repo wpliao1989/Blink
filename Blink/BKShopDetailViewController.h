@@ -12,6 +12,6 @@
 
 @interface BKShopDetailViewController : UIViewController
 
-@property (nonatomic, strong) BKShopInfo *shopInfo;
+@property (strong, nonatomic) NSString *shopID;
 
 @end

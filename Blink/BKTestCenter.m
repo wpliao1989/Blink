@@ -56,7 +56,7 @@
     return testShopInfos;
 }
 
-+ (NSArray *)testFavoriteShopInfos {
++ (NSArray *)testFavoriteShops {
     NSDictionary *shop1Info = @{kBKShopID: @"4000",
                                 kBKShopName: @"50藍",
                                 kBKShopMenu: @[menu(@{kBKMenuName:@"飲"}), menu(@{kBKMenuName:@"料"}), menu(@{kBKMenuName:@"好"}), menu(@{kBKMenuName:@"喝"})],
@@ -83,11 +83,11 @@
                                 kBKShopOpenHour: @"10:20~21:20",
                                 kBKShopDescription: @"雞排店的優惠"};
     
-    BKShopInfo *shop1 = [[BKShopInfo alloc] initWithData:shop1Info];
-    BKShopInfo *shop2 = [[BKShopInfo alloc] initWithData:shop2Info];
-    BKShopInfo *shop3 = [[BKShopInfo alloc] initWithData:shop3Info];
+//    BKShopInfo *shop1 = [[BKShopInfo alloc] initWithData:shop1Info];
+//    BKShopInfo *shop2 = [[BKShopInfo alloc] initWithData:shop2Info];
+//    BKShopInfo *shop3 = [[BKShopInfo alloc] initWithData:shop3Info];
     
-    NSArray *testShopInfos = [NSArray arrayWithObjects:shop1,shop2,shop3,nil];
+    NSArray *testShopInfos = [NSArray arrayWithObjects:shop1Info,shop2Info,shop3Info,nil];
     return testShopInfos;
 }
 
