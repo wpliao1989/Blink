@@ -209,15 +209,20 @@ typedef enum  {
 #pragma mark - Utility methods
 
 - (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
-    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
+//    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
 #warning Test shops inserted here
     // Test        
     NSArray *testShopInfos = [BKTestCenter testShopInfos];
+    NSArray *testShopIDs = @[@"10", @"20", @"30"];
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
-    for (NSDictionary *shopInfo in testShopInfos) {
-        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];
-//        NSLog(@"%@", shopInfo);
+//    for (NSDictionary *shopInfo in testShopInfos) {
+//        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];
+////        NSLog(@"%@", shopInfo);
+//    }
+    [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:testShopIDs];
+    for (int i = 0; i < testShopIDs.count; i++) {
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testShopInfos objectAtIndex:i] forShopID:[testShopIDs objectAtIndex:i]];
     }
     // End of Test]
     
@@ -226,14 +231,14 @@ typedef enum  {
 //           
 //       }];
 //    }
-    NSLog(@"%@", [BKShopInfoManager sharedBKShopInfoManager].shopInfos);
+//    NSLog(@"%@", [BKShopInfoManager sharedBKShopInfoManager].shopInfos);
     [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     //            [self.shopListTableView reloadData:YES];    
 }
 
 - (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
 //    self.isLoadingNewData = YES;
-    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
+    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     
     [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
@@ -301,10 +306,10 @@ typedef enum  {
 //    if (self.isLoadingNewData == YES) {
 //        return 1;
 //    }
-    if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {
+    if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {        
         return 1;
     }
-    else if ([BKAPIManager sharedBKAPIManager].isLoadingData == YES) {
+    else if ([BKAPIManager sharedBKAPIManager].isLoadingData == YES) {        
         return 1;
     }
     else if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] == 0) {

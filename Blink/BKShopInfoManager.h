@@ -15,12 +15,17 @@
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
-@property (strong, nonatomic) NSMutableArray *shopInfos;
-
 - (NSUInteger)shopCount;
 - (NSString *)shopNameAtIndex:(NSUInteger)index;
+- (NSString *)shopIDAtIndex:(NSUInteger)index;
 - (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;
-- (void)addShopInfoWithRawData:(id)rawData;
-- (void)clearShopInfos;
+- (BKShopInfo *)shopInfoForShopID:(NSString *)shopID;
+
+- (void)updateShopIDs:(NSArray *)shopIDs;
+- (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID;
+- (void)clearShopIDs;
+
+//- (void)addShopInfoWithRawData:(id)rawData;
+
 
 @end
