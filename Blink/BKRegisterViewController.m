@@ -39,10 +39,11 @@
 }
 
 - (IBAction)confirmRegistrationButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] login];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [[BKAccountManager sharedBKAccountManager] loginWithCompleteHandler:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }];    
 }
 
 

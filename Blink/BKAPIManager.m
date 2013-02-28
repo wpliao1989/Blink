@@ -18,7 +18,11 @@ NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvai
 @property (nonatomic) BOOL isLocationFailed;
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
+- (NSString *)encodePWD:(NSString *)pwd;
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
+
+- (void)listWithListCriteria:(BKListCriteria)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
+- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
 
@@ -140,6 +144,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return encodedData;
 }
 
+- (NSString *)encodePWD:(NSString *)pwd {
+    return pwd;
+}
+
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler {
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
@@ -151,6 +159,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 #pragma mark - APIs
+
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(asynchronousCompleteHandler)completeHandler {
+    static NSString *kUserName = @"username";
+    static NSString *kPWD = @"password";
+    
+    NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
+    [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:completeHandler];
+}
 
 - (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   
     

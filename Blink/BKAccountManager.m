@@ -12,6 +12,9 @@
 
 #import "BKTestCenter.h"
 
+NSString *const kBKUserEMail = @"email";
+NSString *const kBKUserToken = @"token";
+
 @implementation BKAccountManager
 
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
@@ -39,23 +42,26 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
     return self;
 }
 
-- (void)login {
+- (void)loginWithCompleteHandler:(void (^)())completeHandler {
     // fetch user personal info
-    self.userToken = @"123";
-    self.userName = @"Flyingman";
-    self.userEmail = @"flyingman@fly.com.tw";
-    self.userPhone = @"987654321";
-    // fetch user favorite shop IDs
-    self.favoriteShopIDs = @[@"01", @"02", @"03"];
-    NSArray *testFavShops = [BKTestCenter testFavoriteShops];
-    for (int i = 0; i < self.favoriteShopIDs.count; i++) {
-        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testFavShops objectAtIndex:i] forShopID:[self.favoriteShopIDs objectAtIndex:i]];
-    }
-    
-    // fetch user order history
-    
-    // change isLogin flag
-    self.isLogin = YES;
+    [[BKAPIManager sharedBKAPIManager] loginWithUserName:@"abc123" password:@"fly123" completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        self.userToken = [data objectForKey:kBKUserToken];
+        self.userEmail = [data objectForKey:kBKUserEMail];
+        
+        self.userName = @"Flyingman";
+        self.userPhone = @"987654321";
+        // fetch user favorite shop IDs
+        self.favoriteShopIDs = @[@"01", @"02", @"03"];
+        NSArray *testFavShops = [BKTestCenter testFavoriteShops];
+        for (int i = 0; i < self.favoriteShopIDs.count; i++) {
+            [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testFavShops objectAtIndex:i] forShopID:[self.favoriteShopIDs objectAtIndex:i]];
+        }
+        // fetch user order history
+        
+        // change isLogin flag
+        self.isLogin = YES;
+        completeHandler();
+    }];
 }
 
 - (void)logout {

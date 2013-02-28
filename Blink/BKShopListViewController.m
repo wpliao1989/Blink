@@ -10,6 +10,8 @@
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
+#import "BKOrderManager.h"
+#import "BKShopInfo.h"
 
 #import "BKTestCenter.h"
 
@@ -164,7 +166,15 @@ typedef enum  {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self registerForLocationNotifications];
-    [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];    
+    NSIndexPath *selectedIndexPath = [self.shopListTableView indexPathForSelectedRow];
+    if (selectedIndexPath != nil) {
+        NSLog(@"selectedIndexPath :%@", [self.shopListTableView indexPathForSelectedRow]);
+        NSArray *indexPathsToBeReloaded = [self.shopListTableView indexPathsForVisibleRows];
+        [self.shopListTableView reloadRowsAtIndexPaths:indexPathsToBeReloaded withRowAnimation:UITableViewRowAnimationNone];
+//        [self.shopListTableView reloadData];
+        [self.shopListTableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];
+    }        
 }
 
 //- (void)viewDidAppear:(BOOL)animated {
@@ -290,8 +300,18 @@ typedef enum  {
     }
     else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:indexPath.row];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        cell.textLabel.text = theShopInfo.name;
+        cell.detailTextLabel.text = theShopInfo.shopID;
+        
+        NSLog(@"shopID :%@", theShopInfo.shopID);
+        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);
+        if ([[[BKOrderManager sharedBKOrderManager] shopID] isEqualToString:theShopInfo.shopID]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
     }  
     
     return cell;

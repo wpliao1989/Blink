@@ -101,14 +101,14 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (UIAlertView *)orderExistAlert {
     if (_orderExistAlert == nil) {
-        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"Order exists. Delete order?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Delete", nil];
+        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Delete", nil];
     }
     return _orderExistAlert;
 }
 
 - (UIAlertView *)inValidSelectionAlert {
     if (_inValidSelectionAlert == nil) {
-        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     }
     return _inValidSelectionAlert;
 }
@@ -504,7 +504,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
         if (!success) {
             NSLog(@"not success");
-            self.orderExistAlert.message = [self orderExistsMessage];
+            NSLog(@"orderExistAlert.message :%@", self.orderExistAlert.message);
+            [self.orderExistAlert setMessage:[self orderExistsMessage]];
             [self.orderExistAlert show];
         }
         
@@ -556,7 +557,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)inValidMessage {
-    static NSString *itemNotSelected = @"Item not selected";
+    static NSString *itemNotSelected = @"No item selected";
     static NSString *iceNotSelected = @"Ice level not selected";
     static NSString *sweetnessNotSelected = @"Sweetness not selected";
     static NSString *changeLine = @"\n";
@@ -594,7 +595,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)orderExistsMessage {
-    return [NSString stringWithFormat:@"Shop name: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], self.orderExistAlert.message];
+    return [NSString stringWithFormat:@"Shop name: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"Order exists. Delete order?"];
 }
 
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {

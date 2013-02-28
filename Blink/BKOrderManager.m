@@ -36,6 +36,7 @@
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 
 - (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo;
+- (void)ifNoContentLeftThenClear;
 
 @end
 
@@ -99,6 +100,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (void)deleteOrderContentAtIndex:(NSInteger)index {
     [self.order deleteOrderContentAtIndex:index];
     [self.order updateTotalPrice];
+    [self ifNoContentLeftThenClear];
 }
 
 - (BKOrderContent *)orderContentAtIndex:(NSInteger)index {
@@ -120,6 +122,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return [self.order numberOfOrderContents];
 }
 
+- (void)ifNoContentLeftThenClear {
+    if (([self.order numberOfOrderContents] == 0) && ([self.order.note length] == 0)) {
+        [self clear];
+    }
+}
+
 #pragma Total price / Note
 
 - (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo {
@@ -132,6 +140,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (void)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo{
     self.shopInfo = shopInfo;
     self.order.note = theNote;
+    [self ifNoContentLeftThenClear];
 }
 
 - (NSNumber *)totalPrice {
@@ -140,6 +149,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (NSString *)shopName {
     return self.shopInfo.name;
+}
+
+- (NSString *)shopID {
+    return self.shopInfo.shopID;
 }
 
 - (void)clear {
