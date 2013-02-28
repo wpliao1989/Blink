@@ -90,6 +90,24 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        }];
 //        [manager stopUpdatingLocation];
     }
+    
+//    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+////        NSLog(@"Place marks:");
+////        for (id thePlacemark in placemarks) {
+////            NSLog(@"%@", [thePlacemark class]);
+////            NSLog(@"%@", thePlacemark);
+////        }
+////        NSLog(@"Error: %@", error);
+//        CLPlacemark *thePlacemark = [placemarks objectAtIndex:0];
+//        NSMutableDictionary *address = [NSMutableDictionary dictionaryWithDictionary:thePlacemark.addressDictionary];
+//        [address setObject:@"" forKey:(__bridge NSString *)kABPersonAddressCountryKey];
+//        [address setObject:@"" forKey:(__bridge NSString *)kABPersonAddressZIPKey];
+//        [address setObject:@"" forKey:(__bridge NSString *)kABPersonAddressStateKey];
+//        NSLog(@"%@", address);
+//        NSString *formattedAddress = ABCreateStringWithAddressDictionary(address, NO);
+//        NSLog(@"%@", formattedAddress);
+//    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

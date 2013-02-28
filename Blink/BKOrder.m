@@ -96,7 +96,7 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     
     theOrder.address = self.address != nil ? self.address : @"none";
     theOrder.phone = self.phone != nil ? self.phone : @"none";
-    theOrder.note = self.note != nil ? self.note : @"none";
+    theOrder.note = self.note != nil ? self.note : @"";
     
     NSMutableArray *newContensArray = [NSMutableArray array];
     for (BKOrderContent *content in self.content) {

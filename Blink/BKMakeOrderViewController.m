@@ -30,8 +30,8 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
 
 NSInteger iceComponent = 0;
 NSInteger sweetnessComponent = 1;
-NSInteger sizeComponent = 0;
-NSInteger quantityComponent = 1;
+NSInteger sizeComponent = 1;
+NSInteger quantityComponent = 0;
 
 @interface BKMakeOrderViewController ()
 
@@ -218,6 +218,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateSelected];
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateHighlighted];
     [self updateSelectedQuantityWithRow:0];
+    [self updateSelectedMenuItemWithRow:0];
     
     [self testPrint];
 }
@@ -503,7 +504,15 @@ static NSString *noSelectableItem = @"無可選擇項目";
                 [self pickerView:self.sizeAndQuantityPicker didSelectRow:0 inComponent:sizeComponent];
             }
         }
-    }    
+    }
+    else {
+        [self.itemButton setEnabled:NO];
+        [self changeButtonTitleButton:self.itemButton title:noSelectableItem];
+        [self.iceAndSweetnessButton setEnabled:NO];
+        [self changeButtonTitleButton:self.iceAndSweetnessButton title:noSelectableItem];
+        [self.sizeAndQuantityButton setEnabled:NO];
+        [self changeButtonTitleButton:self.sizeAndQuantityButton title:noSelectableItem];
+    }
 }
 
 - (void)updateSelectedIceWithRow:(NSInteger)row {
@@ -663,7 +672,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)updateSizeAndQuantityButtonTitle {
 //    [self testPrint];
-    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedSize, self.selectedQuantity];
+    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedQuantity, self.selectedSize];
     [self changeButtonTitleButton:self.sizeAndQuantityButton title:title];
 }
 

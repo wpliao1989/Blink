@@ -575,7 +575,7 @@
                                 <rect key="frame" x="115" y="90" width="185" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="大小、數量">
+                                <state key="normal" title="數量、大小">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -600,7 +600,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="大小、數量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ymd-Xk-Jru">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="數量、大小" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ymd-Xk-Jru">
                                 <rect key="frame" x="20" y="95" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -839,11 +839,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="訂單確認" id="Jfj-62-zmC"/>
                     <connections>
-                        <outlet property="serviceType" destination="pNP-Pi-Wet" id="4NH-zO-h6p"/>
-                        <outlet property="shopName" destination="RFB-Nx-IRS" id="8fy-Hz-tpv"/>
-                        <outlet property="totalPrice" destination="8n0-UT-U4S" id="Ks3-xo-L7A"/>
-                        <outlet property="userName" destination="gLP-wa-Vgh" id="0KU-P5-Ecb"/>
-                        <outlet property="userPhone" destination="y20-nF-2nS" id="Wv3-6u-gk1"/>
+                        <outlet property="serviceTypeLabel" destination="pNP-Pi-Wet" id="TNm-ba-ZNH"/>
+                        <outlet property="shopNameLabel" destination="RFB-Nx-IRS" id="JIb-QI-0Op"/>
+                        <outlet property="totalPriceLabel" destination="8n0-UT-U4S" id="vYq-gJ-rLU"/>
+                        <outlet property="userNameLabel" destination="gLP-wa-Vgh" id="uyH-ok-GlW"/>
+                        <outlet property="userPhoneLabel" destination="y20-nF-2nS" id="aPP-B1-w21"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2I-SF-ACe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1199,6 +1199,123 @@
             <point key="canvasLocation" x="1838" y="-257"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="BKItemSelectButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKItemSelectButton.h"/>
+        </class>
+        <class className="BKLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeButtonPressed:"/>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="action" name="registrationButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="BKMainPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMainPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="homeButtonPressed:"/>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="action" name="searchFoodButtonPressed:"/>
+                <relationship kind="action" name="searchShopButtonPressed:"/>
+                <relationship kind="action" name="userToolButtonPressed:"/>
+                <relationship kind="outlet" name="homeButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="userToolButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BKMakeOrderViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMakeOrderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addOrderContentButtonPressed:"/>
+                <relationship kind="action" name="makeOrderButtonPressed:"/>
+                <relationship kind="action" name="noteButtonPressed:"/>
+                <relationship kind="action" name="selectIceAndSweetnessButtonPressed:"/>
+                <relationship kind="action" name="selectItemButtonPressed:"/>
+                <relationship kind="action" name="selectQuantityButtonPressed:"/>
+                <relationship kind="action" name="selectSizeAndQuantityButtonPressed:"/>
+                <relationship kind="outlet" name="iceAndSweetnessButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="iceAndSweetnessPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="itemButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="itemPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="orderContent" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="quantityButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="quantityPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="sizeAndQuantityButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="sizeAndQuantityPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="totalPrice" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BKMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMenuViewController.h"/>
+        </class>
+        <class className="BKNoteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKNoteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="noteText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="BKOrderConfirmViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKOrderConfirmViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="orderConfirmButtonPressed:"/>
+                <relationship kind="outlet" name="serviceTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="totalPriceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userPhoneLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BKRegisterViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="confirmRegistrationButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="BKShopDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="menuButtonPressed:"/>
+                <relationship kind="action" name="orderDeliverButtonPressed:"/>
+                <relationship kind="action" name="takeAwayButtonPressed:"/>
+                <relationship kind="outlet" name="discountInformation" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="shopAddressLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopOpenTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopPhoneLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BKShopListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="categoryButtonPressed:"/>
+                <relationship kind="action" name="listButtonPressed:"/>
+                <relationship kind="action" name="locateUserButtonPressed:"/>
+                <relationship kind="action" name="mapButtonPressed:"/>
+                <relationship kind="action" name="searchButtonPressed:"/>
+                <relationship kind="action" name="sortButtonPressed:"/>
+                <relationship kind="outlet" name="bottomToolBar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="locateUserButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="shopListTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BKUserToolViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKUserToolViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logoutButtonPressed:"/>
+                <relationship kind="action" name="segmentationChanged:"/>
+                <relationship kind="outlet" name="segmentaionControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="userToolTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <AddressBookUI/ABAddressFormatting.h>
+#import <AddressBook/ABPerson.h>
 #import "OSConnectionManager.h"
 #import "CWLSynthesizeSingleton.h"
 

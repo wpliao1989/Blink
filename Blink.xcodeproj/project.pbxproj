@@ -36,6 +36,8 @@
 		CE805BAC16C3A9220040095F /* BKNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BAB16C3A9210040095F /* BKNoteViewController.m */; };
 		CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE805BAD16C3AC3E0040095F /* QuartzCore.framework */; };
 		CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8097E416DB57FC0036C047 /* BKItemSelectButton.m */; };
+		CE80A25416DF56F8007CA904 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE80A25316DF56F7007CA904 /* AddressBookUI.framework */; };
+		CE80A25616DF5F4F007CA904 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE80A25516DF5F4E007CA904 /* AddressBook.framework */; };
 		CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81758416D46AB4002FA6BB /* CoreLocation.framework */; };
 		CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */; };
 		CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758B16D47C2F002FA6BB /* BKShopInfo.m */; };
@@ -45,8 +47,6 @@
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
 		CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */; };
 		CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */; };
-		CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; };
-		CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +103,8 @@
 		CE805BAD16C3AC3E0040095F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE8097E316DB57FC0036C047 /* BKItemSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKItemSelectButton.h; sourceTree = "<group>"; };
 		CE8097E416DB57FC0036C047 /* BKItemSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKItemSelectButton.m; sourceTree = "<group>"; };
+		CE80A25316DF56F7007CA904 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		CE80A25516DF5F4E007CA904 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		CE81758416D46AB4002FA6BB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfoManager.h; sourceTree = "<group>"; };
 		CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfoManager.m; sourceTree = "<group>"; };
@@ -126,10 +128,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE80A25616DF5F4F007CA904 /* AddressBook.framework in Frameworks */,
+				CE80A25416DF56F8007CA904 /* AddressBookUI.framework in Frameworks */,
 				CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */,
 				CE805BAE16C3AC3E0040095F /* QuartzCore.framework in Frameworks */,
-				CEF12DDC16B923EF00EB00C3 /* SystemConfiguration.framework in Frameworks */,
-				CEF12DDA16B923E600EB00C3 /* Security.framework in Frameworks */,
 				CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */,
 				CE7A78C316B760610072519F /* UIKit.framework in Frameworks */,
 				CE7A78C516B760610072519F /* Foundation.framework in Frameworks */,
@@ -153,6 +155,7 @@
 		CE7A78B316B760610072519F = {
 			isa = PBXGroup;
 			children = (
+				CE80A25516DF5F4E007CA904 /* AddressBook.framework */,
 				CE7A78CA16B760610072519F /* Blink */,
 				CE7A78C116B760610072519F /* Frameworks */,
 				CE7A78BF16B760610072519F /* Products */,
@@ -170,6 +173,7 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE80A25316DF56F7007CA904 /* AddressBookUI.framework */,
 				CE81758416D46AB4002FA6BB /* CoreLocation.framework */,
 				CE805BAD16C3AC3E0040095F /* QuartzCore.framework */,
 				CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */,

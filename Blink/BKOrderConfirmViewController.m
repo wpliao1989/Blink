@@ -17,15 +17,22 @@
 @interface BKOrderConfirmViewController ()
 
 - (IBAction)orderConfirmButtonPressed:(id)sender;
-@property (strong, nonatomic) IBOutlet UILabel *totalPrice;
-@property (strong, nonatomic) IBOutlet UILabel *userName;
-@property (strong, nonatomic) IBOutlet UILabel *userPhone;
-@property (strong, nonatomic) IBOutlet UILabel *shopName;
-@property (strong, nonatomic) IBOutlet UILabel *serviceType;
+@property (strong, nonatomic) IBOutlet UILabel *totalPriceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userPhoneLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *serviceTypeLabel;
 
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 
+@property (strong, nonatomic) NSString *userToken;
+@property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *userPhone;
+@property (strong, nonatomic) NSString *userAddress;
+
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
+
+- (void)initUserInfos;
 
 @end
 
@@ -33,8 +40,34 @@
 
 @synthesize shopInfo = _shopInfo;
 
+@synthesize userToken = _userToken;
+@synthesize userName = _userName;
+@synthesize userPhone = _userPhone;
+@synthesize userAddress = _userAddress;
+
+- (void)setUserName:(NSString *)userName {
+    _userName = userName;
+    self.userNameLabel.text = userName;
+}
+
+- (void)setUserPhone:(NSString *)userPhone {
+    _userPhone = userPhone;
+    self.userPhoneLabel.text = userPhone;
+}
+
+- (void)setUserAddress:(NSString *)userAddress {
+    _userAddress = userAddress;
+}
+
 - (BKShopInfo *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
+}
+
+- (void)initUserInfos {
+    self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
+    self.userName = [BKAccountManager sharedBKAccountManager].userName;
+    self.userPhone = [BKAccountManager sharedBKAccountManager].userPhone;
+//    self.userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,10 +83,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
-    self.shopName.text = [[BKOrderManager sharedBKOrderManager] shopName];
-    self.userName.text = [BKAccountManager sharedBKAccountManager].userName;
-    self.userPhone.text = [BKAccountManager sharedBKAccountManager].userPhone;
+    self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
+    self.shopNameLabel.text = [[BKOrderManager sharedBKOrderManager] shopName];
+    [self initUserInfos];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +126,7 @@
 
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
+    [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
     [[BKOrderManager sharedBKOrderManager] sendOrder];
     
     UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];

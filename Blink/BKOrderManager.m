@@ -65,6 +65,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 //    return YES;
 //}
 
+- (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
+    self.order.userToken = token;    
+    self.order.phone = phone;
+    self.order.address = address;
+}
+
 - (void)sendOrder {
 //    BKOrder *testDict = [BKTestCenter testOrder];
     [[BKAPIManager sharedBKAPIManager] orderWithData:[self.order orderForAPI] completionHandler:^(NSURLResponse *response, id data, NSError *error) {
