@@ -30,6 +30,9 @@ NSString *const kBKMenuDetail = @"detail";
 @synthesize sweetnessLevels = _sweetnessLevels;
 @synthesize detail = _detail;
 
+@synthesize priceLevels = _priceLevels;
+@synthesize sizeLevels = _sizeLevels;
+
 - (NSNumber *)UUID {
 #warning UUID may need to be converted to NSNumber
     return [self.data objectForKey:kBKMenuUUID];
@@ -53,6 +56,20 @@ NSString *const kBKMenuDetail = @"detail";
 
 - (NSString *)detail {
     return [self.data objectForKey:kBKMenuDetail];
+}
+
+- (NSArray *)priceLevels {
+    if (_priceLevels == nil) {
+        _priceLevels = @[@"20", @"30", @"10"];
+    }
+    return _priceLevels;
+}
+
+- (NSArray *)sizeLevels {
+    if (_sizeLevels == nil) {
+        _sizeLevels = @[@"正常", @"大", @"小"];
+    }
+    return _sizeLevels;
 }
 
 - (id)initWithData:(NSDictionary *)data  {

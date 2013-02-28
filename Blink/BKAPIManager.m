@@ -38,6 +38,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 @synthesize userCoordinate = _userCoordinate;
 @synthesize isLocationFailed = _isLocationFailed;
 
+- (void)setIsLoadingData:(BOOL)isLoadingData {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = isLoadingData;
+    _isLoadingData = isLoadingData;    
+}
+
 - (CLLocationManager *)locationManager {
     if (_locationManager == nil) {
         _locationManager = [[CLLocationManager alloc] init];
@@ -260,7 +265,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSString *kBKOrderRecordTime = @"recordTime";
     NSString *kBKOrderUserAddress = @"address";
     NSString *kBKOrderUserPhone = @"phone";
-    NSString *kBKOrderContent = @"content";   
+    NSString *kBKOrderContent = @"content";
+    NSString *kBKNote = @"note";
     
 //    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
 //    [parameterDictionary setObject:order.userToken forKey:kBKOrderUserToken];
@@ -278,7 +284,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           kBKOrderRecordTime : order.recordTime,
                                           kBKOrderUserAddress : order.address,
                                           kBKOrderUserPhone : order.phone,
-                                          kBKOrderContent :order.content.count > 0? order.content : [NSNull null]};
+                                          kBKOrderContent : order.content,
+                                            kBKNote : order.note};
     
     
     NSLog(@"order = %@", parameterDictionary);

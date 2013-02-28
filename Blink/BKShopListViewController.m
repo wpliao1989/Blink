@@ -225,7 +225,7 @@ typedef enum  {
 #warning Test shops inserted here
     // Test        
     NSArray *testShopInfos = [BKTestCenter testShopInfos];
-    NSArray *testShopIDs = @[@"10", @"20", @"30"];
+    NSArray *testShopIDs = @[@"1000", @"2000", @"3000"];
 //    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
 //    for (NSDictionary *shopInfo in testShopInfos) {
 //        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];

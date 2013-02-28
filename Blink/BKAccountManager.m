@@ -51,7 +51,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
         self.userName = @"Flyingman";
         self.userPhone = @"987654321";
         // fetch user favorite shop IDs
-        self.favoriteShopIDs = @[@"01", @"02", @"03"];
+        self.favoriteShopIDs = @[@"4000", @"5000", @"6000"];
         NSArray *testFavShops = [BKTestCenter testFavoriteShops];
         for (int i = 0; i < self.favoriteShopIDs.count; i++) {
             [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testFavShops objectAtIndex:i] forShopID:[self.favoriteShopIDs objectAtIndex:i]];

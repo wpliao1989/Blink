@@ -83,6 +83,7 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     return self.content.count;
 }
 
+#warning Must fill out empty properties before submission
 - (BKOrder *)orderForAPI {
     BKOrder *theOrder = [[BKOrder alloc] init];
     theOrder.userToken = self.userToken != nil ? self.userToken : @"none";

@@ -28,25 +28,30 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
     BKSelectionSweetnessNotSelected = 4
 };
 
+NSInteger iceComponent = 0;
+NSInteger sweetnessComponent = 1;
+NSInteger sizeComponent = 0;
+NSInteger quantityComponent = 1;
+
 @interface BKMakeOrderViewController ()
 
 - (IBAction)makeOrderButtonPressed:(id)sender;
 - (IBAction)noteButtonPressed:(id)sender;
 - (IBAction)addOrderContentButtonPressed:(id)sender;
 - (IBAction)selectItemButtonPressed:(id)sender;
-- (IBAction)selectIceButtonPressed:(id)sender;
-- (IBAction)selectSweetnessButtonPressed:(id)sender;
+- (IBAction)selectIceAndSweetnessButtonPressed:(id)sender;
+- (IBAction)selectSizeAndQuantityButtonPressed:(id)sender;
 - (IBAction)selectQuantityButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *itemButton;
-@property (strong, nonatomic) IBOutlet BKItemSelectButton *iceButton;
-@property (strong, nonatomic) IBOutlet BKItemSelectButton *sweetnessButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *iceAndSweetnessButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *sizeAndQuantityButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *quantityButton;
 @property (strong, nonatomic) IBOutlet UIPickerView *itemPicker;
-@property (strong, nonatomic) IBOutlet UIPickerView *icePicker;
-@property (strong, nonatomic) IBOutlet UIPickerView *sweetnessPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *iceAndSweetnessPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *sizeAndQuantityPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 
 @property (strong, nonatomic) BKShopInfo *shopInfo;
@@ -57,6 +62,7 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
 @property (strong, nonatomic) NSString *selectedIceLevel;
 @property (strong, nonatomic) NSString *selectedSweetness;
 @property (strong, nonatomic) NSNumber *selectedQuantity;
+@property (strong, nonatomic) NSString *selectedSize;
 
 @property (strong, nonatomic) UIAlertView *orderExistAlert;
 @property (strong, nonatomic) UIAlertView *inValidSelectionAlert;
@@ -65,15 +71,25 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 - (void)initSettings;
+
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row;
 - (void)updateSelectedIceWithRow:(NSInteger)row;
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row;
 - (void)updateSelectedQuantityWithRow:(NSInteger)row;
+- (void)updateSelectedSizeWithRow:(NSInteger)row;
+
 - (void)addOrderContent;
 - (NSArray *)inValidSelectionCodes;
 - (NSString *)inValidMessage;
 - (NSString *)orderExistsMessage;
+
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
+- (void)updateIceAndSweetnessButtonTitle;
+- (void)updateSizeAndQuantityButtonTitle;
+
+- (BOOL)hasSelectableIce;
+- (BOOL)hasSelectableSweetness;
+- (BOOL)hasSelectableSize;
 
 // For test purposes
 - (void)testPrint;
@@ -94,6 +110,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 @synthesize selectedIceLevel = _selectedIceLevel;
 @synthesize selectedSweetness = _selectedSweetness;
 @synthesize selectedQuantity = _selectedQuantity;
+@synthesize selectedSize = _selectedSize;
 
 @synthesize orderExistAlert = _orderExistAlert;
 @synthesize inValidSelectionAlert = _inValidSelectionAlert;
@@ -142,32 +159,26 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (void)setSelectedItemName:(NSString *)selectedItemName {
     _selectedItemName = selectedItemName;
     [self changeButtonTitleButton:self.itemButton title:selectedItemName];
-//    [self.itemButton setTitle:selectedItemName forState:UIControlStateNormal];
-//    [self.itemButton setTitle:selectedItemName forState:UIControlStateSelected];
-//    [self.itemButton setTitle:selectedItemName forState:UIControlStateHighlighted];
 }
 
 - (void)setSelectedIceLevel:(NSString *)selectedIceLevel {
     _selectedIceLevel = selectedIceLevel;
-    [self changeButtonTitleButton:self.iceButton title:selectedIceLevel];
-//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateNormal];
-//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateSelected];
-//    [self.iceButton setTitle:selectedIceLevel forState:UIControlStateHighlighted];
+    [self updateIceAndSweetnessButtonTitle];
 }
 
 - (void)setSelectedSweetness:(NSString *)selectedSweetness {
     _selectedSweetness = selectedSweetness;
-    [self changeButtonTitleButton:self.sweetnessButton title:selectedSweetness];
-//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateNormal];
-//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateSelected];
-//    [self.sweetnessButton setTitle:selectedSweetness forState:UIControlStateHighlighted];
+    [self updateIceAndSweetnessButtonTitle];
 }
 
 - (void)setSelectedQuantity:(NSNumber *)selectedQuantity {
     _selectedQuantity = selectedQuantity;
-    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateNormal];
-    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateSelected];
-    [self.quantityButton setTitle:[selectedQuantity stringValue] forState:UIControlStateHighlighted];
+    [self updateSizeAndQuantityButtonTitle];
+}
+
+- (void)setSelectedSize:(NSString *)selectedSize {
+    _selectedSize = selectedSize;
+    [self updateSizeAndQuantityButtonTitle];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -199,8 +210,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     }        
     
     self.itemButton.inputView = self.itemPicker;    
-    self.iceButton.inputView = self.icePicker;
-    self.sweetnessButton.inputView = self.sweetnessPicker;
+    self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
+    self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
     self.quantityButton.inputView = self.quantityPicker;
 //    self.quantityButton.titleLabel.text = [[self.quantityLevels objectAtIndex:0] stringValue];
 //    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateNormal];
@@ -292,6 +303,12 @@ static NSString *noSelectableItem = @"無可選擇項目";
 #pragma mark - Picker view dataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    if (pickerView == self.iceAndSweetnessPicker) {
+        return 2;
+    }
+    else if (pickerView == self.sizeAndQuantityPicker) {
+        return 2;
+    }
     return 1;
 }
 
@@ -304,17 +321,28 @@ static NSString *noSelectableItem = @"無可選擇項目";
             count = self.menu.count;
         }        
         
-    }else if (pickerView == self.icePicker) {
-//        count = self.menu
+    }else if (pickerView == self.iceAndSweetnessPicker) {        
         
-        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
-            count = self.selectedMenuItem.iceLevels.count;
+        if (component == iceComponent) {
+            if ([self hasSelectableIce]) {
+                count = self.selectedMenuItem.iceLevels.count;
+            }
+        }        
+        else if (component == sweetnessComponent) {
+            if ([self hasSelectableSweetness]) {
+                count = self.selectedMenuItem.sweetnessLevels.count;
+            }
+        }    
+        
+    }else if (pickerView == self.sizeAndQuantityPicker) {
+        
+        if (component == sizeComponent) {
+            if ([self hasSelectableSize]) {
+                count = self.selectedMenuItem.sizeLevels.count;
+            }
         }
-        
-    }else if (pickerView == self.sweetnessPicker) {
-        
-        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
-            count = self.selectedMenuItem.sweetnessLevels.count;
+        else if (component == quantityComponent) {
+            count = self.quantityLevels.count;
         }
         
     }else if (pickerView == self.quantityPicker) {
@@ -338,69 +366,74 @@ static NSString *noSelectableItem = @"無可選擇項目";
     if (pickerView == self.itemPicker) {
 
         [self updateSelectedMenuItemWithRow:row];
-//        BKMenuItem *theItem = [self.menu objectAtIndex:row];
-//        self.selectedMenuItem = theItem;
-//        self.selectedItemName = theItem.name;
-//        [self.icePicker reloadAllComponents];
-//        [self.sweetnessPicker reloadAllComponents];
         
-    }else if (pickerView == self.icePicker) {
+    }else if (pickerView == self.iceAndSweetnessPicker) {
         
-        [self updateSelectedIceWithRow:row];
-//        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
-//            self.selectedIceLevel = [self.selectedMenuItem.iceLevels objectAtIndex:row];
-//        }        
+        if (component == iceComponent) {
+            [self updateSelectedIceWithRow:row];
+        }
+        else if (component == sweetnessComponent) {
+            [self updateSelectedSweetnessWithRow:row];
+        }     
         
-    }else if (pickerView == self.sweetnessPicker) {
+    }else if (pickerView == self.sizeAndQuantityPicker) {
         
-        [self updateSelectedSweetnessWithRow:row];
-//        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
-//            self.selectedSweetness = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
-//        }
+        if (component == sizeComponent) {
+            [self updateSelectedSizeWithRow:row];
+        }
+        else if (component == quantityComponent) {
+            [self updateSelectedQuantityWithRow:row];
+        }
         
     }else if (pickerView == self.quantityPicker) {
         
         [self updateSelectedQuantityWithRow:row];
-//        NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
-//        NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
-//        self.selectedQuantity = theNumber;
     }
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    UILabel *label = (UILabel *)view;
+    if (label == nil) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    }  
     label.textAlignment = NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];    
+    label.backgroundColor = [UIColor clearColor];
+    label.text = noSelectableItem;
     
     if (pickerView == self.itemPicker) {
         
         if (self.menu.count > 0) {
             BKMenuItem *theItem = [self.menu objectAtIndex:row];
             label.text = theItem.name;
-        }
-        else {
-            label.text = noSelectableItem;
-        }
+        }           
         
+    }else if (pickerView == self.iceAndSweetnessPicker) {
         
-    }else if (pickerView == self.icePicker) {
-        
-        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
-            NSLog(@"%@", self.selectedMenuItem.iceLevels);
-            label.text = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+        if (component == iceComponent) {
+            if ([self hasSelectableIce]) {
+                NSLog(@"%@", self.selectedMenuItem.iceLevels);
+                label.text = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+            }
         }
-        else {
-            label.text = noSelectableItem;
-        }
+        else if (component == sweetnessComponent) {
+            if ([self hasSelectableSweetness]) {
+                NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
+                label.text = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+            }
+        } 
         
-    }else if (pickerView == self.sweetnessPicker) {
+    }else if (pickerView == self.sizeAndQuantityPicker) {
         
-        if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
-            NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
-            label.text = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+        if (component == sizeComponent) {
+            
+            if ([self hasSelectableSize]) {
+                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
+                label.text = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
+            }
         }
-        else {
-            label.text = noSelectableItem;
+        else if (component == quantityComponent) {
+            NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
+            label.text = [theNumber stringValue];
         }
         
     }else if (pickerView == self.quantityPicker) {
@@ -410,7 +443,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
     }
     
-    return label;
+    return label;       
 }
 
 #pragma mark - Alert view delegate
@@ -433,53 +466,70 @@ static NSString *noSelectableItem = @"無可選擇項目";
         if (theItem != self.selectedMenuItem) {
             self.selectedMenuItem = theItem;
             self.selectedItemName = theItem.name;
-            if (theItem.iceLevels.count == 0) {
+            
+            [self.iceAndSweetnessPicker reloadAllComponents];
+            [self.sizeAndQuantityPicker reloadAllComponents];
+            
+            if (![self hasSelectableIce] && ![self hasSelectableSweetness]) {
 //                NSLog(@"1");
                 self.selectedIceLevel = nil;
-                [self.iceButton setEnabled:NO];
-                [self changeButtonTitleButton:self.iceButton title:noSelectableItem];
+                [self.iceAndSweetnessButton setEnabled:NO];
+                [self changeButtonTitleButton:self.iceAndSweetnessButton title:noSelectableItem];
             }
             else {
 //                NSLog(@"2");
-                [self.iceButton setEnabled:YES];
-                [self.icePicker selectRow:0 inComponent:0 animated:NO];
-                [self pickerView:self.icePicker didSelectRow:0 inComponent:0];
+                [self.iceAndSweetnessButton setEnabled:YES];
+                
+                [self.iceAndSweetnessPicker selectRow:0 inComponent:iceComponent animated:NO];
+                [self pickerView:self.iceAndSweetnessPicker didSelectRow:0 inComponent:iceComponent];
+                
+                [self.iceAndSweetnessPicker selectRow:0 inComponent:sweetnessComponent animated:NO];
+                [self pickerView:self.iceAndSweetnessPicker didSelectRow:0 inComponent:sweetnessComponent];
             }
-            if (theItem.sweetnessLevels.count == 0) {
-//                NSLog(@"3");
-                self.selectedSweetness = nil;
-                [self.sweetnessButton setEnabled:NO];
-                [self changeButtonTitleButton:self.sweetnessButton title:noSelectableItem];
+//            if (theItem.sweetnessLevels.count == 0) {
+////                NSLog(@"3");
+//                self.selectedSweetness = nil;
+//                [self.sizeAndQuantityButton setEnabled:NO];
+//                [self changeButtonTitleButton:self.sizeAndQuantityButton title:noSelectableItem];
+//            }
+//            else {
+////                NSLog(@"4");
+//                [self.sizeAndQuantityButton setEnabled:YES];
+//                [self.sizeAndQuantityPicker selectRow:0 inComponent:0 animated:NO];
+//                [self pickerView:self.sizeAndQuantityPicker didSelectRow:0 inComponent:0];
+//            }
+            if ([self hasSelectableSize]) {
+                [self.sizeAndQuantityPicker selectRow:0 inComponent:sizeComponent animated:NO];
+                [self pickerView:self.sizeAndQuantityPicker didSelectRow:0 inComponent:sizeComponent];
             }
-            else {
-//                NSLog(@"4");
-                [self.sweetnessButton setEnabled:YES];
-                [self.sweetnessPicker selectRow:0 inComponent:0 animated:NO];
-                [self pickerView:self.sweetnessPicker didSelectRow:0 inComponent:0];
-            }
-            
-            [self.icePicker reloadAllComponents];
-            [self.sweetnessPicker reloadAllComponents];
-        }        
+        }
     }    
 }
 
 - (void)updateSelectedIceWithRow:(NSInteger)row {
-    if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0)) {
+    if ([self hasSelectableIce]) {
         self.selectedIceLevel = [self.selectedMenuItem.iceLevels objectAtIndex:row];
     }
 }
 
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row {
-    if ((self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0)) {
+    if ([self hasSelectableSweetness]) {
         self.selectedSweetness = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
     }
 }
 
 - (void)updateSelectedQuantityWithRow:(NSInteger)row {
     NSNumber *theNumber = [self.quantityLevels objectAtIndex:row];
-    NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
+//    NSLog(@"theNumber stringValue = %@", [theNumber stringValue]);
     self.selectedQuantity = theNumber;
+}
+
+- (void)updateSelectedSizeWithRow:(NSInteger)row {
+//    [self testPrint];
+    if ([self hasSelectableSize]) {
+        self.selectedSize = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
+    }
+//    [self testPrint];
 }
 
 - (void)addOrderContent {
@@ -490,7 +540,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
         BKOrderContent *newOrderContent = [[BKOrderContent alloc] initWithMenu:self.selectedMenuItem
                                                                            ice:self.selectedIceLevel
                                                                      sweetness:self.selectedSweetness
-                                                                      quantity:self.selectedQuantity];
+                                                                      quantity:self.selectedQuantity
+                                                                          size:self.selectedSize];
+        
         BOOL success = [[BKOrderManager sharedBKOrderManager] addNewOrderContent:newOrderContent forShopInfo:self.shopInfo completeHandler:^(NSInteger updatedRow, BOOL isNewItemAdded) {
             NSIndexPath *indexPathToBeUpdated = [NSIndexPath indexPathForRow:updatedRow inSection:0];
             if (isNewItemAdded) {
@@ -604,11 +656,36 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [button setTitle:title forState:UIControlStateHighlighted];
 }
 
+- (void)updateIceAndSweetnessButtonTitle {
+    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedIceLevel, self.selectedSweetness];
+    [self changeButtonTitleButton:self.iceAndSweetnessButton title:title];
+}
+
+- (void)updateSizeAndQuantityButtonTitle {
+//    [self testPrint];
+    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedSize, self.selectedQuantity];
+    [self changeButtonTitleButton:self.sizeAndQuantityButton title:title];
+}
+
+- (BOOL)hasSelectableIce {
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
+}
+
+- (BOOL)hasSelectableSweetness {
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0);
+}
+
+- (BOOL)hasSelectableSize {
+//    NSLog(@"self.selectedMenuItem.sizeLevels.count :%d", self.selectedMenuItem.sizeLevels.count);
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.sizeLevels.count > 0);
+}
+
 - (void)testPrint {
     NSLog(@"selectedItemName: %@", self.selectedItemName);
     NSLog(@"selectedIce: %@", self.selectedIceLevel);
     NSLog(@"selectedSweetness: %@", self.selectedSweetness);
     NSLog(@"selectedQuantity: %@", self.selectedQuantity);
+    NSLog(@"selectedSize: %@", self.selectedSize);
 }
 
 #pragma mark - IBActions
@@ -653,16 +730,20 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [self.itemButton becomeFirstResponder];
 }
 
-- (IBAction)selectIceButtonPressed:(id)sender {
-    NSInteger row = [self.icePicker selectedRowInComponent:0];
-    [self updateSelectedIceWithRow:row];
-    [self.iceButton becomeFirstResponder];
+- (IBAction)selectIceAndSweetnessButtonPressed:(id)sender {
+    NSInteger iceRow = [self.iceAndSweetnessPicker selectedRowInComponent:iceComponent];
+    NSInteger sweetnessRow = [self.iceAndSweetnessPicker selectedRowInComponent:sweetnessComponent];
+    [self updateSelectedIceWithRow:iceRow];
+    [self updateSelectedSweetnessWithRow:sweetnessRow];
+    [self.iceAndSweetnessButton becomeFirstResponder];
 }
 
-- (IBAction)selectSweetnessButtonPressed:(id)sender {
-    NSInteger row = [self.sweetnessPicker selectedRowInComponent:0];
-    [self updateSelectedSweetnessWithRow:row];
-    [self.sweetnessButton becomeFirstResponder];
+- (IBAction)selectSizeAndQuantityButtonPressed:(id)sender {
+    NSInteger sizeRow = [self.sizeAndQuantityPicker selectedRowInComponent:sizeComponent];
+    NSInteger quantityRow = [self.sizeAndQuantityPicker selectedRowInComponent:quantityComponent];
+    [self updateSelectedSizeWithRow:sizeRow];
+    [self updateSelectedQuantityWithRow:quantityRow];
+    [self.sizeAndQuantityButton becomeFirstResponder];
 }
 
 - (IBAction)selectQuantityButtonPressed:(id)sender {

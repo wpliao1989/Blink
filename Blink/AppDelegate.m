@@ -22,7 +22,7 @@
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
     
-//    [[UINavigationBar appearance] setBackgroundImage:<#(UIImage *)#>];  
+//    [[UINavigationBar appearance] setBackgroundImage:(UIImage *)];    
     [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
     return YES;
 }

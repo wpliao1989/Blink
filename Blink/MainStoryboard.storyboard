@@ -463,7 +463,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="slv-Aq-9Rc">
-                                <rect key="frame" x="11" y="179" width="298" height="254"/>
+                                <rect key="frame" x="11" y="168" width="298" height="265"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -520,7 +520,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o8V-zP-Bbi">
-                                <rect key="frame" x="195" y="141" width="105" height="31"/>
+                                <rect key="frame" x="195" y="130" width="105" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="新增至訂單">
@@ -560,7 +560,7 @@
                                 <rect key="frame" x="115" y="50" width="185" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="冰量">
+                                <state key="normal" title="冰量、糖量">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -568,14 +568,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectIceButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="637-nq-zkA"/>
+                                    <action selector="selectIceAndSweetnessButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="oND-K5-BxY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BtW-x9-Nh9" customClass="BKItemSelectButton">
                                 <rect key="frame" x="115" y="90" width="185" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="糖量">
+                                <state key="normal" title="大小、數量">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -583,47 +583,25 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectSweetnessButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="8Ob-v2-iy2"/>
+                                    <action selector="selectSizeAndQuantityButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="rkU-ua-EVu"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="選擇品項" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RJK-Uk-yhO">
-                                <rect key="frame" x="20" y="15" width="73" height="21"/>
+                                <rect key="frame" x="27" y="15" width="73" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="冰量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8e-d2-m1H">
-                                <rect key="frame" x="20" y="55" width="73" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="冰量、糖量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8e-d2-m1H">
+                                <rect key="frame" x="20" y="55" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="糖量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ymd-Xk-Jru">
-                                <rect key="frame" x="20" y="95" width="73" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="04c-Ff-Q26" customClass="BKItemSelectButton">
-                                <rect key="frame" x="115" y="141" width="72" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="0">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectQuantityButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="he4-dd-Mf2"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="數量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Oc7-YJ-zTA">
-                                <rect key="frame" x="20" y="145" width="73" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="大小、數量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ymd-Xk-Jru">
+                                <rect key="frame" x="20" y="95" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -634,15 +612,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="訂購設定" id="YgF-3Y-ZTU"/>
                     <connections>
-                        <outlet property="iceButton" destination="D0g-Dv-zl3" id="6kz-TJ-0qJ"/>
-                        <outlet property="icePicker" destination="zdl-Tb-bjG" id="ecp-de-6IM"/>
+                        <outlet property="iceAndSweetnessButton" destination="D0g-Dv-zl3" id="jGR-LP-LlI"/>
+                        <outlet property="iceAndSweetnessPicker" destination="zdl-Tb-bjG" id="OFy-Ad-CXK"/>
                         <outlet property="itemButton" destination="YmZ-NP-wLV" id="E91-Kf-lJI"/>
                         <outlet property="itemPicker" destination="y5T-CT-Bxx" id="zg4-YW-7tM"/>
                         <outlet property="orderContent" destination="slv-Aq-9Rc" id="sRf-4Y-dgX"/>
                         <outlet property="quantityButton" destination="04c-Ff-Q26" id="4QB-x8-XQN"/>
                         <outlet property="quantityPicker" destination="qcG-Sl-Heu" id="Re8-Hh-G1b"/>
-                        <outlet property="sweetnessButton" destination="BtW-x9-Nh9" id="6bs-s6-7Jm"/>
-                        <outlet property="sweetnessPicker" destination="iXj-Z9-UmL" id="5Cd-dz-6hv"/>
+                        <outlet property="sizeAndQuantityButton" destination="BtW-x9-Nh9" id="ICM-Ji-kZ2"/>
+                        <outlet property="sizeAndQuantityPicker" destination="iXj-Z9-UmL" id="G3m-Bn-ybs"/>
                         <outlet property="totalPrice" destination="qMh-gb-Yjg" id="pVo-Gx-Iit"/>
                         <segue destination="pr9-DW-WBx" kind="push" identifier="orderConfirmSegue" id="7kI-bq-AX4"/>
                         <segue destination="gZU-Sn-msS" kind="modal" identifier="fromOrderToLoginSegue" id="LP2-pZ-FvA"/>
@@ -681,6 +659,28 @@
                         <outlet property="delegate" destination="xZP-RZ-ETy" id="cyI-xG-CA3"/>
                     </connections>
                 </pickerView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="04c-Ff-Q26" customClass="BKItemSelectButton">
+                    <rect key="frame" x="0.0" y="0.0" width="72" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="0">
+                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="selectQuantityButtonPressed:" destination="xZP-RZ-ETy" eventType="touchUpInside" id="he4-dd-Mf2"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="數量" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Oc7-YJ-zTA">
+                    <rect key="frame" x="0.0" y="0.0" width="73" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </objects>
             <point key="canvasLocation" x="1838" y="398"/>
         </scene>

@@ -28,7 +28,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
 @synthesize basePrice = _basePrice;
 @synthesize price = _price;
 
-- (id)initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity{
+- (id)initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size{
     self = [super init];
     if (self) {
         self.UUID = menu.UUID;
@@ -36,6 +36,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
         self.ice = ice;
         self.sweetness = sweetness;
         self.quantity = quantity;
+        self.size = size;
     }
     return self;
 }
