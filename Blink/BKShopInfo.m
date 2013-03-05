@@ -31,6 +31,8 @@ NSString *const kBKShopCoWorkChannel = @"coWorkChannel";
 NSString *const kBKShopDescription = @"intro";
 NSString *const kBKShopIsDeliverable = @"deliverable";
 
+static NSString *emptyString = @"Null content";
+
 @interface BKShopInfo ()
 
 @property (strong, nonatomic) NSDictionary *data;
@@ -71,6 +73,9 @@ NSString *const kBKShopIsDeliverable = @"deliverable";
 //}
 
 - (NSString *)name {
+    if ([self.data objectForKey:kBKShopName] == [NSNull null]) {
+        return emptyString;
+    }
     return [self.data objectForKey:kBKShopName];
 }
 
@@ -87,22 +92,37 @@ NSString *const kBKShopIsDeliverable = @"deliverable";
 }
 
 - (NSString *)phone {
+    if ([self.data objectForKey:kBKShopPhone] == [NSNull null]) {
+        return emptyString;
+    }
     return [self.data objectForKey:kBKShopPhone];
 }
 
 - (NSString *)address {
+    if ([self.data objectForKey:kBKShopAddress] == [NSNull null]) {
+        return emptyString;
+    }
     return [self.data objectForKey:kBKShopAddress];
 }
 
 - (NSString *)openHours {
+    if ([self.data objectForKey:kBKShopOpenHour] == [NSNull null]) {
+        return emptyString;
+    }    
     return [self.data objectForKey:kBKShopOpenHour];
 }
 
 - (NSString *)shopDescription {
+    if ([self.data objectForKey:kBKShopDescription] == [NSNull null]) {
+        return emptyString;
+    }
     return [self.data objectForKey:kBKShopDescription];
 }
 
 - (NSString *)shopID {
+    if ([self.data objectForKey:kBKShopID] == [NSNull null]) {
+        return emptyString;
+    }
     return [self.data objectForKey:kBKShopID];
 }
 

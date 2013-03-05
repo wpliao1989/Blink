@@ -118,13 +118,7 @@
                                 <rect key="frame" x="0.0" y="29" width="320" height="475"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="在這裡修改您的個人資料" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rhW-0Z-rOE">
-                                        <rect key="frame" x="57" y="227" width="206" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pke-jH-neG">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pke-jH-neG">
                                         <rect key="frame" x="110" y="260" width="100" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="完成未完訂單">
@@ -135,6 +129,27 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gVB-zT-yld">
+                                        <rect key="frame" x="85" y="150" width="150" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q1D-JS-eII">
+                                        <rect key="frame" x="85" y="180" width="150" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R4h-sm-BAr">
+                                        <rect key="frame" x="10" y="210" width="300" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -209,6 +224,9 @@
                     <connections>
                         <outlet property="segmentaionControl" destination="Hn4-WM-TFl" id="oVz-bj-S91"/>
                         <outlet property="userDataModificationView" destination="Lb3-9i-uK7" id="d2s-3k-cQv"/>
+                        <outlet property="userEmailLabel" destination="Q1D-JS-eII" id="nIz-J8-mAh"/>
+                        <outlet property="userNameLabel" destination="gVB-zT-yld" id="w7t-Ef-lWg"/>
+                        <outlet property="userTokenLabel" destination="R4h-sm-BAr" id="dBw-UY-jaV"/>
                         <outlet property="userToolTableView" destination="BkM-4H-rPx" id="gAL-MV-5Ta"/>
                         <segue destination="mgw-hS-r6z" kind="push" identifier="fromFavoriteShopDetailSegue" id="cvb-pK-M3T"/>
                     </connections>
@@ -1312,6 +1330,9 @@
                 <relationship kind="action" name="segmentationChanged:"/>
                 <relationship kind="outlet" name="segmentaionControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="userEmailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userTokenLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userToolTableView" candidateClass="UITableView"/>
             </relationships>
         </class>

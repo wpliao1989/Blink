@@ -33,8 +33,10 @@ NSString *const kBKMenuDetail = @"detail";
 @synthesize priceLevels = _priceLevels;
 @synthesize sizeLevels = _sizeLevels;
 
-- (NSNumber *)UUID {
+- (NSString *)UUID {
 #warning UUID may need to be converted to NSNumber
+    NSLog(@"UUID is %@", [self.data objectForKey:kBKMenuUUID]);
+    NSLog(@"UUID class is %@", [[self.data objectForKey:kBKMenuUUID] class]);
     return [self.data objectForKey:kBKMenuUUID];
 }
 
@@ -47,10 +49,16 @@ NSString *const kBKMenuDetail = @"detail";
 }
 
 - (NSArray *)iceLevels {
+    if ([self.data objectForKey:kBKMenuIce] == [NSNull null]) {
+        return @[];
+    }
     return [self.data objectForKey:kBKMenuIce];
 }
 
 - (NSArray *)sweetnessLevels {
+    if ([self.data objectForKey:kBKMenuSweetness] == [NSNull null]) {
+        return @[];
+    }
     return [self.data objectForKey:kBKMenuSweetness];
 }
 

@@ -110,10 +110,11 @@ NSString *const kBKOrderContentQuantity = @"quantity";
         return NO;
     }
     
-    if (([self.UUID isEqualToNumber:theOrderContent.UUID]) &&
+    if (([self.UUID isEqualToString:theOrderContent.UUID]) &&
         ([self.name isEqualToString:theOrderContent.name]) &&
         (([self.ice isEqualToString:theOrderContent.ice]) || ((self.ice == nil) && (theOrderContent.ice == nil))) &&
-        (([self.sweetness isEqualToString:theOrderContent.sweetness]) || ((self.sweetness == nil) && (theOrderContent.sweetness == nil)))) {
+        (([self.sweetness isEqualToString:theOrderContent.sweetness]) || ((self.sweetness == nil) && (theOrderContent.sweetness == nil))) &&
+        ([self.size isEqualToString:theOrderContent.size])) {
         return YES;
     }
     return NO;

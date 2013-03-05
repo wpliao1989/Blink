@@ -61,6 +61,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index {
+    NSLog(@"ShopInfoAtIndex: [self.shopIDs objectAtIndex:index]: %@", [self.shopIDs objectAtIndex:index]);
     return [self.shopInfoDictionary objectForKey:[self.shopIDs objectAtIndex:index]];
 }
 
@@ -73,7 +74,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID {
-    // Assume rawData is a dictionary    
+    // Assume rawData is a dictionary
+    if (rawData == [NSNull null]) {
+        NSLog(@"Warning: data for shop id %@ is NSNull!", shopID);
+        return;
+    }
     
     if ([self.shopInfoDictionary objectForKey:shopID] == nil) {
         NSLog(@"Add new shop info for key %@", shopID);
@@ -82,13 +87,30 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     }
     else {
         BKShopInfo *oldShopInfo = [self.shopInfoDictionary objectForKey:shopID];
-        NSLog(@"oldShopInfo :%@", oldShopInfo);        
+        NSLog(@"Replace shop info for key %@", shopID);
+//        NSLog(@"oldShopInfo.name: %@", oldShopInfo.name);
+//        NSLog(@"newShopInfo.name: %@", [rawData objectForKey:@"name"]);
         [oldShopInfo updateWithData:rawData];
+    }
+}
+
+- (void)addShopInfosWithRawDatas:(NSArray *)rawDatas forShopIDs:(NSArray *)shopIDs {
+    if (rawDatas.count != shopIDs.count) {
+        NSLog(@"Warning: rawData.count != shopIDs.count!");
+    }
+    
+    for (int i = 0; i < rawDatas.count; i++) {
+        [self addShopInfoWithRawData:[rawDatas objectAtIndex:i] forShopID:[shopIDs objectAtIndex:i]];
     }
 }
 
 - (void)clearShopIDs {
     self.shopIDs = nil;
+}
+
+- (void)printShopIDs {
+    NSLog(@"BKShopInfoManager test print!");
+    NSLog(@"ShopIDs: %@", self.shopIDs);
 }
 
 //- (void)addShopInfoWithRawData:(NSDictionary *)rawData {

@@ -39,12 +39,15 @@
 }
 
 - (IBAction)confirmRegistrationButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] loginWithCompleteHandler:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    }];    
+    [[BKAccountManager sharedBKAccountManager] loginWithCompleteHandler:^(BOOL success) {
+        if (success) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }
+        else {
+            NSLog(@"login failed!");
+        }
+    }];
 }
-
-
 @end

@@ -18,8 +18,8 @@
 + (NSArray *)testShopInfos {   
     NSDictionary *shop11menu = @{kBKMenuUUID:@1000,
                                  kBKMenuName:@"喝的東西",
-                                   kBKMenuIce: @[@"low", @"normal"],
-                                   kBKMenuSweetness: @[@"half"]};
+                                   kBKMenuIce: @[@"正常", @"七分", @"一半", @"三分", @"去冰", @"熱"],
+                                   kBKMenuSweetness: @[@"正常", @"七分", @"一半", @"三分", @"無糖"]};
     NSDictionary *shop12menu = @{kBKMenuUUID:@2000,
                                  kBKMenuName:@"吃的東西"
                                  

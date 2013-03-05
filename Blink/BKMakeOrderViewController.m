@@ -207,16 +207,14 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     for (BKMenuItem *item in self.menu) {
         NSLog(@"name of item is %@", item.name);
+        NSLog(@"%@", item.UUID);
     }        
     
     self.itemButton.inputView = self.itemPicker;    
     self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
     self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
     self.quantityButton.inputView = self.quantityPicker;
-//    self.quantityButton.titleLabel.text = [[self.quantityLevels objectAtIndex:0] stringValue];
-//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateNormal];
-//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateSelected];
-//    [self.quantityButton setTitle:[[self.quantityLevels objectAtIndex:0] stringValue] forState:UIControlStateHighlighted];
+
     [self updateSelectedQuantityWithRow:0];
     [self updateSelectedMenuItemWithRow:0];
     
@@ -412,13 +410,13 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
         if (component == iceComponent) {
             if ([self hasSelectableIce]) {
-                NSLog(@"%@", self.selectedMenuItem.iceLevels);
+//                NSLog(@"%@", self.selectedMenuItem.iceLevels);
                 label.text = [self.selectedMenuItem.iceLevels objectAtIndex:row];
             }
         }
         else if (component == sweetnessComponent) {
             if ([self hasSelectableSweetness]) {
-                NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
+//                NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
                 label.text = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
             }
         } 
@@ -428,7 +426,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
         if (component == sizeComponent) {
             
             if ([self hasSelectableSize]) {
-                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
+//                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
                 label.text = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
             }
         }
@@ -677,10 +675,14 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (BOOL)hasSelectableIce {
-    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
+    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);
+    return NO;
+//    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
 }
 
 - (BOOL)hasSelectableSweetness {
+    NSLog(@"self.selectedMenuItem.sweetnessLevels: %@", self.selectedMenuItem.sweetnessLevels);
+    return NO;
     return (self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0);
 }
 

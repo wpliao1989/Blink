@@ -5,7 +5,8 @@
 //  Created by Wei Ping on 13/2/19.
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
-
+#import "Base64.h"
+#import "Sha1.h"
 #import "BKAPIManager.h"
 #import "BKOrder.h"
 
@@ -168,7 +169,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (NSString *)encodePWD:(NSString *)pwd {
-    return pwd;
+//    NSString *sha1String = [Sha1 dataUsingSha1:pwd];
+//    NSLog(@"sha1String: %@", sha1String);
+//    
+//    NSString *base64String = [Base64 encodeWithNSString:sha1String];
+//    NSLog(@"base64String: %@", base64String);
+    
+//    NSString *base64String123 = [Base64 encodeWithNSString:@"ffc9bb611e2b3c47f74b12293c29924a5ff872cc"];
+//    NSLog(@"base64String123: %@", base64String123);
+    
+    return [Base64 encode:[Sha1 dataUsingSha1:pwd]];
 }
 
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler {
@@ -192,27 +202,48 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   
+    static NSString *kShopIDs = @"sShopID";
     
     [self listWithListCriteria:criteria completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         NSLog(@"response: %@", response);
         NSLog(@"data :%@", data);
         NSLog(@"error: %@", error);
         
-        __block NSArray *shopIDs = data;
-        __block NSMutableArray *shopRawDatas;
-        for (__block NSString *theShopID in shopIDs) {
-            [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-                [shopRawDatas addObject:data];                
-                if ([theShopID isEqualToString:[shopIDs lastObject]]) {
-                    self.isLoadingData = NO;
-                    completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);                    
-                }
-            }];
-        }
+        __block NSMutableArray *shopIDs = [[data objectForKey:kShopIDs] mutableCopy];
+        __block NSMutableDictionary *shopRawDatas = [NSMutableDictionary dictionary];
+        
         if (shopIDs.count == 0) {
             self.isLoadingData = NO;
-            completeHandler(shopIDs, [NSArray arrayWithArray:shopRawDatas]);
+            completeHandler(shopIDs, @[]);
         }
+        
+        for (int i = 0; i < shopIDs.count; i++) {
+            NSString *theShopID = [shopIDs objectAtIndex:i];
+        
+            [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//                NSLog(@"the shop id :%@", theShopID);
+                NSLog(@"shop detail data :%@", data);
+//                NSLog(@"Shop name:%@", [data objectForKey:@"name"]);
+                NSLog(@"shop detail data class: %@", [data class]);
+                if (data == nil) {                    
+                    [shopIDs removeObject:theShopID];
+                }
+                else {
+                    [shopRawDatas setObject:data forKey:theShopID];
+                }
+                
+//                NSLog(@"shopRawDatas: %@", shopRawDatas);
+                if (shopRawDatas.count == shopIDs.count) {                   
+                    
+                    NSMutableArray *rawDatas = [NSMutableArray array];
+                    for (int j = 0; j < shopIDs.count; j++) {
+                        [rawDatas addObject:[shopRawDatas objectForKey:[shopIDs objectAtIndex:j]]];
+                    }
+                    self.isLoadingData = NO;
+                    completeHandler(shopIDs, rawDatas);                    
+                }
+            }];
+        }        
     }];   
 }
 
@@ -274,7 +305,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     static NSString *kShopID = @"sShopID";
     
     NSDictionary *parameterDictionary = @{kShopID : shopID};
-    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
+    [self callAPI:@"shop" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
 - (void)orderWithData:(BKOrder *)order completionHandler:(asynchronousCompleteHandler)completeHandler {

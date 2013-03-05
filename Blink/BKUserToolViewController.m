@@ -27,6 +27,13 @@ enum BKUserToolSegmentationSelection {
 @property (strong, nonatomic) NSArray *orderlist;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
 @property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
+@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userEmailLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userTokenLabel;
+
+@property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *userEmail;
+@property (strong, nonatomic) NSString *userToken;
 
 @end
 
@@ -36,6 +43,24 @@ enum BKUserToolSegmentationSelection {
 @synthesize segmentaionControl = _segmentaionControl;
 @synthesize shopIDList = _shopIDList;
 @synthesize orderlist = _orderlist;
+@synthesize userName = _userName;
+@synthesize userEmail = _userEmail;
+@synthesize userToken = _userToken;
+
+- (void)setUserName:(NSString *)userName {
+    _userName = userName;
+    self.userNameLabel.text = userName;
+}
+
+- (void)setUserEmail:(NSString *)userEmail {
+    _userEmail = userEmail;
+    self.userEmailLabel.text = userEmail;
+}
+
+- (void)setUserToken:(NSString *)userToken {
+    _userToken = userToken;
+    self.userTokenLabel.text = userToken;
+}
 
 - (NSArray *)shopIDList {
     if (_shopIDList == nil) {
@@ -68,6 +93,9 @@ enum BKUserToolSegmentationSelection {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"self.shopIDs = %@", self.shopIDList);
+    self.userName = [BKAccountManager sharedBKAccountManager].userName;
+    self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
+    self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

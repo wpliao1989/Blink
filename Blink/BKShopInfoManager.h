@@ -23,7 +23,10 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 - (void)updateShopIDs:(NSArray *)shopIDs;
 - (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID;
+- (void)addShopInfosWithRawDatas:(NSArray *)rawDatas forShopIDs:(NSArray *)shopIDs;
 - (void)clearShopIDs;
+
+- (void)printShopIDs;
 
 //- (void)addShopInfoWithRawData:(id)rawData;
 

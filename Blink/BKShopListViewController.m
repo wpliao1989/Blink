@@ -79,7 +79,7 @@ typedef enum  {
 
 //@property (strong, nonatomic) NSMutableArray *shopInfos;
 
-- (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs;
+- (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
 // Methods for reloading data based on list criteria
 - (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
 - (void)locationDidChange;
@@ -219,33 +219,30 @@ typedef enum  {
 
 #pragma mark - Utility methods
 
-- (void)saveShopInfosWithShopIDs:(NSArray *)shopIDs {
+- (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs {
 //    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
     
 #warning Test shops inserted here
     // Test        
     NSArray *testShopInfos = [BKTestCenter testShopInfos];
     NSArray *testShopIDs = @[@"1000", @"2000", @"3000"];
-//    [BKShopInfoManager sharedBKShopInfoManager].shopInfos = [testShopInfos mutableCopy];
-//    for (NSDictionary *shopInfo in testShopInfos) {
-//        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:shopInfo];
-////        NSLog(@"%@", shopInfo);
-//    }
+
     [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:testShopIDs];
     for (int i = 0; i < testShopIDs.count; i++) {
         [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testShopInfos objectAtIndex:i] forShopID:[testShopIDs objectAtIndex:i]];
-//        NSLog(@"5456456465");
+
     }
     // End of Test]
     
+//    [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
 //    for (NSString *shopID in shopIDs) {
 //       [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //           
 //       }];
+//        NSLog(@"shopID: %@", shopID);
 //    }
-//    NSLog(@"%@", [BKShopInfoManager sharedBKShopInfoManager].shopInfos);
-    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //            [self.shopListTableView reloadData:YES];    
+
+    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];   
 }
 
 - (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
@@ -259,11 +256,19 @@ typedef enum  {
 ////                                              self.isLoadingNewData = NO;                                              
 //                                              [self saveShopInfosWithShopIDs:data];
 //                                          }];
-    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *shopRawDatas) {
-        [self saveShopInfosWithShopIDs:shopIDs];
+//    [self saveTestShopInfosWithShopIDs:nil];
+    
+    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria
+                                                completeHandler:^(NSArray *shopIDs, NSArray *shopRawDatas) {
+        
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
-//        NSLog(@"123123123123123132");
-    }];
+                                                    NSLog(@"shopIDs: %@", shopIDs);
+//                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
+                                                    [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
+                                                    [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
+                                                    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
+                                                }];
 }
 
 #pragma mark - TableViewDataSource, TableViewDelegate

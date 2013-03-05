@@ -29,6 +29,8 @@
 		CE7A78F216B766CD0072519F /* BKUserToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F116B766CD0072519F /* BKUserToolViewController.m */; };
 		CE7A78F516B7686E0072519F /* BKAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78F416B7686E0072519F /* BKAccountManager.m */; };
 		CE7A78FE16B79C8F0072519F /* BKRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */; };
+		CE7BFAE516E4AB8F00248B3E /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7BFAE416E4AB8F00248B3E /* Base64.m */; };
+		CE7E4D1C16E59918009B44F3 /* Sha1.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E4D1B16E59918009B44F3 /* Sha1.m */; };
 		CE7E9FC016B8EE3200A131B6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */; };
 		CE7F8A6716BF883E00BD4D85 /* BKMakeOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */; };
 		CE805B9916C39CDB0040095F /* BKOrderConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805B9816C39CDA0040095F /* BKOrderConfirmViewController.m */; };
@@ -87,6 +89,11 @@
 		CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
 		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
 		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
+		CE7BFAE316E4AB8F00248B3E /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		CE7BFAE416E4AB8F00248B3E /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		CE7E4D1716E5959B009B44F3 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
+		CE7E4D1A16E59918009B44F3 /* Sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sha1.h; sourceTree = "<group>"; };
+		CE7E4D1B16E59918009B44F3 /* Sha1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sha1.m; sourceTree = "<group>"; };
 		CE7E9FBF16B8EE3200A131B6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMakeOrderViewController.h; sourceTree = "<group>"; };
 		CE7F8A6616BF883E00BD4D85 /* BKMakeOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMakeOrderViewController.m; sourceTree = "<group>"; };
@@ -155,7 +162,6 @@
 		CE7A78B316B760610072519F = {
 			isa = PBXGroup;
 			children = (
-				CE80A25516DF5F4E007CA904 /* AddressBook.framework */,
 				CE7A78CA16B760610072519F /* Blink */,
 				CE7A78C116B760610072519F /* Frameworks */,
 				CE7A78BF16B760610072519F /* Products */,
@@ -173,6 +179,8 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE7E4D1716E5959B009B44F3 /* libcommonCrypto.dylib */,
+				CE80A25516DF5F4E007CA904 /* AddressBook.framework */,
 				CE80A25316DF56F7007CA904 /* AddressBookUI.framework */,
 				CE81758416D46AB4002FA6BB /* CoreLocation.framework */,
 				CE805BAD16C3AC3E0040095F /* QuartzCore.framework */,
@@ -199,6 +207,8 @@
 				CE55EA3816D718490005C70F /* TestCenter */,
 				CE805B9516C388F20040095F /* ModelObjects */,
 				CE8097E216DB57CF0036C047 /* CustomButton */,
+				CE7BFAE216E4AB8F00248B3E /* base64 */,
+				CE7E4D1916E598F4009B44F3 /* Sha1 */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
 			);
@@ -244,6 +254,24 @@
 				CE805BAB16C3A9210040095F /* BKNoteViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CE7BFAE216E4AB8F00248B3E /* base64 */ = {
+			isa = PBXGroup;
+			children = (
+				CE7BFAE316E4AB8F00248B3E /* Base64.h */,
+				CE7BFAE416E4AB8F00248B3E /* Base64.m */,
+			);
+			path = base64;
+			sourceTree = "<group>";
+		};
+		CE7E4D1916E598F4009B44F3 /* Sha1 */ = {
+			isa = PBXGroup;
+			children = (
+				CE7E4D1A16E59918009B44F3 /* Sha1.h */,
+				CE7E4D1B16E59918009B44F3 /* Sha1.m */,
+			);
+			name = Sha1;
 			sourceTree = "<group>";
 		};
 		CE805B9516C388F20040095F /* ModelObjects */ = {
@@ -384,6 +412,8 @@
 				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
 				CE55EA3E16D765990005C70F /* BKOrder.m in Sources */,
 				CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */,
+				CE7BFAE516E4AB8F00248B3E /* Base64.m in Sources */,
+				CE7E4D1C16E59918009B44F3 /* Sha1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +488,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blink/Blink-Prefix.pch";
 				INFOPLIST_FILE = "Blink/Blink-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -469,6 +503,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blink/Blink-Prefix.pch";
 				INFOPLIST_FILE = "Blink/Blink-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

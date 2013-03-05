@@ -21,7 +21,8 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 
 - initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size;
 
-@property (strong, nonatomic) NSNumber *UUID;
+//@property (strong, nonatomic) NSNumber *UUID;
+@property (strong, nonatomic) NSString *UUID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *size;
 @property (strong, nonatomic) NSString *ice;
