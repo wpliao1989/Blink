@@ -30,6 +30,7 @@
 @property (strong, nonatomic) NSString *userPhone;
 @property (strong, nonatomic) NSString *userAddress;
 
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 
 - (void)initUserInfos;
@@ -94,6 +95,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Utility methods
+
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
     static NSString *preString = @"總金額: ";
     static NSString *postString = @"元";
@@ -117,9 +136,9 @@
     
     BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
-    basePrice.text = orderContent.basePrice;
+    basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];
-    price.text = orderContent.price;
+    price.text = [self currencyStringForPrice:orderContent.priceValue];
     
     return cell;
 }
@@ -127,11 +146,16 @@
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
     [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
-    [[BKOrderManager sharedBKOrderManager] sendOrder];
-    
-    UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
-    if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-    }
+    [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success) {
+        if (success) {
+            UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
+            if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+            }
+        }
+        else {
+            NSLog(@"Warning: order failed!");
+        }
+    }];   
 }
 @end

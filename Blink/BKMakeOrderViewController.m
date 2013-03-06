@@ -42,6 +42,7 @@ NSInteger quantityComponent = 0;
 - (IBAction)selectIceAndSweetnessButtonPressed:(id)sender;
 - (IBAction)selectSizeAndQuantityButtonPressed:(id)sender;
 - (IBAction)selectQuantityButtonPressed:(id)sender;
+- (IBAction)selectTimeButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
@@ -49,10 +50,12 @@ NSInteger quantityComponent = 0;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *iceAndSweetnessButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *sizeAndQuantityButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *quantityButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *timeButton;
 @property (strong, nonatomic) IBOutlet UIPickerView *itemPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *iceAndSweetnessPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *sizeAndQuantityPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
+@property (strong, nonatomic) IBOutlet UIDatePicker *timePicker;
 
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 @property (strong, readonly, nonatomic) NSArray *menu;
@@ -82,6 +85,7 @@ NSInteger quantityComponent = 0;
 - (NSArray *)inValidSelectionCodes;
 - (NSString *)inValidMessage;
 - (NSString *)orderExistsMessage;
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
 
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 - (void)updateIceAndSweetnessButtonTitle;
@@ -214,6 +218,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
     self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
     self.quantityButton.inputView = self.quantityPicker;
+    self.timeButton.inputView = self.timePicker;
 
     [self updateSelectedQuantityWithRow:0];
     [self updateSelectedMenuItemWithRow:0];
@@ -271,15 +276,15 @@ static NSString *noSelectableItem = @"無可選擇項目";
     UILabel *name = (UILabel *)[cell viewWithTag:1];
     UILabel *ice = (UILabel *)[cell viewWithTag:2];
     UILabel *sweetness = (UILabel *)[cell viewWithTag:3];
-    UILabel *quantity = (UILabel *)[cell viewWithTag:4];
+    UILabel *quantityAndSize = (UILabel *)[cell viewWithTag:4];
     UILabel *price = (UILabel *)[cell viewWithTag:5];
     
     BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     ice.text = orderContent.ice;
     sweetness.text = orderContent.sweetness;
-    quantity.text = [orderContent.quantity stringValue];
-    price.text = orderContent.price;
+    quantityAndSize.text = [NSString stringWithFormat:@"%@ %@", [orderContent.quantity stringValue], orderContent.size];
+    price.text = [self currencyStringForPrice:orderContent.priceValue];
     
     return cell;
 }
@@ -427,7 +432,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
             
             if ([self hasSelectableSize]) {
 //                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
-                label.text = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
+                NSString *theSize = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
+                NSNumber *thePrice = [self.selectedMenuItem priceForSize:theSize];                
+                label.text = [NSString stringWithFormat:@"%@ %@", theSize, [self currencyStringForPrice:thePrice]];
             }
         }
         else if (component == quantityComponent) {
@@ -657,6 +664,22 @@ static NSString *noSelectableItem = @"無可選擇項目";
     return [NSString stringWithFormat:@"Shop name: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"Order exists. Delete order?"];
 }
 
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateSelected];
@@ -670,19 +693,28 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)updateSizeAndQuantityButtonTitle {
 //    [self testPrint];
-    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedQuantity, self.selectedSize];
+    NSString *title;
+    if (self.selectedSize != nil) {
+        title = [NSString stringWithFormat:@"%@ %@ %@", self.selectedQuantity, self.selectedSize, [self currencyStringForPrice:[self.selectedMenuItem priceForSize:self.selectedSize]]];
+    }
+    else {
+        title = [NSString stringWithFormat:@"%@", self.selectedQuantity];
+    }
+    
     [self changeButtonTitleButton:self.sizeAndQuantityButton title:title];
 }
 
 - (BOOL)hasSelectableIce {
-    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);
-    return NO;
-//    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
+//    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);
+//    NSLog(@"self.selectedMenuItem.iceLevels class: %@", [self.selectedMenuItem.iceLevels class]);
+//    return NO;
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
 }
 
 - (BOOL)hasSelectableSweetness {
-    NSLog(@"self.selectedMenuItem.sweetnessLevels: %@", self.selectedMenuItem.sweetnessLevels);
-    return NO;
+//    NSLog(@"self.selectedMenuItem.sweetnessLevels: %@", self.selectedMenuItem.sweetnessLevels);
+//    NSLog(@"self.selectedMenuItem.sweetnessLevels class: %@", [self.selectedMenuItem.sweetnessLevels class]);
+//    return NO;
     return (self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0);
 }
 
@@ -761,5 +793,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
     NSInteger row = [self.quantityPicker selectedRowInComponent:0];
     [self updateSelectedQuantityWithRow:row];
     [self.quantityButton becomeFirstResponder];
+}
+
+- (IBAction)selectTimeButtonPressed:(id)sender {
+    [self.timeButton becomeFirstResponder];
 }
 @end

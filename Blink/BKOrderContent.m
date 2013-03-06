@@ -26,7 +26,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
 @synthesize quantity = _quantity;
 
 @synthesize basePrice = _basePrice;
-@synthesize price = _price;
+//@synthesize price = _price;
 
 - (id)initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size{
     self = [super init];
@@ -37,13 +37,21 @@ NSString *const kBKOrderContentQuantity = @"quantity";
         self.sweetness = sweetness;
         self.quantity = quantity;
         self.size = size;
+        self.basePrice = [menu priceForSize:size];
     }
     return self;
 }
 
-- (NSString *)basePrice {
+//- (NSString *)basePrice {
+//    if (_basePrice == nil) {
+//        _basePrice = [[NSNumber numberWithDouble:0.0] stringValue];
+//    }
+//    return _basePrice;
+//}
+
+- (NSNumber *)basePrice {
     if (_basePrice == nil) {
-        _basePrice = [[NSNumber numberWithDouble:0.0] stringValue];
+        _basePrice = [NSNumber numberWithDouble:0.0];
     }
     return _basePrice;
 }
@@ -58,36 +66,37 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     return theContent;
 }
 
-- (NSString *)price {
-    static NSNumberFormatter *currencyFormatter;    
-    
-    if (currencyFormatter == nil) {
-        currencyFormatter = [[NSNumberFormatter alloc] init];
-        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [currencyFormatter setPositiveFormat:@"¤#,###"];
-        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-        [currencyFormatter setLocale:twLocale];
-        [currencyFormatter setCurrencySymbol:@"$"];
-//        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-    }
-    
-    NSNumber *price = [self priceValue];
-   
-//    NSLog(@"basePrice string is %@", self.basePrice);    
-//    NSLog(@"price is %@", price);
-//    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
-    
-    return [currencyFormatter stringFromNumber:price];
-}
+//- (NSString *)price {
+//    static NSNumberFormatter *currencyFormatter;    
+//    
+//    if (currencyFormatter == nil) {
+//        currencyFormatter = [[NSNumberFormatter alloc] init];
+//        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+//        [currencyFormatter setPositiveFormat:@"¤#,###"];
+//        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+//        [currencyFormatter setLocale:twLocale];
+//        [currencyFormatter setCurrencySymbol:@"$"];
+////        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+//    }
+//    
+//    NSNumber *price = [self priceValue];
+//   
+////    NSLog(@"basePrice string is %@", self.basePrice);    
+////    NSLog(@"price is %@", price);
+////    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
+//    
+//    return [currencyFormatter stringFromNumber:price];
+//}
 
 - (NSNumber *)priceValue {
-    static NSNumberFormatter *numberFormatter;
-    if (numberFormatter == nil) {
-        numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    }
+//    static NSNumberFormatter *numberFormatter;
+//    if (numberFormatter == nil) {
+//        numberFormatter = [[NSNumberFormatter alloc] init];
+//        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+//    }
     
-    NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
+//    NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
+    NSNumber *basePrice = self.basePrice;
 //    if (basePrice == nil) {
 //        basePrice = [[NSNumber alloc] initWithDouble:0.0];
 //    }
@@ -128,7 +137,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
     NSLog(@"sweetness is: %@", self.sweetness);
     NSLog(@"quantity is: %@", self.quantity);
     NSLog(@"basePrice is: %@", self.basePrice);
-    NSLog(@"price is: %@", self.price);
+//    NSLog(@"price is: %@", self.price);
 }
 
 @end

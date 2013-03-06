@@ -22,6 +22,8 @@ static NSString *emptyString = @"Null data";
 
 @property (strong, nonatomic) NSDictionary *data;
 
+- (BOOL)isNullValue:(id)object;
+
 @end
 
 @implementation BKAccountManager
@@ -43,22 +45,29 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 //    return _favoriteShops;
 //}
 
+- (BOOL)isNullValue:(id)object {
+    if (object == [NSNull null] || object == nil) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString *)userToken {
-    if ([self.data objectForKey:kBKUserToken] == [NSNull null] || [self.data objectForKey:kBKUserToken] == nil) {
+    if ([self isNullValue:[self.data objectForKey:kBKUserToken]]) {
         return emptyString;
     }
     return [self.data objectForKey:kBKUserToken];
 }
 
 - (NSString *)userEmail {
-    if ([self.data objectForKey:kBKUserEMail] == [NSNull null] || [self.data objectForKey:kBKUserEMail] == nil) {
+    if ([self isNullValue:[self.data objectForKey:kBKUserEMail]]) {
         return emptyString;
     }
     return [self.data objectForKey:kBKUserEMail];
 }
 
 - (NSString *)userName {
-    if ([self.data objectForKey:kBKUserName] == [NSNull null] || [self.data objectForKey:kBKUserName] == nil) {
+    if ([self isNullValue:[self.data objectForKey:kBKUserName]]) {
         return emptyString;
     }
     return [self.data objectForKey:kBKUserName];

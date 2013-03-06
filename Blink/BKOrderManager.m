@@ -71,10 +71,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     self.order.address = address;
 }
 
-- (void)sendOrder {
+- (void)sendOrderWithCompleteHandler:(void (^)(BOOL))completeHandler {
 //    BKOrder *testDict = [BKTestCenter testOrder];
     [[BKAPIManager sharedBKAPIManager] orderWithData:[self.order orderForAPI] completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSLog(@"%@", data);        
+        NSLog(@"data %@", data);
+        NSLog(@"response %@", response);
+        NSLog(@"error %@", error);
+        if (data == nil || error != nil) {
+            completeHandler(NO);
+        }
+        else {
+            completeHandler(YES);
+        }
     }];   
 }
 

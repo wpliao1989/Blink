@@ -30,4 +30,6 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 @property (strong, nonatomic) NSArray *priceLevels;
 @property (strong, nonatomic) NSArray *sizeLevels;
 
+- (NSNumber *)priceForSize:(NSString *)size;
+
 @end
