@@ -11,6 +11,7 @@
 		CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3A16D718600005C70F /* BKTestCenter.m */; };
 		CE55EA3E16D765990005C70F /* BKOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3D16D765990005C70F /* BKOrder.m */; };
 		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
+		CE793BD216E725BA00472188 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CE793BD116E7237500472188 /* MBProgressHUD.m */; };
 		CE7A78C316B760610072519F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C216B760610072519F /* UIKit.framework */; };
 		CE7A78C516B760610072519F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C416B760610072519F /* Foundation.framework */; };
 		CE7A78C716B760610072519F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7A78C616B760610072519F /* CoreGraphics.framework */; };
@@ -60,6 +61,8 @@
 		CE55EA3D16D765990005C70F /* BKOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrder.m; sourceTree = "<group>"; };
 		CE78482B16D20CEB00A80031 /* BKOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderManager.h; sourceTree = "<group>"; };
 		CE78482C16D20CEB00A80031 /* BKOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderManager.m; sourceTree = "<group>"; };
+		CE793BD016E7237500472188 /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		CE793BD116E7237500472188 /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		CE7A78BE16B760610072519F /* Blink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7A78C216B760610072519F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CE7A78C416B760610072519F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,6 +92,7 @@
 		CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
 		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
 		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
+		CE7AAFFF16E82DC40053F829 /* BKAPIError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKAPIError.h; sourceTree = "<group>"; };
 		CE7BFAE316E4AB8F00248B3E /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		CE7BFAE416E4AB8F00248B3E /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		CE7E4D1716E5959B009B44F3 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
@@ -159,6 +163,15 @@
 			name = TestCenter;
 			sourceTree = "<group>";
 		};
+		CE793BCF16E7235F00472188 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				CE793BD016E7237500472188 /* MBProgressHUD.h */,
+				CE793BD116E7237500472188 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		CE7A78B316B760610072519F = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +219,7 @@
 				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
 				CE55EA3816D718490005C70F /* TestCenter */,
 				CE805B9516C388F20040095F /* ModelObjects */,
+				CE793BCF16E7235F00472188 /* MBProgressHUD */,
 				CE8097E216DB57CF0036C047 /* CustomButton */,
 				CE7BFAE216E4AB8F00248B3E /* base64 */,
 				CE7E4D1916E598F4009B44F3 /* Sha1 */,
@@ -295,6 +309,7 @@
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
 				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
+				CE7AAFFF16E82DC40053F829 /* BKAPIError.h */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -414,6 +429,7 @@
 				CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */,
 				CE7BFAE516E4AB8F00248B3E /* Base64.m in Sources */,
 				CE7E4D1C16E59918009B44F3 /* Sha1.m in Sources */,
+				CE793BD216E725BA00472188 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

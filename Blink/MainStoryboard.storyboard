@@ -128,6 +128,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="completeUnfinishedOrderButtonPressed:" destination="Mpb-6J-6KN" eventType="touchUpInside" id="lPn-TZ-g28"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gVB-zT-yld">
                                         <rect key="frame" x="85" y="150" width="150" height="21"/>
@@ -229,6 +232,7 @@
                         <outlet property="userTokenLabel" destination="R4h-sm-BAr" id="dBw-UY-jaV"/>
                         <outlet property="userToolTableView" destination="BkM-4H-rPx" id="gAL-MV-5Ta"/>
                         <segue destination="mgw-hS-r6z" kind="push" identifier="fromFavoriteShopDetailSegue" id="cvb-pK-M3T"/>
+                        <segue destination="mgw-hS-r6z" kind="push" identifier="fromUnfinishedOrderSegue" id="Oyn-iM-HVx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyp-KB-QKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -259,7 +263,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5PZ-Nh-Ov5">
-                                <rect key="frame" x="93" y="260" width="135" height="44"/>
+                                <rect key="frame" x="93" y="305" width="135" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="會員登入">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -286,21 +290,41 @@
                                     <action selector="registrationButtonPressed:" destination="DyK-JR-YIz" eventType="touchUpInside" id="8YQ-vP-twG"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YPn-4e-m7e">
-                                <rect key="frame" x="93" y="111" width="135" height="44"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="會員帳號" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="klY-XV-4C3">
+                                <rect key="frame" x="42" y="101" width="71" height="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="會員密碼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B0M-Le-ZYM">
+                                <rect key="frame" x="42" y="150" width="71" height="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="cGn-U3-Ktl">
+                                <rect key="frame" x="121" y="99" width="158" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="DyK-JR-YIz" id="bK0-Qc-qRF"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="nIt-mK-XHZ">
+                                <rect key="frame" x="121" y="148" width="158" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="DyK-JR-YIz" id="eop-c4-jhS"/>
+                                </connections>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="ZNf-ba-XWk">
+                                <rect key="frame" x="63" y="209" width="79" height="27"/>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bL0-Ii-VfM">
+                                <rect key="frame" x="185" y="201" width="73" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Facebook 登入">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XPt-xA-txn">
-                                <rect key="frame" x="93" y="175" width="135" height="44"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Google+ 登入">
+                                <state key="normal" title="忘記密碼">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -320,10 +344,35 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="isSavingPreferencesSwitch" destination="ZNf-ba-XWk" id="fyz-Fj-0Dj"/>
+                        <outlet property="userAccountTextField" destination="cGn-U3-Ktl" id="QKd-fz-u82"/>
+                        <outlet property="userPasswordTextField" destination="nIt-mK-XHZ" id="wq8-5d-dPe"/>
                         <segue destination="Ciy-ss-NAw" kind="push" identifier="registrationSegue" id="16r-ar-F6j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WX5-i4-Wda" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YPn-4e-m7e">
+                    <rect key="frame" x="0.0" y="0.0" width="135" height="44"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Facebook 登入">
+                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XPt-xA-txn">
+                    <rect key="frame" x="0.0" y="0.0" width="135" height="44"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Google+ 登入">
+                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </objects>
             <point key="canvasLocation" x="2334" y="1350"/>
         </scene>
@@ -721,6 +770,9 @@ AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </mutableData>
                     </timeZone>
+                    <connections>
+                        <action selector="timePickerValueChanged:" destination="xZP-RZ-ETy" eventType="valueChanged" id="1aL-8X-Dbu"/>
+                    </connections>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="04c-Ff-Q26" customClass="BKItemSelectButton">
                     <rect key="frame" x="0.0" y="0.0" width="72" height="31"/>
@@ -1272,6 +1324,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="closeButtonPressed:"/>
                 <relationship kind="action" name="loginButtonPressed:"/>
                 <relationship kind="action" name="registrationButtonPressed:"/>
+                <relationship kind="outlet" name="userAccountTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userPasswordTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="BKMainPageViewController" superclassName="UIViewController">
@@ -1298,6 +1352,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="selectQuantityButtonPressed:"/>
                 <relationship kind="action" name="selectSizeAndQuantityButtonPressed:"/>
                 <relationship kind="action" name="selectTimeButtonPressed:"/>
+                <relationship kind="action" name="timePickerValueChanged:"/>
                 <relationship kind="outlet" name="iceAndSweetnessButton" candidateClass="BKItemSelectButton"/>
                 <relationship kind="outlet" name="iceAndSweetnessPicker" candidateClass="UIPickerView"/>
                 <relationship kind="outlet" name="itemButton" candidateClass="BKItemSelectButton"/>
@@ -1374,6 +1429,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="BKUserToolViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKUserToolViewController.h"/>
             <relationships>
+                <relationship kind="action" name="completeUnfinishedOrderButtonPressed:"/>
                 <relationship kind="action" name="logoutButtonPressed:"/>
                 <relationship kind="action" name="segmentationChanged:"/>
                 <relationship kind="outlet" name="segmentaionControl" candidateClass="UISegmentedControl"/>
@@ -1391,7 +1447,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qSY-7S-ko2"/>
         <segue reference="LP2-pZ-FvA"/>
+        <segue reference="Oyn-iM-HVx"/>
     </inferredMetricsTieBreakers>
 </document>

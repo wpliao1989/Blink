@@ -11,6 +11,7 @@
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
+#import "BKOrderManager.h"
 
 @interface BKUserToolViewController ()
 
@@ -22,6 +23,9 @@ enum BKUserToolSegmentationSelection {
 
 - (IBAction)segmentationChanged:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
+- (IBAction)completeUnfinishedOrderButtonPressed:(id)sender;
+
+
 @property (strong, nonatomic) IBOutlet UITableView *userToolTableView;
 @property (strong, nonatomic) NSArray *shopIDList;
 @property (strong, nonatomic) NSArray *orderlist;
@@ -116,6 +120,10 @@ enum BKUserToolSegmentationSelection {
         detailVC.shopID = [self.shopIDList objectAtIndex:selectedIndex];
         
     }
+    else if ([segue.identifier isEqualToString:@"fromUnfinishedOrderSegue"]) {
+        BKShopDetailViewController *detailVC = segue.destinationViewController;       
+        detailVC.shopID = [[BKOrderManager sharedBKOrderManager] shopID];
+    }
 }
 
 #pragma mark - Table View
@@ -189,5 +197,11 @@ enum BKUserToolSegmentationSelection {
     [logoutActionSheet showInView:self.view];
     
     
+}
+
+- (IBAction)completeUnfinishedOrderButtonPressed:(id)sender {
+    if ([[BKOrderManager sharedBKOrderManager] hasOrder]) {
+        [self performSegueWithIdentifier:@"fromUnfinishedOrderSegue" sender:self];
+    }
 }
 @end

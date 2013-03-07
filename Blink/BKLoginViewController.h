@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 //@protocol BKRegisterViewControllerDelegate;
+@protocol MBProgressHUDDelegate;
 
-@interface BKLoginViewController : UIViewController
+@interface BKLoginViewController : UIViewController<MBProgressHUDDelegate, UITextFieldDelegate>
 
 @end

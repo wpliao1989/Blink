@@ -39,7 +39,7 @@
 }
 
 - (IBAction)confirmRegistrationButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] loginWithCompleteHandler:^(BOOL success) {
+    [[BKAccountManager sharedBKAccountManager] loginWithAccount:@"Flyingman" password:@"fly123" CompleteHandler:^(BOOL success, NSError *error) {      
         if (success) {
             [self dismissViewControllerAnimated:YES completion:^{
                 

@@ -92,6 +92,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return (self.shopInfo != nil) && (![self.shopInfo.shopID isEqualToString:anotherShopInfo.shopID]);
 }
 
+- (BOOL)hasOrder {
+    return self.shopInfo != nil;
+}
+
 - (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
 //    NSLog(@"%@", self.shopInfo);
 //    NSLog(@"%@", shopInfo);

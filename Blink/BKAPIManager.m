@@ -9,9 +9,16 @@
 #import "Sha1.h"
 #import "BKAPIManager.h"
 #import "BKOrder.h"
+#import "BKAPIError.h"
 
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
+
+NSString *const kBKWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
+
+NSString *const kBKAPIResult = @"result";
+NSString *const kBKAPIResultCorrect = @"1";
+NSString *const kBKAPIResultWrong = @"0";
 
 @interface BKAPIManager ()
 
@@ -26,6 +33,8 @@ NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvai
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
+- (BOOL)isCorrectResult:(id)data;
+- (BOOL)isWrongResult:(id)data;
 
 @end
 
@@ -191,14 +200,44 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+- (BOOL)isCorrectResult:(id)data {
+//    NSLog(@"result class: %@", [[data objectForKey:kBKAPIResult] class]);
+    if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultCorrect]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isWrongResult:(id)data {
+    if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultWrong]) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark - APIs
 
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(asynchronousCompleteHandler)completeHandler {
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(loginCompleteHandler)completeHandler {
     static NSString *kUserName = @"username";
     static NSString *kPWD = @"password";
     
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
-    [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:completeHandler];
+    [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {     
+        
+        if (error != nil) {
+            completeHandler(nil, error);
+        }
+//        else if ([self isCorrectResult:data]) {
+//            completeHandler(data, nil);
+//        }
+        else if ([self isWrongResult:data]) {            
+            NSError *wrongResultError = [NSError errorWithDomain:kBKWrongUserNameOrPassword code:0 userInfo:nil];
+            completeHandler(nil, wrongResultError);
+        }
+        else {
+            completeHandler(data, nil);
+        }
+    }];
 }
 
 - (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   

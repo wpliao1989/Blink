@@ -9,6 +9,8 @@
 #import "BKLoginViewController.h"
 #import "BKAccountManager.h"
 #import "BKRegisterViewController.h"
+#import "MBProgressHUD.h"
+#import "BKAPIError.h"
 
 @interface BKLoginViewController ()
 
@@ -16,10 +18,45 @@
 - (IBAction)registrationButtonPressed:(id)sender;
 - (IBAction)closeButtonPressed:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UITextField *userAccountTextField;
+@property (strong, nonatomic) IBOutlet UITextField *userPasswordTextField;
+@property (strong, nonatomic) IBOutlet UISwitch *isSavingPreferencesSwitch;
+
+@property (strong, nonatomic) NSString *userAccount;
+@property (strong, nonatomic) NSString *userPassword;
+
+@property (strong, nonatomic) MBProgressHUD *HUD;
+
 @end
 
 @implementation BKLoginViewController
 
+@synthesize userAccount = _userAccount;
+@synthesize userPassword = _userPassword;
+
+- (NSString *)userAccount {
+    if (_userAccount == nil) {
+        _userAccount = @"";
+    }
+    return _userAccount;
+}
+
+- (void)setUserAccount:(NSString *)userAccount {
+    _userAccount = userAccount;
+    self.userAccountTextField.text = userAccount;
+}
+
+- (NSString *)userPassword {
+    if (_userPassword == nil) {
+        _userPassword = @"";
+    }
+    return _userPassword;
+}
+
+- (void)setUserPassword:(NSString *)userPassword {
+    _userPassword = userPassword;
+    self.userPasswordTextField.text = userPassword;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,6 +71,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.isSavingPreferencesSwitch.on = [BKAccountManager sharedBKAccountManager].isSavingPreferences;
+    if (self.isSavingPreferencesSwitch.on) {
+        self.userAccount = [BKAccountManager sharedBKAccountManager].userPreferedAccount;
+        self.userPassword = [BKAccountManager sharedBKAccountManager].userPreferedPassword;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [BKAccountManager sharedBKAccountManager].isSavingPreferences = self.isSavingPreferencesSwitch.on;
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,15 +90,37 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] loginWithCompleteHandler:^(BOOL success) {
+    [self.userAccountTextField resignFirstResponder];
+    [self.userPasswordTextField resignFirstResponder];
+    
+//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.HUD];
+    self.HUD.delegate = self;
+    self.HUD.labelText = kBKConnecting;
+    [self.HUD show:YES];
+    
+    [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
+            self.HUD.labelText = kBKLoginSuccess;
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];
+            [self.HUD hide:YES];
+            [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
         }
         else {
-            NSLog(@"login failed!");
-        }
+            self.HUD.mode = MBProgressHUDModeText;
+            if ([error.domain isEqualToString:kBKWrongUserNameOrPassword]) {
+                [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
+                self.HUD.labelText = @"帳號或密碼錯誤";
+            }
+            else {
+                self.HUD.labelText = @"網路無回應";
+            }                        
+            [self.HUD hide:YES afterDelay:2];
+        }        
+//        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     }];
 }
 
@@ -78,5 +147,27 @@
 //        [self.navigationController popToRootViewControllerAnimated:NO];
 //    }
 //}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    NSLog(@"hudWasHidden");
+    [self.HUD removeFromSuperview];
+    self.HUD = nil;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.userAccountTextField) {
+//        NSLog(@"account!");
+        self.userAccount = textField.text;
+    }
+    else if (textField == self.userPasswordTextField) {
+//        NSLog(@"password!");
+        self.userPassword = textField.text;
+    }
+}
 
 @end

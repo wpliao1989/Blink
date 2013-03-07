@@ -43,6 +43,7 @@ NSInteger quantityComponent = 0;
 - (IBAction)selectSizeAndQuantityButtonPressed:(id)sender;
 - (IBAction)selectQuantityButtonPressed:(id)sender;
 - (IBAction)selectTimeButtonPressed:(id)sender;
+- (IBAction)timePickerValueChanged:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
@@ -214,11 +215,23 @@ static NSString *noSelectableItem = @"無可選擇項目";
         NSLog(@"%@", item.UUID);
     }        
     
+    // Configure input views
     self.itemButton.inputView = self.itemPicker;    
     self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
     self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
     self.quantityButton.inputView = self.quantityPicker;
     self.timeButton.inputView = self.timePicker;
+    
+    // Configure time picker intervals
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *monthOffset = [[NSDateComponents alloc] init];
+    [monthOffset setMonth:1];
+    
+    NSDate *minDate = [NSDate date];
+    NSDate *maxDate = [currentCalendar dateByAddingComponents:monthOffset toDate:minDate options:0];
+    [self.timePicker setMinimumDate:minDate];
+    [self.timePicker setMaximumDate:maxDate];
+    
 
     [self updateSelectedQuantityWithRow:0];
     [self updateSelectedMenuItemWithRow:0];
@@ -797,5 +810,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (IBAction)selectTimeButtonPressed:(id)sender {
     [self.timeButton becomeFirstResponder];
+}
+
+- (IBAction)timePickerValueChanged:(id)sender {
+    NSLog(@"date changed: %@", self.timePicker.date);
 }
 @end

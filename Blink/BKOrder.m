@@ -92,7 +92,7 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = NSDateFormatterShortStyle;
     formatter.timeStyle = NSDateFormatterShortStyle;
-    theOrder.recordTime = [formatter stringFromDate:[NSDate date]];
+    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [formatter stringFromDate:[NSDate date]];
     
     theOrder.address = self.address != nil ? self.address : @"none";
     theOrder.phone = self.phone != nil ? self.phone : @"none";
