@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, BKListCriteria) {
 FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
 
-typedef void (^loginCompleteHandler)(id data, NSError *error);
+typedef void (^apiCompleteHandler)(id data, NSError *error);
 
 @interface BKAPIManager : OSConnectionManager<CLLocationManagerDelegate>
 
@@ -42,7 +42,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 @property (nonatomic) BOOL isLoadingData;
 
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(loginCompleteHandler) completeHandler;
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 
 - (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
 

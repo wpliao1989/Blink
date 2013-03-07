@@ -22,6 +22,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 @property (nonatomic, strong) BKOrder *order;
 
 //- (BOOL)isValidOrder;
+- (void)setOrderTime:(NSDate *)date;
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address;
 - (void)sendOrderWithCompleteHandler:(void (^)(BOOL success))completeHandler;
 

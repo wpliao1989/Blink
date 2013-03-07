@@ -54,8 +54,8 @@ NSString *const kBKMenuPriceSmall = @"Small";
         NSLog(@"Warning: price is %@ class:%@, not valid!", [self.data objectForKey:kBKMenuPrice], [[self.data objectForKey:kBKMenuPrice] class]);
         
         id test = [NSJSONSerialization JSONObjectWithData:[(NSString *)[self.data objectForKey:kBKMenuPrice] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-        NSLog(@"test = %@", test);
-        NSLog(@"test class = %@", [test class]);
+//        NSLog(@"test = %@", test);
+//        NSLog(@"test class = %@", [test class]);
         
         return test;
     }

@@ -97,12 +97,12 @@
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.HUD];
     self.HUD.delegate = self;
-    self.HUD.labelText = kBKConnecting;
+    self.HUD.labelText = BKConnecting;
     [self.HUD show:YES];
     
     [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
-            self.HUD.labelText = kBKLoginSuccess;
+            self.HUD.labelText = BKLoginSuccess;
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];

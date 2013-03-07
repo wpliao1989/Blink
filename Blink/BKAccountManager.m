@@ -20,11 +20,11 @@ NSString *const kBKUserPreferedAccount = @"kBKUserPreferedAccount";
 NSString *const kBKUserPreferedPassword = @"kBKUserPreferedPassword";
 NSString *const kBKUserPreferedIsSaving = @"kBKUserPreferedIsSaving";
 
-NSString *const kBKConnecting = @"登入中...";
-NSString *const kBKLoginSuccess = @"登入成功!";
+NSString *const BKConnecting = @"登入中...";
+NSString *const BKLoginSuccess = @"登入成功!";
 //NSString *const kBKLoginFailed = @"Login failed...";
 
-static NSString *emptyString = @"Null data";
+NSString *const emptyString = @"Null data";
 
 @interface BKAccountManager ()
 

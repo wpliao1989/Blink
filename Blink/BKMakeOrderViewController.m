@@ -67,6 +67,7 @@ NSInteger quantityComponent = 0;
 @property (strong, nonatomic) NSString *selectedSweetness;
 @property (strong, nonatomic) NSNumber *selectedQuantity;
 @property (strong, nonatomic) NSString *selectedSize;
+@property (strong, nonatomic) NSDate *selectedTime;
 
 @property (strong, nonatomic) UIAlertView *orderExistAlert;
 @property (strong, nonatomic) UIAlertView *inValidSelectionAlert;
@@ -75,12 +76,14 @@ NSInteger quantityComponent = 0;
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 - (void)initSettings;
+- (void)initTimePicker;
 
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row;
 - (void)updateSelectedIceWithRow:(NSInteger)row;
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row;
 - (void)updateSelectedQuantityWithRow:(NSInteger)row;
 - (void)updateSelectedSizeWithRow:(NSInteger)row;
+- (void)updateSelectedTimeWithDate:(NSDate *)date;
 
 - (void)addOrderContent;
 - (NSArray *)inValidSelectionCodes;
@@ -91,6 +94,7 @@ NSInteger quantityComponent = 0;
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 - (void)updateIceAndSweetnessButtonTitle;
 - (void)updateSizeAndQuantityButtonTitle;
+- (void)updateTimeButtonTitle;
 
 - (BOOL)hasSelectableIce;
 - (BOOL)hasSelectableSweetness;
@@ -186,6 +190,11 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [self updateSizeAndQuantityButtonTitle];
 }
 
+- (void)setSelectedTime:(NSDate *)selectedTime {
+    _selectedTime = selectedTime;
+    [self updateTimeButtonTitle];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -220,23 +229,39 @@ static NSString *noSelectableItem = @"無可選擇項目";
     self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
     self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
     self.quantityButton.inputView = self.quantityPicker;
-    self.timeButton.inputView = self.timePicker;
+    self.timeButton.inputView = self.timePicker;   
     
-    // Configure time picker intervals
-    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-    NSDateComponents *monthOffset = [[NSDateComponents alloc] init];
-    [monthOffset setMonth:1];
-    
-    NSDate *minDate = [NSDate date];
-    NSDate *maxDate = [currentCalendar dateByAddingComponents:monthOffset toDate:minDate options:0];
-    [self.timePicker setMinimumDate:minDate];
-    [self.timePicker setMaximumDate:maxDate];
-    
+    [self initTimePicker];
 
     [self updateSelectedQuantityWithRow:0];
     [self updateSelectedMenuItemWithRow:0];
     
     [self testPrint];
+}
+
+- (void)initTimePicker {
+    // Configure time picker intervals
+    NSInteger minInterval = self.timePicker.minuteInterval;
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *monthOffset = [[NSDateComponents alloc] init];
+    [monthOffset setMonth:1];
+    
+    NSDate *minDate = [NSDate date];
+    NSDateComponents *minComp = [currentCalendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit)fromDate:minDate];
+    [minComp setSecond:0];
+    
+    NSLog(@"minComp.minute/minInterval %f", (double)minComp.minute/(double)minInterval);
+    NSLog(@"ceil :%f", ceil((double)minComp.minute/(double)minInterval));
+        
+    [minComp setMinute:ceil((double)minComp.minute/(double)minInterval)*minInterval];
+    minDate = [currentCalendar dateFromComponents:minComp];
+    
+    NSDate *maxDate = [currentCalendar dateByAddingComponents:monthOffset toDate:minDate options:0];
+    
+    [self.timePicker setMinimumDate:minDate];
+    [self.timePicker setMaximumDate:maxDate];
+    
+    [self updateSelectedTimeWithDate:self.timePicker.date];
 }
 
 - (void)didReceiveMemoryWarning
@@ -559,6 +584,10 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    [self testPrint];
 }
 
+- (void)updateSelectedTimeWithDate:(NSDate *)date {
+    self.selectedTime = date;
+}
+
 - (void)addOrderContent {
 //    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
     if ([self inValidSelectionCodes] == nil){
@@ -717,6 +746,19 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [self changeButtonTitleButton:self.sizeAndQuantityButton title:title];
 }
 
+- (void)updateTimeButtonTitle {
+    static NSDateFormatter *formatter;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy/M/d ah:mm"];
+//        [formatter setDateStyle:NSDateFormatterShortStyle];
+//        [formatter setTimeStyle:NSDateFormatterShortStyle];
+//        NSLog(@"formatter string: %@", formatter.dateFormat);
+    }
+    NSString *title = [formatter stringFromDate:self.selectedTime];
+    [self changeButtonTitleButton:self.timeButton title:title];
+}
+
 - (BOOL)hasSelectableIce {
 //    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);
 //    NSLog(@"self.selectedMenuItem.iceLevels class: %@", [self.selectedMenuItem.iceLevels class]);
@@ -813,6 +855,28 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (IBAction)timePickerValueChanged:(id)sender {
-    NSLog(@"date changed: %@", self.timePicker.date);
+    static NSDateFormatter *formatter;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterFullStyle];
+        [formatter setTimeStyle:NSDateFormatterFullStyle];
+    }
+    NSLog(@"picker date: %@", [formatter stringFromDate:self.timePicker.date] );
+    NSLog(@"min date: %@", [formatter stringFromDate:self.timePicker.minimumDate]);
+    NSLog(@"max date: %@", [formatter stringFromDate:self.timePicker.maximumDate]);
+    
+    NSDate *oneSecondAfterPickerDate = [self.timePicker.date dateByAddingTimeInterval:1];
+    if ([self.timePicker.date isEqualToDate:self.timePicker.minimumDate]) {
+        NSLog(@"date is at or below minimum");
+        self.timePicker.date = oneSecondAfterPickerDate;        
+        [self.timePicker setDate:self.timePicker.minimumDate animated:YES];
+    }
+    else if ([self.timePicker.date isEqualToDate:self.timePicker.maximumDate]) {
+        NSLog(@"date is at or above maximum");
+        self.timePicker.date = oneSecondAfterPickerDate;
+        [self.timePicker setDate:self.timePicker.maximumDate animated:YES];
+    }    
+    
+    [self updateSelectedTimeWithDate:self.timePicker.date];
 }
 @end

@@ -65,6 +65,19 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 //    return YES;
 //}
 
+- (void)setOrderTime:(NSDate *)date {
+    static NSDateFormatter *formatter;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy/M/d ah:mm"];
+        //        [formatter setDateStyle:NSDateFormatterShortStyle];
+        //        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        //        NSLog(@"formatter string: %@", formatter.dateFormat);
+    }
+    NSString *recordTime = [formatter stringFromDate:date];
+    self.order.recordTime = recordTime;
+}
+
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
     self.order.userToken = token;    
     self.order.phone = phone;

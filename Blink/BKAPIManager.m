@@ -217,7 +217,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 #pragma mark - APIs
 
-- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(loginCompleteHandler)completeHandler {
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler {
     static NSString *kUserName = @"username";
     static NSString *kPWD = @"password";
     
