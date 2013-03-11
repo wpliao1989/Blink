@@ -20,6 +20,7 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 @interface BKOrder : NSObject
 
 @property (nonatomic, strong) NSString *userToken;
+@property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *shopID;
 @property (nonatomic, strong) NSString *recordTime;
 @property (nonatomic, strong) NSString *phone;

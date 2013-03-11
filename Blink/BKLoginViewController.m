@@ -76,6 +76,9 @@
         self.userAccount = [BKAccountManager sharedBKAccountManager].userPreferedAccount;
         self.userPassword = [BKAccountManager sharedBKAccountManager].userPreferedPassword;
     }
+    
+//    self.isSavingPreferencesSwitch.onImage = [UIImage imageNamed:@"Default.png"];
+//    self.isSavingPreferencesSwitch.offImage = [UIImage imageNamed:@"37x-Checkmark.png"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -97,21 +100,24 @@
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.HUD];
     self.HUD.delegate = self;
-    self.HUD.labelText = BKConnecting;
+    self.HUD.labelText = BKLoggingMessage;
     [self.HUD show:YES];
     
     [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
-            self.HUD.labelText = BKLoginSuccess;
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-            }];
-            [self.HUD hide:YES];
+            self.HUD.mode = MBProgressHUDModeText;
+            self.HUD.labelText = BKLoginSuccessMessage;
+            double delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self dismissViewControllerAnimated:YES completion:^{}];
+                [self.HUD hide:YES];
+            });            
             [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
         }
         else {
             self.HUD.mode = MBProgressHUDModeText;
-            if ([error.domain isEqualToString:kBKWrongUserNameOrPassword]) {
+            if ([error.domain isEqualToString:BKErrorWrongUserNameOrPassword]) {
                 [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
                 self.HUD.labelText = @"帳號或密碼錯誤";
             }

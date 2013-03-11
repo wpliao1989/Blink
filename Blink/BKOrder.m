@@ -87,6 +87,7 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
 - (BKOrder *)orderForAPI {
     BKOrder *theOrder = [[BKOrder alloc] init];
     theOrder.userToken = self.userToken != nil ? self.userToken : @"none";
+    theOrder.userName = self.userName != nil ? self.userName : @"none";
     theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

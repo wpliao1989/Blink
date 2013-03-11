@@ -33,7 +33,7 @@ NSInteger sweetnessComponent = 1;
 NSInteger sizeComponent = 1;
 NSInteger quantityComponent = 0;
 
-@interface BKMakeOrderViewController ()
+@interface BKMakeOrderViewController()<BKNoteViewDelegate>
 
 - (IBAction)makeOrderButtonPressed:(id)sender;
 - (IBAction)noteButtonPressed:(id)sender;
@@ -786,6 +786,12 @@ static NSString *noSelectableItem = @"無可選擇項目";
     NSLog(@"selectedSize: %@", self.selectedSize);
 }
 
+#pragma mark - BKNoteViewDelegate
+
+- (void)confirmButtonPressed:(BKNoteViewController *)sender {
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)makeOrderButtonPressed:(id)sender {
@@ -804,6 +810,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (IBAction)noteButtonPressed:(id)sender {
     BKNoteViewController *note = [self.storyboard instantiateViewControllerWithIdentifier:@"BKNoteVC"];
+    note.delegate = self;
     note.note = [[BKOrderManager sharedBKOrderManager] noteForShopInfo:self.shopInfo];
     note.shopID = self.shopID;
 //    NSLog(@"%@", NSStringFromCGRect(note.view.frame));

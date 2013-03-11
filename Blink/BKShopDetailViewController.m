@@ -27,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
 @property (strong, nonatomic) IBOutlet UITextView *discountInformation;
 
+- (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
+
 - (void)initShop;
 
 @end
@@ -55,7 +57,7 @@
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
     self.navigationItem.title = self.shopInfo.name;
-    [self initShop];
+    [self initShop];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +86,26 @@
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.openHours;
     self.discountInformation.text = self.shopInfo.shopDescription;
+}
+
+- (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber {
+    BOOL hasPlusSign = NO;
+    if ([[phoneNumber substringToIndex:1] isEqualToString:@"+"]) {
+        hasPlusSign = YES;
+    }
+    NSCharacterSet *seperatorSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+    NSString *cleanPhoneNumber = [[phoneNumber componentsSeparatedByCharactersInSet:seperatorSet] componentsJoinedByString:@""];
+    if (hasPlusSign) {
+        cleanPhoneNumber = [@"+" stringByAppendingString:cleanPhoneNumber];
+    }
+    NSURL *phoneURL = [NSURL URLWithString:[@"tel:" stringByAppendingString:cleanPhoneNumber]];
+    NSLog(@"phoneURL = %@", phoneURL);
+//    NSLog([[UIApplication sharedApplication] canOpenURL:phoneURL] ? @"YES" : @"NO");
+    if ([[UIApplication sharedApplication] canOpenURL:phoneURL]) {
+        [[UIApplication sharedApplication] openURL:phoneURL];
+        return YES;
+    }
+    return NO;
 }
 
 //- (void)setEditing:(BOOL)editing animated:(BOOL)animated {

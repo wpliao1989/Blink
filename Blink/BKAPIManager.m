@@ -14,7 +14,8 @@
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
 
-NSString *const kBKWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
+NSString *const BKErrorWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
+NSString *const BKErrorWrongOrder = @"kBKWrongOrder";
 
 NSString *const kBKAPIResult = @"result";
 NSString *const kBKAPIResultCorrect = @"1";
@@ -194,7 +195,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
     [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        //        NSLog(@"%@", data);
+//        NSLog(@"callAPI, data:%@", data);
 //        self.isLoadingData = NO;
         completeHandler(response, data, error);
     }];
@@ -231,7 +232,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //            completeHandler(data, nil);
 //        }
         else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:kBKWrongUserNameOrPassword code:0 userInfo:nil];
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorWrongUserNameOrPassword code:0 userInfo:nil];
             completeHandler(nil, wrongResultError);
         }
         else {
@@ -295,15 +296,21 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     self.isLoadingData = YES;
     
+    if ([self isEmptyCoordinate:self.userCoordinate]) {
+        NSLog(@"Warning: userCoordinate is empty!");
+        self.isLoadingData = NO;
+        return;
+    }
+    
     switch (criteria) {
         case BKListCriteriaDistant:
             criteriaString = @"distant";
-            if ([self isEmptyCoordinate:self.userCoordinate]) {                
-                NSLog(@"Warning: userCoordinate is empty!");
-                self.isLoadingData = NO;
-                return;
-            }
-            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.latitude]};
+//            if ([self isEmptyCoordinate:self.userCoordinate]) {                
+//                NSLog(@"Warning: userCoordinate is empty!");
+//                self.isLoadingData = NO;
+//                return;
+//            }
+//            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.latitude]};
             break;
         case BKListCriteriaPrice:
             criteriaString = @"price";
@@ -316,7 +323,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         default:
             NSLog(@"Warning: criteria is undefined, value: %d", criteria);
             break;
-    }
+    }    
+    
+    parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userCoordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userCoordinate.latitude]};
     
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
 //    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];    
@@ -347,14 +356,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"shop" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
-- (void)orderWithData:(BKOrder *)order completionHandler:(asynchronousCompleteHandler)completeHandler {
-    NSString *kBKOrderUserToken = @"userToken";
-    NSString *kBKOrderShopID = @"sShopID";
-    NSString *kBKOrderRecordTime = @"recordTime";
-    NSString *kBKOrderUserAddress = @"address";
-    NSString *kBKOrderUserPhone = @"phone";
-    NSString *kBKOrderContent = @"content";
-    NSString *kBKNote = @"note";
+- (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
+    static NSString *kBKOrderUserToken = @"userToken";
+    static NSString *kBKOrderShopID = @"sShopID";
+    static NSString *kBKOrderRecordTime = @"recordTime";
+    static NSString *kBKOrderUserAddress = @"address";
+    static NSString *kBKOrderUserPhone = @"phone";
+    static NSString *kBKOrderContent = @"content";
+    static NSString *kBKNote = @"note";
+    static NSString *kBKOrderUserName = @"name";
     
 //    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
 //    [parameterDictionary setObject:order.userToken forKey:kBKOrderUserToken];
@@ -373,12 +383,25 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           kBKOrderUserAddress : order.address,
                                           kBKOrderUserPhone : order.phone,
                                           kBKOrderContent : order.content,
-                                            kBKNote : order.note};
-    
+                                            kBKNote : order.note,
+                                            kBKOrderUserName : order.userName};
     
     NSLog(@"order = %@", parameterDictionary);
     
-    [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:completeHandler];
+    [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSLog(@"data = %@", data);
+        
+        if (error != nil) {            
+            completeHandler(nil, error);
+        }        
+        else if ([self isWrongResult:data]) {            
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorWrongOrder code:0 userInfo:nil];
+            completeHandler(nil, wrongResultError);
+        }
+        else {            
+            completeHandler(data, nil);
+        }
+    }];
 }
 
 @end

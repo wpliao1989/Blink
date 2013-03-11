@@ -47,6 +47,7 @@
 		CE81758F16D47CE7002FA6BB /* BKOrderContent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758E16D47CE7002FA6BB /* BKOrderContent.m */; };
 		CE8ED96A16D32FB200307FF1 /* BKAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96916D32FB200307FF1 /* BKAPIManager.m */; };
 		CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */; };
+		CE99FA4016E9B9EA00D558ED /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE99FA3F16E9B9EA00D558ED /* 37x-Checkmark.png */; };
 		CEC0188816BBC86D00886331 /* BKShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */; };
 		CEC19CF416C3B24E00624F6B /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA316C3A8010040095F /* MJPopupBackgroundView.m */; };
 		CEC19CF716C3B2D600624F6B /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE805BA516C3A8010040095F /* UIViewController+MJPopupViewController.m */; };
@@ -127,6 +128,7 @@
 		CE8ED96916D32FB200307FF1 /* BKAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAPIManager.m; sourceTree = "<group>"; };
 		CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSConnectionManager.h; sourceTree = "<group>"; };
 		CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSConnectionManager.m; sourceTree = "<group>"; };
+		CE99FA3F16E9B9EA00D558ED /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
 		CEC8656B16D781F9007F7375 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				CE7A78D616B760610072519F /* Default.png */,
 				CE7A78D816B760610072519F /* Default@2x.png */,
 				CE7A78DA16B760610072519F /* Default-568h@2x.png */,
+				CE99FA3F16E9B9EA00D558ED /* 37x-Checkmark.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				CE7A78D916B760610072519F /* Default@2x.png in Resources */,
 				CE7A78DB16B760610072519F /* Default-568h@2x.png in Resources */,
 				CE7A78E516B7607B0072519F /* MainStoryboard.storyboard in Resources */,
+				CE99FA4016E9B9EA00D558ED /* 37x-Checkmark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

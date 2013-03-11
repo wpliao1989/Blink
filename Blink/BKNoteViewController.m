@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *noteText;
 @property (strong, nonatomic) BKShopInfo *shopInfo;
+- (IBAction)dismissButtonPressed:(id)sender;
 
 @end
 
@@ -51,8 +52,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 //    NSLog(@"note will disappear");
-    [self.noteText resignFirstResponder];
-    [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
+    [self.noteText resignFirstResponder];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +81,13 @@
 //    NSDictionary *info = notification.userInfo;
 //    CGRect keyboardFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 //    NSLog(@"%@", NSStringFromCGRect(keyboardFrame));
+}
+
+- (void)dismissButtonPressed:(id)sender {
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(confirmButtonPressed:)]) {
+        [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
+        [self.delegate confirmButtonPressed:self];
+    }
 }
 
 @end

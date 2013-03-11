@@ -1,4 +1,4 @@
-//
+;//
 //  mainPageViewController.h
 //  Blink
 //
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMainPageViewController : UIViewController
+@interface BKMainPageViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
 

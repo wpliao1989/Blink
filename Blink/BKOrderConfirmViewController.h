@@ -10,7 +10,9 @@
 
 @class BKShopInfo;
 
-@interface BKOrderConfirmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@protocol MBProgressHUDDelegate;
+
+@interface BKOrderConfirmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate>
 
 @property (strong, nonatomic) NSString *shopID;
 

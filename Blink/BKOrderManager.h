@@ -24,7 +24,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 //- (BOOL)isValidOrder;
 - (void)setOrderTime:(NSDate *)date;
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address;
-- (void)sendOrderWithCompleteHandler:(void (^)(BOOL success))completeHandler;
+- (void)sendOrderWithCompleteHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 
 - (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;

@@ -79,22 +79,22 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 }
 
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
-    self.order.userToken = token;    
+    self.order.userToken = token;
+    self.order.userName = name;
     self.order.phone = phone;
     self.order.address = address;
 }
 
-- (void)sendOrderWithCompleteHandler:(void (^)(BOOL))completeHandler {
+- (void)sendOrderWithCompleteHandler:(void (^)(BOOL, NSError*))completeHandler {
 //    BKOrder *testDict = [BKTestCenter testOrder];
-    [[BKAPIManager sharedBKAPIManager] orderWithData:[self.order orderForAPI] completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSLog(@"data %@", data);
-        NSLog(@"response %@", response);
+    [[BKAPIManager sharedBKAPIManager] orderWithData:[self.order orderForAPI] completionHandler:^(id data, NSError *error) {
+        NSLog(@"data %@", data);        
         NSLog(@"error %@", error);
         if (data == nil || error != nil) {
-            completeHandler(NO);
+            completeHandler(NO, error);
         }
         else {
-            completeHandler(YES);
+            completeHandler(YES, error);
         }
     }];   
 }

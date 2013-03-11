@@ -13,6 +13,8 @@
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
+#import "BKAPIError.h"
+#import "MBProgressHUD.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -29,6 +31,8 @@
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
 @property (strong, nonatomic) NSString *userAddress;
+
+@property (strong, nonatomic) MBProgressHUD *HUD;
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
@@ -146,15 +150,38 @@
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
     [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
-    [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success) {
+    
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.HUD];
+    self.HUD.delegate = self;
+    self.HUD.labelText = BKLoggingMessage;
+    [self.HUD show:YES];
+    
+    [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
-            UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
-            if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-            }
+            self.HUD.mode = MBProgressHUDModeText;
+            self.HUD.labelText = BKLoginSuccessMessage;
+            double delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.HUD hide:YES];
+                UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
+                if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+                }
+                                                                                        
+            });            
         }
         else {
-            NSLog(@"Warning: order failed!");
+            NSLog(@"Warning: order failed, error: %@", error);
+            self.HUD.mode = MBProgressHUDModeText;
+            if ([error.domain isEqualToString:BKErrorWrongOrder]) {                
+                self.HUD.labelText = @"訂單錯誤";
+            }
+            else {
+                self.HUD.labelText = @"網路無回應";
+            }
+            [self.HUD hide:YES afterDelay:2];
         }
     }];   
 }

@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
 
-FOUNDATION_EXPORT NSString *const BKConnecting;
-FOUNDATION_EXPORT NSString *const BKLoginSuccess;
+FOUNDATION_EXPORT NSString *const BKLoggingMessage;
+FOUNDATION_EXPORT NSString *const BKLoginSuccessMessage;
 //FOUNDATION_EXPORT NSString *const kBKLoginFailed;
 
 @interface BKAccountManager : NSObject
