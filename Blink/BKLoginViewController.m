@@ -117,7 +117,7 @@
         }
         else {
             self.HUD.mode = MBProgressHUDModeText;
-            if ([error.domain isEqualToString:BKErrorWrongUserNameOrPassword]) {
+            if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
                 [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
                 self.HUD.labelText = @"帳號或密碼錯誤";
             }

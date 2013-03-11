@@ -813,6 +813,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     note.delegate = self;
     note.note = [[BKOrderManager sharedBKOrderManager] noteForShopInfo:self.shopInfo];
     note.shopID = self.shopID;
+    note.orderExistAlert = self.orderExistAlert;
 //    NSLog(@"%@", NSStringFromCGRect(note.view.frame));
 //    note.view.bounds = CGRectMake(0, 0, 300, 400);
 //    NSLog(@"%@", note);

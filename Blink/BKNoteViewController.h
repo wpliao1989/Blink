@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSString *note;
 @property (strong, nonatomic) NSString *shopID;
+@property (strong, nonatomic) UIAlertView *orderExistAlert;
 
 @property (strong, nonatomic) id<BKNoteViewDelegate> delegate;
 

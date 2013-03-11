@@ -14,18 +14,40 @@
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
 
-NSString *const BKErrorWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
-NSString *const BKErrorWrongOrder = @"kBKWrongOrder";
+NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
+NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
 
 NSString *const kBKAPIResult = @"result";
 NSString *const kBKAPIResultCorrect = @"1";
 NSString *const kBKAPIResultWrong = @"0";
+
+@interface NSData (JSONValue)
+
+- (id) JSONValue;
+
+@end
+
+
+@implementation NSData (JSONValue)
+
+-(id)JSONValue{
+    NSError *error = nil;
+    
+    id result = [NSJSONSerialization JSONObjectWithData:self options:NSJSONReadingAllowFragments error:&error];
+    if (error != nil) {
+        NSLog(@"JSONValue error: %@",error);
+    }
+    return result;
+}
+
+@end
 
 @interface BKAPIManager ()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) BOOL isLocationFailed;
 
+-(id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON timeout:(NSTimeInterval)time completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
 - (NSString *)encodePWD:(NSString *)pwd;
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
@@ -48,6 +70,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 @synthesize isLocationServiceAvailable = _isServiceAvailable;
 @synthesize userCoordinate = _userCoordinate;
 @synthesize isLocationFailed = _isLocationFailed;
+
+#pragma mark - Getters and Setters
 
 - (void)setIsLoadingData:(BOOL)isLoadingData {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = isLoadingData;
@@ -73,18 +97,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     _userCoordinate = userCoordinate;
 }
 
+#pragma mark - Location
+
 - (BOOL)isLocationServiceAvailable {
-//    NSLog(@"%d, %d", [CLLocationManager locationServicesEnabled], [CLLocationManager authorizationStatus]);    
+    //    NSLog(@"%d, %d", [CLLocationManager locationServicesEnabled], [CLLocationManager authorizationStatus]);
     return ([CLLocationManager locationServicesEnabled]) &&
     ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized);
-//    &&(self.isLocationFailed == NO);
+    //    &&(self.isLocationFailed == NO);
 }
-
-- (NSURL *)hostURL {
-    return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
-}
-
-#pragma mark - Location Manager
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.isLocationFailed = NO;
@@ -201,6 +221,20 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+#pragma mark - OSConnectionManager overwrite
+
+- (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest {
+    [originalRequest setTimeoutInterval:10.0];
+    NSLog(@"timeout = %f", originalRequest.timeoutInterval);
+    return originalRequest;
+}
+
+- (NSURL *)hostURL {
+    return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
+}
+
+#pragma mark - Returned data checking
+
 - (BOOL)isCorrectResult:(id)data {
 //    NSLog(@"result class: %@", [[data objectForKey:kBKAPIResult] class]);
     if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultCorrect]) {
@@ -232,7 +266,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //            completeHandler(data, nil);
 //        }
         else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorWrongUserNameOrPassword code:0 userInfo:nil];
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:nil];
             completeHandler(nil, wrongResultError);
         }
         else {
@@ -395,7 +429,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             completeHandler(nil, error);
         }        
         else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorWrongOrder code:0 userInfo:nil];
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:nil];
             completeHandler(nil, wrongResultError);
         }
         else {            

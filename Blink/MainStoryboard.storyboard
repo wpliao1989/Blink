@@ -525,7 +525,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="dismissButtonPressed:" destination="YaH-NC-9Dw" eventType="touchUpInside" id="zCT-Id-6rI"/>
+                                    <action selector="saveButtonPressed:" destination="YaH-NC-9Dw" eventType="touchUpInside" id="C9V-3h-azD"/>
                                 </connections>
                             </button>
                         </subviews>

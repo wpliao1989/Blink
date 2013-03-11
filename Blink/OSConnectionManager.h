@@ -24,3 +24,10 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(OSConnectionManager)
 -(NSString *)specifyStrFromDict:(NSDictionary *)dict withDiv:(NSString *)div;
 
 @end
+
+@interface OSConnectionManager (ModifyRequest)
+
+// Overwrite this method to perform additional request modifications
+- (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest;
+
+@end

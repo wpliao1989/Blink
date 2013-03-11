@@ -29,6 +29,13 @@
 
 @end
 
+@implementation OSConnectionManager (ModifyRequest)
+
+- (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest {
+    return originalRequest;
+}
+
+@end
 
 @implementation OSConnectionManager
 
@@ -62,6 +69,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
         [request setHTTPMethod:method];
         [request setHTTPBody:postData];
     }
+    request = [self modifyOriginalRequest:request];
     
     NSHTTPURLResponse *response = nil;
     NSError *error = nil;

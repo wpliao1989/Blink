@@ -168,10 +168,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return self.order.note;
 }
 
-- (void)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo{
+- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo{
+    if ([self isDifferentShop:shopInfo]) {
+        return NO;
+    }
     self.shopInfo = shopInfo;
     self.order.note = theNote;
     [self ifNoContentLeftThenClear];
+    return YES;
 }
 
 - (NSNumber *)totalPrice {

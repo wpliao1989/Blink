@@ -62,7 +62,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.        
+	// Do any additional setup after loading the view.    
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,9 +120,9 @@
     return NO;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    [self.activeField resignFirstResponder];
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    [self.activeField resignFirstResponder];
+//}
 
 - (IBAction)searchShopButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"shopListSegue" sender:sender];

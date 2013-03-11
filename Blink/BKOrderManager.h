@@ -33,7 +33,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo;
 
 - (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo;
-- (void)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo;
+- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo; // return YES for successful saving, NO otherwise 
 
 - (BOOL)hasOrder;
 - (NSNumber *)totalPrice;

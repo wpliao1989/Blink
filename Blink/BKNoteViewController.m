@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *noteText;
 @property (strong, nonatomic) BKShopInfo *shopInfo;
-- (IBAction)dismissButtonPressed:(id)sender;
+- (IBAction)saveButtonPressed:(id)sender;
 
 @end
 
@@ -83,11 +83,17 @@
 //    NSLog(@"%@", NSStringFromCGRect(keyboardFrame));
 }
 
-- (void)dismissButtonPressed:(id)sender {
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(confirmButtonPressed:)]) {
-        [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
+- (void)saveButtonPressed:(id)sender {
+    if ([[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo]) {
         [self.delegate confirmButtonPressed:self];
     }
+    else {
+        [self.orderExistAlert show];
+    }
+//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(confirmButtonPressed:)]) {
+//        [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
+//        [self.delegate confirmButtonPressed:self];
+//    }
 }
 
 @end
