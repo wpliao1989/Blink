@@ -25,5 +25,6 @@
 @required
 
 - (void)confirmButtonPressed:(BKNoteViewController *)sender;
+- (NSString *)orderExistsMessage;
 
 @end

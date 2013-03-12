@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *discountInformation;
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
+- (NSString *)phoneNumberExtractedFromString:(NSString *)string;
 
 - (void)initShop;
 
@@ -89,16 +90,29 @@
 }
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber {
+    phoneNumber = [self phoneNumberExtractedFromString:phoneNumber];
+    
+    NSURL *phoneURL = [NSURL URLWithString:[@"tel:" stringByAppendingString:phoneNumber]];
+    NSLog(@"phoneURL = %@", phoneURL);
+//    NSLog([[UIApplication sharedApplication] canOpenURL:phoneURL] ? @"YES" : @"NO");
+    if ([[UIApplication sharedApplication] canOpenURL:phoneURL]) {
+        [[UIApplication sharedApplication] openURL:phoneURL];
+        return YES;
+    }
+    return NO;
+}
+
+- (NSString *)phoneNumberExtractedFromString:(NSString *)string {
     BOOL hasPlusSign = NO;
-    phoneNumber = [phoneNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if ([[phoneNumber substringToIndex:1] isEqualToString:@"+"]) {
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([[string substringToIndex:1] isEqualToString:@"+"]) {
         hasPlusSign = YES;
     }
     static NSCharacterSet *seperatorSet;
     if (seperatorSet == nil) {
-        seperatorSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]; 
+        seperatorSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
     }
-    NSString *cleanPhoneNumber = [[phoneNumber componentsSeparatedByCharactersInSet:seperatorSet] componentsJoinedByString:@""];
+    NSString *cleanPhoneNumber = [[string componentsSeparatedByCharactersInSet:seperatorSet] componentsJoinedByString:@""];
     if (hasPlusSign) {
         cleanPhoneNumber = [@"+" stringByAppendingString:cleanPhoneNumber];
     }
@@ -107,21 +121,13 @@
     static NSDataDetector *phoneDetector;
     if (phoneDetector == nil) {
         phoneDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber error:&error];
-    }    
+    }
     NSTextCheckingResult *checkingResult = [phoneDetector firstMatchInString:cleanPhoneNumber options:0 range:NSMakeRange(0, cleanPhoneNumber.length)];
     if (error) {
         NSLog(@"phone error: %@", error);
     }
     NSLog(@"phoneNumber = %@", checkingResult.phoneNumber);
-    
-    NSURL *phoneURL = [NSURL URLWithString:[@"tel:" stringByAppendingString:checkingResult.phoneNumber]];
-    NSLog(@"phoneURL = %@", phoneURL);
-//    NSLog([[UIApplication sharedApplication] canOpenURL:phoneURL] ? @"YES" : @"NO");
-    if ([[UIApplication sharedApplication] canOpenURL:phoneURL]) {
-        [[UIApplication sharedApplication] openURL:phoneURL];
-        return YES;
-    }
-    return NO;
+    return checkingResult.phoneNumber;
 }
 
 //- (void)setEditing:(BOOL)editing animated:(BOOL)animated {

@@ -127,21 +127,21 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (UIAlertView *)orderExistAlert {
     if (_orderExistAlert == nil) {
-        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"Delete", nil];
+        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"刪除", nil];
     }
     return _orderExistAlert;
 }
 
 - (UIAlertView *)inValidSelectionAlert {
     if (_inValidSelectionAlert == nil) {
-        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"確定" otherButtonTitles: nil];
     }
     return _inValidSelectionAlert;
 }
 
 - (UIAlertView *)notEnoughContentAlert {
     if (_notEnoughContentAlert == nil) {
-        _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"Not enough content" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"請至少選擇一項商品" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
     }
     return _notEnoughContentAlert;
 }
@@ -665,9 +665,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)inValidMessage {
-    static NSString *itemNotSelected = @"No item selected";
-    static NSString *iceNotSelected = @"Ice level not selected";
-    static NSString *sweetnessNotSelected = @"Sweetness not selected";
+    static NSString *itemNotSelected = @"尚未選擇商品";
+    static NSString *iceNotSelected = @"尚未選擇冰量";
+    static NSString *sweetnessNotSelected = @"尚未選擇糖量";
     static NSString *changeLine = @"\n";
     
     NSString *result = @"";
@@ -703,7 +703,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)orderExistsMessage {
-    return [NSString stringWithFormat:@"Shop name: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"Order exists. Delete order?"];
+    return [NSString stringWithFormat:@"有尚未發送的訂單\n商店名: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"要把訂單刪除嗎?"];
 }
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price {
@@ -813,7 +813,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     note.delegate = self;
     note.note = [[BKOrderManager sharedBKOrderManager] noteForShopInfo:self.shopInfo];
     note.shopID = self.shopID;
-    note.orderExistAlert = self.orderExistAlert;
+    note.orderExistAlert = self.orderExistAlert;    
 //    NSLog(@"%@", NSStringFromCGRect(note.view.frame));
 //    note.view.bounds = CGRectMake(0, 0, 300, 400);
 //    NSLog(@"%@", note);

@@ -22,9 +22,29 @@
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
     
-//    [[UINavigationBar appearance] setBackgroundImage:(UIImage *)];    
+    [self customizeNavigationBar];    
+    
     [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
+    
     return YES;
+}
+
+- (void)customizeNavigationBar {
+    // Customize UINavigationBar
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithWhite:0.298 alpha:1.000], UITextAttributeTextColor,
+                                                           //                                                           [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],UITextAttributeTextShadowColor,
+                                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                                           [UIFont fontWithName:@"Helvetica" size:21.0], UITextAttributeFont,
+                                                           nil]];
+    
+    //    NSArray *arrayOfFontNames = [UIFont fontNamesForFamilyName:@"Helvetica"];
+    //    for (NSString *name in arrayOfFontNames) {
+    //        NSLog(@"font name: %@", name);
+    //    }
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"title.png"] forBarMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

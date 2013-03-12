@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *countyTextField;
 @property (strong, nonatomic) IBOutlet UITextField *regionTextField;
 @property (strong, nonatomic) IBOutlet UITextField *roadTextField;
+//@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
 - (IBAction)searchFoodButtonPressed:(id)sender;
@@ -62,7 +63,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.    
+	// Do any additional setup after loading the view.
+//    [self.homeButton setBackgroundImage:[[UIImage imageNamed:@"37x-Checkmark.png"] resizableImageWithCapInsets:UIEdgeInsetsZero] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    UIImage *image = [UIImage imageNamed:@"a2.png"];
+
+//    self.segmentedControl.segmentedControlStyle = 5;
+
+//    [self.segmentedControl setImage:image forSegmentAtIndex:0];
+    NSLog(@"height = %@", NSStringFromCGRect(self.navigationItem.titleView.frame));    
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,7 +133,7 @@
 //}
 
 - (IBAction)searchShopButtonPressed:(id)sender {
-    [self performSegueWithIdentifier:@"shopListSegue" sender:sender];
+//    [self performSegueWithIdentifier:@"shopListSegue" sender:sender];
 }
 
 - (IBAction)searchFoodButtonPressed:(id)sender {

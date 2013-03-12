@@ -161,6 +161,15 @@ typedef enum  {
         
         [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
     }
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 56, 37)];
+    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *backButton1 = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButton1;
+}
+
+- (void)pop {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -492,5 +501,6 @@ typedef enum  {
             NSLog(@"%@", data);
         }];
     }
+    [self.searchBar resignFirstResponder];
 }
 @end

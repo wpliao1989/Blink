@@ -43,7 +43,10 @@
 //    NSLog(@"viewDidLoad");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    self.noteText.text = self.note; 
+    self.noteText.text = self.note;
+    
+    NSLog(@"Parent view controller: %@", self.parentViewController);
+    NSLog(@"Presenting view controller: %@", self.presentingViewController);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,6 +91,7 @@
         [self.delegate confirmButtonPressed:self];
     }
     else {
+        [self.orderExistAlert setMessage:[self.delegate orderExistsMessage]];
         [self.orderExistAlert show];
     }
 //    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(confirmButtonPressed:)]) {

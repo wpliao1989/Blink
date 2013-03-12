@@ -107,7 +107,7 @@
         if (success) {
             self.HUD.mode = MBProgressHUDModeText;
             self.HUD.labelText = BKLoginSuccessMessage;
-            double delayInSeconds = 2.0;
+            double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self dismissViewControllerAnimated:YES completion:^{}];
@@ -124,14 +124,14 @@
             else {
                 self.HUD.labelText = @"網路無回應";
             }                        
-            [self.HUD hide:YES afterDelay:2];
+            [self.HUD hide:YES afterDelay:1.0];
         }        
 //        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     }];
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {
-    [self performSegueWithIdentifier:@"registrationSegue" sender:self];
+//    [self performSegueWithIdentifier:@"registrationSegue" sender:self];
 }
 
 - (IBAction)closeButtonPressed:(id)sender {

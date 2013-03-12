@@ -14,4 +14,7 @@
 
 @property (strong, nonatomic) NSString *shopID;
 
+// This is made public specific for NoteViewController
+//- (NSString *)orderExistsMessage;
+
 @end
