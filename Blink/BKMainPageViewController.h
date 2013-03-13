@@ -11,5 +11,6 @@
 @interface BKMainPageViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *backButton;
 
 @end

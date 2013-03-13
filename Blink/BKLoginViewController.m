@@ -21,11 +21,13 @@
 @property (strong, nonatomic) IBOutlet UITextField *userAccountTextField;
 @property (strong, nonatomic) IBOutlet UITextField *userPasswordTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *isSavingPreferencesSwitch;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) NSString *userAccount;
 @property (strong, nonatomic) NSString *userPassword;
 
 @property (strong, nonatomic) MBProgressHUD *HUD;
+@property (strong, nonatomic) UITextField *activeField;
 
 @end
 
@@ -79,6 +81,20 @@
     
 //    self.isSavingPreferencesSwitch.onImage = [UIImage imageNamed:@"Default.png"];
 //    self.isSavingPreferencesSwitch.offImage = [UIImage imageNamed:@"37x-Checkmark.png"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    CGSize sizeOfView = self.view.frame.size;
+    self.scrollView.contentSize = sizeOfView;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -165,6 +181,11 @@
     return NO;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSLog(@"begin editing!");
+    self.activeField = textField;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == self.userAccountTextField) {
 //        NSLog(@"account!");
@@ -174,6 +195,42 @@
 //        NSLog(@"password!");
         self.userPassword = textField.text;
     }
+    self.activeField = nil;
+}
+
+- (void)keyBoardDidShow:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    //    NSLog(@"view frame: %@", NSStringFromCGRect(self.view.frame));
+    NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
+    //    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
+    NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
+    
+    if (!CGRectContainsRect(aRect, self.activeField.frame)) {
+        CGPoint scrollPoint = CGPointMake(0, self.activeField.frame.origin.y + self.activeField.frame.size.height - aRect.size.height);
+        NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
+        //        [self.scrollView setContentOffset:scrollPoint animated:YES];
+        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+    }
+}
+
+- (void)keyBoardWillHide:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:animationTime animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        self.scrollView.contentInset = contentInsets;
+        self.scrollView.scrollIndicatorInsets = contentInsets;
+    }];    
 }
 
 @end

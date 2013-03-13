@@ -18,6 +18,7 @@
 #import "BKItemSelectButton.h"
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
+#import "UIViewController+BKBaseViewController.h"
 
 #import "BKTestCenter.h"
 
@@ -206,9 +207,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+//    [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
+//    [self addHomeButton];    
     [self initSettings];
 }
 

@@ -70,7 +70,7 @@
 //    self.segmentedControl.segmentedControlStyle = 5;
 
 //    [self.segmentedControl setImage:image forSegmentAtIndex:0];
-    NSLog(@"height = %@", NSStringFromCGRect(self.navigationItem.titleView.frame));    
+//    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,7 +148,4 @@
     [self performSegueWithIdentifier:@"userToolSegue" sender:sender];
 }
 
-- (IBAction)homeButtonPressed:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
 @end

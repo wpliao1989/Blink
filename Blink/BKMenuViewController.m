@@ -9,6 +9,7 @@
 #import "BKMenuViewController.h"
 #import "BKMainPageViewController.h"
 #import "BKMenuItem.h"
+#import "UIViewController+BKBaseViewController.h"
 
 @interface BKMenuViewController ()
 

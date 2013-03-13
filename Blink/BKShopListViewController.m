@@ -12,6 +12,7 @@
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
 #import "BKShopInfo.h"
+#import "UIViewController+BKBaseViewController.h"
 
 #import "BKTestCenter.h"
 
@@ -162,15 +163,18 @@ typedef enum  {
         [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
     }
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 56, 37)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *backButton1 = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButton1;
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 56, 37)];
+//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    UIBarButtonItem *backButton1 = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    self.navigationItem.leftBarButtonItem = backButton1;
+//    [self addBackButton];
+    [self.bottomToolBar setTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"under"]]];
+    [self.shopListTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
 }
 
-- (void)pop {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)pop {
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

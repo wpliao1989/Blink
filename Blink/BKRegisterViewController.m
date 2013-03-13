@@ -8,6 +8,7 @@
 
 #import "BKRegisterViewController.h"
 #import "BKAccountManager.h"
+#import "UIViewController+BKBaseViewController.h"
 
 @interface BKRegisterViewController ()
 

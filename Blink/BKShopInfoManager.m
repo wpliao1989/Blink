@@ -83,6 +83,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     if ([self.shopInfoDictionary objectForKey:shopID] == nil) {
         NSLog(@"Add new shop info for key %@", shopID);
         BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
+        newShopInfo.shopID = shopID;
         [self.shopInfoDictionary setObject:newShopInfo forKey:shopID];
     }
     else {

@@ -12,6 +12,7 @@
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
+#import "UIViewController+BKBaseViewController.h"
 
 @interface BKUserToolViewController ()
 
@@ -34,6 +35,7 @@ enum BKUserToolSegmentationSelection {
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userEmailLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userTokenLabel;
+@property (strong, nonatomic) UIActionSheet *logoutActionSheet;
 
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userEmail;
@@ -50,6 +52,7 @@ enum BKUserToolSegmentationSelection {
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
 @synthesize userToken = _userToken;
+@synthesize logoutActionSheet = _logoutActionSheet;
 
 - (void)setUserName:(NSString *)userName {
     _userName = userName;
@@ -83,6 +86,14 @@ enum BKUserToolSegmentationSelection {
     return _orderlist;
 }
 
+- (UIActionSheet *)logoutActionSheet {
+    if (_logoutActionSheet == nil) {
+        _logoutActionSheet = [[UIActionSheet alloc] initWithTitle:@"確定登出?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
+        [_logoutActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    }
+    return _logoutActionSheet;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -100,6 +111,9 @@ enum BKUserToolSegmentationSelection {
     self.userName = [BKAccountManager sharedBKAccountManager].userName;
     self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
     self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
+    
+//    CGRect frame = self.segmentaionControl.frame;
+//    [self.segmentaionControl setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 100)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,11 +206,8 @@ enum BKUserToolSegmentationSelection {
     }
 }
 
-- (IBAction)logoutButtonPressed:(id)sender {
-    UIActionSheet *logoutActionSheet = [[UIActionSheet alloc] initWithTitle:@"確定登出?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
-    [logoutActionSheet showInView:self.view];
-    
-    
+- (IBAction)logoutButtonPressed:(id)sender {    
+    [self.logoutActionSheet showInView:self.view];    
 }
 
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender {

@@ -119,12 +119,12 @@ static NSString *emptyString = @"Null content";
     return [self.data objectForKey:kBKShopDescription];
 }
 
-- (NSString *)shopID {
-    if ([self.data objectForKey:kBKShopID] == [NSNull null]) {
-        return emptyString;
-    }
-    return [self.data objectForKey:kBKShopID];
-}
+//- (NSString *)shopID {
+//    if ([self.data objectForKey:kBKShopID] == [NSNull null]) {
+//        return emptyString;
+//    }
+//    return [self.data objectForKey:kBKShopID];
+//}
 
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];

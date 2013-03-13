@@ -12,6 +12,7 @@
 #import "BKShopInfoManager.h"
 #import "BKMenuViewController.h"
 #import "BKMakeOrderViewController.h"
+#import "UIViewController+BKBaseViewController.h"
 
 @interface BKShopDetailViewController ()
 
@@ -56,7 +57,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.    
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
+    
     self.navigationItem.title = self.shopInfo.name;
     [self initShop];    
 }
