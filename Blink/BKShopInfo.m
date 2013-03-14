@@ -30,12 +30,16 @@ NSString *const kBKShopIsProvidingReceipt = @"withReceipt";
 NSString *const kBKShopCoWorkChannel = @"coWorkChannel";
 NSString *const kBKShopDescription = @"intro";
 NSString *const kBKShopIsDeliverable = @"deliverable";
+NSString *const kBKShopDeliverCost = @"deliverCost";
 
 static NSString *emptyString = @"Null content";
 
 @interface BKShopInfo ()
 
 @property (strong, nonatomic) NSDictionary *data;
+
+@property (nonatomic) CLLocationDegrees latitude;
+@property (nonatomic) CLLocationDegrees longitude;
 
 @end
 
@@ -52,7 +56,9 @@ static NSString *emptyString = @"Null content";
 @synthesize shopID = _shopID;
 @synthesize externalID = _externalID;
 @synthesize region = _region;
-@synthesize shopCoordinate = _shopCoordinate;
+@synthesize shopLocaiton = _shopLocaiton;
+@synthesize latitude = _latitude;
+@synthesize longitude = _longitude;
 @synthesize shopURL = _shopURL;
 @synthesize commerceType = _commerceType;
 @synthesize managerName = _managerName;
@@ -63,6 +69,7 @@ static NSString *emptyString = @"Null content";
 @synthesize coWorkChannel = _coWorkChannel;
 @synthesize shopDescription = _shopDescription;
 @synthesize isDeliverable = _isDeliverable;
+@synthesize deliverCost = _deliverCost;
 
 //- (id)initWithName:(NSString *)shopName {
 //    self = [super init];
@@ -105,6 +112,34 @@ static NSString *emptyString = @"Null content";
     return [self.data objectForKey:kBKShopAddress];
 }
 
+- (CLLocationDegrees)latitude {
+    if ([self.data objectForKey:kBKShopLatitude] == [NSNull null]) {
+        return 0.0;
+    }
+    return [[self.data objectForKey:kBKShopLatitude] doubleValue];
+}
+
+- (CLLocationDegrees)longitude {
+    if ([self.data objectForKey:kBKShopLongitude] == [NSNull null]) {
+        return 0.0;
+    }
+    return [[self.data objectForKey:kBKShopLongitude] doubleValue];
+}
+
+- (CLLocation *)shopLocaiton {
+    if (_shopLocaiton == nil) {
+        _shopLocaiton = [[CLLocation alloc] initWithLatitude:self.latitude longitude:self.longitude];
+    }
+    return _shopLocaiton;
+}
+
+- (NSString *)commerceType {
+    if ([self.data objectForKey:kBKShopCommerceType] == [NSNull null]) {
+        return emptyString;
+    }
+    return [self.data objectForKey:kBKShopCommerceType];
+}
+
 - (NSString *)openHours {
     if ([self.data objectForKey:kBKShopOpenHour] == [NSNull null]) {
         return emptyString;
@@ -117,6 +152,13 @@ static NSString *emptyString = @"Null content";
         return emptyString;
     }
     return [self.data objectForKey:kBKShopDescription];
+}
+
+- (NSNumber *)deliverCost {
+    if ([self.data objectForKey:kBKShopDeliverCost] == [NSNull null] || [self.data objectForKey:kBKShopDeliverCost] == nil) {
+        return @(-1);
+    }
+    return [self.data objectForKey:kBKShopDeliverCost];
 }
 
 //- (NSString *)shopID {
@@ -144,6 +186,7 @@ static NSString *emptyString = @"Null content";
 - (void)updateWithData:(NSDictionary *)data {
     self.data = data;
     self.menu = nil;
+    self.shopLocaiton = nil;
 }
 
 @end

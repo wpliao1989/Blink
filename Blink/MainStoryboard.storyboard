@@ -92,28 +92,6 @@
                                             <outlet property="delegate" destination="2ch-5L-3cc" id="SBj-uT-htK"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lsh-As-mWD">
-                                        <rect key="frame" x="20" y="115" width="139" height="32"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="a2.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s5k-yV-dpL">
-                                        <rect key="frame" x="161" y="115" width="139" height="32"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="a3.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon1.png" id="Bgs-9S-c8k">
                                         <rect key="frame" x="28" y="162" width="10" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -159,7 +137,7 @@
                         <outlet property="regionTextField" destination="a9R-GW-lXw" id="uRK-qD-oAf"/>
                         <outlet property="roadTextField" destination="fbR-1Y-jmM" id="q95-UE-tgv"/>
                         <outlet property="scrollView" destination="NTj-Qw-0Bk" id="Xlc-gD-kej"/>
-                        <outlet property="userToolButton" destination="9NX-Lk-8Dn" id="yBe-4a-ESk"/>
+                        <outlet property="userToolButton" destination="07O-kE-vs7" id="cZi-AU-YNZ"/>
                         <segue destination="oaA-HK-GSf" kind="push" identifier="shopListSegue" id="wso-nA-m2Q"/>
                         <segue destination="Mpb-6J-6KN" kind="push" identifier="userToolSegue" id="hXK-Fz-ycd"/>
                         <segue destination="gZU-Sn-msS" kind="modal" identifier="loginSegue" id="Fqf-f2-bQo"/>
@@ -187,21 +165,25 @@
                         <action selector="loginButtonPressed:" destination="2ch-5L-3cc" id="fvu-GT-MOC"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="個人工具" id="9NX-Lk-8Dn">
-                    <connections>
-                        <action selector="userToolButtonPressed:" destination="2ch-5L-3cc" id="d0C-12-z3Q"/>
-                    </connections>
+                <barButtonItem style="plain" id="07O-kE-vs7">
+                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uyc-i4-why">
+                        <rect key="frame" x="245" y="2" width="70" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                        <state key="normal" image="tool.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" image="tool_press.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="userToolButtonPressed:" destination="2ch-5L-3cc" eventType="touchUpInside" id="Fd4-xJ-vfi"/>
+                        </connections>
+                    </button>
                 </barButtonItem>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="d95-6c-ICM">
-                    <rect key="frame" x="0.0" y="0.0" width="237" height="30"/>
-                    <segments>
-                        <segment title="" image="a2.png">
-                            <size key="contentOffset" width="6" height="0.0"/>
-                        </segment>
-                        <segment title="找外帶"/>
-                    </segments>
-                    <color key="tintColor" red="0.9450981021" green="0.91764712329999998" blue="0.87843143940000001" alpha="1" colorSpace="deviceRGB"/>
-                </segmentedControl>
+                <barButtonItem title="個人工具" id="9NX-Lk-8Dn"/>
             </objects>
             <point key="canvasLocation" x="309" y="-33"/>
         </scene>
@@ -229,7 +211,7 @@
                                 <rect key="frame" x="0.0" y="29" width="320" height="387"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pke-jH-neG">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pke-jH-neG">
                                         <rect key="frame" x="110" y="205" width="100" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="完成未完訂單">
@@ -347,10 +329,23 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="登出" id="ae3-0A-iWm">
-                            <connections>
-                                <action selector="logoutButtonPressed:" destination="Mpb-6J-6KN" id="hSI-tZ-wdJ"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="aKS-i4-q0E">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RzL-oX-PVr">
+                                <rect key="frame" x="260" y="4" width="55" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                                <state key="normal" image="logout.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="logout_press.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonPressed:" destination="Mpb-6J-6KN" eventType="touchUpInside" id="T59-62-fww"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -365,6 +360,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyp-KB-QKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="登出" id="ae3-0A-iWm">
+                    <connections>
+                        <action selector="logoutButtonPressed:" destination="Mpb-6J-6KN" id="hSI-tZ-wdJ"/>
+                    </connections>
+                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="766" y="-781"/>
         </scene>
@@ -463,7 +463,7 @@
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="ZNf-ba-XWk">
                                         <rect key="frame" x="107" y="241" width="79" height="27"/>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bL0-Ii-VfM">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bL0-Ii-VfM">
                                         <rect key="frame" x="206" y="234" width="73" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="忘記密碼">
@@ -489,10 +489,23 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="登入" id="xbQ-Lu-7Xx">
-                        <barButtonItem key="leftBarButtonItem" title="關閉" id="LQw-OS-Vek">
-                            <connections>
-                                <action selector="closeButtonPressed:" destination="DyK-JR-YIz" id="Lge-sV-YpO"/>
-                            </connections>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="OgB-3i-poN">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uyx-wk-SRs">
+                                <rect key="frame" x="5" y="5" width="50" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                                <state key="normal" image="close.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="close_press.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonPressed:" destination="DyK-JR-YIz" eventType="touchUpInside" id="tLe-Yo-zTp"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -504,6 +517,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WX5-i4-Wda" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="關閉" id="LQw-OS-Vek">
+                    <connections>
+                        <action selector="closeButtonPressed:" destination="DyK-JR-YIz" id="Lge-sV-YpO"/>
+                    </connections>
+                </barButtonItem>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YPn-4e-m7e">
                     <rect key="frame" x="0.0" y="0.0" width="135" height="44"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1216,11 +1234,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ahome.png" id="H2l-Pm-DYL">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="379"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="R4i-wJ-KYj">
+                            <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="R4i-wJ-KYj">
                                 <rect key="frame" x="0.0" y="372" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <items>
@@ -1283,35 +1297,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="JoX-eq-grV">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <searchBar contentMode="redraw" barStyle="blackOpaque" placeholder="搜尋店名" id="FBV-Nn-B7M">
-                                                <rect key="frame" x="0.0" y="0.0" width="247" height="44"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <scopeButtonTitles>
-                                                    <string>Title</string>
-                                                    <string>Title</string>
-                                                </scopeButtonTitles>
-                                            </searchBar>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oHv-lb-fSy">
-                                                <rect key="frame" x="254" y="0.0" width="57" height="44"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="google1.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="searchButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="fae-z2-CWF"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
                                     <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="5Yb-hh-5QI">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -1319,39 +1304,79 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <outlet property="delegate" destination="oaA-HK-GSf" id="nQE-WT-Ypa"/>
                                         </connections>
                                     </mapView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wSo-1a-mB0">
-                                        <rect key="frame" x="0.0" y="44" width="320" height="328"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="86" sectionHeaderHeight="22" sectionFooterHeight="22" id="wSo-1a-mB0">
+                                        <rect key="frame" x="0.0" y="40" width="320" height="332"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="contentInset" minX="0.0" minY="11" maxX="0.0" maxY="0.0"/>
+                                        <inset key="scrollIndicatorInsets" minX="0.0" minY="11" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="e7j-Cb-vfE" detailTextLabel="OeB-fT-tyf" style="IBUITableViewCellStyleValue1" id="M2C-Eo-q2w">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="M2C-Eo-q2w" customClass="BKShopListCell">
+                                                <rect key="frame" x="0.0" y="22" width="320" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e7j-Cb-vfE">
-                                                            <rect key="frame" x="10" y="11" width="35" height="21"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OeB-fT-tyf">
-                                                            <rect key="frame" x="253" y="11" width="57" height="21"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LXA-ME-nYz">
+                                                            <rect key="frame" x="90" y="9" width="215" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="1" green="0.28235294117647058" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                            <color key="highlightedColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                                         </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="-$1000免費外送，距離138.1公里" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nQv-eW-xk6">
+                                                            <rect key="frame" x="90" y="32" width="215" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="日本料理" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V9v-gM-iAA">
+                                                            <rect key="frame" x="200" y="53" width="95" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="star.png" id="A8C-JX-Gnf">
+                                                            <rect key="frame" x="90" y="55" width="18" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="star.png" id="2bt-iy-6lr">
+                                                            <rect key="frame" x="110" y="55" width="18" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="star.png" id="tGV-zP-gzm">
+                                                            <rect key="frame" x="130" y="55" width="18" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="star.png" id="4Eb-Bb-HOe">
+                                                            <rect key="frame" x="151" y="55" width="18" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="star.png" id="2qA-zg-TuZ">
+                                                            <rect key="frame" x="170" y="55" width="18" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="commerceTypeLabel" destination="V9v-gM-iAA" id="eXB-KK-iM0"/>
+                                                    <outlet property="priceAndDistanceLabel" destination="nQv-eW-xk6" id="lR4-uN-2ev"/>
+                                                    <outlet property="shopNameLabel" destination="LXA-ME-nYz" id="x6h-1m-rWL"/>
+                                                    <outletCollection property="scoreImageViews" destination="A8C-JX-Gnf" id="ndy-Dg-1i3"/>
+                                                    <outletCollection property="scoreImageViews" destination="2bt-iy-6lr" id="40n-rH-8Er"/>
+                                                    <outletCollection property="scoreImageViews" destination="tGV-zP-gzm" id="hsm-m6-8Hr"/>
+                                                    <outletCollection property="scoreImageViews" destination="4Eb-Bb-HOe" id="6rd-yu-z4V"/>
+                                                    <outletCollection property="scoreImageViews" destination="2qA-zg-TuZ" id="Cs2-qD-gAh"/>
+                                                </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="loadingCell" id="Us4-5z-adu">
-                                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="108" width="320" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" id="5n5-Fh-26I">
@@ -1364,14 +1389,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 </view>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noResultCell" textLabel="dT2-jg-yvs" style="IBUITableViewCellStyleDefault" id="fUB-Uy-slf">
-                                                <rect key="frame" x="0.0" y="110" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="194" width="320" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="搜尋無結果" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dT2-jg-yvs">
-                                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                                            <rect key="frame" x="10" y="0.0" width="300" height="85"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1382,14 +1407,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 </view>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noServiceCell" textLabel="PS5-EG-bOz" style="IBUITableViewCellStyleDefault" id="m8h-3L-OTz">
-                                                <rect key="frame" x="0.0" y="154" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="280" width="320" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="請開啟定位服務" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PS5-EG-bOz">
-                                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                                            <rect key="frame" x="10" y="0.0" width="300" height="85"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1405,12 +1430,43 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <outlet property="delegate" destination="oaA-HK-GSf" id="fhj-9m-sm5"/>
                                         </connections>
                                     </tableView>
+                                    <view contentMode="scaleToFill" id="JoX-eq-grV">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="google.png" id="kRy-D1-Bb0">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="4dM-R1-GiG">
+                                                <rect key="frame" x="42" y="8" width="185" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oHv-lb-fSy">
+                                                <rect key="frame" x="240" y="2" width="57" height="44"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="google1.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted" image="google1_press.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="searchButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="fae-z2-CWF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058823529409" green="0.95294117647058818" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="搜尋美食" id="Zg9-r9-McA">
@@ -1435,11 +1491,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </navigationItem>
                     <connections>
                         <outlet property="bottomToolBar" destination="R4i-wJ-KYj" id="P5r-Y2-nBH"/>
-                        <outlet property="listButton" destination="O6q-Pv-Tho" id="lKk-dA-RWj"/>
-                        <outlet property="locateUserButton" destination="593-lc-0CZ" id="yUQ-VS-Rnj"/>
+                        <outlet property="listButton" destination="pua-CK-Gry" id="w5E-mN-JVs"/>
+                        <outlet property="locateUserButton" destination="a3x-l0-deu" id="o5Y-A1-ff0"/>
                         <outlet property="mainContentView" destination="NCr-hP-u26" id="ysq-T7-fg3"/>
                         <outlet property="mapButton" destination="2zq-cp-N2K" id="T1E-Gx-wig"/>
-                        <outlet property="searchBar" destination="FBV-Nn-B7M" id="AAP-TJ-5nb"/>
+                        <outlet property="searchBar" destination="4dM-R1-GiG" id="Zaq-Wx-iyF"/>
                         <outlet property="searchDisplayController" destination="YgZ-y2-eli" id="8DX-Ma-lMA"/>
                         <outlet property="shopListMapView" destination="5Yb-hh-5QI" id="ZZp-0J-vfP"/>
                         <outlet property="shopListTableView" destination="wSo-1a-mB0" id="qvb-Cf-qJa"/>
@@ -1448,18 +1504,65 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z9a-Gg-Xun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" barStyle="blackOpaque" placeholder="搜尋店名" id="FBV-Nn-B7M">
+                    <rect key="frame" x="0.0" y="0.0" width="247" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <scopeButtonTitles>
+                        <string>Title</string>
+                        <string>Title</string>
+                    </scopeButtonTitles>
+                </searchBar>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ahome.png" id="H2l-Pm-DYL">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="379"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture.png" id="7Kc-gF-y0T">
+                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list.png" id="QdG-7a-9H5">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <barButtonItem title="地圖顯示" id="6tm-dq-BMG"/>
                 <barButtonItem title="排序" id="g3k-di-MCF"/>
                 <barButtonItem title="分類" id="TrR-zQ-T33"/>
-                <barButtonItem title="列表顯示" id="O6q-Pv-Tho">
-                    <connections>
-                        <action selector="listButtonPressed:" destination="oaA-HK-GSf" id="m9A-a7-U9G"/>
-                    </connections>
+                <barButtonItem title="列表顯示" id="O6q-Pv-Tho"/>
+                <barButtonItem style="plain" id="pua-CK-Gry">
+                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4u5-fl-qMe">
+                        <rect key="frame" x="222" y="7" width="93" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <state key="normal" image="b4.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" image="b4_press.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="listButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="zCv-w0-LH4"/>
+                        </connections>
+                    </button>
                 </barButtonItem>
-                <barButtonItem title="我的位置" id="593-lc-0CZ">
-                    <connections>
-                        <action selector="locateUserButtonPressed:" destination="oaA-HK-GSf" id="B31-3n-1fO"/>
-                    </connections>
+                <barButtonItem title="我的位置" id="593-lc-0CZ"/>
+                <barButtonItem style="plain" id="a3x-l0-deu">
+                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t1S-VU-JVr">
+                        <rect key="frame" x="245" y="2" width="70" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
+                        <state key="normal" image="my.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" image="my_press.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="locateUserButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="Qk5-UG-XIE"/>
+                        </connections>
+                    </button>
                 </barButtonItem>
                 <searchDisplayController id="YgZ-y2-eli">
                     <connections>
@@ -1732,8 +1835,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </scenes>
     <resources>
         <image name="a1.png" width="320" height="365"/>
-        <image name="a2.png" width="277" height="63"/>
-        <image name="a3.png" width="277" height="63"/>
         <image name="ahome.png" width="575" height="174"/>
         <image name="b1.png" width="179" height="58"/>
         <image name="b1_press.png" width="179" height="58"/>
@@ -1741,23 +1842,38 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="b2_press.png" width="179" height="58"/>
         <image name="b3.png" width="179" height="58"/>
         <image name="b3_press.png" width="179" height="58"/>
+        <image name="b4.png" width="179" height="58"/>
+        <image name="b4_press.png" width="179" height="58"/>
         <image name="back.png" width="113" height="75"/>
         <image name="back_press.png" width="113" height="75"/>
         <image name="bg.png" width="640" height="960"/>
+        <image name="close.png" width="113" height="75"/>
+        <image name="close_press.png" width="113" height="75"/>
+        <image name="google.png" width="640" height="98"/>
         <image name="google1.png" width="127" height="98"/>
+        <image name="google1_press.png" width="127" height="98"/>
         <image name="home.png" width="113" height="75"/>
         <image name="home_press.png" width="113" height="75"/>
         <image name="icon1.png" width="19" height="35"/>
+        <image name="list.png" width="640" height="171"/>
         <image name="login.png" width="113" height="75"/>
         <image name="login2.png" width="444" height="66"/>
         <image name="login2_press.png" width="444" height="66"/>
         <image name="login_press.png" width="113" height="75"/>
+        <image name="logout.png" width="113" height="75"/>
+        <image name="logout_press.png" width="113" height="75"/>
+        <image name="my.png" width="131" height="75"/>
+        <image name="my_press.png" width="131" height="75"/>
+        <image name="picture.png" width="127" height="123"/>
         <image name="search shop.png" width="231" height="67"/>
         <image name="search shop_press.png" width="231" height="67"/>
         <image name="search.png" width="640" height="91"/>
         <image name="search_press.png" width="640" height="91"/>
         <image name="sign in.png" width="640" height="91"/>
         <image name="sign in_press.png" width="640" height="91"/>
+        <image name="star.png" width="37" height="33"/>
+        <image name="tool.png" width="131" height="75"/>
+        <image name="tool_press.png" width="131" height="75"/>
     </resources>
     <classes>
         <class className="BKCustomUIViewController" superclassName="UIViewController">
@@ -1866,6 +1982,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="shopPhoneLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="BKShopListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="commerceTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priceAndDistanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="scoreImageViews" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
         <class className="BKShopListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListViewController.h"/>
             <relationships>
@@ -1880,7 +2005,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="locateUserButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="shopListTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>

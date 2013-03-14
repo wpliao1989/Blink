@@ -68,7 +68,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 @synthesize isLoadingData = _isLoadingData;
 @synthesize locationManager = _locationManager;
 @synthesize isLocationServiceAvailable = _isServiceAvailable;
-@synthesize userCoordinate = _userCoordinate;
+//@synthesize userCoordinate = _userCoordinate;
+@synthesize userLocation = _userLocation;
 @synthesize isLocationFailed = _isLocationFailed;
 
 #pragma mark - Getters and Setters
@@ -88,13 +89,23 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return _locationManager;
 }
 
-- (void)setUserCoordinate:(CLLocationCoordinate2D)userCoordinate {
-    if ([self isEmptyCoordinate:_userCoordinate]&&(![self isEmptyCoordinate:userCoordinate])) {
+//- (void)setUserCoordinate:(CLLocationCoordinate2D)userCoordinate {
+//    if ([self isEmptyCoordinate:_userCoordinate]&&(![self isEmptyCoordinate:userCoordinate])) {
+//        NSLog(@"userCoordinate became available!");
+//        _userCoordinate = userCoordinate;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationBecameAvailableNotification object:nil];
+//    }
+//    _userCoordinate = userCoordinate;
+//}
+
+- (void)setUserLocation:(CLLocation *)userLocation {
+    if (_userLocation == nil && userLocation != nil) {
         NSLog(@"userCoordinate became available!");
-        _userCoordinate = userCoordinate;
+        _userLocation = userLocation;
         [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationBecameAvailableNotification object:nil];
+        return;
     }
-    _userCoordinate = userCoordinate;
+    _userLocation = userLocation;
 }
 
 #pragma mark - Location
@@ -114,7 +125,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0) {
         NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-        self.userCoordinate = location.coordinate;
+//        self.userCoordinate = location.coordinate;
+        self.userLocation = location;
         [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationDidChangeNotification object:nil];
 //        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //            NSLog(@"%@", data);            
@@ -148,8 +160,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)startUpdatingUserLocation {
     NSLog(@"isLocationFailed = %d", self.isLocationFailed);
-    NSLog(@"%f %f", self.userCoordinate.longitude, self.userCoordinate.latitude);
-    NSLog([self isEmptyCoordinate:self.userCoordinate]? @"YES":@"NO");
+//    NSLog(@"%f %f", self.userCoordinate.longitude, self.userCoordinate.latitude);
+    NSLog(@"%f %f", self.userLocation.coordinate.longitude, self.userLocation.coordinate.latitude);
+//    NSLog([self isEmptyCoordinate:self.userCoordinate]? @"YES":@"NO");
     [self.locationManager startUpdatingLocation];
 }
 
@@ -297,6 +310,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //                NSLog(@"the shop id :%@", theShopID);
                 NSLog(@"shop detail data :%@", data);
+                NSLog(@"shop service: %@", [data objectForKey:@"service"]);
+                NSLog(@"shop commerceType: %@", [data objectForKey:@"commerceType"]);
 //                NSLog(@"Shop name:%@", [data objectForKey:@"name"]);
                 NSLog(@"shop detail data class: %@", [data class]);
                 if (data == nil) {                    
@@ -330,7 +345,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     self.isLoadingData = YES;
     
-    if ([self isEmptyCoordinate:self.userCoordinate]) {
+    if ([self isEmptyCoordinate:self.userLocation.coordinate]) {
         NSLog(@"Warning: userCoordinate is empty!");
         self.isLoadingData = NO;
         return;
@@ -359,7 +374,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             break;
     }    
     
-    parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userCoordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userCoordinate.latitude]};
+    parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude]};
     
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
 //    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];    
@@ -391,7 +406,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
-    static NSString *kBKOrderUserToken = @"userToken";
+    static NSString *kBKOrderUserToken = @"token";
     static NSString *kBKOrderShopID = @"sShopID";
     static NSString *kBKOrderRecordTime = @"recordTime";
     static NSString *kBKOrderUserAddress = @"address";

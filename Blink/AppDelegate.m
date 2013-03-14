@@ -20,11 +20,15 @@
 //    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];
+//    [self.window makeKeyAndVisible];    
+    
+    [BugSenseController sharedControllerWithBugSenseAPIKey:@"775724ff"];
     
     [self customizeNavigationBar];    
-    
+
     [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
+    
+    
     
     return YES;
 }

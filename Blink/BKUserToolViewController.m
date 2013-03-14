@@ -81,7 +81,8 @@ enum BKUserToolSegmentationSelection {
 - (NSArray *)orderlist {
     if (_orderlist == nil) {
 #warning Test order list
-        _orderlist = [NSMutableArray arrayWithObjects:@"雞排", @"紅茶", @"小雞腿", nil];
+//        _orderlist = [NSMutableArray arrayWithObjects:@"雞排", @"紅茶", @"小雞腿", nil];
+        _orderlist = [NSMutableArray array];
     }
     return _orderlist;
 }

@@ -13,6 +13,7 @@
 #import "BKOrderManager.h"
 #import "BKShopInfo.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "BKShopListCell.h"
 
 #import "BKTestCenter.h"
 
@@ -70,7 +71,9 @@ typedef enum  {
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
 @property (strong, nonatomic) IBOutlet UIToolbar *bottomToolBar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *locateUserButton;
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+//@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UITextField *searchBar;
+
 @property (strong, nonatomic) UIActionSheet *listActionSheet;
 @property (strong, nonatomic) UIActionSheet *sortActionSheet;
 //@property (strong, nonatomic) CLLocationManager *locationManager;
@@ -86,6 +89,10 @@ typedef enum  {
 - (void)locationDidChange;
 - (void)locationBecameAvailable;
 - (void)registerForLocationNotifications;
+
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
+- (NSString *)stringForDeliverCost:(NSNumber *)cost;
+- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation;
 
 @end
 
@@ -168,8 +175,10 @@ typedef enum  {
 //    UIBarButtonItem *backButton1 = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 //    self.navigationItem.leftBarButtonItem = backButton1;
 //    [self addBackButton];
-    [self.bottomToolBar setTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"under"]]];
-    [self.shopListTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
+    [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+//    [self.bottomToolBar setTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"under"]]];
+    [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
+//    [self.shopListTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
 }
 
 //- (void)pop {
@@ -179,15 +188,16 @@ typedef enum  {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self registerForLocationNotifications];
-    NSIndexPath *selectedIndexPath = [self.shopListTableView indexPathForSelectedRow];
-    if (selectedIndexPath != nil) {
-        NSLog(@"selectedIndexPath :%@", [self.shopListTableView indexPathForSelectedRow]);
-        NSArray *indexPathsToBeReloaded = [self.shopListTableView indexPathsForVisibleRows];
-        [self.shopListTableView reloadRowsAtIndexPaths:indexPathsToBeReloaded withRowAnimation:UITableViewRowAnimationNone];
-//        [self.shopListTableView reloadData];
-        [self.shopListTableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];
-    }        
+//    NSIndexPath *selectedIndexPath = [self.shopListTableView indexPathForSelectedRow];
+//    if (selectedIndexPath != nil) {
+//        NSLog(@"selectedIndexPath :%@", [self.shopListTableView indexPathForSelectedRow]);
+//        NSArray *indexPathsToBeReloaded = [self.shopListTableView indexPathsForVisibleRows];
+//        [self.shopListTableView reloadRowsAtIndexPaths:indexPathsToBeReloaded withRowAnimation:UITableViewRowAnimationNone];
+////        [self.shopListTableView reloadData];
+//        [self.shopListTableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//        [self.shopListTableView deselectRowAtIndexPath:[self.shopListTableView indexPathForSelectedRow] animated:YES];
+//    }
+//    NSLog(@"visible rows: %@",[self.shopListTableView indexPathsForVisibleRows]);
 }
 
 //- (void)viewDidAppear:(BOOL)animated {
@@ -222,7 +232,7 @@ typedef enum  {
 }
 
 - (void)locationDidChange {
-    NSLog(@"location changed: long %f, lat %f", [BKAPIManager sharedBKAPIManager].userCoordinate.longitude, [BKAPIManager sharedBKAPIManager].userCoordinate.latitude);
+    NSLog(@"location changed: long %f, lat %f", [BKAPIManager sharedBKAPIManager].userLocation.coordinate.longitude, [BKAPIManager sharedBKAPIManager].userLocation.coordinate.latitude);
 }
 
 - (void)locationBecameAvailable {
@@ -284,7 +294,54 @@ typedef enum  {
                                                 }];
 }
 
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
+- (NSString *)stringForDeliverCost:(NSNumber *)cost {
+    return [NSString stringWithFormat:@"%@免費外送", [self currencyStringForPrice:cost]];
+}
+
+- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation {
+    CLLocation *userLocation = [BKAPIManager sharedBKAPIManager].userLocation;
+    CLLocationDistance distance = [userLocation distanceFromLocation:shopLocation];
+    
+    if (distance > 1000.0) {
+        distance = distance/1000.0;
+        return [NSString stringWithFormat:@"距離%0.1f公里", distance];
+    }
+    
+    return [NSString stringWithFormat:@"距離%d公尺", (NSInteger)distance];
+}
+
 #pragma mark - TableViewDataSource, TableViewDelegate
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {
+//        return 44;
+//    }
+//    else if ([BKAPIManager sharedBKAPIManager].isLoadingData == YES){
+//        return 44;
+//    }
+//    else if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0){        
+//        return 44;
+//    }
+//    else {
+//        return 86;        
+//    }
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
@@ -317,20 +374,48 @@ typedef enum  {
         cell = [tableView dequeueReusableCellWithIdentifier:@"noResultCell"];
     }
     else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
-        cell.textLabel.text = theShopInfo.name;
-        cell.detailTextLabel.text = theShopInfo.shopID;
+        BKShopListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+
+        UIImage *backgroundImage = [UIImage imageNamed:@"list"];
+        UIImage *pressImage = [UIImage imageNamed:@"list_press"];
+        UIImage *picture = [UIImage imageNamed:@"picture"];
         
-        NSLog(@"shopID :%@", theShopInfo.shopID);
-        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);
-        if ([[[BKOrderManager sharedBKOrderManager] shopID] isEqualToString:theShopInfo.shopID]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }
-        else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-    }  
+        cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];        
+        cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:pressImage];
+        cell.imageView.image = picture;       
+        
+        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        
+        // Configure shop name
+        cell.shopNameLabel.text = theShopInfo.name;       
+        
+        // Configure deliver price and distance
+        CLLocation *shopLocation = theShopInfo.shopLocaiton;
+        NSString *deliverCostAndDistanceString = [NSString stringWithFormat:@"%@，%@", [self stringForDeliverCost:theShopInfo.deliverCost], [self stringForDistanceFrom:shopLocation]];
+        cell.priceAndDistanceLabel.text = deliverCostAndDistanceString;
+        
+        // Configure commerce type
+        cell.commerceTypeLabel.text = theShopInfo.commerceType;
+        
+        // Configure score
+        NSInteger shopScore = 4;        
+        if (shopScore <= ((BKShopListCell *)cell).scoreImageViews.count) {            
+            for (NSInteger i = 0; i < shopScore; i++) {                
+                UIImageView *scoreImageView = [((BKShopListCell *)cell).scoreImageViews objectAtIndex:i];
+                scoreImageView.image = [UIImage imageNamed:@"star_press"];
+            }
+        }        
+        
+//        NSLog(@"shopID :%@", theShopInfo.shopID);
+//        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);
+//        if ([[[BKOrderManager sharedBKOrderManager] shopID] isEqualToString:theShopInfo.shopID]) {
+//            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//        }
+//        else {
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+//        }
+        return cell;
+    }
     
     return cell;
 }
@@ -357,6 +442,14 @@ typedef enum  {
         [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
     }
 }
+
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//}
+//
+//-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.searchBar resignFirstResponder];

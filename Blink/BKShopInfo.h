@@ -49,7 +49,7 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 @property (strong, nonatomic) NSString *shopID;
 @property (strong, nonatomic) NSString *externalID;
 @property (strong, nonatomic) NSString *region;
-@property (nonatomic) CLLocationCoordinate2D shopCoordinate;
+@property (nonatomic) CLLocation *shopLocaiton;
 @property (strong, nonatomic) NSString *shopURL;
 @property (strong, nonatomic) NSString *commerceType;
 @property (strong, nonatomic) NSString *managerName;
@@ -60,5 +60,6 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 @property (strong, nonatomic) NSString *coWorkChannel;
 @property (strong, nonatomic) NSString *shopDescription;
 @property (nonatomic) BOOL isDeliverable;
+@property (strong, nonatomic) NSNumber *deliverCost;
 
 @end

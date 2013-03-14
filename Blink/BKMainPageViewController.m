@@ -8,6 +8,21 @@
 
 #import "BKMainPageViewController.h"
 #import "BKAccountManager.h"
+#import "AKSegmentedControl.h"
+
+@interface AKSegmentedControl (SeletedIndex)
+
+- (NSUInteger)firstSelectedIndex;
+
+@end
+
+@implementation AKSegmentedControl (SeletedIndex)
+
+- (NSUInteger)firstSelectedIndex {
+    return [self.selectedIndexes firstIndex];
+}
+
+@end
 
 @interface BKMainPageViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
@@ -18,12 +33,15 @@
 @property (strong, nonatomic) IBOutlet UITextField *regionTextField;
 @property (strong, nonatomic) IBOutlet UITextField *roadTextField;
 //@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
 - (IBAction)searchFoodButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)userToolButtonPressed:(id)sender;
 - (IBAction)homeButtonPressed:(id)sender;
+
+- (void)setUpSegmentedControl;
 
 @end
 
@@ -71,6 +89,59 @@
 
 //    [self.segmentedControl setImage:image forSegmentAtIndex:0];
 //    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
+    [self setUpSegmentedControl];
+//    UITextView *test = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+//    test.text = @"123123123\n1231\n123123";
+//    NSLog(@"test height = %f", test.contentSize.height);
+//    [self.scrollView addSubview:test];
+//    NSLog(@"test height = %f", test.contentSize.height);
+}
+
+- (void)setUpSegmentedControl
+{
+    self.segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(20.0, 115.0, 278.0, 32.0)];
+    [self.segmentedControl addTarget:self action:@selector(segmentedViewController:) forControlEvents:UIControlEventValueChanged];
+    [self.segmentedControl setSegmentedControlMode:AKSegmentedControlModeSticky];
+    [self.segmentedControl setSelectedIndex:0];     
+    
+    [self.segmentedControl setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleBottomMargin];
+    
+    //    [self.segmentedControl1 setSeparatorImage:[UIImage imageNhCapInsets:UIEdgeInsetsMake(0.0, 4.0, 0.0, 1.0)];
+        
+        
+    
+    //    UIImage *buttonBackgroundImagePressedRight = [[UIImage imageNamed:@"segmented-bg-pressed-right.png"]
+    //                                                  resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 1.0, 0.0, 4.0)];
+    
+    // Button 1
+    UIButton *leftButton = [[UIButton alloc] init];
+    UIImage *leftButtonImage = [UIImage imageNamed:@"a2.png"];
+    UIImage *leftButtonPressedImage = [UIImage imageNamed:@"a2_press"];
+    
+    //    [buttonSocial setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 0.0, 5.0)];
+    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateHighlighted];
+    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateSelected];
+    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [leftButton setImage:leftButtonImage forState:UIControlStateNormal];
+    [leftButton setImage:leftButtonPressedImage forState:UIControlStateSelected];
+    [leftButton setImage:leftButtonPressedImage forState:UIControlStateHighlighted];
+    [leftButton setImage:leftButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
+    // Button 2
+    UIButton *rightButton = [[UIButton alloc] init];
+    UIImage *rightButtonImage = [UIImage imageNamed:@"a3.png"];
+    UIImage *rightButtonPressedImage = [UIImage imageNamed:@"a3_press"];
+    
+    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateHighlighted];
+    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateSelected];
+    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [rightButton setImage:rightButtonImage forState:UIControlStateNormal];
+    [rightButton setImage:rightButtonPressedImage forState:UIControlStateSelected];
+    [rightButton setImage:rightButtonPressedImage forState:UIControlStateHighlighted];
+    [rightButton setImage:rightButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
+    [self.segmentedControl setButtonsArray:@[leftButton, rightButton]];
+    [self.scrollView addSubview:self.segmentedControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +173,15 @@
 //        [self.scrollView setContentOffset:scrollPoint animated:YES];
         [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
     }
+}
+
+- (void)segmentedViewController:(id)sender
+{
+    AKSegmentedControl *segmentedControl = (AKSegmentedControl *)sender;
+    
+    if (segmentedControl == self.segmentedControl)
+        NSLog(@"SegmentedControl #1 : Selected Index %d", [segmentedControl firstSelectedIndex]);
+    
 }
 
 - (void)keyBoardWillHide:(NSNotification *)notification {

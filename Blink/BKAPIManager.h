@@ -35,7 +35,8 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 @property (nonatomic) BOOL isLocationServiceAvailable;
-@property (nonatomic) CLLocationCoordinate2D userCoordinate;
+//@property (nonatomic) CLLocationCoordinate2D userCoordinate;
+@property (strong, nonatomic) CLLocation *userLocation;
 
 - (void)startUpdatingUserLocation;
 - (void)stopUpdatingUserLocation;
