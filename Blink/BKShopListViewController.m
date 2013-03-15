@@ -118,9 +118,9 @@ typedef enum  {
 #pragma mark - Setters, late instantiation
 
 - (UIActionSheet *)listActionSheet {
-    if (_listActionSheet == nil || [_listActionSheet numberOfButtons] == 1) {
+    if (_listActionSheet == nil) {
         _listActionSheet = [[UIActionSheet alloc] initWithTitle:@"排序" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-        NSArray *listCriterias = [BKAPIManager sharedBKAPIManager].listCriteria;
+        NSArray *listCriterias = [BKAPIManager sharedBKAPIManager].localizedListCriteria;
         for (NSString *theCriteria in listCriterias) {
             [_listActionSheet addButtonWithTitle:theCriteria];
         }
@@ -131,7 +131,7 @@ typedef enum  {
 }
 
 - (UIActionSheet *)sortActionSheet {
-    if (_sortActionSheet == nil || [_sortActionSheet numberOfButtons] == 1) {
+    if (_sortActionSheet == nil) {
         _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
         NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;
         for (NSString *theCriteria in sortCriterias) {
@@ -242,8 +242,15 @@ typedef enum  {
 
 - (void)serverInfoDidUpdate {
     NSLog(@"server info did update!");
+//    if (self.listActionSheet.visible) {
+//        [self.listActionSheet dismissWithClickedButtonIndex:self.listActionSheet.cancelButtonIndex animated:YES];
+//    }
+//    if (self.sortActionSheet.visible) {
+//        [self.sortActionSheet dismissWithClickedButtonIndex:self.sortActionSheet.cancelButtonIndex animated:YES];
+//    }
     self.listActionSheet = nil;
     self.sortActionSheet = nil;
+    
     [self reloadDefault];
 }
 

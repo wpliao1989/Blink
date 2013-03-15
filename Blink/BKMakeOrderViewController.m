@@ -80,6 +80,7 @@ NSInteger quantityComponent = 0;
 - (void)initButtons;
 - (void)initTimePicker;
 
+// Picker related
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row;
 - (void)updateSelectedIceWithRow:(NSInteger)row;
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row;
@@ -321,6 +322,24 @@ static NSString *noSelectableItem = @"無可選擇項目";
     return result;
 }
 
+#pragma mark - Currency formatter
+
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
 #pragma mark - Table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -521,7 +540,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     }
 }
 
-#pragma mark - Utility methods
+#pragma mark - Update methods
 
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row {
     if (self.menu.count > 0) {
@@ -607,6 +626,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     self.selectedTime = date;
 }
 
+#pragma mark - Modify order
+
 - (void)addOrderContent {
 //    [[BKOrderManager sharedBKOrderManager] addNewOrderContent:[BKTestCenter testOrderContent]];
     if ([self inValidSelectionCodes] == nil){
@@ -651,6 +672,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
         [self.inValidSelectionAlert show];
     }   
 }
+
+#pragma mark - String for alert view
 
 - (NSArray *)inValidSelectionCodes {
     NSMutableArray *result = [NSMutableArray array];
@@ -725,27 +748,13 @@ static NSString *noSelectableItem = @"無可選擇項目";
     return [NSString stringWithFormat:@"有尚未發送的訂單\n商店名: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"要把訂單刪除嗎?"];
 }
 
-- (NSString *)currencyStringForPrice:(NSNumber *)price {
-    static NSNumberFormatter *currencyFormatter;
-    
-    if (currencyFormatter == nil) {
-        currencyFormatter = [[NSNumberFormatter alloc] init];
-        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [currencyFormatter setPositiveFormat:@"¤#,###"];
-        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-        [currencyFormatter setLocale:twLocale];
-        [currencyFormatter setCurrencySymbol:@"$"];
-        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-    }
-    
-    return [currencyFormatter stringFromNumber:price];
-}
+#pragma mark - Button title update
 
 - (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateSelected];
     [button setTitle:title forState:UIControlStateHighlighted];
-}
+} 
 
 - (void)updateIceAndSweetnessButtonTitle {
     NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedIceLevel, self.selectedSweetness];
@@ -777,6 +786,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     NSString *title = [formatter stringFromDate:self.selectedTime];
     [self changeButtonTitleButton:self.timeButton title:title];
 }
+
+#pragma mark - Utility methods
 
 - (BOOL)hasSelectableIce {
 //    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);

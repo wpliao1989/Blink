@@ -49,6 +49,8 @@ NSString *const kBKAPIResultWrong = @"0";
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) BOOL isLocationFailed;
 
+@property (strong, nonatomic) NSArray *listCriteriaKeys;
+
 //-(id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON timeout:(NSTimeInterval)time completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
 - (NSString *)encodePWD:(NSString *)pwd;
@@ -77,7 +79,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 @synthesize userLocation = _userLocation;
 @synthesize isLocationFailed = _isLocationFailed;
 @synthesize regions = _regions;
-@synthesize listCriteria = _listCriteria;
+@synthesize localizedListCriteria = _listCriteria;
+@synthesize listCriteriaKeys = _listCriteriaKeys;
 @synthesize sortCriteria = _sortCriteria;
 
 #pragma mark - Getters and Setters
@@ -104,11 +107,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return _regions;
 }
 
-- (NSArray *)listCriteria {
+- (NSArray *)localizedListCriteria {
     if (_listCriteria == nil) {
         _listCriteria = @[];
     }
     return _listCriteria;
+}
+
+- (NSArray *)listCriteriaKeys {
+    if (_listCriteriaKeys == nil) {
+        _listCriteriaKeys = @[];
+    }
+    return _listCriteriaKeys;
 }
 
 - (NSArray *)sortCriteria {
@@ -206,7 +216,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (BOOL)isServiceInfoValid {
-    return self.listCriteria.count > 0 && self.sortCriteria.count > 0;
+    return self.localizedListCriteria.count > 0 && self.sortCriteria.count > 0;
 }
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject {   
@@ -331,6 +341,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     __block NSMutableArray *shopIDs = [[data objectForKey:kShopIDs] mutableCopy];
     __block NSMutableDictionary *shopRawDatas = [NSMutableDictionary dictionary];
     
+    for (id theShopID in shopIDs) {
+        NSLog(@"theShopID class: %@", [theShopID class]);
+    }
+    
     if (shopIDs.count == 0) {
         self.isLoadingData = NO;
         completeHandler(shopIDs, @[]);
@@ -389,8 +403,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         return;
     }
     
-    if (criteria >= self.listCriteria.count || criteria < 0) {
-        NSLog(@"Warning: invalid list criteria!");
+    if (criteria >= self.listCriteriaKeys.count || criteria < 0) {
+        NSLog(@"Warning: invalid list criteria! %d", criteria);
+        NSLog(@"list criteria keys = %@", self.listCriteriaKeys);
+        NSLog(@"localized list criterias = %@", self.localizedListCriteria);
         return;
     }
     
@@ -420,7 +436,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }    
     
     NSDictionary *parameterDictionary;
-    NSString *criteriaString = [self.listCriteria objectAtIndex:criteria];
+//    NSLog(@"!!!! %@", [self.listCriteria class]);
+    NSString *criteriaString = [self.listCriteriaKeys objectAtIndex:criteria];
     
     parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude]};
     
@@ -522,6 +539,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     static NSString *kRegion = @"region";
     static NSString *kListCriteria = @"listCriteria";
     static NSString *kSortCriteria = @"sortCriteria";
+    static NSString *kListCriteriaDistant = @"distant";
     
     self.isLoadingData = YES;
     
@@ -530,19 +548,42 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             
             if ([data objectForKey:kRegion] != [NSNull null]) {
 //                NSLog(@"region class = %@", [[data objectForKey:kRegion] class]);
-                self.regions = [data objectForKey:kRegion];
+                self.regions = [data objectForKey:kRegion];                
                 
-                for (NSString *theRegion in self.regions) {
-                    NSLog(@"region: %@", theRegion);
-                }
+//                for (NSString *theRegion in [data objectForKey:kRegion]) {
+//                    NSLog(@"region: %@", theRegion);
+//                }
             }
             if ([data objectForKey:kListCriteria] != [NSNull null]) {
-//                NSLog(@"list criteria class = %@", [[data objectForKey:kListCriteria] class]);
-                self.listCriteria = [data objectForKey:kListCriteria];
+                NSDictionary *listCriteriaDict = [data objectForKey:kListCriteria];
+                NSMutableArray *keys = [NSMutableArray array];
+                NSMutableArray *values = [NSMutableArray array];
                 
-                for (NSString *theListCriteria in self.listCriteria) {
-                    NSLog(@"list criteria: %@", theListCriteria);                    
+                keys = [[listCriteriaDict allKeys] mutableCopy];                
+                [keys sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    if ([obj1 isEqualToString:kListCriteriaDistant]) {
+                        return NSOrderedAscending;
+                    }
+                    if ([obj2 isEqualToString:kListCriteriaDistant]) {
+                        return NSOrderedDescending;
+                    }
+                    return NSOrderedSame;
+                }];
+                
+                for (NSString *theKey in keys) {
+                    NSLog(@"the key = %@, the value = %@", theKey, [listCriteriaDict objectForKey:theKey]);
+                    [values addObject:[listCriteriaDict objectForKey:theKey]];
                 }
+                
+                self.listCriteriaKeys = [keys copy];
+                NSLog(@"keys !!!!!! %@   %@", self.listCriteriaKeys, keys);
+                self.localizedListCriteria = [[NSArray alloc] initWithArray:values];
+
+//                for (NSString *theListCriteria in [[data objectForKey:kListCriteria] allValues]) {
+//                    NSLog(@"list criteria: %@", theListCriteria);
+//                }
+//
+//                NSLog(@"list criteria: %@", [data objectForKey:kListCriteria]);
             }
             if ([data objectForKey:kSortCriteria] != [NSNull null]) {
 //                NSLog(@"sort criteria class = %@", [[data objectForKey:kSortCriteria] class]);

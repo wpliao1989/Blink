@@ -46,7 +46,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 @property (strong, nonatomic) NSArray *sortCriteria;
 @property (strong, nonatomic) NSArray *regions;
-@property (strong, nonatomic) NSArray *listCriteria;
+@property (strong, nonatomic) NSArray *localizedListCriteria;
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 

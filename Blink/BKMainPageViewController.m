@@ -11,6 +11,8 @@
 #import "AKSegmentedControl.h"
 #import "BKItemSelectButton.h"
 
+NSString *noSelectableItem = @"無可選擇項目";
+
 @interface AKSegmentedControl (SeletedIndex)
 
 - (NSUInteger)firstSelectedIndex;
@@ -32,10 +34,21 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIPickerView *countyPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *regionPicker;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *countyButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *regionButton;
-@property (strong, nonatomic) IBOutlet BKItemSelectButton *roadButton;
 @property (strong, nonatomic) BKItemSelectButton *activeButton;
+
+// Picker related
+@property (strong, nonatomic) NSArray *countys;
+@property (strong, nonatomic) NSArray *regions;
+@property (strong, nonatomic) NSString *selectedCounty;
+@property (strong, nonatomic) NSString *selectedRegion;
+- (void)updateSelectedCountyWithRow:(NSInteger)row;
+- (void)updateSelectedRegionWithRow:(NSInteger)row;
+- (BOOL)hasSelectableCounty;
+- (BOOL)hasSelectableRegion;
+- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
 - (IBAction)searchFoodButtonPressed:(id)sender;
@@ -49,16 +62,47 @@
 - (void)setUpSegmentedControl;
 - (void)setUpPickers;
 
-// Deprecated
+// --------------Followings are deprecated--------------
 @property (strong, nonatomic) IBOutlet UITextField *countyTextField;
 @property (strong, nonatomic) IBOutlet UITextField *regionTextField;
 @property (strong, nonatomic) IBOutlet UITextField *roadTextField;
 @property (strong, nonatomic) UITextField *activeField;
 //@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *roadButton;
 
 @end
 
 @implementation BKMainPageViewController
+
+@synthesize countys = _countys;
+@synthesize regions = _regions;
+
+#pragma mark Getters and Setters
+
+- (NSArray *)countys {
+    if (_countys == nil) {
+        _countys = @[@"台北市",@"台中市",@"高雄市"];
+    }
+    return _countys;
+}
+
+- (NSArray *)regions {
+    if (_regions == nil) {
+        _regions = @[@"1區",@"2區",@"3區"];
+    }
+    return _regions;
+}
+
+- (void)setSelectedCounty:(NSString *)selectedCounty {
+    _selectedCounty = selectedCounty;
+    [self changeButtonTitleButton:self.countyButton title:selectedCounty];
+}
+
+- (void)setSelectedRegion:(NSString *)selectedRegion {
+    [self changeButtonTitleButton:self.regionButton title:selectedRegion];
+}
+
+#pragma mark View controller life cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -120,9 +164,11 @@
 #pragma mark - Utility methods
 
 - (void)setUpPickers {
+    [self updateSelectedCountyWithRow:0];
+    [self updateSelectedRegionWithRow:0];
     self.countyButton.inputView = self.countyPicker;
-    self.regionButton.inputView = self.countyPicker;
-    self.roadButton.inputView = self.countyPicker;
+    self.regionButton.inputView = self.regionPicker;
+//    self.roadButton.inputView = self.countyPicker;
 }
 
 - (void)setUpSegmentedControl
@@ -179,11 +225,82 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {    
-    return 10;
+    NSInteger count = 1;
+    if (pickerView == self.countyPicker) {
+        if ([self hasSelectableCounty]) {
+            count = self.countys.count;
+        }
+    }
+    else if (pickerView == self.regionPicker) {
+        if ([self hasSelectableRegion]) {
+            count = self.regions.count;
+        }
+    }
+    return count;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {    
-    return [NSString stringWithFormat:@"Row %d", row];
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (label == nil) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    }
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
+    label.text = noSelectableItem;
+    
+    if (pickerView == self.countyPicker) {
+        if ([self hasSelectableCounty]) {
+            label.text = [self.countys objectAtIndex:row];
+        }        
+    }
+    else if (pickerView == self.regionPicker) {
+        if ([self hasSelectableRegion]) {
+            label.text = [self.regions objectAtIndex:row];
+        }
+    }
+    
+    return label;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (pickerView == self.countyPicker) {
+        [self updateSelectedCountyWithRow:row];
+    }
+    else if (pickerView == self.regionPicker) {
+        [self updateSelectedRegionWithRow:row];
+    }
+}
+
+# pragma mark - Check if selectable
+
+- (BOOL)hasSelectableCounty {
+    return self.countys.count > 0;
+}
+
+- (BOOL)hasSelectableRegion {
+    return self.regions.count > 0;
+}
+
+#pragma mark - Update selected item methods
+
+- (void)updateSelectedCountyWithRow:(NSInteger)row {
+    if ([self hasSelectableCounty]) {
+        self.selectedCounty = [self.countys objectAtIndex:row];
+    }    
+}
+
+- (void)updateSelectedRegionWithRow:(NSInteger)row {
+    if ([self hasSelectableRegion]) {
+        self.selectedRegion = [self.regions objectAtIndex:row];
+    }
+}
+
+#pragma mark - Button title update
+
+- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateSelected];
+    [button setTitle:title forState:UIControlStateHighlighted];
 }
 
 #pragma mark - Keyboard event
