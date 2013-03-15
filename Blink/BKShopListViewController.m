@@ -43,17 +43,16 @@
 
 @interface BKShopListViewController ()
 
-typedef enum  {
-    BKListActionSheetButtonIndexDistant = 0,
-    BKListActionSheetButtonIndexPrice = 1,
-    BKListActionSheetButtonIndexScore = 2
-}BKListActionSheetButtonIndex;
-
 //typedef enum  {
-//    BKSortActionSheetButtonIndex = 0,
-//    BKSortActionSheetButtonIndex = 1,
-//    BKSortActionSheetButtonIndex = 2
-//}BKSortActionSheetButtonIndex;
+//    BKListActionSheetButtonIndexDistant = 0,
+//    BKListActionSheetButtonIndexPrice = 1,
+//    BKListActionSheetButtonIndexScore = 2
+//}BKListActionSheetButtonIndex;
+
+typedef enum  {
+    BKReloadMethodList = 0,
+    BKReloadMethodSort = 1,
+}BKReloadMethod;
 
 //- (IBAction)homeButtonPressed:(id)sender;
 - (IBAction)mapButtonPressed:(id)sender;
@@ -85,10 +84,14 @@ typedef enum  {
 
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
 // Methods for reloading data based on list criteria
-- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
+//- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
+- (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria;
+- (void)reloadDefault;
+
 - (void)locationDidChange;
 - (void)locationBecameAvailable;
-- (void)registerForLocationNotifications;
+- (void)serverInfoDidUpdate;
+- (void)registerNotifications;
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 - (NSString *)stringForDeliverCost:(NSNumber *)cost;
@@ -115,16 +118,28 @@ typedef enum  {
 #pragma mark - Setters, late instantiation
 
 - (UIActionSheet *)listActionSheet {
-    if (_listActionSheet == nil) {
-        _listActionSheet = [[UIActionSheet alloc] initWithTitle:@"排序" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"依距離", @"依價格", @"依評價", nil];
+    if (_listActionSheet == nil || [_listActionSheet numberOfButtons] == 1) {
+        _listActionSheet = [[UIActionSheet alloc] initWithTitle:@"排序" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        NSArray *listCriterias = [BKAPIManager sharedBKAPIManager].listCriteria;
+        for (NSString *theCriteria in listCriterias) {
+            [_listActionSheet addButtonWithTitle:theCriteria];
+        }
+        _listActionSheet.cancelButtonIndex = [_listActionSheet addButtonWithTitle:@"取消"];
         [_listActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     }
     return _listActionSheet;
 }
 
 - (UIActionSheet *)sortActionSheet {
-    _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"飲料", @"中式", @"西式", nil];
-    [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    if (_sortActionSheet == nil || [_sortActionSheet numberOfButtons] == 1) {
+        _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;
+        for (NSString *theCriteria in sortCriterias) {
+            [_sortActionSheet addButtonWithTitle:theCriteria];
+        }
+        _sortActionSheet.cancelButtonIndex = [_sortActionSheet addButtonWithTitle:@"取消"];
+        [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    }    
     return _sortActionSheet;
 }
 
@@ -152,33 +167,18 @@ typedef enum  {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-//    [self.mainContentView addSubview:[[BKShopListTableViewController alloc] initWithNibName:@"BKShopListTableViewController" bundle:[NSBundle mainBundle]].view];
-//    NSLog(@"selected cell: %@", [self.shopListTableView indexPathForSelectedRow]);
-//    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;
-    NSLog(@"viewDidLoad");
-    
+    NSLog(@"viewDidLoad");    
     NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);   
     
-    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
-    
-//    NSLog(@"%d", [BKShopInfoManager sharedBKShopInfoManager].shopInfos.count);    
-    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
-//        self.isLoadingNewData = YES;
-//        [self.locationManager startUpdatingLocation];
-        
-        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];    
+   
+    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {        
+//        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+        [self reloadDefault];
     }
-    
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 56, 37)];
-//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-//    UIBarButtonItem *backButton1 = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    self.navigationItem.leftBarButtonItem = backButton1;
-//    [self addBackButton];
+
     [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-//    [self.bottomToolBar setTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"under"]]];
     [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
-//    [self.shopListTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
 }
 
 //- (void)pop {
@@ -187,8 +187,11 @@ typedef enum  {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self registerForLocationNotifications];
-//    NSIndexPath *selectedIndexPath = [self.shopListTableView indexPathForSelectedRow];
+    [self registerNotifications];
+    NSIndexPath *selectedIndexPath = [self.shopListTableView indexPathForSelectedRow];
+    if (selectedIndexPath != nil) {
+        [self.shopListTableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
 //    if (selectedIndexPath != nil) {
 //        NSLog(@"selectedIndexPath :%@", [self.shopListTableView indexPathForSelectedRow]);
 //        NSArray *indexPathsToBeReloaded = [self.shopListTableView indexPathsForVisibleRows];
@@ -226,21 +229,31 @@ typedef enum  {
 
 #pragma mark - Location notification
 
-- (void)registerForLocationNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange) name:kBKLocationDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationBecameAvailable) name:kBKLocationBecameAvailableNotification object:nil];
-}
-
 - (void)locationDidChange {
     NSLog(@"location changed: long %f, lat %f", [BKAPIManager sharedBKAPIManager].userLocation.coordinate.longitude, [BKAPIManager sharedBKAPIManager].userLocation.coordinate.latitude);
 }
 
 - (void)locationBecameAvailable {
     NSLog(@"locationBecameAvailable");
-    [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+    [self reloadDefault];
+}
+
+#pragma mark - Server info notification
+
+- (void)serverInfoDidUpdate {
+    NSLog(@"server info did update!");
+    self.listActionSheet = nil;
+    self.sortActionSheet = nil;
+    [self reloadDefault];
 }
 
 #pragma mark - Utility methods
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange) name:kBKLocationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationBecameAvailable) name:kBKLocationBecameAvailableNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverInfoDidUpdate) name:kBKServerInfoDidUpdateNotification object:nil];
+}
 
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs {
 //    [[BKShopInfoManager sharedBKShopInfoManager] clearShopInfos];
@@ -268,30 +281,63 @@ typedef enum  {
     [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];   
 }
 
-- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
-//    self.isLoadingNewData = YES;
+//- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
+////    self.isLoadingNewData = YES;
+//    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
+//    [self.shopListTableView reloadData];
+//    
+////    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
+////                                          completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+////                                              NSLog(@"%@", data);
+//////                                              self.isLoadingNewData = NO;                                              
+////                                              [self saveShopInfosWithShopIDs:data];
+////                                          }];
+////    [self saveTestShopInfosWithShopIDs:nil];
+//    
+//    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria
+//                                                completeHandler:^(NSArray *shopIDs, NSArray *shopRawDatas) {
+//        
+//        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
+//                                                    NSLog(@"shopIDs: %@", shopIDs);
+////                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
+//                                                    [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
+//                                                    [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
+//                                                    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+////                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
+//                                                }];
+//}
+
+- (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria {
+    
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     
-//    [[BKAPIManager sharedBKAPIManager] listWithListCriteria:criteria
-//                                          completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//                                              NSLog(@"%@", data);
-////                                              self.isLoadingNewData = NO;                                              
-//                                              [self saveShopInfosWithShopIDs:data];
-//                                          }];
-//    [self saveTestShopInfosWithShopIDs:nil];
-    
-    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria
-                                                completeHandler:^(NSArray *shopIDs, NSArray *shopRawDatas) {
-        
+    void (^handler)(NSArray *shopIDs, NSArray *shopRawDatas) = ^(NSArray *shopIDs, NSArray *shopRawDatas) {
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
-                                                    NSLog(@"shopIDs: %@", shopIDs);
-//                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
-                                                    [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
-                                                    [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
-                                                    [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-//                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
-                                                }];
+        NSLog(@"shopIDs: %@", shopIDs);
+        //                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
+        [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
+        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
+        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
+    };
+    
+    switch (method) {
+        case BKReloadMethodList:
+            [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:handler];
+            break;
+            
+        case BKReloadMethodSort:
+            [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria completeHandler:handler];
+            break;
+        default:
+            NSLog(@"Warning: invalid reload method!");
+            break;
+    }
+}
+
+- (void)reloadDefault {
+    [self reloadDataUsing:BKReloadMethodList criteria:0];
 }
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price {
@@ -503,29 +549,30 @@ typedef enum  {
 //    NSLog(@"action sheet = %@", actionSheet);
 //    NSLog(@"buttonIndex = %d", buttonIndex);
     if (actionSheet == self.listActionSheet) {
-        switch (buttonIndex) {
-            case BKListActionSheetButtonIndexDistant:
-                [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
-                break;
-            case BKListActionSheetButtonIndexPrice:
-                [self reloadDataAccordingToListCriteria:BKListCriteriaPrice];
-                break;
-            case BKListActionSheetButtonIndexScore:
-                [self reloadDataAccordingToListCriteria:BKListCriteriaScore];
-                break;
-            default:                
-                break;
-        }
-    }
-    else if (actionSheet == self.sortActionSheet) {
 //        switch (buttonIndex) {
-//            case 0:
-//                
+//            case BKListActionSheetButtonIndexDistant:
+////                [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+//                [self reloadDataUsing:BKReloadMethodList criteria:BKListCriteriaDistant];
 //                break;
-//                
-//            default:
+//            case BKListActionSheetButtonIndexPrice:
+////                [self reloadDataAccordingToListCriteria:BKListCriteriaPrice];
+//                [self reloadDataUsing:BKReloadMethodList criteria:BKListCriteriaPrice];
+//                break;
+//            case BKListActionSheetButtonIndexScore:
+////                [self reloadDataAccordingToListCriteria:BKListCriteriaScore];
+//                [self reloadDataUsing:BKReloadMethodList criteria:BKListCriteriaScore];
+//                break;
+//            default:                
 //                break;
 //        }
+        if (buttonIndex != actionSheet.cancelButtonIndex) {
+            [self reloadDataUsing:BKReloadMethodList criteria:buttonIndex];
+        }    
+    }
+    else if (actionSheet == self.sortActionSheet) {
+        if (buttonIndex != actionSheet.cancelButtonIndex) {
+            [self reloadDataUsing:BKReloadMethodSort criteria:buttonIndex];
+        }    
     }
 }
 

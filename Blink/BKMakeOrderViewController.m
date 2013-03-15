@@ -77,6 +77,7 @@ NSInteger quantityComponent = 0;
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 - (void)initSettings;
+- (void)initButtons;
 - (void)initTimePicker;
 
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row;
@@ -196,6 +197,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [self updateTimeButtonTitle];
 }
 
+#pragma mark - View controller life cycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -218,26 +221,41 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     //    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
     //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
-    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];    
+    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
     
-    for (BKMenuItem *item in self.menu) {
-        NSLog(@"name of item is %@", item.name);
-        NSLog(@"%@", item.UUID);
-    }        
-    
-    // Configure input views
-    self.itemButton.inputView = self.itemPicker;    
-    self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
-    self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
-    self.quantityButton.inputView = self.quantityPicker;
-    self.timeButton.inputView = self.timePicker;   
-    
+    [self initButtons];
     [self initTimePicker];
 
     [self updateSelectedQuantityWithRow:0];
     [self updateSelectedMenuItemWithRow:0];
     
     [self testPrint];
+}
+
+- (void)initButtons {
+    // Configure input views
+    self.itemButton.inputView = self.itemPicker;
+    self.iceAndSweetnessButton.inputView = self.iceAndSweetnessPicker;
+    self.sizeAndQuantityButton.inputView = self.sizeAndQuantityPicker;
+//    self.quantityButton.inputView = self.quantityPicker;
+    self.timeButton.inputView = self.timePicker;
+    
+//    [self.itemButton setBackgroundImage:[[UIImage imageNamed:@"pull"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 11, 5, 21)] forState:UIControlStateNormal];
+    UIImage *background = [[UIImage imageNamed:@"pull"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 11, 0, 21)];
+    UIImage *backgroundPress = [[UIImage imageNamed:@"pull_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 11, 0, 21)];
+    
+    [self.itemButton setBackgroundImage:background forState:UIControlStateNormal];
+    [self.itemButton setBackgroundImage:backgroundPress forState:UIControlStateHighlighted];
+    
+    [self.iceAndSweetnessButton setBackgroundImage:background forState:UIControlStateNormal];
+    [self.iceAndSweetnessButton setBackgroundImage:backgroundPress forState:UIControlStateHighlighted];
+    
+    [self.sizeAndQuantityButton setBackgroundImage:background forState:UIControlStateNormal];
+    [self.sizeAndQuantityButton setBackgroundImage:backgroundPress forState:UIControlStateHighlighted];
+    
+    [self.timeButton setBackgroundImage:background forState:UIControlStateNormal];
+    [self.timeButton setBackgroundImage:backgroundPress forState:UIControlStateHighlighted];
+//    [self.itemButton setBackgroundImage:[UIImage imageNamed:@"pull"] forState:UIControlStateNormal];
 }
 
 - (void)initTimePicker {
@@ -751,7 +769,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     static NSDateFormatter *formatter;
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy/M/d ah:mm"];
+        [formatter setDateFormat:@"yy/M/d HH:mm"];
 //        [formatter setDateStyle:NSDateFormatterShortStyle];
 //        [formatter setTimeStyle:NSDateFormatterShortStyle];
 //        NSLog(@"formatter string: %@", formatter.dateFormat);
@@ -780,6 +798,10 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (void)testPrint {
+    for (BKMenuItem *item in self.menu) {
+        NSLog(@"name of item is %@", item.name);
+        NSLog(@"%@", item.UUID);
+    }
     NSLog(@"selectedItemName: %@", self.selectedItemName);
     NSLog(@"selectedIce: %@", self.selectedIceLevel);
     NSLog(@"selectedSweetness: %@", self.selectedSweetness);

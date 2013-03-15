@@ -62,8 +62,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
     NSMutableURLRequest *request;
     
     if ([method isEqualToString:@"GET"]) {
-        NSString *param = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-        request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@?%@",service,param]];
+        if (postData != nil) {
+            NSString *param = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+            request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@?%@",service,param]];
+        }
+        else {
+            request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
+        }        
     }else{
         request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
         [request setHTTPMethod:method];

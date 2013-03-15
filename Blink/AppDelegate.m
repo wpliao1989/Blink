@@ -26,10 +26,8 @@
     
     [self customizeNavigationBar];    
 
-    [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
-    
-    
-    
+    [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];    
+    [[BKAPIManager sharedBKAPIManager] updateServerInfo];
     return YES;
 }
 

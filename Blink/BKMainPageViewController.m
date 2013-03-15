@@ -9,6 +9,7 @@
 #import "BKMainPageViewController.h"
 #import "BKAccountManager.h"
 #import "AKSegmentedControl.h"
+#import "BKItemSelectButton.h"
 
 @interface AKSegmentedControl (SeletedIndex)
 
@@ -25,23 +26,35 @@
 @end
 
 @interface BKMainPageViewController ()
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *userToolButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) UITextField *activeField;
-@property (strong, nonatomic) IBOutlet UITextField *countyTextField;
-@property (strong, nonatomic) IBOutlet UITextField *regionTextField;
-@property (strong, nonatomic) IBOutlet UITextField *roadTextField;
-//@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
+@property (strong, nonatomic) IBOutlet UIPickerView *countyPicker;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *countyButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *regionButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *roadButton;
+@property (strong, nonatomic) BKItemSelectButton *activeButton;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
 - (IBAction)searchFoodButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)userToolButtonPressed:(id)sender;
 - (IBAction)homeButtonPressed:(id)sender;
+- (IBAction)selectCountyButtonPressed:(id)sender;
+- (IBAction)selectRegionButtonPressed:(id)sender;
+- (IBAction)selectRoadButtonPressed:(id)sender;
 
 - (void)setUpSegmentedControl;
+- (void)setUpPickers;
+
+// Deprecated
+@property (strong, nonatomic) IBOutlet UITextField *countyTextField;
+@property (strong, nonatomic) IBOutlet UITextField *regionTextField;
+@property (strong, nonatomic) IBOutlet UITextField *roadTextField;
+@property (strong, nonatomic) UITextField *activeField;
+//@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @end
 
@@ -54,6 +67,12 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,12 +108,21 @@
 
 //    [self.segmentedControl setImage:image forSegmentAtIndex:0];
 //    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
+    [self setUpPickers];
     [self setUpSegmentedControl];
 //    UITextView *test = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
 //    test.text = @"123123123\n1231\n123123";
 //    NSLog(@"test height = %f", test.contentSize.height);
 //    [self.scrollView addSubview:test];
 //    NSLog(@"test height = %f", test.contentSize.height);
+}
+
+#pragma mark - Utility methods
+
+- (void)setUpPickers {
+    self.countyButton.inputView = self.countyPicker;
+    self.regionButton.inputView = self.countyPicker;
+    self.roadButton.inputView = self.countyPicker;
 }
 
 - (void)setUpSegmentedControl
@@ -144,13 +172,24 @@
     [self.scrollView addSubview:self.segmentedControl];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Picker dataSource, delegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
 }
 
-- (void)keyBoardDidShow:(NSNotification *)notification {    
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {    
+    return 10;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {    
+    return [NSString stringWithFormat:@"Row %d", row];
+}
+
+#pragma mark - Keyboard event
+
+- (void)keyBoardDidShow:(NSNotification *)notification {
+    NSLog(@"keyBoardDidShow");
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
@@ -167,24 +206,25 @@
 //    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
     NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
     
-    if (!CGRectContainsRect(aRect, self.activeField.frame)) {
-        CGPoint scrollPoint = CGPointMake(0, self.activeField.frame.origin.y + self.activeField.frame.size.height - aRect.size.height);
+    if (!CGRectContainsRect(aRect, self.activeButton.frame)) {
+        CGPoint scrollPoint = CGPointMake(0, self.activeButton.frame.origin.y + self.activeButton.frame.size.height - aRect.size.height);
         NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
 //        [self.scrollView setContentOffset:scrollPoint animated:YES];
-        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+        [self.scrollView scrollRectToVisible:self.activeButton.frame animated:YES];
     }
+    
+//    if (!CGRectContainsRect(aRect, self.activeField.frame)) {
+//        CGPoint scrollPoint = CGPointMake(0, self.activeField.frame.origin.y + self.activeField.frame.size.height - aRect.size.height);
+//        NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
+//        //        [self.scrollView setContentOffset:scrollPoint animated:YES];
+//        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+//    }
 }
 
-- (void)segmentedViewController:(id)sender
-{
-    AKSegmentedControl *segmentedControl = (AKSegmentedControl *)sender;
-    
-    if (segmentedControl == self.segmentedControl)
-        NSLog(@"SegmentedControl #1 : Selected Index %d", [segmentedControl firstSelectedIndex]);
-    
-}
+
 
 - (void)keyBoardWillHide:(NSNotification *)notification {
+    NSLog(@"keyBoardWillHide");
     NSDictionary* info = [notification userInfo];
     NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:animationTime animations:^{
@@ -193,6 +233,8 @@
         self.scrollView.scrollIndicatorInsets = contentInsets;
     }];    
 }
+
+#pragma mark - Text field event
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     NSLog(@"begin editing!");
@@ -208,9 +250,22 @@
     return NO;
 }
 
+#pragma mark - Segment control event
+
+- (void)segmentedViewController:(id)sender
+{
+    AKSegmentedControl *segmentedControl = (AKSegmentedControl *)sender;
+    
+    if (segmentedControl == self.segmentedControl)
+        NSLog(@"SegmentedControl #1 : Selected Index %d", [segmentedControl firstSelectedIndex]);
+    
+}
+
 //- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 //    [self.activeField resignFirstResponder];
 //}
+
+#pragma mark - IBAction
 
 - (IBAction)searchShopButtonPressed:(id)sender {
 //    [self performSegueWithIdentifier:@"shopListSegue" sender:sender];
@@ -226,6 +281,21 @@
 
 - (IBAction)userToolButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"userToolSegue" sender:sender];
+}
+
+- (IBAction)selectCountyButtonPressed:(id)sender {
+    self.activeButton = sender;
+    [sender becomeFirstResponder];
+}
+
+- (IBAction)selectRegionButtonPressed:(id)sender {
+    self.activeButton = sender;
+    [sender becomeFirstResponder];
+}
+
+- (IBAction)selectRoadButtonPressed:(id)sender {
+    self.activeButton = sender;
+    [sender becomeFirstResponder];
 }
 
 @end

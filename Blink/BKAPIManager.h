@@ -19,14 +19,15 @@
 
 @class BKOrder;
 
-typedef NS_ENUM(NSInteger, BKListCriteria) {
-  BKListCriteriaDistant = 1,
-  BKListCriteriaPrice = 2,
-  BKListCriteriaScore = 3
-};
+//typedef NS_ENUM(NSInteger, BKListCriteria) {
+//  BKListCriteriaDistant = 1,
+//  BKListCriteriaPrice = 2,
+//  BKListCriteriaScore = 3
+//};
 
 FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
+FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
 typedef void (^apiCompleteHandler)(id data, NSError *error);
 
@@ -43,13 +44,21 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 @property (nonatomic) BOOL isLoadingData;
 
+@property (strong, nonatomic) NSArray *sortCriteria;
+@property (strong, nonatomic) NSArray *regions;
+@property (strong, nonatomic) NSArray *listCriteria;
+
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 
-- (void)loadDataWithListCriteria:(BKListCriteria)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
+- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
+
+- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
 
 - (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler) completeHandler;
+
+- (void)updateServerInfo;
 
 @end
 
