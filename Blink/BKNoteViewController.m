@@ -12,6 +12,7 @@
 
 @interface BKNoteViewController ()
 
+@property (strong, nonatomic) IBOutlet UIImageView *background;
 @property (strong, nonatomic) IBOutlet UITextView *noteText;
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 - (IBAction)saveButtonPressed:(id)sender;
@@ -44,6 +45,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     self.noteText.text = self.note;
+    [self.background setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];     
     
     NSLog(@"Parent view controller: %@", self.parentViewController);
     NSLog(@"Presenting view controller: %@", self.presentingViewController);

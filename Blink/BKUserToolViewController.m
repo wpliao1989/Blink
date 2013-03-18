@@ -13,6 +13,8 @@
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "AKSegmentedControl.h"
+#import "AKSegmentedControl+SelectedIndex.h"
 
 @interface BKUserToolViewController ()
 
@@ -26,27 +28,29 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)logoutButtonPressed:(id)sender;
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender;
 
-
 @property (strong, nonatomic) IBOutlet UITableView *userToolTableView;
 @property (strong, nonatomic) NSArray *shopIDList;
 @property (strong, nonatomic) NSArray *orderlist;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
+//@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
 @property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userEmailLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userTokenLabel;
 @property (strong, nonatomic) UIActionSheet *logoutActionSheet;
+@property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userEmail;
 @property (strong, nonatomic) NSString *userToken;
+
+- (void)initSegmentedControl;
 
 @end
 
 @implementation BKUserToolViewController
 
 @synthesize userToolTableView = _userToolTableView;
-@synthesize segmentaionControl = _segmentaionControl;
+//@synthesize segmentaionControl = _segmentaionControl;
 @synthesize shopIDList = _shopIDList;
 @synthesize orderlist = _orderlist;
 @synthesize userName = _userName;
@@ -113,8 +117,52 @@ enum BKUserToolSegmentationSelection {
     self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
     self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
     
+    [self initSegmentedControl];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 //    CGRect frame = self.segmentaionControl.frame;
 //    [self.segmentaionControl setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 100)];
+}
+
+- (void)initSegmentedControl {
+    self.segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 34.0)];
+    [self.segmentedControl addTarget:self action:@selector(segmentationChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.segmentedControl setSegmentedControlMode:AKSegmentedControlModeSticky];
+    [self.segmentedControl setSelectedIndex:0];
+    
+    [self.segmentedControl setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleBottomMargin];
+    
+    // Button 1
+    UIButton *leftButton = [[UIButton alloc] init];
+    UIImage *leftButtonImage = [UIImage imageNamed:@"e1.png"];
+    UIImage *leftButtonPressedImage = [UIImage imageNamed:@"e1_press"];    
+    
+    [leftButton setImage:leftButtonImage forState:UIControlStateNormal];
+    [leftButton setImage:leftButtonPressedImage forState:UIControlStateSelected];
+    [leftButton setImage:leftButtonPressedImage forState:UIControlStateHighlighted];
+    [leftButton setImage:leftButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
+    // Button 2
+    UIButton *midButton = [[UIButton alloc] init];
+    UIImage *midButtonImage = [UIImage imageNamed:@"e3.png"];
+    UIImage *midButtonPressedImage = [UIImage imageNamed:@"e3_press"];    
+    
+    [midButton setImage:midButtonImage forState:UIControlStateNormal];
+    [midButton setImage:midButtonPressedImage forState:UIControlStateSelected];
+    [midButton setImage:midButtonPressedImage forState:UIControlStateHighlighted];
+    [midButton setImage:midButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
+    // Button 3
+    UIButton *rightButton = [[UIButton alloc] init];
+    UIImage *rightButtonImage = [UIImage imageNamed:@"e2.png"];
+    UIImage *rightButtonPressedImage = [UIImage imageNamed:@"e2_press"];
+    
+    [rightButton setImage:rightButtonImage forState:UIControlStateNormal];
+    [rightButton setImage:rightButtonPressedImage forState:UIControlStateSelected];
+    [rightButton setImage:rightButtonPressedImage forState:UIControlStateHighlighted];
+    [rightButton setImage:rightButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
+    [self.segmentedControl setButtonsArray:@[leftButton, midButton, rightButton]];
+    [self.view addSubview:self.segmentedControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,10 +194,10 @@ enum BKUserToolSegmentationSelection {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger dataCount;
     
-    if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
+    if(self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionShop) {
         dataCount = self.shopIDList.count;
     }
-    else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
+    else if (self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         dataCount = self.orderlist.count;
     }
     else {
@@ -161,12 +209,12 @@ enum BKUserToolSegmentationSelection {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
     
-    if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
+    if(self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionShop) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];        
         cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:[self.shopIDList objectAtIndex:indexPath.row]].name;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Shop #%d", indexPath.row];
     }
-    else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
+    else if (self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
         cell.textLabel.text = [self.orderlist objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Order #%d", indexPath.row];
@@ -175,10 +223,10 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) {
+    if(self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionShop) {
         [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:self];
     }
-    else if (self.segmentaionControl.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) {
+    else if (self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         
     }
 }
@@ -195,13 +243,13 @@ enum BKUserToolSegmentationSelection {
 
 #pragma mark - IBActions
 
-- (IBAction)segmentationChanged:(UISegmentedControl *)sender {
-    if ((sender.selectedSegmentIndex == BKUserToolSegmentationSelectionShop) || (sender.selectedSegmentIndex == BKUserToolSegmentationSelectionOrder) ){
+- (IBAction)segmentationChanged:(AKSegmentedControl *)sender {
+    if ((sender.firstSelectedIndex == BKUserToolSegmentationSelectionShop) || (sender.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) ){
         self.userToolTableView.hidden = NO;
         self.userDataModificationView.hidden = YES;
         [self.userToolTableView reloadData];
     }
-    else if (sender.selectedSegmentIndex == BKUserToolSegmentationSelectionUserData) {
+    else if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionUserData) {
         self.userToolTableView.hidden = YES;
         self.userDataModificationView.hidden = NO;
     }

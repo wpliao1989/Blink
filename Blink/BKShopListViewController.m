@@ -178,7 +178,7 @@ typedef enum  {
     }
 
     [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
+    [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 }
 
 //- (void)pop {
@@ -341,6 +341,9 @@ typedef enum  {
             NSLog(@"Warning: invalid reload method!");
             break;
     }
+    
+    // The folling line is for testing
+//    [self saveTestShopInfosWithShopIDs:nil];
 }
 
 - (void)reloadDefault {

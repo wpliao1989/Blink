@@ -46,8 +46,10 @@ NSInteger quantityComponent = 0;
 - (IBAction)selectTimeButtonPressed:(id)sender;
 - (IBAction)timePickerValueChanged:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIImageView *background;
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
+@property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *itemButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *iceAndSweetnessButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *sizeAndQuantityButton;
@@ -215,6 +217,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
 	// Do any additional setup after loading the view.
 //    [self addHomeButton];    
     [self initSettings];
+    self.shopNameLabel.text = ((BKShopInfo *)[[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID]).name;
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.background setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
 }
 
 - (void)initSettings {
@@ -624,6 +629,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)updateSelectedTimeWithDate:(NSDate *)date {
     self.selectedTime = date;
+    [[BKOrderManager sharedBKOrderManager] setOrderTime:date];
 }
 
 #pragma mark - Modify order

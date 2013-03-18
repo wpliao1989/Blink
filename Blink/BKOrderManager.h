@@ -20,6 +20,7 @@ FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 @property (nonatomic, strong) BKOrder *order;
+@property (nonatomic, strong) NSDate *recordTime;
 
 //- (BOOL)isValidOrder;
 - (void)setOrderTime:(NSDate *)date;

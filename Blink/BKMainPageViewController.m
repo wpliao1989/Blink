@@ -10,25 +10,13 @@
 #import "BKAccountManager.h"
 #import "AKSegmentedControl.h"
 #import "BKItemSelectButton.h"
+#import "AKSegmentedControl+SelectedIndex.h"
 
 NSString *noSelectableItem = @"無可選擇項目";
 
-@interface AKSegmentedControl (SeletedIndex)
-
-- (NSUInteger)firstSelectedIndex;
-
-@end
-
-@implementation AKSegmentedControl (SeletedIndex)
-
-- (NSUInteger)firstSelectedIndex {
-    return [self.selectedIndexes firstIndex];
-}
-
-@end
-
 @interface BKMainPageViewController ()
 
+@property (strong, nonatomic) IBOutlet UIImageView *titleBackground;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *userToolButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -38,6 +26,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *countyButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *regionButton;
 @property (strong, nonatomic) BKItemSelectButton *activeButton;
+//@property (strong, nonatomic) IBOutlet UIImageView *backgound;
 
 // Picker related
 @property (strong, nonatomic) NSArray *countys;
@@ -154,6 +143,9 @@ NSString *noSelectableItem = @"無可選擇項目";
 //    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
     [self setUpPickers];
     [self setUpSegmentedControl];
+    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
+    [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+//    self.backgound.image = [[UIImage imageNamed:@"bg_small"] resizableImageWithCapInsets:UIEdgeInsetsZero];
 //    UITextView *test = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
 //    test.text = @"123123123\n1231\n123123";
 //    NSLog(@"test height = %f", test.contentSize.height);

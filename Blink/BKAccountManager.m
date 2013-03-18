@@ -15,6 +15,8 @@
 NSString *const kBKUserEMail = @"email";
 NSString *const kBKUserToken = @"token";
 NSString *const kBKUserName = @"name";
+NSString *const kBKUserAddress = @"address";
+NSString *const kBKUserPhone = @"phone";
 
 NSString *const kBKUserPreferedAccount = @"kBKUserPreferedAccount";
 NSString *const kBKUserPreferedPassword = @"kBKUserPreferedPassword";
@@ -45,6 +47,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
 @synthesize userPhone = _userPhone;
+@synthesize userAddress = _userAddress;
 @synthesize userPreferedAccount = _userPreferedAccount;
 @synthesize userPreferedPassword = _userPreferedPassword;
 @synthesize isSavingPreferences = _isSavingPreferences;
@@ -86,7 +89,17 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 - (NSString *)userPhone {
-    return @"987654321";
+    if ([self isNullValue:[self.data objectForKey:kBKUserPhone]]) {
+        return emptyString;
+    }
+    return [self.data objectForKey:kBKUserPhone];
+}
+
+- (NSString *)userAddress {
+    if ([self isNullValue:[self.data objectForKey:kBKUserAddress]]) {
+        return emptyString;
+    }
+    return [self.data objectForKey:kBKUserAddress];
 }
 
 - (void)setIsSavingPreferences:(BOOL)isSavingPreferences {

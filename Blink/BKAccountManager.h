@@ -21,6 +21,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 @property (strong, nonatomic) NSString *userEmail;
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
+@property (strong, nonatomic) NSString *userAddress;
 
 @property (strong, nonatomic) NSString *userPreferedAccount;
 @property (strong, nonatomic) NSString *userPreferedPassword;

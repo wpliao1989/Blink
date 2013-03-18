@@ -20,11 +20,14 @@
 @interface BKOrderConfirmViewController ()
 
 - (IBAction)orderConfirmButtonPressed:(id)sender;
+@property (strong, nonatomic) IBOutlet UIImageView *backgrond;
 @property (strong, nonatomic) IBOutlet UILabel *totalPriceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userPhoneLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *serviceTypeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 
@@ -39,6 +42,7 @@
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 
 - (void)initUserInfos;
+- (NSString *)stringFromDate:(NSDate *)date;
 
 @end
 
@@ -63,6 +67,7 @@
 
 - (void)setUserAddress:(NSString *)userAddress {
     _userAddress = userAddress;
+    self.userAddressLabel.text = userAddress;
 }
 
 - (BKShopInfo *)shopInfo {
@@ -73,7 +78,7 @@
     self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
     self.userName = [BKAccountManager sharedBKAccountManager].userName;
     self.userPhone = [BKAccountManager sharedBKAccountManager].userPhone;
-//    self.userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
+    self.userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -89,9 +94,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self initUserInfos];
+    NSLog(@"date: %@", [BKOrderManager sharedBKOrderManager].recordTime);
+    
+    self.timeLabel.text = [self stringFromDate:[BKOrderManager sharedBKOrderManager].recordTime];
     self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
     self.shopNameLabel.text = [[BKOrderManager sharedBKOrderManager] shopName];
-    [self initUserInfos];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,10 +135,26 @@
     return result;
 }
 
+- (NSString *)stringFromDate:(NSDate *)date {
+    static NSDateFormatter *formatter;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy/M/d HH:mm"];
+        //        [formatter setDateStyle:NSDateFormatterShortStyle];
+        //        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        //        NSLog(@"formatter string: %@", formatter.dateFormat);
+    }
+    return [formatter stringFromDate:date];
+}
+
 #pragma mark - Tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[BKOrderManager sharedBKOrderManager] numberOfOrderContentsForShopInfo:self.shopInfo];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 71;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,12 +164,16 @@
     UILabel *basePrice = (UILabel *)[cell viewWithTag:2];    
     UILabel *quantity = (UILabel *)[cell viewWithTag:3];
     UILabel *price = (UILabel *)[cell viewWithTag:4];
+    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
+    UILabel *ice = (UILabel *)[cell viewWithTag:6];
     
     BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];
     price.text = [self currencyStringForPrice:orderContent.priceValue];
+    sweetness.text = orderContent.sweetness;
+    ice.text = orderContent.ice;
     
     return cell;
 }
@@ -155,7 +185,7 @@
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.HUD];
     self.HUD.delegate = self;
-    self.HUD.labelText = BKLoggingMessage;
+    self.HUD.labelText = @"送出中...";
     [self.HUD show:YES];
     
     [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {

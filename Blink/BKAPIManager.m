@@ -554,7 +554,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //                    NSLog(@"region: %@", theRegion);
 //                }
             }
-            if ([data objectForKey:kListCriteria] != [NSNull null]) {
+            if ([data objectForKey:kListCriteria] != [NSNull null] && [[data objectForKey:kListCriteria] isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *listCriteriaDict = [data objectForKey:kListCriteria];
                 NSMutableArray *keys = [NSMutableArray array];
                 NSMutableArray *values = [NSMutableArray array];
@@ -584,6 +584,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //                }
 //
 //                NSLog(@"list criteria: %@", [data objectForKey:kListCriteria]);
+            }
+            else {
+                self.listCriteriaKeys = @[@"distant", @"price", @"score"];
+                self.localizedListCriteria = @[@"依距離", @"依價格", @"依評價"];
             }
             if ([data objectForKey:kSortCriteria] != [NSNull null]) {
 //                NSLog(@"sort criteria class = %@", [[data objectForKey:kSortCriteria] class]);

@@ -13,5 +13,7 @@
 @interface BKShopDetailViewController : UIViewController
 
 @property (strong, nonatomic) NSString *shopID;
+// This home button is for menu view controller
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
 
 @end

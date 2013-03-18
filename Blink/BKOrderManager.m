@@ -76,6 +76,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     }
     NSString *recordTime = [formatter stringFromDate:date];
     self.order.recordTime = recordTime;
+    self.recordTime = date;
 }
 
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
@@ -159,7 +160,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     }
 }
 
-#pragma Total price / Note
+#pragma mark - Total price / Note
 
 - (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo {
     if ([self isDifferentShop:shopInfo]) {
@@ -181,6 +182,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 - (NSNumber *)totalPrice {
     return self.order.totalPrice;
 }
+
+#pragma mark - Order informations
 
 - (NSString *)shopName {
     return self.shopInfo.name;

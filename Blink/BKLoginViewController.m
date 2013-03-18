@@ -18,6 +18,7 @@
 - (IBAction)registrationButtonPressed:(id)sender;
 - (IBAction)closeButtonPressed:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIImageView *titleBackground;
 @property (strong, nonatomic) IBOutlet UITextField *userAccountTextField;
 @property (strong, nonatomic) IBOutlet UITextField *userPasswordTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *isSavingPreferencesSwitch;
@@ -79,6 +80,8 @@
         self.userPassword = [BKAccountManager sharedBKAccountManager].userPreferedPassword;
     }
     
+    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
+    [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 //    self.isSavingPreferencesSwitch.onImage = [UIImage imageNamed:@"Default.png"];
 //    self.isSavingPreferencesSwitch.offImage = [UIImage imageNamed:@"37x-Checkmark.png"];
 }

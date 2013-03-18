@@ -27,8 +27,8 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 @property (strong, nonatomic) NSArray *sweetnessLevels;
 @property (strong, nonatomic) NSString *detail;
 
-@property (strong, nonatomic) NSArray *priceLevels;
-@property (strong, nonatomic) NSArray *sizeLevels;
+@property (strong, nonatomic) NSArray *priceLevels; // array of NSString
+@property (strong, nonatomic) NSArray *sizeLevels; // array of NSNumber
 
 - (NSNumber *)priceForSize:(NSString *)size;
 

@@ -22,7 +22,11 @@
 
 @property (nonatomic, strong) BKShopInfo *shopInfo;
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
+@property (strong, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopCommerceTypeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
@@ -59,7 +63,12 @@
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.navigationItem.title = self.shopInfo.name;
-    [self initShop];    
+    [self initShop];
+    [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
+    [self.introduceSectionBackground setImage:[[UIImage imageNamed:@"introduce"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 158, 35, 158)]];
+//    [self.introduceSectionBackground setImage:[UIImage imageNamed:@"introduce"]];
+    [self.scrollView setContentSize:CGSizeMake(320, 591)];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +93,7 @@
 
 - (void)initShop {
     self.shopNameLabel.text = self.shopInfo.name;
+    self.shopCommerceTypeLabel.text = self.shopInfo.commerceType;
     self.shopAddressLabel.text = self.shopInfo.address;
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.openHours;

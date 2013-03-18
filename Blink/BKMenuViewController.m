@@ -7,11 +7,14 @@
 //
 
 #import "BKMenuViewController.h"
-#import "BKMainPageViewController.h"
+#import "BKShopDetailViewController.h"
 #import "BKMenuItem.h"
 #import "UIViewController+BKBaseViewController.h"
 
 @interface BKMenuViewController ()
+
+- (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item;
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
 
 @end
 
@@ -37,7 +40,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = ((BKMainPageViewController *)[self.navigationController.viewControllers objectAtIndex:0]).homeButton;    
+    self.navigationItem.rightBarButtonItem = ((BKShopDetailViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2]).homeButton;
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,10 +70,43 @@
 {
     static NSString *CellIdentifier = @"menuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = ((BKMenuItem *)[self.menu objectAtIndex:indexPath.row]).name;
-    // Configure the cell...
+    
+    BKMenuItem *item = [self.menu objectAtIndex:indexPath.row];
+    
+    UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
+    itemNameLabel.text = item.name;
+    
+    cell.imageView.image = [UIImage imageNamed:@"picture"];
+    
+    UILabel *priceLabel = (UILabel *)[cell viewWithTag:2];
+    priceLabel.text = [self stringForPriceFromMenuItem:item];
     
     return cell;
+}
+
+- (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item {
+    NSString *result = @"";
+    
+    for (NSString *size in item.sizeLevels) {
+        result = [result stringByAppendingFormat:@"%@%@ ", size, [self currencyStringForPrice:[item priceForSize:size]]];
+    }
+    return result;
+}
+
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
 }
 
 /*
