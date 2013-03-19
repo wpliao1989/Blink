@@ -121,7 +121,7 @@ NSString *noSelectableItem = @"無可選擇項目";
     else {        
         self.navigationItem.rightBarButtonItem = self.loginButton;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];    
 }
 
@@ -297,7 +297,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 #pragma mark - Keyboard event
 
-- (void)keyBoardDidShow:(NSNotification *)notification {
+- (void)keyBoardWillShow:(NSNotification *)notification {
     NSLog(@"keyBoardDidShow");
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;

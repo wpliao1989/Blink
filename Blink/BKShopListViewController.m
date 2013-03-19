@@ -597,6 +597,7 @@ typedef enum  {
 //        
 //    }];
 //    self.shopListMapView.frame = self.mainContentView.frame;
+    return;
     self.mapButton.enabled = NO;
     self.sortButton.enabled = NO;
     

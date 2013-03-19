@@ -91,7 +91,7 @@
     CGSize sizeOfView = self.view.frame.size;
     self.scrollView.contentSize = sizeOfView;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
@@ -201,7 +201,7 @@
     self.activeField = nil;
 }
 
-- (void)keyBoardDidShow:(NSNotification *)notification {
+- (void)keyBoardWillShow:(NSNotification *)notification {
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     

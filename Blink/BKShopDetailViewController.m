@@ -25,17 +25,22 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
 @property (strong, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
+@property (strong, nonatomic) IBOutlet UIView *introSection;
+@property (strong, nonatomic) IBOutlet UIView *bottomSection;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopCommerceTypeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
-@property (strong, nonatomic) IBOutlet UITextView *discountInformation;
+@property (strong, nonatomic) IBOutlet UITextView *shopIntro;
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
 - (NSString *)phoneNumberExtractedFromString:(NSString *)string;
 
 - (void)initShop;
+- (void)configureIntroSection;
+- (void)configureBottomSection;
+- (void)configureScrollView;
 
 @end
 
@@ -64,10 +69,34 @@
     
     self.navigationItem.title = self.shopInfo.name;
     [self initShop];
-    [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
+    [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];    
+
+    [self configureIntroSection];
+    [self configureBottomSection];
+    [self configureScrollView];    
+}
+
+- (void)configureIntroSection {
+    CGFloat shopIntroBottomPoint =  self.shopIntro.frame.origin.y + self.shopIntro.contentSize.height;
+    CGFloat sectionHeight = shopIntroBottomPoint + 40.0;
+    CGRect newFrame = self.introSection.frame;
+    newFrame.size.height = sectionHeight;
+    NSLog(@"old frame = %@", NSStringFromCGRect(self.introSection.frame));
+    self.introSection.frame = newFrame;
+    NSLog(@"new frame = %@", NSStringFromCGRect(self.introSection.frame));
+    NSLog(@"height of text: %f", self.shopIntro.contentSize.height);
     [self.introduceSectionBackground setImage:[[UIImage imageNamed:@"introduce"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 158, 35, 158)]];
-//    [self.introduceSectionBackground setImage:[UIImage imageNamed:@"introduce"]];
-    [self.scrollView setContentSize:CGSizeMake(320, 591)];
+}
+
+- (void)configureBottomSection {
+    CGRect newFrame = self.bottomSection.frame;
+    newFrame.origin.y = self.introSection.frame.origin.y + self.introSection.frame.size.height;
+    self.bottomSection.frame = newFrame;
+}
+
+- (void)configureScrollView {
+    CGFloat contentHeight = self.bottomSection.frame.origin.y + self.bottomSection.frame.size.height;
+    [self.scrollView setContentSize:CGSizeMake(320, contentHeight)];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
 }
 
@@ -97,7 +126,7 @@
     self.shopAddressLabel.text = self.shopInfo.address;
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.openHours;
-    self.discountInformation.text = self.shopInfo.shopDescription;
+    self.shopIntro.text = self.shopInfo.shopDescription;
 }
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber {

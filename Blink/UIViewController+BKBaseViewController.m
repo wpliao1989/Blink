@@ -40,6 +40,27 @@
 
 @end
 
+@implementation UIViewController (AdditionalSetup)
+
+- (void)viewDidLoad {
+    NSLog(@"add subview! self class %@", [self class]);
+    if (![self isKindOfClass:[UINavigationController class]]) {
+//        NSLog(@"self.view.frame = %@", NSStringFromCGRect(self.view.frame));
+        CGRect bounds = self.view.bounds;
+        CGFloat viewWidth = bounds.size.width;
+        CGFloat viewHeight = bounds.size.height;
+        
+        UIImageView *demoView = [[UIImageView alloc] initWithFrame:CGRectMake(viewWidth/2 - 113, viewHeight/2 - 64, 226, 128)];
+        demoView.image = [UIImage imageNamed:@"demo"];
+        demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        
+        [self.view addSubview:demoView];
+        NSLog(@"self.subviews = %@", self.view.subviews);
+    }    
+}
+
+@end
+
 
 
 

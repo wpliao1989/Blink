@@ -213,7 +213,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)viewDidLoad
 {
-//    [super viewDidLoad];
+    [super viewDidLoad];
 	// Do any additional setup after loading the view.
 //    [self addHomeButton];    
     [self initSettings];
@@ -227,7 +227,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     //    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
     //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
-    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
+    self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
     
     [self initButtons];
     [self initTimePicker];
@@ -316,12 +316,12 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)totalPriceDidChange {
 //    NSLog(@"totalPriceDidChange!");
-    NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPrice];
+    NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo];
     self.totalPrice.text = [self stringForTotalPrice:totalPrice];
 }
 
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
-    static NSString *preString = @"總金額: ";
+    static NSString *preString = @"總金額：";
     static NSString *postString = @"元";
     NSString *result = [[preString stringByAppendingString:[totalPrice stringValue]] stringByAppendingString:postString];
     return result;

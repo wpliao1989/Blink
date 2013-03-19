@@ -98,7 +98,7 @@
     NSLog(@"date: %@", [BKOrderManager sharedBKOrderManager].recordTime);
     
     self.timeLabel.text = [self stringFromDate:[BKOrderManager sharedBKOrderManager].recordTime];
-    self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPrice]];
+    self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
     self.shopNameLabel.text = [[BKOrderManager sharedBKOrderManager] shopName];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
@@ -129,9 +129,9 @@
 }
 
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
-    static NSString *preString = @"總金額: ";
+//    static NSString *preString = @"總金額: ";
     static NSString *postString = @"元";
-    NSString *result = [[preString stringByAppendingString:[totalPrice stringValue]] stringByAppendingString:postString];
+    NSString *result = [NSString stringWithFormat:@"%@%@", [totalPrice stringValue], postString];
     return result;
 }
 

@@ -179,7 +179,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return YES;
 }
 
-- (NSNumber *)totalPrice {
+- (NSNumber *)totalPriceForShop:(BKShopInfo *)shopInfo {
+    if ([self isDifferentShop:shopInfo]) {
+        return @(0);
+    }
     return self.order.totalPrice;
 }
 

@@ -24,7 +24,7 @@ enum BKUserToolSegmentationSelection {
   BKUserToolSegmentationSelectionUserData = 2
 };
 
-- (IBAction)segmentationChanged:(id)sender;
+- (void)segmentationChanged:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender;
 
@@ -243,7 +243,8 @@ enum BKUserToolSegmentationSelection {
 
 #pragma mark - IBActions
 
-- (IBAction)segmentationChanged:(AKSegmentedControl *)sender {
+- (void)segmentationChanged:(AKSegmentedControl *)sender {
+    NSLog(@"segment changed!");
     if ((sender.firstSelectedIndex == BKUserToolSegmentationSelectionShop) || (sender.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) ){
         self.userToolTableView.hidden = NO;
         self.userDataModificationView.hidden = YES;
