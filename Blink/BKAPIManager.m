@@ -48,6 +48,7 @@ NSString *const kBKAPIResultWrong = @"0";
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) BOOL isLocationFailed;
+- (void)updateToLocation:(CLLocation *)location;
 
 @property (strong, nonatomic) NSArray *listCriteriaKeys;
 
@@ -157,21 +158,25 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    self.isLocationFailed = NO;
     
-    CLLocation *location = [locations lastObject];
-    NSDate *eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-//        self.userCoordinate = location.coordinate;
-        self.userLocation = location;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationDidChangeNotification object:nil];
+    [self updateToLocation:[locations lastObject]];
+    return;
+    
+//    self.isLocationFailed = NO;
+    
+//    CLLocation *location = [locations lastObject];
+//    NSDate *eventDate = location.timestamp;
+//    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+//    if (abs(howRecent) < 15.0) {
+//        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
+////        self.userCoordinate = location.coordinate;
+//        self.userLocation = location;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationDidChangeNotification object:nil];
 //        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //            NSLog(@"%@", data);            
 //        }];
 //        [manager stopUpdatingLocation];
-    }
+//    }
     
 //    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
 //    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -190,6 +195,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        NSString *formattedAddress = ABCreateStringWithAddressDictionary(address, NO);
 //        NSLog(@"%@", formattedAddress);
 //    }];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSLog(@"did update to location: %@", newLocation);
+    [self updateToLocation:newLocation];
+}
+
+- (void)updateToLocation:(CLLocation *)location {
+    self.isLocationFailed = NO;    
+    
+    NSDate *eventDate = location.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    if (abs(howRecent) < 15.0) {
+        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
+        //        self.userCoordinate = location.coordinate;
+        self.userLocation = location;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBKLocationDidChangeNotification object:nil];
+        //        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant userCoordinate:self.userCoordinate completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        //            NSLog(@"%@", data);
+        //        }];
+        //        [manager stopUpdatingLocation];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -596,7 +623,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                 for (NSString *theSortCriteria in self.sortCriteria) {
                     NSLog(@"sort criteria: %@", theSortCriteria);                    
                 }
-            }            
+            }
         }
         
         if (![self isServiceInfoValid]) {

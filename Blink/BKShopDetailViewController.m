@@ -109,7 +109,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"menuSegue"]) {
         BKMenuViewController *menuVC = segue.destinationViewController;
-        menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
+//        menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
+        menuVC.navigationItem.title = @"菜單";
         menuVC.menu = self.shopInfo.menu;
     }
     else if ([segue.identifier isEqualToString:@"makeOrderSegue"]) {
