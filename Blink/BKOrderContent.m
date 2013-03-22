@@ -57,7 +57,7 @@ NSString *const kBKOrderContentQuantity = @"quantity";
 }
 
 - (NSDictionary *)contentForAPI {
-    NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID != nil ? self.UUID : @0,
+    NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID != nil ? self.UUID : @"none",
                                  kBKOrderContentName: self.name != nil ? self.name : @"none",
                                  kBKOrderContentSize: self.size != nil ? self.size : @"none",
                                  kBKOrderContentIce: self.ice != nil ? self.ice : @"none",

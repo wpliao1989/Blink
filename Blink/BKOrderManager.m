@@ -56,7 +56,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (void)setShopInfo:(BKShopInfo *)shopInfo {
     if (shopInfo != _shopInfo) {
-        self.order.shopID = shopInfo.shopID;
+        self.order.shopID = shopInfo.sShopID;
     }
     _shopInfo = shopInfo;
 }
@@ -69,7 +69,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     static NSDateFormatter *formatter;
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy/M/d ah:mm"];
+        [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
         //        [formatter setDateStyle:NSDateFormatterShortStyle];
         //        [formatter setTimeStyle:NSDateFormatterShortStyle];
         //        NSLog(@"formatter string: %@", formatter.dateFormat);
@@ -77,6 +77,29 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     NSString *recordTime = [formatter stringFromDate:date];
     self.order.recordTime = recordTime;
     self.recordTime = date;
+    
+    // The followings are for testing format
+//    static NSDateFormatter *formatter;
+//    if (formatter == nil) {
+//        formatter = [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy/M/d H:mm"];
+//        //        [formatter setDateStyle:NSDateFormatterShortStyle];
+//        //        [formatter setTimeStyle:NSDateFormatterShortStyle];
+//        //        NSLog(@"formatter string: %@", formatter.dateFormat);
+//    }
+//    NSDate *today = [NSDate date];
+//    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+//    NSDateComponents *newComp = [currentCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
+//    [newComp setDay:1];
+//    [newComp setHour:1];
+//    [newComp setMinute:1];
+//    today = [currentCalendar dateFromComponents:newComp];
+//    
+//    NSString *recordTime = [formatter stringFromDate:today];
+//    NSLog(@"1. %@", recordTime);
+//    [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+//    recordTime = [formatter stringFromDate:today];
+//    NSLog(@"2. %@", recordTime);
 }
 
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
@@ -103,7 +126,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 #pragma mark - Order content operations
 
 - (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo {
-    return (self.shopInfo != nil) && (![self.shopInfo.shopID isEqualToString:anotherShopInfo.shopID]);
+    return (self.shopInfo != nil) && (![self.shopInfo.sShopID isEqualToString:anotherShopInfo.sShopID]);
 }
 
 - (BOOL)hasOrder {
@@ -193,7 +216,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 }
 
 - (NSString *)shopID {
-    return self.shopInfo.shopID;
+    return self.shopInfo.sShopID;
 }
 
 - (void)clear {

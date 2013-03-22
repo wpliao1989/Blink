@@ -135,4 +135,8 @@ static NSInteger quantity = 1;
     NSLog(@"testDict = %@", testDi);
 }
 
++ (void)testMethods {
+    NSLog(@"Testing..");
+}
+
 @end

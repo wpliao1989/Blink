@@ -53,7 +53,7 @@ static NSString *emptyString = @"Null content";
 @synthesize address = _address;
 @synthesize openHours = _openHours;
 
-@synthesize shopID = _shopID;
+@synthesize sShopID = _shopID;
 @synthesize externalID = _externalID;
 @synthesize region = _region;
 @synthesize shopLocaiton = _shopLocaiton;
@@ -147,6 +147,13 @@ static NSString *emptyString = @"Null content";
     return [self.data objectForKey:kBKShopOpenHour];
 }
 
+- (NSString *)shopURL {
+    if ([self.data objectForKey:kBKShopURL] == [NSNull null]) {
+        return emptyString;
+    }
+    return [self.data objectForKey:kBKShopURL];
+}
+
 - (NSString *)shopDescription {
     if ([self.data objectForKey:kBKShopDescription] == [NSNull null]) {
         return emptyString;
@@ -156,7 +163,7 @@ static NSString *emptyString = @"Null content";
 
 - (NSNumber *)deliverCost {
     if ([self.data objectForKey:kBKShopDeliverCost] == [NSNull null] || [self.data objectForKey:kBKShopDeliverCost] == nil) {
-        return @(-1);
+        return @(50);
     }
     return [self.data objectForKey:kBKShopDeliverCost];
 }
@@ -183,10 +190,11 @@ static NSString *emptyString = @"Null content";
     return self;
 }
 
-- (void)updateWithData:(NSDictionary *)data {
+- (void)updateWithData:(NSDictionary *)data sShopID:(NSString *)sShopID {
     self.data = data;
     self.menu = nil;
     self.shopLocaiton = nil;
+    self.sShopID = sShopID;
 }
 
 @end

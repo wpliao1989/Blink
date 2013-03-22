@@ -50,6 +50,7 @@ NSInteger quantityComponent = 0;
 @property (strong, nonatomic) IBOutlet UITableView *orderContent;
 @property (strong, nonatomic) IBOutlet UILabel *totalPrice;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *minDeliveryCostLabel;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *itemButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *iceAndSweetnessButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *sizeAndQuantityButton;
@@ -78,6 +79,7 @@ NSInteger quantityComponent = 0;
 
 - (void)totalPriceDidChange;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
+- (NSString *)stringForDeliveryCostLabelCost:(NSNumber *)cost;
 - (void)initSettings;
 - (void)initButtons;
 - (void)initTimePicker;
@@ -217,7 +219,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 	// Do any additional setup after loading the view.
 //    [self addHomeButton];    
     [self initSettings];
-    self.shopNameLabel.text = ((BKShopInfo *)[[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID]).name;
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     [self.background setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
 }
@@ -227,7 +229,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     //    NSLog(@"totalPrice is %@", [[BKOrderManager sharedBKOrderManager] totalPrice]);
     //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
+    self.shopNameLabel.text = self.shopInfo.name;
     self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
+    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.deliverCost];
     
     [self initButtons];
     [self initTimePicker];
@@ -268,8 +272,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     // Configure time picker intervals
     NSInteger minInterval = self.timePicker.minuteInterval;
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-    NSDateComponents *monthOffset = [[NSDateComponents alloc] init];
-    [monthOffset setMonth:1];
+    NSDateComponents *dayOffset = [[NSDateComponents alloc] init];
+    [dayOffset setDay:30];
     
     NSDate *minDate = [NSDate date];
     NSDateComponents *minComp = [currentCalendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit)fromDate:minDate];
@@ -281,7 +285,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     [minComp setMinute:ceil((double)minComp.minute/(double)minInterval)*minInterval];
     minDate = [currentCalendar dateFromComponents:minComp];
     
-    NSDate *maxDate = [currentCalendar dateByAddingComponents:monthOffset toDate:minDate options:0];
+    NSDate *maxDate = [currentCalendar dateByAddingComponents:dayOffset toDate:minDate options:0];
     
     [self.timePicker setMinimumDate:minDate];
     [self.timePicker setMaximumDate:maxDate];
@@ -318,13 +322,32 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    NSLog(@"totalPriceDidChange!");
     NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo];
     self.totalPrice.text = [self stringForTotalPrice:totalPrice];
+    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.deliverCost];
 }
+
+#pragma mark - String for price and delivery cost label
 
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
     static NSString *preString = @"總金額：";
     static NSString *postString = @"元";
     NSString *result = [[preString stringByAppendingString:[totalPrice stringValue]] stringByAppendingString:postString];
     return result;
+}
+
+- (NSString *)stringForDeliveryCostLabelCost:(NSNumber *)cost {
+    NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo];
+    
+    double totalPriceD = [totalPrice doubleValue];
+    double costD = [cost doubleValue];
+    
+    NSString *costString = [NSString stringWithFormat:@"%0.0f", costD];
+    
+    if (totalPriceD >= costD) {
+        return [NSString stringWithFormat:@"已達最低外送價格：%@元", costString];
+    }
+    else {
+        return [NSString stringWithFormat:@"最低外送價格：%@元", costString];
+    }
 }
 
 #pragma mark - Currency formatter
@@ -926,5 +949,9 @@ static NSString *noSelectableItem = @"無可選擇項目";
     }    
     
     [self updateSelectedTimeWithDate:self.timePicker.date];
+}
+- (void)viewDidUnload {
+    [self setMinDeliveryCostLabel:nil];
+    [super viewDidUnload];
 }
 @end

@@ -19,5 +19,6 @@
 + (BKOrderContent *)testOrderContent;
 
 + (void)testPrint;
++ (void)testMethods;
 
 @end

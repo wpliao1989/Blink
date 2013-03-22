@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BKAPIManager.h"
+#import "BKTestCenter.h"
 
 @implementation AppDelegate
 
@@ -27,7 +28,10 @@
     [self customizeNavigationBar];    
 
     [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];    
-    [[BKAPIManager sharedBKAPIManager] updateServerInfo];
+    [[BKAPIManager sharedBKAPIManager] updateServerInfo];    
+    
+//    [BKTestCenter testMethods];
+    
     return YES;
 }
 

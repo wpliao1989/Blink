@@ -36,7 +36,7 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 //- (id)initWithName:(NSString *)shopName;
 - (id)initWithData:(NSDictionary *)data;
 
-- (void)updateWithData:(NSDictionary *)data;
+- (void)updateWithData:(NSDictionary *)data sShopID:(NSString *)sShopID;
 
 @property (strong, nonatomic) NSString *name;
 // Menu is an array of dictionaries(keys: UUID, name, price)
@@ -46,7 +46,7 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *openHours;
 
-@property (strong, nonatomic) NSString *shopID;
+@property (strong, nonatomic) NSString *sShopID;
 @property (strong, nonatomic) NSString *externalID;
 @property (strong, nonatomic) NSString *region;
 @property (nonatomic) CLLocation *shopLocaiton;

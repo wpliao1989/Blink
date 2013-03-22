@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Blink/BKMakeOrderViewController.m"
-         timestampString = "385270598.895375"
+         timestampString = "385614200.902468"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "551"
-         endingLineNumber = "551"
+         startingLineNumber = "574"
+         endingLineNumber = "574"
          landmarkName = "-updateSelectedMenuItemWithRow:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -53,19 +53,6 @@
          startingLineNumber = "471"
          endingLineNumber = "471"
          landmarkName = "-listWithListCriteria:completionHandler:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Blink/BKShopDetailViewController.m"
-         timestampString = "385291437.162654"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
-         landmarkName = "-configureIntroSection"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

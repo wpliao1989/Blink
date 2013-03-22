@@ -83,7 +83,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     if ([self.shopInfoDictionary objectForKey:shopID] == nil) {
         NSLog(@"Add new shop info for key %@", shopID);
         BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
-        newShopInfo.shopID = shopID;
+        newShopInfo.sShopID = shopID;
         [self.shopInfoDictionary setObject:newShopInfo forKey:shopID];
     }
     else {
@@ -91,7 +91,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
         NSLog(@"Replace shop info for key %@", shopID);
 //        NSLog(@"oldShopInfo.name: %@", oldShopInfo.name);
 //        NSLog(@"newShopInfo.name: %@", [rawData objectForKey:@"name"]);
-        [oldShopInfo updateWithData:rawData];
+        [oldShopInfo updateWithData:rawData sShopID:shopID];
     }
 }
 

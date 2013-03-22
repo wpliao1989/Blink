@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
 @property (strong, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
+@property (strong, nonatomic) IBOutlet UIImageView *urlAndIntroSeperator;
 @property (strong, nonatomic) IBOutlet UIView *introSection;
 @property (strong, nonatomic) IBOutlet UIView *bottomSection;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
@@ -32,10 +33,15 @@
 @property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *shopMinDeliveryLabel;
+@property (strong, nonatomic) IBOutlet UITextView *shopURL;
 @property (strong, nonatomic) IBOutlet UITextView *shopIntro;
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
 - (NSString *)phoneNumberExtractedFromString:(NSString *)string;
+
+- (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost;
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
 
 - (void)initShop;
 - (void)configureIntroSection;
@@ -51,6 +57,8 @@
 - (BKShopInfo *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
 }
+
+#pragma mark - View controller life cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,30 +84,6 @@
     [self configureScrollView];    
 }
 
-- (void)configureIntroSection {
-    CGFloat shopIntroBottomPoint =  self.shopIntro.frame.origin.y + self.shopIntro.contentSize.height;
-    CGFloat sectionHeight = shopIntroBottomPoint + 40.0;
-    CGRect newFrame = self.introSection.frame;
-    newFrame.size.height = sectionHeight;
-    NSLog(@"old frame = %@", NSStringFromCGRect(self.introSection.frame));
-    self.introSection.frame = newFrame;
-    NSLog(@"new frame = %@", NSStringFromCGRect(self.introSection.frame));
-    NSLog(@"height of text: %f", self.shopIntro.contentSize.height);
-    [self.introduceSectionBackground setImage:[[UIImage imageNamed:@"introduce"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 158, 35, 158)]];
-}
-
-- (void)configureBottomSection {
-    CGRect newFrame = self.bottomSection.frame;
-    newFrame.origin.y = self.introSection.frame.origin.y + self.introSection.frame.size.height;
-    self.bottomSection.frame = newFrame;
-}
-
-- (void)configureScrollView {
-    CGFloat contentHeight = self.bottomSection.frame.origin.y + self.bottomSection.frame.size.height;
-    [self.scrollView setContentSize:CGSizeMake(320, contentHeight)];
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -121,6 +105,8 @@
     }
 }
 
+#pragma mark - UI Initialization
+
 - (void)initShop {
     self.shopNameLabel.text = self.shopInfo.name;
     self.shopCommerceTypeLabel.text = self.shopInfo.commerceType;
@@ -128,7 +114,90 @@
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.openHours;
     self.shopIntro.text = self.shopInfo.shopDescription;
+    self.shopURL.text = self.shopInfo.shopURL;
+    self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.deliverCost];
 }
+
+- (void)configureIntroSection {
+    // Set background image
+    UIImage *backgroundImage = [[UIImage imageNamed:@"introduce"] resizableImageWithCapInsets:UIEdgeInsetsMake(70, 60, 70, 60)];
+    [self.introduceSectionBackground setImage:backgroundImage];
+    CGFloat backgoundImageHeight = backgroundImage.size.height;
+    
+    // Configure URL frame
+    CGRect URLNewFrame = self.shopURL.frame;
+    URLNewFrame.size.height = self.shopURL.contentSize.height;
+    self.shopURL.frame = URLNewFrame;
+    
+    // Configure seperator
+    CGFloat URLAndIntroDistance = 5.0;
+    CGRect seperatorNewFrame = self.urlAndIntroSeperator.frame;
+    CGPoint seperatorNewOrigin = seperatorNewFrame.origin;
+    seperatorNewOrigin.y = URLNewFrame.origin.y + URLNewFrame.size.height + URLAndIntroDistance/2;
+    seperatorNewFrame.origin = seperatorNewOrigin;
+    self.urlAndIntroSeperator.frame = seperatorNewFrame;
+    
+    // Configure intro frame
+    CGPoint newOrigin = CGPointMake(URLNewFrame.origin.x, URLNewFrame.origin.y + URLNewFrame.size.height + URLAndIntroDistance);
+    CGRect introNewFrame = self.shopIntro.frame;
+    introNewFrame.origin = newOrigin;
+    introNewFrame.size.height = self.shopIntro.contentSize.height;
+    self.shopIntro.frame = introNewFrame;
+    
+    // Configure section frame
+    CGFloat shopIntroBottomPoint =  self.shopIntro.frame.origin.y + self.shopIntro.contentSize.height;
+    CGFloat sectionHeight = shopIntroBottomPoint + 20.0;
+    if (sectionHeight < backgoundImageHeight) {
+        sectionHeight = backgoundImageHeight;
+    }
+    CGRect introSectionNewFrame = self.introSection.frame;
+    introSectionNewFrame.size.height = sectionHeight;
+    NSLog(@"old frame = %@", NSStringFromCGRect(self.introSection.frame));
+    self.introSection.frame = introSectionNewFrame;
+    NSLog(@"new frame = %@", NSStringFromCGRect(self.introSection.frame));
+    NSLog(@"URL text view frame: %@", NSStringFromCGRect(self.shopURL.frame));
+    NSLog(@"intro text view frame: %@", NSStringFromCGRect(self.shopIntro.frame));
+    NSLog(@"height of text: %f", self.shopIntro.contentSize.height);
+}
+
+- (void)configureBottomSection {
+    CGFloat introSectionAndBottomSectionDistance= 10.0;
+    CGRect newFrame = self.bottomSection.frame;
+    newFrame.origin.y = self.introSection.frame.origin.y + self.introSection.frame.size.height + introSectionAndBottomSectionDistance;
+    self.bottomSection.frame = newFrame;
+}
+
+- (void)configureScrollView {
+    CGFloat contentHeight = self.bottomSection.frame.origin.y + self.bottomSection.frame.size.height;
+    [self.scrollView setContentSize:CGSizeMake(320, contentHeight)];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
+}
+
+#pragma mark - Price string
+
+- (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost {
+    return [NSString stringWithFormat:@"最低外送價：%@", [self currencyStringForPrice:cost]];
+}
+
+#pragma mark - Currency formatter
+
+- (NSString *)currencyStringForPrice:(NSNumber *)price {
+    static NSNumberFormatter *currencyFormatter;
+    
+    if (currencyFormatter == nil) {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setPositiveFormat:@"¤#,###"];
+        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+        [currencyFormatter setLocale:twLocale];
+        [currencyFormatter setCurrencySymbol:@"$"];
+        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+    }
+    
+    return [currencyFormatter stringFromNumber:price];
+}
+
+#pragma mark - Phone number detecting and calling
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber {
     phoneNumber = [self phoneNumberExtractedFromString:phoneNumber];
@@ -180,6 +249,8 @@
 //    }
 //}
 
+#pragma mark - IBActions
+
 - (IBAction)menuButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"menuSegue" sender:self];
 }
@@ -190,5 +261,11 @@
 
 - (IBAction)takeAwayButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
+}
+- (void)viewDidUnload {
+    [self setShopURL:nil];
+    [self setUrlAndIntroSeperator:nil];
+    [self setShopMinDeliveryLabel:nil];
+    [super viewDidUnload];
 }
 @end
