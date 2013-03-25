@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Blink/BKShopListViewController.m"
-         timestampString = "385287290.74445"
+         timestampString = "385624458.276265"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "450"
-         endingLineNumber = "450"
+         startingLineNumber = "460"
+         endingLineNumber = "460"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,24 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Blink/BKAPIManager.m"
-         timestampString = "385454595.331029"
+         timestampString = "385635353.887001"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "605"
-         endingLineNumber = "605"
-         landmarkName = "-updateServerInfo"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Blink/BKAPIManager.m"
-         timestampString = "385454595.331029"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "471"
-         endingLineNumber = "471"
+         startingLineNumber = "485"
+         endingLineNumber = "485"
          landmarkName = "-listWithListCriteria:completionHandler:"
          landmarkType = "5">
       </FileBreakpoint>

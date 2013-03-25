@@ -1945,8 +1945,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture.png" id="7P5-T7-Cti">
-                                                <rect key="frame" x="20" y="45" width="100" height="100"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <rect key="frame" x="26" y="45" width="100" height="100"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="p1.png" id="a5T-vW-BoW">
                                                 <rect key="frame" x="141" y="78" width="12" height="12"/>
@@ -2090,6 +2090,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="shopNameLabel" destination="xrQ-T8-HGU" id="AVw-vT-ihg"/>
                         <outlet property="shopOpenTimeLabel" destination="fN6-rh-uw8" id="JnZ-hF-tla"/>
                         <outlet property="shopPhoneLabel" destination="yKQ-Yf-rn6" id="ISK-bC-CA4"/>
+                        <outlet property="shopPic" destination="7P5-T7-Cti" id="Iu9-PQ-K9O"/>
                         <outlet property="shopURL" destination="KA9-Q4-Lcr" id="Hyj-e7-YDd"/>
                         <outlet property="topSectionBackground" destination="0i9-YB-MzD" id="iuK-95-B6r"/>
                         <outlet property="urlAndIntroSeperator" destination="5uv-0d-Wt7" id="O0Z-Ti-nxd"/>
@@ -2372,6 +2373,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="shopOpenTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="shopPhoneLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopPic" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="shopURL" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="topSectionBackground" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="urlAndIntroSeperator" candidateClass="UIImageView"/>

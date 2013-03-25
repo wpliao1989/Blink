@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
 @property (strong, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
 @property (strong, nonatomic) IBOutlet UIImageView *urlAndIntroSeperator;
+@property (strong, nonatomic) IBOutlet UIImageView *shopPic;
 @property (strong, nonatomic) IBOutlet UIView *introSection;
 @property (strong, nonatomic) IBOutlet UIView *bottomSection;
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
@@ -108,6 +109,11 @@
 #pragma mark - UI Initialization
 
 - (void)initShop {
+//    self.shopPic.image = self.shopInfo.pictureImage;
+//    NSLog(@"shop image size = %@", NSStringFromCGSize(self.shopInfo.pictureImage.size));
+    [self.shopPic setImage:self.shopInfo.pictureImage];
+//    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
+//    [self.shopPic.layer setBorderWidth:3];
     self.shopNameLabel.text = self.shopInfo.name;
     self.shopCommerceTypeLabel.text = self.shopInfo.commerceType;
     self.shopAddressLabel.text = self.shopInfo.address;
@@ -266,6 +272,7 @@
     [self setShopURL:nil];
     [self setUrlAndIntroSeperator:nil];
     [self setShopMinDeliveryLabel:nil];
+    [self setShopPic:nil];
     [super viewDidUnload];
 }
 @end

@@ -31,6 +31,7 @@ NSString *const kBKShopCoWorkChannel = @"coWorkChannel";
 NSString *const kBKShopDescription = @"intro";
 NSString *const kBKShopIsDeliverable = @"deliverable";
 NSString *const kBKShopDeliverCost = @"deliverCost";
+NSString *const kBKShopPicURL = @"pic";
 
 static NSString *emptyString = @"Null content";
 
@@ -70,6 +71,7 @@ static NSString *emptyString = @"Null content";
 @synthesize shopDescription = _shopDescription;
 @synthesize isDeliverable = _isDeliverable;
 @synthesize deliverCost = _deliverCost;
+@synthesize pictureURL = _pictureURL;
 
 //- (id)initWithName:(NSString *)shopName {
 //    self = [super init];
@@ -163,9 +165,16 @@ static NSString *emptyString = @"Null content";
 
 - (NSNumber *)deliverCost {
     if ([self.data objectForKey:kBKShopDeliverCost] == [NSNull null] || [self.data objectForKey:kBKShopDeliverCost] == nil) {
-        return @(50);
+        return @(-1);
     }
     return [self.data objectForKey:kBKShopDeliverCost];
+}
+
+- (NSURL *)pictureURL {
+    if ([self.data objectForKey:kBKShopPicURL] == [NSNull null] || [self.data objectForKey:kBKShopPicURL] == nil || ![[self.data objectForKey:kBKShopPicURL] isKindOfClass:[NSString class]]) {
+        return nil;
+    }
+    return [NSURL URLWithString:[self.data objectForKey:kBKShopPicURL]];
 }
 
 //- (NSString *)shopID {

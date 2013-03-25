@@ -11,6 +11,7 @@
 #import "AKSegmentedControl.h"
 #import "BKItemSelectButton.h"
 #import "AKSegmentedControl+SelectedIndex.h"
+#import "BKAPIManager.h"
 
 NSString *noSelectableItem = @"無可選擇項目";
 
@@ -69,17 +70,11 @@ NSString *noSelectableItem = @"無可選擇項目";
 #pragma mark Getters and Setters
 
 - (NSArray *)countys {
-    if (_countys == nil) {
-        _countys = @[@"台北市",@"台中市",@"高雄市"];
-    }
-    return _countys;
+    return [BKAPIManager sharedBKAPIManager].cities;
 }
 
 - (NSArray *)regions {
-    if (_regions == nil) {
-        _regions = @[@"1區",@"2區",@"3區"];
-    }
-    return _regions;
+    return [[BKAPIManager sharedBKAPIManager] regionsForCity:self.selectedCounty];
 }
 
 - (void)setSelectedCounty:(NSString *)selectedCounty {
@@ -88,6 +83,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (void)setSelectedRegion:(NSString *)selectedRegion {
+    _selectedRegion = selectedRegion;
     [self changeButtonTitleButton:self.regionButton title:selectedRegion];
 }
 
@@ -145,22 +141,40 @@ NSString *noSelectableItem = @"無可選擇項目";
     [self setUpSegmentedControl];
     [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
     [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
-//    self.backgound.image = [[UIImage imageNamed:@"bg_small"] resizableImageWithCapInsets:UIEdgeInsetsZero];
-//    UITextView *test = [[UITextView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
-//    test.text = @"123123123\n1231\n123123";
-//    NSLog(@"test height = %f", test.contentSize.height);
-//    [self.scrollView addSubview:test];
-//    NSLog(@"test height = %f", test.contentSize.height);
+    
+    // Register notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverInfoDidUpdate) name:kBKServerInfoDidUpdateNotification object:nil];
 }
 
 #pragma mark - Utility methods
 
 - (void)setUpPickers {
-    [self updateSelectedCountyWithRow:0];
-    [self updateSelectedRegionWithRow:0];
     self.countyButton.inputView = self.countyPicker;
     self.regionButton.inputView = self.regionPicker;
+    [self initPickerSelect];    
 //    self.roadButton.inputView = self.countyPicker;
+}
+
+- (void)initPickerSelect {
+    [self updateSelectedCountyWithRow:0];
+    [self updateSelectedRegionWithRow:0];
+    
+//    if ([self hasSelectableCounty]) {
+//        [self.countyButton setEnabled:YES];
+//        [self updateSelectedCountyWithRow:0];
+//    }
+//    else {
+//        [self.countyButton setEnabled:NO];
+//    }
+//    
+//    if ([self hasSelectableRegion]) {
+//        [self.regionButton setEnabled:YES];
+//        [self updateSelectedRegionWithRow:0];
+//    }
+//    else {
+//        [self.regionButton setEnabled:NO];
+//    }
+    
 }
 
 - (void)setUpSegmentedControl
@@ -278,6 +292,10 @@ NSString *noSelectableItem = @"無可選擇項目";
 - (void)updateSelectedCountyWithRow:(NSInteger)row {
     if ([self hasSelectableCounty]) {
         self.selectedCounty = [self.countys objectAtIndex:row];
+        
+        [self.regionPicker reloadAllComponents];
+        [self.regionPicker selectRow:0 inComponent:0 animated:NO];
+        [self pickerView:self.regionPicker didSelectRow:0 inComponent:0];
     }    
 }
 
@@ -295,10 +313,19 @@ NSString *noSelectableItem = @"無可選擇項目";
     [button setTitle:title forState:UIControlStateHighlighted];
 }
 
+#pragma mark - Server info notification
+
+- (void)serverInfoDidUpdate {
+    NSLog(@"server info did update!");
+    [self.countyPicker reloadAllComponents];
+    [self.regionPicker reloadAllComponents];
+    [self initPickerSelect];
+}
+
 #pragma mark - Keyboard event
 
 - (void)keyBoardWillShow:(NSNotification *)notification {
-    NSLog(@"keyBoardDidShow");
+    //NSLog(@"keyBoardDidShow");
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
@@ -311,13 +338,13 @@ NSString *noSelectableItem = @"無可選擇項目";
     CGRect aRect = self.view.frame;
     aRect.size.height -= kbSize.height;
 //    NSLog(@"view frame: %@", NSStringFromCGRect(self.view.frame));
-    NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
+    //NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
 //    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
-    NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
+    //NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
     
     if (!CGRectContainsRect(aRect, self.activeButton.frame)) {
         CGPoint scrollPoint = CGPointMake(0, self.activeButton.frame.origin.y + self.activeButton.frame.size.height - aRect.size.height);
-        NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
+        //NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
 //        [self.scrollView setContentOffset:scrollPoint animated:YES];
         [self.scrollView scrollRectToVisible:self.activeButton.frame animated:YES];
     }
@@ -333,7 +360,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 
 - (void)keyBoardWillHide:(NSNotification *)notification {
-    NSLog(@"keyBoardWillHide");
+    //NSLog(@"keyBoardWillHide");
     NSDictionary* info = [notification userInfo];
     NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:animationTime animations:^{
@@ -378,6 +405,8 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 - (IBAction)searchShopButtonPressed:(id)sender {
 //    [self performSegueWithIdentifier:@"shopListSegue" sender:sender];
+    NSLog(@"Selected city: %@", self.selectedCounty);
+    NSLog(@"Selected region: %@", self.selectedRegion);
 }
 
 - (IBAction)searchFoodButtonPressed:(id)sender {

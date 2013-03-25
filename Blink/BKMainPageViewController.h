@@ -10,7 +10,7 @@
 
 @interface BKMainPageViewController : UIViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backButton;
+//@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
+//@property (strong, nonatomic) IBOutlet UIBarButtonItem *backButton;
 
 @end

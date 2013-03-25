@@ -51,6 +51,7 @@ NSString *const kBKAPIResultWrong = @"0";
 - (void)updateToLocation:(CLLocation *)location;
 
 @property (strong, nonatomic) NSArray *listCriteriaKeys;
+@property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
 //-(id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON timeout:(NSTimeInterval)time completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
@@ -79,7 +80,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //@synthesize userCoordinate = _userCoordinate;
 @synthesize userLocation = _userLocation;
 @synthesize isLocationFailed = _isLocationFailed;
-@synthesize regions = _regions;
+@synthesize cities = _regions;
 @synthesize localizedListCriteria = _listCriteria;
 @synthesize listCriteriaKeys = _listCriteriaKeys;
 @synthesize sortCriteria = _sortCriteria;
@@ -101,11 +102,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return _locationManager;
 }
 
-- (NSArray *)regions {
+- (NSArray *)cities {
     if (_regions == nil) {
         _regions = @[];
     }
     return _regions;
+}
+
+- (NSDictionary *)cityToRegionDict {
+    if (_cityToRegionDict == nil) {
+        _cityToRegionDict = @{};
+    }
+    return _cityToRegionDict;
 }
 
 - (NSArray *)localizedListCriteria {
@@ -304,6 +312,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+#pragma mark - Get regions
+
+- (NSArray *)regionsForCity:(NSString *)city {
+    return [self.cityToRegionDict objectForKey:city];
+}
+
 #pragma mark - OSConnectionManager overwrite
 
 - (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest {
@@ -482,6 +496,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     if (criteria >= self.sortCriteria.count || criteria < 0) {
         NSLog(@"Warning: invalid sort criteria!");
+        return;
     }
     
     self.isLoadingData = YES;
@@ -562,68 +577,24 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
-- (void)updateServerInfo {    
+- (void)updateServerInfo {
     static NSString *kRegion = @"region";
     static NSString *kListCriteria = @"listCriteria";
-    static NSString *kSortCriteria = @"sortCriteria";
-    static NSString *kListCriteriaDistant = @"distant";
+//    static NSString *kSortCriteria = @"sortCriteria";
     
     self.isLoadingData = YES;
     
     [self service:@"info" method:@"GET" postData:nil useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         if ([self isCorrectResult:data]) {
             
-            if ([data objectForKey:kRegion] != [NSNull null]) {
-//                NSLog(@"region class = %@", [[data objectForKey:kRegion] class]);
-                self.regions = [data objectForKey:kRegion];                
-                
-//                for (NSString *theRegion in [data objectForKey:kRegion]) {
-//                    NSLog(@"region: %@", theRegion);
-//                }
-            }
-            if ([data objectForKey:kListCriteria] != [NSNull null] && [[data objectForKey:kListCriteria] isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *listCriteriaDict = [data objectForKey:kListCriteria];
-                NSMutableArray *keys = [NSMutableArray array];
-                NSMutableArray *values = [NSMutableArray array];
-                
-                keys = [[listCriteriaDict allKeys] mutableCopy];                
-                [keys sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                    if ([obj1 isEqualToString:kListCriteriaDistant]) {
-                        return NSOrderedAscending;
-                    }
-                    if ([obj2 isEqualToString:kListCriteriaDistant]) {
-                        return NSOrderedDescending;
-                    }
-                    return NSOrderedSame;
-                }];
-                
-                for (NSString *theKey in keys) {
-                    NSLog(@"the key = %@, the value = %@", theKey, [listCriteriaDict objectForKey:theKey]);
-                    [values addObject:[listCriteriaDict objectForKey:theKey]];
-                }
-                
-                self.listCriteriaKeys = [keys copy];
-                NSLog(@"keys !!!!!! %@   %@", self.listCriteriaKeys, keys);
-                self.localizedListCriteria = [[NSArray alloc] initWithArray:values];
+            id regionObject = [data objectForKey:kRegion];
+            [self updateRegionWithObject:regionObject];
+            
+            id listCriteriaObject = [data objectForKey:kListCriteria];
+            [self updateListCriteriaWithObject:listCriteriaObject];            
 
-//                for (NSString *theListCriteria in [[data objectForKey:kListCriteria] allValues]) {
-//                    NSLog(@"list criteria: %@", theListCriteria);
-//                }
-//
-//                NSLog(@"list criteria: %@", [data objectForKey:kListCriteria]);
-            }
-            else {
-                self.listCriteriaKeys = @[@"distant", @"price", @"score"];
-                self.localizedListCriteria = @[@"依距離", @"依價格", @"依評價"];
-            }
-            if ([data objectForKey:kSortCriteria] != [NSNull null]) {
-//                NSLog(@"sort criteria class = %@", [[data objectForKey:kSortCriteria] class]);
-                self.sortCriteria = [data objectForKey:kSortCriteria];
-                
-                for (NSString *theSortCriteria in self.sortCriteria) {
-                    NSLog(@"sort criteria: %@", theSortCriteria);                    
-                }
-            }
+            [self updateSortCriteria];
+            
         }
         
         if (![self isServiceInfoValid]) {
@@ -635,5 +606,97 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         }
     }];
 }
+
+#pragma mark - Update info methods
+
+- (void)updateListCriteriaWithObject:(id)listCriteriaObject {
+    if (listCriteriaObject != [NSNull null] && [listCriteriaObject isKindOfClass:[NSDictionary class]]) {
+        static NSString *kListCriteriaDistant = @"distant";
+        NSDictionary *listCriteriaDict = listCriteriaObject;
+        NSMutableArray *keys = [NSMutableArray array];
+        NSMutableArray *values = [NSMutableArray array];
+        
+        keys = [[listCriteriaDict allKeys] mutableCopy];
+        [keys sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            if ([obj1 isEqualToString:kListCriteriaDistant]) {
+                return NSOrderedAscending;
+            }
+            if ([obj2 isEqualToString:kListCriteriaDistant]) {
+                return NSOrderedDescending;
+            }
+            return NSOrderedSame;
+        }];
+        
+        for (NSString *theKey in keys) {
+            //NSLog(@"the key = %@, the value = %@", theKey, [listCriteriaDict objectForKey:theKey]);
+            [values addObject:[listCriteriaDict objectForKey:theKey]];
+        }
+        
+        self.listCriteriaKeys = [keys copy];
+        //NSLog(@"keys !!!!!! %@   %@", self.listCriteriaKeys, keys);
+        self.localizedListCriteria = [[NSArray alloc] initWithArray:values];
+        
+        //                for (NSString *theListCriteria in [[data objectForKey:kListCriteria] allValues]) {
+        //                    NSLog(@"list criteria: %@", theListCriteria);
+        //                }
+        //
+        //                NSLog(@"list criteria: %@", [data objectForKey:kListCriteria]);
+    }
+    else {
+        self.listCriteriaKeys = @[@"distant", @"price", @"score"];
+        self.localizedListCriteria = @[@"依距離", @"依價格", @"依評價"];
+    }
+}
+
+- (void)updateRegionWithObject:(id)regionObject {
+    if (regionObject != [NSNull null] && [regionObject isKindOfClass:[NSArray class]]) {        
+        NSMutableArray *cities = [NSMutableArray array];
+        NSMutableDictionary *citiesToRegionsTable = [NSMutableDictionary dictionary];
+        
+        for (NSArray *cityAndRegions in regionObject) {
+            NSString *cityName = [cityAndRegions objectAtIndex:0];
+            NSArray *regions = [cityAndRegions objectAtIndex:1];
+            
+            [cities addObject:cityName];
+            [citiesToRegionsTable setObject:regions forKey:cityName];
+        }
+        
+        self.cities = [NSArray arrayWithArray:cities];
+        self.cityToRegionDict = [NSDictionary dictionaryWithDictionary:citiesToRegionsTable];
+    }
+//    NSLog(@"regions: %@, class: %@", regionObject, [regionObject class]);
+//    for (id object in regionObject) {
+//        NSLog(@"object: %@, class: %@", object, [object class]);
+//        for (id innerObject in object) {
+//            NSLog(@"inner object: %@, class: %@", innerObject, [innerObject class]);
+//        }
+//    }
+}
+
+- (void)updateSortCriteria {
+    self.sortCriteria = @[@"中式料理",
+                          @"日式料理",
+                          @"亞洲料理",
+                          @"泰式料理",
+                          @"美式料理",
+                          @"韓式料理",
+                          @"港式料理",
+                          @"義式料理",
+                          @"輕食",
+                          @"其他異國料理",
+                          @"燒烤類",
+                          @"鍋類",
+                          @"咖啡、簡餐、茶",
+                          @"素食",
+                          @"速食料理",
+                          @"主題特色餐廳",
+                          @"早餐",
+                          @"buffet自助餐",
+                          @"小吃",
+                          @"冰品、飲料、甜湯",
+                          @"烘焙、甜點、零食",
+                          @"其他美食"];
+}
+
 
 @end

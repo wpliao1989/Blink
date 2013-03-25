@@ -27,8 +27,8 @@
     
     [self customizeNavigationBar];    
 
-    [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];    
-    [[BKAPIManager sharedBKAPIManager] updateServerInfo];    
+    [[BKAPIManager sharedBKAPIManager] startUpdatingUserLocation];
+    [[BKAPIManager sharedBKAPIManager] updateServerInfo];
     
 //    [BKTestCenter testMethods];
     

@@ -62,4 +62,7 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 @property (nonatomic) BOOL isDeliverable;
 @property (strong, nonatomic) NSNumber *deliverCost;
 
+@property (strong, nonatomic) NSURL *pictureURL;
+@property (weak, nonatomic) UIImage *pictureImage;
+
 @end

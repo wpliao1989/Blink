@@ -97,6 +97,8 @@ typedef enum  {
 - (NSString *)stringForDeliverCost:(NSNumber *)cost;
 - (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation;
 
+- (UIImage *)defaultPicture;
+
 @end
 
 @implementation BKShopListViewController
@@ -131,9 +133,9 @@ typedef enum  {
 }
 
 - (UIActionSheet *)sortActionSheet {
-    if (_sortActionSheet == nil) {
+    if (_sortActionSheet == nil) {       
         _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-        NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;
+        NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;        
         for (NSString *theCriteria in sortCriterias) {
             [_sortActionSheet addButtonWithTitle:theCriteria];
         }
@@ -382,6 +384,14 @@ typedef enum  {
     return [NSString stringWithFormat:@"距離%d公尺", (NSInteger)distance];
 }
 
+- (UIImage *)defaultPicture {
+    static UIImage *pic;
+    if (pic == nil) {
+        pic = [UIImage imageNamed:@"picture"];
+    }    
+    return pic;
+}
+
 #pragma mark - TableViewDataSource, TableViewDelegate
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -431,16 +441,16 @@ typedef enum  {
     }
     else {
         BKShopListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
 
         UIImage *backgroundImage = [UIImage imageNamed:@"list"];
-        UIImage *pressImage = [UIImage imageNamed:@"list_press"];
-        UIImage *picture = [UIImage imageNamed:@"picture"];
+        UIImage *pressImage = [UIImage imageNamed:@"list_press"];        
         
         cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];        
         cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:pressImage];
-        cell.imageView.image = picture;       
-        
-        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        if (theShopInfo.pictureImage == nil) {
+            cell.imageView.image = [self defaultPicture];
+        }        
         
         // Configure shop name
         cell.shopNameLabel.text = theShopInfo.name;       
@@ -460,7 +470,7 @@ typedef enum  {
                 UIImageView *scoreImageView = [((BKShopListCell *)cell).scoreImageViews objectAtIndex:i];
                 scoreImageView.image = [UIImage imageNamed:@"star_press"];
             }
-        }        
+        }
         
 //        NSLog(@"shopID :%@", theShopInfo.shopID);
 //        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);
@@ -499,10 +509,31 @@ typedef enum  {
     }
 }
 
-//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//}
-//
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
+        return;
+    }
+    BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+    
+    NSLog(@"will display cell at row:%d", indexPath.row);
+    NSLog(@"cell image: %@", cell.imageView.image);
+    NSLog(@"shop info image: %@", theShopInfo.pictureImage);
+    
+    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
+        // Test image
+        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+            //            NSLog(@"pic response: %@", response);
+            //            NSLog(@"pic data: %@", data);
+            //            NSLog(@"pic error: %@", error);
+            UIImage *pic = [UIImage imageWithData:data];
+            cell.imageView.image = pic;
+            theShopInfo.pictureImage = pic;
+        }];
+    }
+    
+}
+
 //-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
 //    
 //}
