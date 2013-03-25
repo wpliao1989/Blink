@@ -520,16 +520,27 @@ typedef enum  {
     NSLog(@"shop info image: %@", theShopInfo.pictureImage);
     
     if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
+        
+        double delayInSeconds = 5.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:theShopInfo completeHandler:^(UIImage *image) {
+                cell.imageView.image = image;
+                NSLog(@"Shop list: image did download! %@", theShopInfo.name);
+            }];
+        });
+        
+
         // Test image
-        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            //            NSLog(@"pic response: %@", response);
-            //            NSLog(@"pic data: %@", data);
-            //            NSLog(@"pic error: %@", error);
-            UIImage *pic = [UIImage imageWithData:data];
-            cell.imageView.image = pic;
-            theShopInfo.pictureImage = pic;
-        }];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//            //            NSLog(@"pic response: %@", response);
+//            //            NSLog(@"pic data: %@", data);
+//            //            NSLog(@"pic error: %@", error);
+//            UIImage *pic = [UIImage imageWithData:data];
+//            cell.imageView.image = pic;
+//            theShopInfo.pictureImage = pic;
+//        }];
     }
     
 }

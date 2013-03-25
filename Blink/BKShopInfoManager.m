@@ -9,12 +9,16 @@
 #import "BKShopInfoManager.h"
 #import "BKShopInfo.h"
 
+NSString *const BKShopImageDidDownloadNotification = @"BKShopImageDidDownloadNotification";
+NSString *const kBKShopImageDidDownloadUserInfoShopInfo = @"kBKShopImageDidDownloadUserInfoShopInfo";
+
 @interface BKShopInfoManager ()
 
 //@property (strong, nonatomic) NSMutableArray *shopInfos;
 
 @property (strong, nonatomic) NSMutableDictionary *shopInfoDictionary;
 @property (strong, nonatomic) NSMutableArray *shopIDs;
+@property (strong, nonatomic) NSMutableDictionary *activeImageDownloads; // Key is sShopID, value is shopInfo
 
 @end
 
@@ -48,6 +52,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return _shopIDs;
 }
 
+- (NSMutableDictionary *)activeImageDownloads {
+    if (_activeImageDownloads == nil) {
+        _activeImageDownloads = [NSMutableDictionary dictionary];
+    }
+    return _activeImageDownloads;
+}
+
+#pragma mark - Shop info query
+
 - (NSUInteger)shopCount {
     return self.shopIDs.count;
 }
@@ -68,6 +81,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (BKShopInfo *)shopInfoForShopID:(NSString *)shopID {
     return [self.shopInfoDictionary objectForKey:shopID];
 }
+
+#pragma mark - Shop info update
 
 - (void)updateShopIDs:(NSArray *)shopIDs {
     self.shopIDs = [shopIDs mutableCopy];
@@ -112,6 +127,29 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (void)printShopIDs {
     NSLog(@"BKShopInfoManager test print!");
     NSLog(@"ShopIDs: %@", self.shopIDs);
+}
+
+#pragma mark - Shop image download
+
+- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
+    [self.activeImageDownloads setObject:shopInfo forKey:shopInfo.sShopID];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:shopInfo.pictureURL];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        //            NSLog(@"pic response: %@", response);
+        //            NSLog(@"pic data: %@", data);
+        //            NSLog(@"pic error: %@", error);
+        UIImage *pic = [UIImage imageWithData:data];        
+        shopInfo.pictureImage = pic;
+        [self.activeImageDownloads removeObjectForKey:shopInfo.sShopID];
+        completeHandler(pic);
+        NSDictionary *userInfo = @{kBKShopImageDidDownloadUserInfoShopInfo:shopInfo};
+        [[NSNotificationCenter defaultCenter] postNotificationName:BKShopImageDidDownloadNotification object:nil userInfo:userInfo];
+    }];
+}
+
+- (BOOL)isDownloadingImageForShopInfo:(BKShopInfo *)shopInfo {
+    return [self.activeImageDownloads objectForKey:shopInfo.sShopID] != nil;
 }
 
 //- (void)addShopInfoWithRawData:(NSDictionary *)rawData {

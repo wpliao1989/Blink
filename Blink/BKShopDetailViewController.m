@@ -21,6 +21,7 @@
 - (IBAction)takeAwayButtonPressed:(id)sender;
 
 @property (nonatomic, strong) BKShopInfo *shopInfo;
+@property (strong, nonatomic) UIImage *shopImage; // Keep a strong pointer to prevent image from dealloc
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
@@ -45,6 +46,7 @@
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 
 - (void)initShop;
+- (void)configureShopImage;
 - (void)configureIntroSection;
 - (void)configureBottomSection;
 - (void)configureScrollView;
@@ -75,14 +77,28 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.    
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopImageDidDownload:) name:BKShopImageDidDownloadNotification object:nil];
     self.navigationItem.title = self.shopInfo.name;
     [self initShop];
-    [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];    
-
+    
+    [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
     [self configureIntroSection];
     [self configureBottomSection];
     [self configureScrollView];    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];   
+    NSLog(self.isMovingToParentViewController?@"is being push":@"not being push");
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];    
+    
+    NSLog(self.isMovingFromParentViewController? @"is beging pop":@"not being pop");
+    if (self.isMovingToParentViewController) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,11 +125,8 @@
 #pragma mark - UI Initialization
 
 - (void)initShop {
-//    self.shopPic.image = self.shopInfo.pictureImage;
-//    NSLog(@"shop image size = %@", NSStringFromCGSize(self.shopInfo.pictureImage.size));
-    [self.shopPic setImage:self.shopInfo.pictureImage];
-//    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
-//    [self.shopPic.layer setBorderWidth:3];
+    [self configureShopImage];
+    
     self.shopNameLabel.text = self.shopInfo.name;
     self.shopCommerceTypeLabel.text = self.shopInfo.commerceType;
     self.shopAddressLabel.text = self.shopInfo.address;
@@ -122,6 +135,28 @@
     self.shopIntro.text = self.shopInfo.shopDescription;
     self.shopURL.text = self.shopInfo.shopURL;
     self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.deliverCost];
+}
+
+- (void)configureShopImage {
+    //    self.shopPic.image = self.shopInfo.pictureImage;
+    //    NSLog(@"shop image size = %@", NSStringFromCGSize(self.shopInfo.pictureImage.size));
+    if (self.shopInfo.pictureImage != nil) {
+        [self.shopPic setImage:self.shopInfo.pictureImage];
+        self.shopImage = self.shopInfo.pictureImage;
+        //    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
+        //    [self.shopPic.layer setBorderWidth:3];
+    }
+    else {        
+        NSLog([[BKShopInfoManager sharedBKShopInfoManager] isDownloadingImageForShopInfo:self.shopInfo]?@"Yes downloading %@":@"NO not downloading %@", self.shopInfo.name);
+    }
+}
+
+- (void)shopImageDidDownload:(NSNotification *)notification {    
+    NSDictionary *userInfo = notification.userInfo;
+    if ([userInfo objectForKey:kBKShopImageDidDownloadUserInfoShopInfo] == self.shopInfo) {
+        NSLog(@"Shop detail: image did download! %@", self.shopInfo.name);
+        [self configureShopImage];
+    }
 }
 
 - (void)configureIntroSection {
