@@ -12,6 +12,8 @@
 #import "BKItemSelectButton.h"
 #import "AKSegmentedControl+SelectedIndex.h"
 #import "BKAPIManager.h"
+#import "UIButton+AKSegmentedButton.h"
+#import "UIButton+ChangeTitle.h"
 
 NSString *noSelectableItem = @"無可選擇項目";
 
@@ -20,13 +22,13 @@ NSString *noSelectableItem = @"無可選擇項目";
 @property (strong, nonatomic) IBOutlet UIImageView *titleBackground;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *userToolButton;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIPickerView *countyPicker;
 @property (strong, nonatomic) IBOutlet UIPickerView *regionPicker;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *countyButton;
 @property (strong, nonatomic) IBOutlet BKItemSelectButton *regionButton;
-@property (strong, nonatomic) BKItemSelectButton *activeButton;
+
 //@property (strong, nonatomic) IBOutlet UIImageView *backgound;
 
 // Picker related
@@ -38,7 +40,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 - (void)updateSelectedRegionWithRow:(NSInteger)row;
 - (BOOL)hasSelectableCounty;
 - (BOOL)hasSelectableRegion;
-- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
+//- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
 - (IBAction)searchFoodButtonPressed:(id)sender;
@@ -79,12 +81,14 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)setSelectedCounty:(NSString *)selectedCounty {
     _selectedCounty = selectedCounty;
-    [self changeButtonTitleButton:self.countyButton title:selectedCounty];
+//    [self changeButtonTitleButton:self.countyButton title:selectedCounty];
+    [self.countyButton changeTitleTo:selectedCounty];
 }
 
 - (void)setSelectedRegion:(NSString *)selectedRegion {
     _selectedRegion = selectedRegion;
-    [self changeButtonTitleButton:self.regionButton title:selectedRegion];
+//    [self changeButtonTitleButton:self.regionButton title:selectedRegion];
+    [self.regionButton changeTitleTo:selectedRegion];
 }
 
 #pragma mark View controller life cycle
@@ -106,10 +110,6 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"%@", NSStringFromCGSize(self.view.frame.size));
-    NSLog(@"%@", NSStringFromCGSize(self.navigationController.view.frame.size));
-    CGSize sizeOfView = self.view.frame.size;
-    self.scrollView.contentSize = sizeOfView;
 
     if ([BKAccountManager sharedBKAccountManager].isLogin == YES) {        
         self.navigationItem.rightBarButtonItem = self.userToolButton;
@@ -117,17 +117,7 @@ NSString *noSelectableItem = @"無可選擇項目";
     else {        
         self.navigationItem.rightBarButtonItem = self.loginButton;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];    
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    if (self.isMovingFromParentViewController) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }
-
+       
 }
 
 - (void)viewDidLoad
@@ -143,8 +133,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 //    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
     [self setUpPickers];
     [self setUpSegmentedControl];
-    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
-    [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];    
     
     // Register notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverInfoDidUpdate) name:kBKServerInfoDidUpdateNotification object:nil];
@@ -198,31 +187,15 @@ NSString *noSelectableItem = @"無可選擇項目";
     //                                                  resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 1.0, 0.0, 4.0)];
     
     // Button 1
-    UIButton *leftButton = [[UIButton alloc] init];
+    
     UIImage *leftButtonImage = [UIImage imageNamed:@"a2.png"];
     UIImage *leftButtonPressedImage = [UIImage imageNamed:@"a2_press"];
+    UIButton *leftButton = [UIButton buttonForNormalImage:leftButtonImage pressedImage:leftButtonPressedImage];
     
-    //    [buttonSocial setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 0.0, 5.0)];
-    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateHighlighted];
-    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateSelected];
-    //    [buttonSocial setBackgroundImage:buttonBackgroundImagePressedLeft forState:(UIControlStateHighlighted|UIControlStateSelected)];
-    [leftButton setImage:leftButtonImage forState:UIControlStateNormal];
-    [leftButton setImage:leftButtonPressedImage forState:UIControlStateSelected];
-    [leftButton setImage:leftButtonPressedImage forState:UIControlStateHighlighted];
-    [leftButton setImage:leftButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
-    
-    // Button 2
-    UIButton *rightButton = [[UIButton alloc] init];
+    // Button 2    
     UIImage *rightButtonImage = [UIImage imageNamed:@"a3.png"];
     UIImage *rightButtonPressedImage = [UIImage imageNamed:@"a3_press"];
-    
-    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateHighlighted];
-    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateSelected];
-    //    [buttonStar setBackgroundImage:buttonBackgroundImagePressedCenter forState:(UIControlStateHighlighted|UIControlStateSelected)];
-    [rightButton setImage:rightButtonImage forState:UIControlStateNormal];
-    [rightButton setImage:rightButtonPressedImage forState:UIControlStateSelected];
-    [rightButton setImage:rightButtonPressedImage forState:UIControlStateHighlighted];
-    [rightButton setImage:rightButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    UIButton *rightButton = [UIButton buttonForNormalImage:rightButtonImage pressedImage:rightButtonPressedImage];
     
     [self.segmentedControl setButtonsArray:@[leftButton, rightButton]];
     [self.scrollView addSubview:self.segmentedControl];
@@ -309,13 +282,13 @@ NSString *noSelectableItem = @"無可選擇項目";
     }
 }
 
-#pragma mark - Button title update
-
-- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitle:title forState:UIControlStateSelected];
-    [button setTitle:title forState:UIControlStateHighlighted];
-}
+//#pragma mark - Button title update
+//
+//- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title {
+//    [button setTitle:title forState:UIControlStateNormal];
+//    [button setTitle:title forState:UIControlStateSelected];
+//    [button setTitle:title forState:UIControlStateHighlighted];
+//}
 
 #pragma mark - Server info notification
 
@@ -326,65 +299,17 @@ NSString *noSelectableItem = @"無可選擇項目";
     [self initPickerSelect];
 }
 
-#pragma mark - Keyboard event
-
-- (void)keyBoardWillShow:(NSNotification *)notification {
-    //NSLog(@"keyBoardDidShow");
-    NSDictionary* info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your application might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-//    NSLog(@"view frame: %@", NSStringFromCGRect(self.view.frame));
-    //NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
-//    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
-    //NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
-    
-    if (!CGRectContainsRect(aRect, self.activeButton.frame)) {
-        CGPoint scrollPoint = CGPointMake(0, self.activeButton.frame.origin.y + self.activeButton.frame.size.height - aRect.size.height);
-        //NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
-//        [self.scrollView setContentOffset:scrollPoint animated:YES];
-        [self.scrollView scrollRectToVisible:self.activeButton.frame animated:YES];
-    }
-    
-//    if (!CGRectContainsRect(aRect, self.activeField.frame)) {
-//        CGPoint scrollPoint = CGPointMake(0, self.activeField.frame.origin.y + self.activeField.frame.size.height - aRect.size.height);
-//        NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
-//        //        [self.scrollView setContentOffset:scrollPoint animated:YES];
-//        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
-//    }
-}
-
-
-
-- (void)keyBoardWillHide:(NSNotification *)notification {
-    //NSLog(@"keyBoardWillHide");
-    NSDictionary* info = [notification userInfo];
-    NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    [UIView animateWithDuration:animationTime animations:^{
-        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-        self.scrollView.contentInset = contentInsets;
-        self.scrollView.scrollIndicatorInsets = contentInsets;
-    }];    
-}
-
 #pragma mark - Text field event
-
+// Deprecated
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     NSLog(@"begin editing!");
     self.activeField = textField;
 }
-
+// Deprecated
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.activeField = nil;
 }
-
+// Deprecated
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
@@ -426,17 +351,17 @@ NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (IBAction)selectCountyButtonPressed:(id)sender {
-    self.activeButton = sender;
+    self.activeResponder = sender;
     [sender becomeFirstResponder];
 }
 
 - (IBAction)selectRegionButtonPressed:(id)sender {
-    self.activeButton = sender;
+    self.activeResponder = sender;
     [sender becomeFirstResponder];
 }
 
 - (IBAction)selectRoadButtonPressed:(id)sender {
-    self.activeButton = sender;
+    self.activeResponder = sender;
     [sender becomeFirstResponder];
 }
 

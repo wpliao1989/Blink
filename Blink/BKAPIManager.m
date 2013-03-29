@@ -585,6 +585,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     self.isLoadingData = YES;
     
     [self service:@"info" method:@"GET" postData:nil useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSLog(@"response = %@", response);
+        NSLog(@"data = %@", data);
+        NSLog(@"error = %@", error);
+        
         if ([self isCorrectResult:data]) {
             
             id regionObject = [data objectForKey:kRegion];
@@ -598,7 +602,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         }
         
         if (![self isServiceInfoValid]) {
-            [self updateServerInfo];
+            double delayInSeconds = 10.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self updateServerInfo];
+            });            
         }
         else {
             self.isLoadingData = NO;

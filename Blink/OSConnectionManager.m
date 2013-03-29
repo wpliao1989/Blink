@@ -100,6 +100,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
         }
     }
     
+    
     return data;    
 }
 

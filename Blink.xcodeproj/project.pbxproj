@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		42B2665B1705A50900183C6A /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B2665A1705A50900183C6A /* orange.png */; };
+		42B2665E1705D3D600183C6A /* BKScrollableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B2665D1705D3D600183C6A /* BKScrollableViewController.m */; };
+		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
+		42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */; };
+		42B266661705E03C00183C6A /* UIButton+ChangeTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
 		CE3AAFFD16EDDB05007E6A82 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD116EDDB05007E6A82 /* a2@2x.png */; };
@@ -217,7 +221,6 @@
 		CE8194D316F31ECA006A29EB /* point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8194BD16F31ECA006A29EB /* point@2x.png */; };
 		CE82B5E816F05AE6008828CB /* BKShopListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82B5E716F05AE5008828CB /* BKShopListCell.m */; };
 		CE82B62616F07C56008828CB /* AKSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82B62516F07C56008828CB /* AKSegmentedControl.m */; };
-		CE8354DB16F167DC000E7FE0 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8354DA16F167DC000E7FE0 /* BugSense-iOS.framework */; };
 		CE8354DC16F167F2000E7FE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DDB16B923EF00EB00C3 /* SystemConfiguration.framework */; };
 		CE8354DE16F16800000E7FE0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8354DD16F16800000E7FE0 /* libz.dylib */; };
 		CE8354E516F17E6D000E7FE0 /* b4_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8354DF16F17E6D000E7FE0 /* b4_press@2x.png */; };
@@ -257,6 +260,13 @@
 
 /* Begin PBXFileReference section */
 		42B2665A1705A50900183C6A /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
+		42B2665C1705D3D600183C6A /* BKScrollableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKScrollableViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		42B2665D1705D3D600183C6A /* BKScrollableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKScrollableViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
+		42B266611705DE2300183C6A /* UIButton+AKSegmentedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AKSegmentedButton.h"; sourceTree = "<group>"; };
+		42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AKSegmentedButton.m"; sourceTree = "<group>"; };
+		42B266641705E03C00183C6A /* UIButton+ChangeTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ChangeTitle.h"; sourceTree = "<group>"; };
+		42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ChangeTitle.m"; sourceTree = "<group>"; };
 		CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2_press@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD116EDDB05007E6A82 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
@@ -501,7 +511,6 @@
 		CE82B5E716F05AE5008828CB /* BKShopListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopListCell.m; sourceTree = "<group>"; };
 		CE82B62416F07C56008828CB /* AKSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSegmentedControl.h; sourceTree = "<group>"; };
 		CE82B62516F07C56008828CB /* AKSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSegmentedControl.m; sourceTree = "<group>"; };
-		CE8354DA16F167DC000E7FE0 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "BugSense-iOS.framework"; path = "../../../Downloads/BugSense-iOS.framework"; sourceTree = "<group>"; };
 		CE8354DD16F16800000E7FE0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CE8354DF16F17E6D000E7FE0 /* b4_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b4_press@2x.png"; sourceTree = "<group>"; };
 		CE8354E016F17E6D000E7FE0 /* b4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b4@2x.png"; sourceTree = "<group>"; };
@@ -552,7 +561,6 @@
 			files = (
 				CE8354DE16F16800000E7FE0 /* libz.dylib in Frameworks */,
 				CE8354DC16F167F2000E7FE0 /* SystemConfiguration.framework in Frameworks */,
-				CE8354DB16F167DC000E7FE0 /* BugSense-iOS.framework in Frameworks */,
 				CE80A25616DF5F4F007CA904 /* AddressBook.framework in Frameworks */,
 				CE80A25416DF56F8007CA904 /* AddressBookUI.framework in Frameworks */,
 				CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */,
@@ -562,12 +570,22 @@
 				CE7A78C516B760610072519F /* Foundation.framework in Frameworks */,
 				CE7A78C716B760610072519F /* CoreGraphics.framework in Frameworks */,
 				CE7A78C916B760610072519F /* CoreData.framework in Frameworks */,
+				42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42B266671705E04A00183C6A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				42B266641705E03C00183C6A /* UIButton+ChangeTitle.h */,
+				42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		CE3AAF6E16EDC734007E6A82 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,7 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				CE8354DD16F16800000E7FE0 /* libz.dylib */,
-				CE8354DA16F167DC000E7FE0 /* BugSense-iOS.framework */,
+				42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */,
 				CE7E4D1716E5959B009B44F3 /* libcommonCrypto.dylib */,
 				CE80A25516DF5F4E007CA904 /* AddressBook.framework */,
 				CE80A25316DF56F7007CA904 /* AddressBookUI.framework */,
@@ -650,6 +668,7 @@
 				CE82B62316F07C36008828CB /* AKSegmentedControl */,
 				CE55EA3816D718490005C70F /* TestCenter */,
 				CE805B9516C388F20040095F /* ModelObjects */,
+				42B266671705E04A00183C6A /* Category */,
 				CE793BCF16E7235F00472188 /* MBProgressHUD */,
 				CE8097E216DB57CF0036C047 /* CustomButton */,
 				CE82B5E516F05ABB008828CB /* CustomCell */,
@@ -685,6 +704,8 @@
 				CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */,
 				CE7A78F016B766CD0072519F /* BKUserToolViewController.h */,
 				CE7A78F116B766CD0072519F /* BKUserToolViewController.m */,
+				42B2665C1705D3D600183C6A /* BKScrollableViewController.h */,
+				42B2665D1705D3D600183C6A /* BKScrollableViewController.m */,
 				CE7A78E616B762210072519F /* BKMainPageViewController.h */,
 				CE7A78E716B762210072519F /* BKMainPageViewController.m */,
 				CE7A78E916B762410072519F /* BKShopListViewController.h */,
@@ -787,6 +808,8 @@
 				CE82B62516F07C56008828CB /* AKSegmentedControl.m */,
 				CE79028316F6FB2E004E4FB9 /* AKSegmentedControl+SelectedIndex.h */,
 				CE79028416F6FB2F004E4FB9 /* AKSegmentedControl+SelectedIndex.m */,
+				42B266611705DE2300183C6A /* UIButton+AKSegmentedButton.h */,
+				42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */,
 			);
 			name = AKSegmentedControl;
 			sourceTree = "<group>";
@@ -1292,6 +1315,9 @@
 				CE82B5E816F05AE6008828CB /* BKShopListCell.m in Sources */,
 				CE82B62616F07C56008828CB /* AKSegmentedControl.m in Sources */,
 				CE79028516F6FB2F004E4FB9 /* AKSegmentedControl+SelectedIndex.m in Sources */,
+				42B2665E1705D3D600183C6A /* BKScrollableViewController.m in Sources */,
+				42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */,
+				42B266661705E03C00183C6A /* UIButton+ChangeTitle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1369,6 +1395,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Downloads\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blink/Blink-Prefix.pch";
@@ -1394,6 +1421,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Downloads\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Blink/Blink-Prefix.pch";

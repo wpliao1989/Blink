@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKScrollableViewController.h"
 
 //@protocol BKRegisterViewControllerDelegate;
 @protocol MBProgressHUDDelegate;
 
-@interface BKLoginViewController : UIViewController<MBProgressHUDDelegate, UITextFieldDelegate>
+@interface BKLoginViewController : BKScrollableViewController<MBProgressHUDDelegate, UITextFieldDelegate>
 
 @end

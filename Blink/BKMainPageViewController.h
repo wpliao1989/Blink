@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKMainPageViewController : UIViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+#import "BKScrollableViewController.h"
+
+@interface BKMainPageViewController : BKScrollableViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 //@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeButton;
 //@property (strong, nonatomic) IBOutlet UIBarButtonItem *backButton;
