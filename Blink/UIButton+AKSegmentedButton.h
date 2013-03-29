@@ -11,5 +11,7 @@
 @interface UIButton (AKSegmentedButton)
 
 + (UIButton *)buttonForNormalImage:(UIImage *)normalImage pressedImage:(UIImage *)pressedImage;
+- (void)changeButtonImage:(UIImage *)normalImage pressedImage:(UIImage *)pressedImage;
+- (void)changeTextColor:(UIColor *)normalColor highlightedColor:(UIColor *)hilightedColor;
 
 @end

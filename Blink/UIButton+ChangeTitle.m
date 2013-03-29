@@ -17,4 +17,10 @@
 //    [self setTitle:@"" forState:UIControlStateDisabled];
 }
 
+- (void)changeTitleColor:(UIColor *)color {
+    [self setTitleColor:color forState:UIControlStateNormal];
+    [self setTitleColor:color forState:UIControlStateSelected];
+    [self setTitleColor:color forState:UIControlStateHighlighted];
+}
+
 @end

@@ -11,5 +11,6 @@
 @interface UIButton (ChangeTitle)
 
 - (void)changeTitleTo:(NSString *)title;
+- (void)changeTitleColor:(UIColor *)color;
 
 @end

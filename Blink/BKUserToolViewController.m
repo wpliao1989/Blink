@@ -15,6 +15,8 @@
 #import "UIViewController+BKBaseViewController.h"
 #import "AKSegmentedControl.h"
 #import "AKSegmentedControl+SelectedIndex.h"
+#import "UIButton+AKSegmentedButton.h"
+#import "UIButton+ChangeTitle.h"
 
 @interface BKUserToolViewController ()
 
@@ -37,6 +39,11 @@ enum BKUserToolSegmentationSelection {
 @property (strong, nonatomic) IBOutlet UILabel *userEmailLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userTokenLabel;
 @property (strong, nonatomic) UIActionSheet *logoutActionSheet;
+@property (weak, nonatomic) IBOutlet UIView *segmentedControlView;
+@property (weak, nonatomic) IBOutlet UIButton *firstButton;
+@property (weak, nonatomic) IBOutlet UIButton *secondButton;
+@property (weak, nonatomic) IBOutlet UIButton *thirdButton;
+
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 
 @property (strong, nonatomic) NSString *userName;
@@ -124,45 +131,39 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (void)initSegmentedControl {
-    self.segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 34.0)];
+    self.segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
     [self.segmentedControl addTarget:self action:@selector(segmentationChanged:) forControlEvents:UIControlEventValueChanged];
     [self.segmentedControl setSegmentedControlMode:AKSegmentedControlModeSticky];
     [self.segmentedControl setSelectedIndex:0];
     
-    [self.segmentedControl setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleBottomMargin];
+    [self.segmentedControl setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin];
     
-    // Button 1
-    UIButton *leftButton = [[UIButton alloc] init];
-    UIImage *leftButtonImage = [UIImage imageNamed:@"e1.png"];
-    UIImage *leftButtonPressedImage = [UIImage imageNamed:@"e1_press"];    
-    
-    [leftButton setImage:leftButtonImage forState:UIControlStateNormal];
-    [leftButton setImage:leftButtonPressedImage forState:UIControlStateSelected];
-    [leftButton setImage:leftButtonPressedImage forState:UIControlStateHighlighted];
-    [leftButton setImage:leftButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    UIColor *normalTextColor = [UIColor colorWithRed:87.0/255.0 green:87.0/255.0 blue:87.0/255.0 alpha:1.0];
+    UIColor *hilightedColor = [UIColor whiteColor];
+    UIImage *pressedImage = [UIImage imageNamed:@"orange"];
+    // Button 1    
+//    UIImage *leftButtonImage = [UIImage imageNamed:@"orange"];
+//    UIImage *leftButtonPressedImage = [UIImage imageNamed:@"orange"];
+//    UIButton *leftButton = [UIButton buttonForNormalImage:nil pressedImage:leftButtonPressedImage];
+    [self.firstButton changeButtonImage:nil pressedImage:pressedImage];
+    [self.firstButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
     // Button 2
-    UIButton *midButton = [[UIButton alloc] init];
-    UIImage *midButtonImage = [UIImage imageNamed:@"e3.png"];
-    UIImage *midButtonPressedImage = [UIImage imageNamed:@"e3_press"];    
-    
-    [midButton setImage:midButtonImage forState:UIControlStateNormal];
-    [midButton setImage:midButtonPressedImage forState:UIControlStateSelected];
-    [midButton setImage:midButtonPressedImage forState:UIControlStateHighlighted];
-    [midButton setImage:midButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+//    UIImage *midButtonImage = [UIImage imageNamed:@"orange"];
+//    UIImage *midButtonPressedImage = [UIImage imageNamed:@"orange"];
+//    UIButton *midButton = [UIButton buttonForNormalImage:nil pressedImage:midButtonPressedImage];
+    [self.secondButton changeButtonImage:nil pressedImage:pressedImage];
+    [self.secondButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
     // Button 3
-    UIButton *rightButton = [[UIButton alloc] init];
-    UIImage *rightButtonImage = [UIImage imageNamed:@"e2.png"];
-    UIImage *rightButtonPressedImage = [UIImage imageNamed:@"e2_press"];
+//    UIImage *rightButtonImage = [UIImage imageNamed:@"e2.png"];
+//    UIImage *rightButtonPressedImage = [UIImage imageNamed:@"orange"];
+//    UIButton *rightButton = [UIButton buttonForNormalImage:nil pressedImage:rightButtonPressedImage];
+    [self.thirdButton changeButtonImage:nil pressedImage:pressedImage];
+    [self.thirdButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
-    [rightButton setImage:rightButtonImage forState:UIControlStateNormal];
-    [rightButton setImage:rightButtonPressedImage forState:UIControlStateSelected];
-    [rightButton setImage:rightButtonPressedImage forState:UIControlStateHighlighted];
-    [rightButton setImage:rightButtonPressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
-    
-    [self.segmentedControl setButtonsArray:@[leftButton, midButton, rightButton]];
-    [self.view addSubview:self.segmentedControl];
+    [self.segmentedControl setButtonsArray:@[self.firstButton, self.secondButton, self.thirdButton]];
+    [self.segmentedControlView addSubview:self.segmentedControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -264,5 +265,9 @@ enum BKUserToolSegmentationSelection {
     if ([[BKOrderManager sharedBKOrderManager] hasOrder]) {
         [self performSegueWithIdentifier:@"fromUnfinishedOrderSegue" sender:self];
     }
+}
+- (void)viewDidUnload {
+    [self setFirstButton:nil];
+    [super viewDidUnload];
 }
 @end

@@ -130,7 +130,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 - (void)loginWithAccount:(NSString *)account password:(NSString *)pwd CompleteHandler:(void (^)(BOOL, NSError *))completeHandler {
     // fetch user personal info   
-    [[BKAPIManager sharedBKAPIManager] loginWithUserName:account password:pwd completionHandler:^(id data, NSError *error) {        
+    [[BKAPIManager sharedBKAPIManager] loginWithUserName:account password:pwd completionHandler:^(id data, NSError *error) {
         if (data != nil) {
             self.data = data;            
             

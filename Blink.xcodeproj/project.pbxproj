@@ -12,6 +12,7 @@
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
 		42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */; };
 		42B266661705E03C00183C6A /* UIButton+ChangeTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */; };
+		42B266691705E2B800183C6A /* orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B266681705E2B800183C6A /* orange@2x.png */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
 		CE3AAFFD16EDDB05007E6A82 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD116EDDB05007E6A82 /* a2@2x.png */; };
@@ -267,6 +268,7 @@
 		42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AKSegmentedButton.m"; sourceTree = "<group>"; };
 		42B266641705E03C00183C6A /* UIButton+ChangeTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ChangeTitle.h"; sourceTree = "<group>"; };
 		42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ChangeTitle.m"; sourceTree = "<group>"; };
+		42B266681705E2B800183C6A /* orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange@2x.png"; sourceTree = "<group>"; };
 		CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2_press@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD116EDDB05007E6A82 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
@@ -920,6 +922,7 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				42B266681705E2B800183C6A /* orange@2x.png */,
 				CE79027716F6FA3C004E4FB9 /* e1_press@2x.png */,
 				CE79027816F6FA3D004E4FB9 /* e1@2x.png */,
 				CE79027916F6FA3D004E4FB9 /* e2_press@2x.png */,
@@ -1270,6 +1273,7 @@
 				CE7CACE316F80F4000778CEB /* demo.png in Resources */,
 				CE7CACE516F80FCF00778CEB /* demo@2x.png in Resources */,
 				42B2665B1705A50900183C6A /* orange.png in Resources */,
+				42B266691705E2B800183C6A /* orange@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
