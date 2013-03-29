@@ -12,6 +12,6 @@
 //@protocol BKRegisterViewControllerDelegate;
 @protocol MBProgressHUDDelegate;
 
-@interface BKLoginViewController : BKScrollableViewController<MBProgressHUDDelegate, UITextFieldDelegate>
+@interface BKLoginViewController : BKScrollableViewController<MBProgressHUDDelegate>
 
 @end

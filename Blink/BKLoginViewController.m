@@ -94,42 +94,63 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)loginButtonPressed:(id)sender {
-    [self.userAccountTextField resignFirstResponder];
-    [self.userPasswordTextField resignFirstResponder];
-    
-//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.HUD];
-    self.HUD.delegate = self;
-    self.HUD.labelText = BKLoggingMessage;
-    [self.HUD show:YES];
-    
+#pragma mark - Custom login method
+
+- (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
-            self.HUD.mode = MBProgressHUDModeText;
-            self.HUD.labelText = BKLoginSuccessMessage;
-            double delayInSeconds = 1.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self dismissViewControllerAnimated:YES completion:^{}];
-                [self.HUD hide:YES];
-            });            
             [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
+            successBlock();
         }
         else {
-            self.HUD.mode = MBProgressHUDModeText;
             if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
                 [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
-                self.HUD.labelText = @"帳號或密碼錯誤";
             }
-            else {
-                self.HUD.labelText = @"網路無回應";
-            }                        
-            [self.HUD hide:YES afterDelay:1.0];
-        }        
-//        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+            failBlock(error);
+        }
     }];
+}
+
+#pragma mark - IBActions
+
+- (IBAction)loginButtonPressed:(id)sender {
+    [self beginLogin];
+    return;
+    
+//    [self.activeResponder resignFirstResponder];
+//    
+////    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//    [self.navigationController.view addSubview:self.HUD];
+//    self.HUD.delegate = self;
+//    self.HUD.labelText = BKLoggingMessage;
+//    [self.HUD show:YES];
+//    
+//    [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
+//        if (success) {
+//            self.HUD.mode = MBProgressHUDModeText;
+//            self.HUD.labelText = BKLoginSuccessMessage;
+//            double delayInSeconds = 1.0;
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                [self dismissViewControllerAnimated:YES completion:^{}];
+//                [self.HUD hide:YES];
+//            });            
+//            [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
+//        }
+//        else {
+//            self.HUD.mode = MBProgressHUDModeText;
+//            if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
+//                [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
+//                self.HUD.labelText = @"帳號或密碼錯誤";
+//            }
+//            else {
+//                self.HUD.labelText = @"網路無回應";
+//            }                        
+//            [self.HUD hide:YES afterDelay:1.0];
+//        }        
+////        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+//    }];
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {
@@ -162,27 +183,17 @@
     self.HUD = nil;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    NSLog(@"begin editing!");
-    self.activeResponder = textField;
-}
-
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [super textFieldDidEndEditing:textField];
+    
     if (textField == self.userAccountTextField) {
-//        NSLog(@"account!");
+        //        NSLog(@"account!");
         self.userAccount = textField.text;
     }
     else if (textField == self.userPasswordTextField) {
-//        NSLog(@"password!");
+        //        NSLog(@"password!");
         self.userPassword = textField.text;
     }
-    self.activeResponder = nil;
 }
-
 
 @end

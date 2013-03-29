@@ -7,6 +7,14 @@
 //
 
 #import "BKScrollableViewController.h"
+#import "MBProgressHUD.h"
+#import "BKAccountManager.h"
+
+@interface BKScrollableViewController()
+
+@property (strong, nonatomic) MBProgressHUD *HUD;
+
+@end
 
 @implementation BKScrollableViewController
 
@@ -78,8 +86,6 @@
     //    }
 }
 
-
-
 - (void)keyBoardWillHide:(NSNotification *)notification {
     //NSLog(@"keyBoardWillHide");
     NSDictionary* info = [notification userInfo];
@@ -89,6 +95,59 @@
         self.scrollView.contentInset = contentInsets;
         self.scrollView.scrollIndicatorInsets = contentInsets;
     }];    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeResponder = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeResponder = nil;
+}
+
+@end
+
+@implementation BKScrollableViewController (SupportLogin)
+
+- (void)beginLogin {
+    [self.activeResponder resignFirstResponder];
+    
+    //    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.HUD];
+    self.HUD.delegate = self;
+    self.HUD.labelText = BKLoggingMessage;
+    [self.HUD show:YES];
+    
+    [self loginCustomMethodSuccessBlock:^{
+        self.HUD.mode = MBProgressHUDModeText;
+        self.HUD.labelText = BKLoginSuccessMessage;
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self dismissViewControllerAnimated:YES completion:^{}];
+            [self.HUD hide:YES];
+        });
+    } failBlock:^(NSError *error) {
+        self.HUD.mode = MBProgressHUDModeText;
+        if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
+            self.HUD.labelText = @"帳號或密碼錯誤";
+        }
+        else {
+            self.HUD.labelText = @"網路無回應";
+        }
+        [self.HUD hide:YES afterDelay:1.0];
+    }];
+}
+
+- (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
+    // Do success block by default
+    successBlock();
 }
 
 @end
