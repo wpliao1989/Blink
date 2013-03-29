@@ -122,8 +122,12 @@ NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidDisappear:animated];
+    
+    if (self.isMovingFromParentViewController) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+
 }
 
 - (void)viewDidLoad

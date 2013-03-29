@@ -40,6 +40,7 @@
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
+- (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness;
 
 - (void)initUserInfos;
 - (NSString *)stringFromDate:(NSDate *)date;
@@ -147,6 +148,10 @@
     return [formatter stringFromDate:date];
 }
 
+- (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness {
+    return [NSString stringWithFormat:@"%@%@(%@、%@)", size, [quantity stringValue], ice, sweetness];
+}
+
 #pragma mark - Tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -164,16 +169,18 @@
     UILabel *basePrice = (UILabel *)[cell viewWithTag:2];    
     UILabel *quantity = (UILabel *)[cell viewWithTag:3];
     UILabel *price = (UILabel *)[cell viewWithTag:4];
-    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
-    UILabel *ice = (UILabel *)[cell viewWithTag:6];
+    UILabel *sizeQuantityIceSweet = (UILabel *)[cell viewWithTag:5];
+//    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
+//    UILabel *ice = (UILabel *)[cell viewWithTag:6];
     
     BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];
     price.text = [self currencyStringForPrice:orderContent.priceValue];
-    sweetness.text = orderContent.sweetness;
-    ice.text = orderContent.ice;
+    sizeQuantityIceSweet.text = [self stringForSize:orderContent.size quantity:orderContent.quantity ice:orderContent.ice sweetness:orderContent.sweetness];
+//    sweetness.text = orderContent.sweetness;
+//    ice.text = orderContent.ice;
     
     return cell;
 }

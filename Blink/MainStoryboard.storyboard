@@ -1307,29 +1307,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="單價" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xff-gI-Wa2">
-                                                            <rect key="frame" x="16" y="47" width="38" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="總價" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GiU-iE-u26">
-                                                            <rect key="frame" x="212" y="47" width="62" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="10000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fn2-Vu-3x4">
                                                             <rect key="frame" x="57" y="47" width="49" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="taK-DF-Y2D">
-                                                            <rect key="frame" x="114" y="47" width="16" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
@@ -1342,18 +1321,32 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                             <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="left" text="糖正常" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Wcy-cN-wom">
-                                                            <rect key="frame" x="16" y="26" width="45" height="21"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" text="總價" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GiU-iE-u26">
+                                                            <rect key="frame" x="212" y="47" width="62" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="單價" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xff-gI-Wa2">
+                                                            <rect key="frame" x="16" y="47" width="38" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="冰正常" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3KN-yK-xLU">
-                                                            <rect key="frame" x="69" y="26" width="45" height="21"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="left" text="大小冰量糖量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eI9-pL-Rmv">
+                                                            <rect key="frame" x="16" y="26" width="258" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="taK-DF-Y2D">
+                                                            <rect key="frame" x="114" y="47" width="16" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="0.28235294119999998" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
                                                     </subviews>
@@ -1408,6 +1401,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2I-SF-ACe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="left" text="糖正常" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Wcy-cN-wom">
+                    <rect key="frame" x="0.0" y="0.0" width="45" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="left" text="冰正常" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3KN-yK-xLU">
+                    <rect key="frame" x="0.0" y="0.0" width="45" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="服務類型:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9KB-h9-6is">
                     <rect key="frame" x="0.0" y="0.0" width="70" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2244,6 +2251,188 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="yes.png" width="118" height="48"/>
         <image name="yes_press.png" width="118" height="48"/>
     </resources>
+    <classes>
+        <class className="BKCustomUIViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKCustomUIViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homeButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BKItemSelectButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKItemSelectButton.h"/>
+        </class>
+        <class className="BKLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeButtonPressed:"/>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="action" name="registrationButtonPressed:"/>
+                <relationship kind="outlet" name="isSavingPreferencesSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="titleBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userAccountTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userPasswordTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="BKMainPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMainPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="homeButtonPressed:"/>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="action" name="searchFoodButtonPressed:"/>
+                <relationship kind="action" name="searchShopButtonPressed:"/>
+                <relationship kind="action" name="selectCountyButtonPressed:"/>
+                <relationship kind="action" name="selectRegionButtonPressed:"/>
+                <relationship kind="action" name="selectRoadButtonPressed:"/>
+                <relationship kind="action" name="userToolButtonPressed:"/>
+                <relationship kind="outlet" name="countyButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="countyPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="countyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="regionButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="regionPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="regionTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="roadButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="roadTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="titleBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userToolButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BKMakeOrderViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMakeOrderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addOrderContentButtonPressed:"/>
+                <relationship kind="action" name="makeOrderButtonPressed:"/>
+                <relationship kind="action" name="noteButtonPressed:"/>
+                <relationship kind="action" name="selectIceAndSweetnessButtonPressed:"/>
+                <relationship kind="action" name="selectItemButtonPressed:"/>
+                <relationship kind="action" name="selectQuantityButtonPressed:"/>
+                <relationship kind="action" name="selectSizeAndQuantityButtonPressed:"/>
+                <relationship kind="action" name="selectTimeButtonPressed:"/>
+                <relationship kind="action" name="timePickerValueChanged:"/>
+                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="iceAndSweetnessButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="iceAndSweetnessPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="itemButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="itemPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="minDeliveryCostLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="orderContent" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="quantityButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="quantityPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sizeAndQuantityButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="sizeAndQuantityPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="timeButton" candidateClass="BKItemSelectButton"/>
+                <relationship kind="outlet" name="timePicker" candidateClass="UIDatePicker"/>
+                <relationship kind="outlet" name="totalPrice" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BKMenuViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKMenuViewController.h"/>
+        </class>
+        <class className="BKNoteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKNoteViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="saveButtonPressed:"/>
+                <relationship kind="outlet" name="background" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="noteText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="BKOrderConfirmViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKOrderConfirmViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="orderConfirmButtonPressed:"/>
+                <relationship kind="outlet" name="backgrond" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="serviceTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="totalPriceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userAddressLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userPhoneLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BKRegisterViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKRegisterViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="confirmRegistrationButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="BKShopDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="menuButtonPressed:"/>
+                <relationship kind="action" name="orderDeliverButtonPressed:"/>
+                <relationship kind="action" name="takeAwayButtonPressed:"/>
+                <relationship kind="outlet" name="bottomSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="homeButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="introSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="introduceSectionBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="shopAddressLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopCommerceTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopIntro" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="shopMinDeliveryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopOpenTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopPhoneLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopPic" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shopURL" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="topSectionBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="urlAndIntroSeperator" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="BKShopListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="commerceTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priceAndDistanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shopNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="scoreImageViews" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="BKShopListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="categoryButtonPressed:"/>
+                <relationship kind="action" name="listButtonPressed:"/>
+                <relationship kind="action" name="locateUserButtonPressed:"/>
+                <relationship kind="action" name="mapButtonPressed:"/>
+                <relationship kind="action" name="searchButtonPressed:"/>
+                <relationship kind="action" name="sortButtonPressed:"/>
+                <relationship kind="outlet" name="bottomToolBar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="locateUserButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mainContentView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="shopListMapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="shopListTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BKUserToolViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKUserToolViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="completeUnfinishedOrderButtonPressed:"/>
+                <relationship kind="action" name="logoutButtonPressed:"/>
+                <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="userEmailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userTokenLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userToolTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backButtonPressed:"/>
+                <relationship kind="action" name="homeButtonPressed:"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
