@@ -290,6 +290,7 @@ typedef enum  {
     [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];   
 }
 
+// The folloing is for older version API
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria {
 ////    self.isLoadingNewData = YES;
 //    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
@@ -316,28 +317,57 @@ typedef enum  {
 //                                                }];
 //}
 
+//- (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria {
+//    
+//    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
+//    [self.shopListTableView reloadData];
+//    
+//    loadDataCompleteHandler handler = ^(NSArray *shopIDs, NSArray *shopRawDatas) {
+//        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
+//        NSLog(@"shopIDs: %@", shopIDs);
+//        //                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
+//        [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
+//        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
+//        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
+//    };
+//    
+//    switch (method) {
+//        case BKReloadMethodList:
+//            [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:handler];
+//            break;
+//            
+//        case BKReloadMethodSort:
+//            [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria completeHandler:handler];
+//            break;
+//        default:
+//            NSLog(@"Warning: invalid reload method!");
+//            break;
+//    }
+//    
+//    // The folling line is for testing
+////    [self saveTestShopInfosWithShopIDs:nil];
+//}
+
 - (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria {
     
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     
-    void (^handler)(NSArray *shopIDs, NSArray *shopRawDatas) = ^(NSArray *shopIDs, NSArray *shopRawDatas) {
+    loadDataComplete handler = ^() {
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
-        NSLog(@"shopIDs: %@", shopIDs);
-        //                                                    NSLog(@"shopRawDatas: %@", shopRawDatas);
-        [[BKShopInfoManager sharedBKShopInfoManager] updateShopIDs:shopIDs];
-        [[BKShopInfoManager sharedBKShopInfoManager] addShopInfosWithRawDatas:shopRawDatas forShopIDs:shopIDs];
+        
         [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
     };
     
     switch (method) {
         case BKReloadMethodList:
-            [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:handler];
+            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithListCriteria:criteria completeHandler:handler];
             break;
             
         case BKReloadMethodSort:
-            [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria completeHandler:handler];
+            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithSortCriteria:criteria completeHandler:handler];
             break;
         default:
             NSLog(@"Warning: invalid reload method!");
@@ -345,7 +375,7 @@ typedef enum  {
     }
     
     // The folling line is for testing
-//    [self saveTestShopInfosWithShopIDs:nil];
+    //    [self saveTestShopInfosWithShopIDs:nil];
 }
 
 - (void)reloadDefault {
@@ -461,7 +491,7 @@ typedef enum  {
         cell.priceAndDistanceLabel.text = deliverCostAndDistanceString;
         
         // Configure commerce type
-        cell.commerceTypeLabel.text = theShopInfo.commerceType;
+        cell.commerceTypeLabel.text = theShopInfo.type;
         
         // Configure score
         NSInteger shopScore = 4;        

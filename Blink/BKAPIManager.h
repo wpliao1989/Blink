@@ -30,6 +30,7 @@ FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
 FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
 typedef void (^apiCompleteHandler)(id data, NSError *error);
+typedef void (^loadDataCompleteHandler)(NSArray *shopIDs, NSArray *rawDatas);
 
 @interface BKAPIManager : OSConnectionManager<CLLocationManagerDelegate>
 
@@ -51,9 +52,10 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 
-- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
+//- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
+- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataCompleteHandler)completeHandler;
 
-- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
+- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataCompleteHandler)completeHandler;
 
 - (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler) completeHandler;
 

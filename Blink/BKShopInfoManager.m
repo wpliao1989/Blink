@@ -8,6 +8,7 @@
 
 #import "BKShopInfoManager.h"
 #import "BKShopInfo.h"
+#import "BKAPIManager.h"
 
 NSString *const BKShopImageDidDownloadNotification = @"BKShopImageDidDownloadNotification";
 NSString *const kBKShopImageDidDownloadUserInfoShopInfo = @"kBKShopImageDidDownloadUserInfoShopInfo";
@@ -17,7 +18,7 @@ NSString *const kBKShopImageDidDownloadUserInfoShopInfo = @"kBKShopImageDidDownl
 //@property (strong, nonatomic) NSMutableArray *shopInfos;
 
 @property (strong, nonatomic) NSMutableDictionary *shopInfoDictionary;
-@property (strong, nonatomic) NSMutableArray *shopIDs;
+@property (strong, nonatomic) NSArray *shopIDs;
 @property (strong, nonatomic) NSMutableDictionary *activeImageDownloads; // Key is sShopID, value is shopInfo
 
 @end
@@ -82,10 +83,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return [self.shopInfoDictionary objectForKey:shopID];
 }
 
+#pragma mark - Load data
+
+- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+        self.shopIDs = shopIDs;
+        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+        completeHandler();
+    }];
+}
+
+- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+        self.shopIDs = shopIDs;
+        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+        completeHandler();
+    }];
+}
+
 #pragma mark - Shop info update
 
 - (void)updateShopIDs:(NSArray *)shopIDs {
-    self.shopIDs = [shopIDs mutableCopy];
+    self.shopIDs = shopIDs;
 }
 
 - (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID {
@@ -106,7 +125,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
         NSLog(@"Replace shop info for key %@", shopID);
 //        NSLog(@"oldShopInfo.name: %@", oldShopInfo.name);
 //        NSLog(@"newShopInfo.name: %@", [rawData objectForKey:@"name"]);
-        [oldShopInfo updateWithData:rawData sShopID:shopID];
+//        [oldShopInfo updateWithData:rawData sShopID:shopID];
+        [oldShopInfo updateWithData:rawData];
     }
 }
 

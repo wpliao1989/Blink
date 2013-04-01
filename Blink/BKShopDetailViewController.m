@@ -128,10 +128,10 @@
     [self configureShopImage];
     
     self.shopNameLabel.text = self.shopInfo.name;
-    self.shopCommerceTypeLabel.text = self.shopInfo.commerceType;
+    self.shopCommerceTypeLabel.text = self.shopInfo.type;
     self.shopAddressLabel.text = self.shopInfo.address;
     self.shopPhoneLabel.text = self.shopInfo.phone;
-    self.shopOpenTimeLabel.text = self.shopInfo.openHours;
+    self.shopOpenTimeLabel.text = self.shopInfo.businessHours;
     self.shopIntro.text = self.shopInfo.shopDescription;
     self.shopURL.text = self.shopInfo.shopURL;
     self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.deliverCost];

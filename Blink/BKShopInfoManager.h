@@ -12,6 +12,8 @@
 FOUNDATION_EXPORT NSString *const BKShopImageDidDownloadNotification;
 FOUNDATION_EXPORT NSString *const kBKShopImageDidDownloadUserInfoShopInfo;
 
+typedef void (^loadDataComplete)();
+
 @class BKShopInfo;
 
 @interface BKShopInfoManager : NSObject
@@ -24,9 +26,16 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;
 - (BKShopInfo *)shopInfoForShopID:(NSString *)shopID;
 
-- (void)updateShopIDs:(NSArray *)shopIDs; // Use this method to change current displaying shops in shoplist view controller
+// Methods for loading new datas
+- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
+- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
+
+// Use this method to change current displaying shops in shoplist view controller
+- (void)updateShopIDs:(NSArray *)shopIDs;
+
 - (void)addShopInfoWithRawData:(id)rawData forShopID:(NSString *)shopID;
 - (void)addShopInfosWithRawDatas:(NSArray *)rawDatas forShopIDs:(NSArray *)shopIDs; // This method is for updating multiple shopinfos at once
+
 - (void)clearShopIDs;
 
 // Shop image download

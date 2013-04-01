@@ -406,6 +406,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="106" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="1" minY="0.0" maxX="-1" maxY="0.0"/>
                     <state key="normal" title="訂單追蹤">
                         <color key="titleColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -418,6 +419,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="106" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="-3" maxY="0.0"/>
                     <state key="normal" title="個人資料">
                         <color key="titleColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2229,77 +2231,77 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         </scene>
     </scenes>
     <resources>
-        <image name="a4.png" width="277" height="63"/>
-        <image name="a4_press.png" width="277" height="63"/>
-        <image name="a5.png" width="277" height="63"/>
-        <image name="a5_press.png" width="277" height="63"/>
-        <image name="add.png" width="237" height="48"/>
-        <image name="add_press.png" width="237" height="48"/>
-        <image name="ahome.png" width="575" height="174"/>
-        <image name="b1.png" width="179" height="58"/>
-        <image name="b1_press.png" width="179" height="58"/>
-        <image name="b2.png" width="179" height="58"/>
-        <image name="b2_press.png" width="179" height="58"/>
-        <image name="b3.png" width="179" height="58"/>
-        <image name="b3_press.png" width="179" height="58"/>
-        <image name="b4.png" width="179" height="58"/>
-        <image name="b4_press.png" width="179" height="58"/>
-        <image name="b5.png" width="163" height="58"/>
-        <image name="b5_press.png" width="163" height="58"/>
-        <image name="back.png" width="113" height="75"/>
-        <image name="back_press.png" width="113" height="75"/>
-        <image name="bg.png" width="640" height="960"/>
-        <image name="close.png" width="113" height="75"/>
-        <image name="close_press.png" width="113" height="75"/>
-        <image name="f.png" width="283" height="69"/>
-        <image name="f_press.png" width="283" height="69"/>
-        <image name="g.png" width="283" height="69"/>
-        <image name="g_press.png" width="283" height="69"/>
-        <image name="google.png" width="640" height="98"/>
-        <image name="google1.png" width="127" height="98"/>
-        <image name="google1_press.png" width="127" height="98"/>
-        <image name="home.png" width="113" height="75"/>
-        <image name="home_press.png" width="113" height="75"/>
-        <image name="icon1.png" width="19" height="35"/>
-        <image name="line.png" width="287" height="2"/>
-        <image name="list.png" width="640" height="171"/>
+        <image name="a4.png" width="139" height="32"/>
+        <image name="a4_press.png" width="139" height="32"/>
+        <image name="a5.png" width="139" height="32"/>
+        <image name="a5_press.png" width="139" height="32"/>
+        <image name="add.png" width="119" height="24"/>
+        <image name="add_press.png" width="119" height="24"/>
+        <image name="ahome.png" width="288" height="87"/>
+        <image name="b1.png" width="90" height="29"/>
+        <image name="b1_press.png" width="90" height="29"/>
+        <image name="b2.png" width="90" height="29"/>
+        <image name="b2_press.png" width="90" height="29"/>
+        <image name="b3.png" width="90" height="29"/>
+        <image name="b3_press.png" width="90" height="29"/>
+        <image name="b4.png" width="90" height="29"/>
+        <image name="b4_press.png" width="90" height="29"/>
+        <image name="b5.png" width="82" height="29"/>
+        <image name="b5_press.png" width="82" height="29"/>
+        <image name="back.png" width="57" height="38"/>
+        <image name="back_press.png" width="57" height="38"/>
+        <image name="bg.png" width="320" height="480"/>
+        <image name="close.png" width="57" height="38"/>
+        <image name="close_press.png" width="57" height="38"/>
+        <image name="f.png" width="142" height="35"/>
+        <image name="f_press.png" width="142" height="35"/>
+        <image name="g.png" width="142" height="35"/>
+        <image name="g_press.png" width="142" height="35"/>
+        <image name="google.png" width="16" height="16"/>
+        <image name="google1.png" width="64" height="49"/>
+        <image name="google1_press.png" width="64" height="49"/>
+        <image name="home.png" width="57" height="38"/>
+        <image name="home_press.png" width="57" height="38"/>
+        <image name="icon1.png" width="10" height="18"/>
+        <image name="line.png" width="144" height="1"/>
+        <image name="list.png" width="320" height="86"/>
         <image name="login.png" width="56" height="37"/>
-        <image name="login2.png" width="444" height="66"/>
-        <image name="login2_press.png" width="444" height="66"/>
+        <image name="login2.png" width="222" height="33"/>
+        <image name="login2_press.png" width="222" height="33"/>
         <image name="login_press.png" width="56" height="37"/>
-        <image name="logout.png" width="113" height="75"/>
-        <image name="logout_press.png" width="113" height="75"/>
-        <image name="menu.png" width="640" height="103"/>
-        <image name="menu_press.png" width="640" height="103"/>
-        <image name="my.png" width="131" height="75"/>
-        <image name="my_press.png" width="131" height="75"/>
-        <image name="next.png" width="249" height="60"/>
+        <image name="logout.png" width="57" height="38"/>
+        <image name="logout_press.png" width="57" height="38"/>
+        <image name="menu.png" width="320" height="52"/>
+        <image name="menu_press.png" width="320" height="52"/>
+        <image name="my.png" width="66" height="38"/>
+        <image name="my_press.png" width="66" height="38"/>
+        <image name="next.png" width="125" height="30"/>
         <image name="next_press.png" width="249" height="60"/>
-        <image name="note.png" width="249" height="60"/>
+        <image name="note.png" width="125" height="30"/>
         <image name="note_press.png" width="16" height="16"/>
-        <image name="p1.png" width="25" height="25"/>
-        <image name="p2.png" width="25" height="25"/>
-        <image name="p3.png" width="25" height="25"/>
-        <image name="p4.png" width="25" height="25"/>
-        <image name="picture.png" width="127" height="123"/>
-        <image name="point.png" width="546" height="3"/>
-        <image name="pull.png" width="455" height="54"/>
-        <image name="pull_press.png" width="455" height="54"/>
-        <image name="search shop.png" width="231" height="67"/>
-        <image name="search shop_press.png" width="231" height="67"/>
-        <image name="search.png" width="640" height="91"/>
-        <image name="search_press.png" width="640" height="91"/>
-        <image name="send.png" width="249" height="60"/>
-        <image name="send_press.png" width="249" height="60"/>
-        <image name="shadow.png" width="610" height="21"/>
-        <image name="sign in.png" width="640" height="91"/>
-        <image name="sign in_press.png" width="640" height="91"/>
-        <image name="star.png" width="37" height="33"/>
+        <image name="p1.png" width="13" height="13"/>
+        <image name="p2.png" width="13" height="13"/>
+        <image name="p3.png" width="13" height="13"/>
+        <image name="p4.png" width="13" height="13"/>
+        <image name="picture.png" width="64" height="62"/>
+        <image name="point.png" width="273" height="2"/>
+        <image name="pull.png" width="228" height="27"/>
+        <image name="pull_press.png" width="228" height="27"/>
+        <image name="search shop.png" width="116" height="34"/>
+        <image name="search shop_press.png" width="116" height="34"/>
+        <image name="search.png" width="320" height="46"/>
+        <image name="search_press.png" width="320" height="46"/>
+        <image name="send.png" width="125" height="30"/>
+        <image name="send_press.png" width="125" height="30"/>
+        <image name="shadow.png" width="305" height="11"/>
+        <image name="sign in.png" width="320" height="46"/>
+        <image name="sign in_press.png" width="320" height="46"/>
+        <image name="star.png" width="19" height="17"/>
         <image name="tool.png" width="65" height="37"/>
         <image name="tool_press.png" width="65" height="37"/>
         <image name="under.png" width="320" height="44"/>
-        <image name="yes.png" width="118" height="48"/>
-        <image name="yes_press.png" width="118" height="48"/>
+        <image name="yes.png" width="59" height="24"/>
+        <image name="yes_press.png" width="59" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -10,6 +10,7 @@
 #import "BKAPIManager.h"
 #import "BKOrder.h"
 #import "BKAPIError.h"
+#import "BKShopInfo.h"
 
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
@@ -60,7 +61,9 @@ NSString *const kBKAPIResultWrong = @"0";
 
 - (void)listWithListCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)sortWithCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
-- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
+//- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
+- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
+
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
@@ -372,63 +375,105 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
-- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {
-    static NSString *kShopIDs = @"sShopID";
+//- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {
+//    static NSString *kShopIDs = @"sShopID";
+//    
+//    NSLog(@"response: %@", response);
+//    NSLog(@"data :%@", data);
+//    NSLog(@"error: %@", error);
+//    
+//    __block NSMutableArray *shopIDs = [[data objectForKey:kShopIDs] mutableCopy];
+//    __block NSMutableDictionary *shopRawDatas = [NSMutableDictionary dictionary];
+//    
+//    for (id theShopID in shopIDs) {
+//        NSLog(@"theShopID class: %@", [theShopID class]);
+//    }
+//    
+//    if (shopIDs.count == 0) {
+//        self.isLoadingData = NO;
+//        completeHandler(shopIDs, @[]);
+//    }
+//    
+//    for (int i = 0; i < shopIDs.count; i++) {
+//        NSString *theShopID = [shopIDs objectAtIndex:i];
+//        
+//        [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//            //                NSLog(@"the shop id :%@", theShopID);
+//            NSLog(@"shop detail data :%@", data);
+//            NSLog(@"shop service: %@", [data objectForKey:@"service"]);
+//            NSLog(@"shop commerceType: %@", [data objectForKey:@"commerceType"]);
+//            //                NSLog(@"Shop name:%@", [data objectForKey:@"name"]);
+//            NSLog(@"shop detail data class: %@", [data class]);
+//            if (data == nil) {
+//                [shopIDs removeObject:theShopID];
+//            }
+//            else {
+//                [shopRawDatas setObject:data forKey:theShopID];
+//            }
+//            
+//            //                NSLog(@"shopRawDatas: %@", shopRawDatas);
+//            if (shopRawDatas.count == shopIDs.count) {
+//                
+//                NSMutableArray *rawDatas = [NSMutableArray array];
+//                for (int j = 0; j < shopIDs.count; j++) {
+//                    [rawDatas addObject:[shopRawDatas objectForKey:[shopIDs objectAtIndex:j]]];
+//                }
+//                self.isLoadingData = NO;
+//                completeHandler(shopIDs, rawDatas);
+//            }
+//        }];
+//    }
+//}
+
+- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler {
+    static NSString *kShops = @"shop";
     
     NSLog(@"response: %@", response);
     NSLog(@"data :%@", data);
     NSLog(@"error: %@", error);
     
-    __block NSMutableArray *shopIDs = [[data objectForKey:kShopIDs] mutableCopy];
-    __block NSMutableDictionary *shopRawDatas = [NSMutableDictionary dictionary];
+//    NSArray *shops = data[kShops];
+//    for (NSDictionary *dict in shops) {
+//        NSString *distance = @"distance";
+//        NSString *lat = @"lat";
+//        NSString *lng = @"lng";
+//        NSString *minprice = @"minprice";
+//        NSString *score = @"score";
+//        NSString *service = @"service";
+//        NSString *shopID = @"sShopID";
+//        NSString *type = @"type";
+//        NSLog(@"distance is %@, class is %@", dict[distance], [dict[distance] class]);
+//        NSLog(@"lat is %@, class is %@", dict[lat], [dict[lat] class]);
+//        NSLog(@"lng is %@, class is %@", dict[lng], [dict[lng] class]);
+//        NSLog(@"minprice is %@, class is %@", dict[minprice], [dict[minprice] class]);
+//        NSLog(@"score is %@, class is %@", dict[score], [dict[score] class]);
+//        NSLog(@"service is %@, class is %@", dict[service], [dict[service] class]);
+//        NSLog(@"shopID is %@, class is %@", dict[shopID], [dict[shopID] class]);
+//        NSLog(@"type is %@, class is %@", dict[type], [dict[type] class]);
+//    }
     
-    for (id theShopID in shopIDs) {
-        NSLog(@"theShopID class: %@", [theShopID class]);
-    }
+    NSArray *shopRawDatas = data[kShops];
+    self.isLoadingData = NO;
     
-    if (shopIDs.count == 0) {
-        self.isLoadingData = NO;
-        completeHandler(shopIDs, @[]);
+    if (shopRawDatas.count == 0) {        
+        completeHandler(@[], @[]);
     }
-    
-    for (int i = 0; i < shopIDs.count; i++) {
-        NSString *theShopID = [shopIDs objectAtIndex:i];
-        
-        [self shopDetailWithShopID:theShopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-            //                NSLog(@"the shop id :%@", theShopID);
-            NSLog(@"shop detail data :%@", data);
-            NSLog(@"shop service: %@", [data objectForKey:@"service"]);
-            NSLog(@"shop commerceType: %@", [data objectForKey:@"commerceType"]);
-            //                NSLog(@"Shop name:%@", [data objectForKey:@"name"]);
-            NSLog(@"shop detail data class: %@", [data class]);
-            if (data == nil) {
-                [shopIDs removeObject:theShopID];
-            }
-            else {
-                [shopRawDatas setObject:data forKey:theShopID];
-            }
-            
-            //                NSLog(@"shopRawDatas: %@", shopRawDatas);
-            if (shopRawDatas.count == shopIDs.count) {
-                
-                NSMutableArray *rawDatas = [NSMutableArray array];
-                for (int j = 0; j < shopIDs.count; j++) {
-                    [rawDatas addObject:[shopRawDatas objectForKey:[shopIDs objectAtIndex:j]]];
-                }
-                self.isLoadingData = NO;
-                completeHandler(shopIDs, rawDatas);
-            }
-        }];
-    }
+    else {
+        NSMutableArray *shopIDs = [NSMutableArray array];
+        for (NSDictionary *dict in shopRawDatas) {
+            [shopIDs addObject:dict[kBKSShopID]];
+        }
+        completeHandler([NSArray arrayWithArray:shopIDs], shopRawDatas);
+    }   
 }
 
-- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {   
+- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataCompleteHandler)completeHandler {   
     [self listWithListCriteria:criteria completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         [self handleListAndSortResponse:response data:data error:error completeHandler:completeHandler];     
     }];
 }
 
-- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {
+- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataCompleteHandler)completeHandler {
     [self sortWithCriteria:criteria completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         [self handleListAndSortResponse:response data:data error:error completeHandler:completeHandler];
     }];
@@ -453,29 +498,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     self.isLoadingData = YES;
     
-//    switch (criteria) {
-//        case BKListCriteriaDistant:
-//            criteriaString = @"distant";
-////            if ([self isEmptyCoordinate:self.userCoordinate]) {                
-////                NSLog(@"Warning: userCoordinate is empty!");
-////                self.isLoadingData = NO;
-////                return;
-////            }
-////            parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.longitude], kLatitude : [[NSString alloc] initWithFormat:@"%f", self.userCoordinate.latitude]};
-//            break;
-//        case BKListCriteriaPrice:
-//            criteriaString = @"price";
-//            parameterDictionary = @{ kListCriteria : criteriaString};
-//            break;
-//        case BKListCriteriaScore:
-//            criteriaString = @"score";
-//            parameterDictionary = @{ kListCriteria : criteriaString};
-//            break;
-//        default:
-//            NSLog(@"Warning: criteria is undefined, value: %d", criteria);
-//            break;
-//    }    
-    
     NSDictionary *parameterDictionary;
 //    NSLog(@"!!!! %@", [self.listCriteria class]);
     NSString *criteriaString = [self.listCriteriaKeys objectAtIndex:criteria];
@@ -483,12 +505,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude]};
     
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
-//    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];    
-//    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);    
-//    [self service:@"list" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//        NSLog(@"%@", data);
-//        completeHandler(response, data, error);
-//    }];    
 }
 
 - (void)sortWithCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler {

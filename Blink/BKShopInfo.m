@@ -8,29 +8,33 @@
 
 #import "BKShopInfo.h"
 #import "BKMenuItem.h"
+#import "NSObject+NullObject.h"
 
 NSString *const kBKShopName = @"name";
 NSString *const kBKShopMenu = @"menu";
 NSString *const kBKShopPhone = @"phone";
 NSString *const kBKShopAddress = @"address";
-NSString *const kBKShopOpenHour = @"businessHours";
+NSString *const kBKShopBusinessHour = @"businessHours";
 
-NSString *const kBKShopID = @"mShopID";
-NSString *const kBKShopExternalID = @"extID";
-NSString *const kBKShopRegion = @"region";
-NSString *const kBKShopLongitude = @"long";
+NSString *const kBKSShopID = @"sShopID";
+//NSString *const kBKShopExternalID = @"extID";
+//NSString *const kBKShopRegion = @"region";
+NSString *const kBKShopLongitude = @"lng";
 NSString *const kBKShopLatitude = @"lat";
+NSString *const kBKShopDistance = @"distance";
 NSString *const kBKShopURL = @"url";
-NSString *const kBKShopCommerceType = @"commerceType";
-NSString *const kBKShopManagerName = @"managerName";
-NSString *const kBKShopManagerPhone = @"managerPhone";
-NSString *const kBKShopManagerEmail = @"managerEmail";
-NSString *const kBKShopServicesProviding = @"service";
+NSString *const kBKShopType = @"type";
+NSString *const kBKShopScore = @"score";
+//NSString *const kBKShopManagerName = @"managerName";
+//NSString *const kBKShopManagerPhone = @"managerPhone";
+//NSString *const kBKShopManagerEmail = @"managerEmail";
+NSString *const kBKShopServices = @"service";
 NSString *const kBKShopIsProvidingReceipt = @"withReceipt";
 NSString *const kBKShopCoWorkChannel = @"coWorkChannel";
 NSString *const kBKShopDescription = @"intro";
 NSString *const kBKShopIsDeliverable = @"deliverable";
 NSString *const kBKShopDeliverCost = @"deliverCost";
+NSString *const kBKShopMinPrice = @"minprice";
 NSString *const kBKShopPicURL = @"pic";
 
 static NSString *emptyString = @"Null content";
@@ -52,22 +56,22 @@ static NSString *emptyString = @"Null content";
 @synthesize menu = _menu;
 @synthesize phone = _phone;
 @synthesize address = _address;
-@synthesize openHours = _openHours;
+@synthesize businessHours = _openHours;
 
 @synthesize sShopID = _shopID;
-@synthesize externalID = _externalID;
-@synthesize region = _region;
+//@synthesize externalID = _externalID;
+//@synthesize region = _region;
 @synthesize shopLocaiton = _shopLocaiton;
 @synthesize latitude = _latitude;
 @synthesize longitude = _longitude;
 @synthesize shopURL = _shopURL;
-@synthesize commerceType = _commerceType;
-@synthesize managerName = _managerName;
-@synthesize managerPhone = _managerPhone;
-@synthesize managerEmail = _managerEmail;
-@synthesize servicesProviding = _servicesProviding;
+@synthesize type = _commerceType;
+//@synthesize managerName = _managerName;
+//@synthesize managerPhone = _managerPhone;
+//@synthesize managerEmail = _managerEmail;
+@synthesize services = _servicesProviding;
 @synthesize isProvidingReceipt = _isProvidingReceipt;
-@synthesize coWorkChannel = _coWorkChannel;
+@synthesize cooperation = _coWorkChannel;
 @synthesize shopDescription = _shopDescription;
 @synthesize isDeliverable = _isDeliverable;
 @synthesize deliverCost = _deliverCost;
@@ -81,11 +85,22 @@ static NSString *emptyString = @"Null content";
 //    return self;
 //}
 
-- (NSString *)name {
-    if ([self.data objectForKey:kBKShopName] == [NSNull null]) {
+#pragma mark - Shop basic infos
+
+- (NSString *)sShopID {
+    id object = self.data[kBKSShopID];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKShopName];
+    return object;
+}
+
+- (NSString *)name {
+    id object = self.data[kBKShopName];
+    if ([object isNullOrNil] || ![object isString]) {
+        return emptyString;
+    }
+    return object;
 }
 
 - (NSArray *)menu {
@@ -101,31 +116,37 @@ static NSString *emptyString = @"Null content";
 }
 
 - (NSString *)phone {
-    if ([self.data objectForKey:kBKShopPhone] == [NSNull null]) {
+    id object = self.data[kBKShopPhone];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKShopPhone];
+    return object;
 }
 
 - (NSString *)address {
-    if ([self.data objectForKey:kBKShopAddress] == [NSNull null]) {
+    id object = self.data[kBKShopAddress];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKShopAddress];
+    return object;
 }
 
+#pragma mark - Location
+
 - (CLLocationDegrees)latitude {
-    if ([self.data objectForKey:kBKShopLatitude] == [NSNull null]) {
+    id object = self.data[kBKShopLatitude];
+    if ([object isNullOrNil] || ![object isNumber]) {
         return 0.0;
     }
-    return [[self.data objectForKey:kBKShopLatitude] doubleValue];
+    return [object doubleValue];
 }
 
 - (CLLocationDegrees)longitude {
-    if ([self.data objectForKey:kBKShopLongitude] == [NSNull null]) {
+    id object = self.data[kBKShopLongitude];
+    if ([object isNullOrNil] || ![object isNumber]) {
         return 0.0;
     }
-    return [[self.data objectForKey:kBKShopLongitude] doubleValue];
+    return [object doubleValue];
 }
 
 - (CLLocation *)shopLocaiton {
@@ -135,46 +156,62 @@ static NSString *emptyString = @"Null content";
     return _shopLocaiton;
 }
 
-- (NSString *)commerceType {
-    if ([self.data objectForKey:kBKShopCommerceType] == [NSNull null]) {
-        return emptyString;
+- (NSNumber *)distance {
+    id object = self.data[kBKShopDistance];
+    if ([object isNullOrNil] || ![object isNumber]) {
+        return @(-1);
     }
-    return [self.data objectForKey:kBKShopCommerceType];
+    return object;
 }
 
-- (NSString *)openHours {
-    if ([self.data objectForKey:kBKShopOpenHour] == [NSNull null]) {
+#pragma mark - Descriptions
+
+- (NSString *)type {
+    id object = self.data[kBKShopType];
+    if ([object isNullOrNil] || ![object isString]) {
+        return emptyString;
+    }
+    return object;
+}
+
+- (NSString *)businessHours {
+    id object = self.data[kBKShopBusinessHour];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }    
-    return [self.data objectForKey:kBKShopOpenHour];
+    return object;
 }
 
 - (NSString *)shopURL {
-    if ([self.data objectForKey:kBKShopURL] == [NSNull null]) {
+    id object = self.data[kBKShopURL];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKShopURL];
+    return object;
 }
 
 - (NSString *)shopDescription {
-    if ([self.data objectForKey:kBKShopDescription] == [NSNull null]) {
+    id object = self.data[kBKShopDescription];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKShopDescription];
+    return object;
 }
 
 - (NSNumber *)deliverCost {
-    if ([self.data objectForKey:kBKShopDeliverCost] == [NSNull null] || [self.data objectForKey:kBKShopDeliverCost] == nil) {
+    id object = self.data[kBKShopDeliverCost];
+    if ([object isNullOrNil] || ![object isNumber]) {
         return @(-1);
     }
-    return [self.data objectForKey:kBKShopDeliverCost];
+    return object;
 }
 
 - (NSURL *)pictureURL {
-    if ([self.data objectForKey:kBKShopPicURL] == [NSNull null] || [self.data objectForKey:kBKShopPicURL] == nil || ![[self.data objectForKey:kBKShopPicURL] isKindOfClass:[NSString class]]) {
+    id object = self.data[kBKShopPicURL];
+    if ([object isNullOrNil] || ![object isString]) {
         return nil;
     }
-    return [NSURL URLWithString:[self.data objectForKey:kBKShopPicURL]];
+    return [NSURL URLWithString:object];
 }
 
 //- (NSString *)shopID {
@@ -188,22 +225,21 @@ static NSString *emptyString = @"Null content";
     self = [super init];
     if (self) {
         self.data = data;
-//        self.shopID = [data objectForKey:kBKShopID];
-//        self.name = [data objectForKey:kBKShopName];
-//        self.menu = [data objectForKey:kBKShopMenu];
-//        self.phone = [data objectForKey:kBKShopPhone];
-//        self.address = [data objectForKey:kBKShopAddress];
-//        self.openHours = [data objectForKey:kBKShopOpenHour];
-//        self.shopDescription = [data objectForKey:kBKShopDescription];
     }
     return self;
 }
 
-- (void)updateWithData:(NSDictionary *)data sShopID:(NSString *)sShopID {
+//- (void)updateWithData:(NSDictionary *)data sShopID:(NSString *)sShopID {
+//    self.data = data;
+//    self.menu = nil;
+//    self.shopLocaiton = nil;
+//    self.shopID = sShopID;
+//}
+
+- (void)updateWithData:(NSDictionary *)data {
     self.data = data;
     self.menu = nil;
     self.shopLocaiton = nil;
-    self.sShopID = sShopID;
 }
 
 @end

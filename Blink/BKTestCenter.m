@@ -25,29 +25,29 @@
                                  
                                  };
     
-    NSDictionary *shop1Info = @{kBKShopID: @"1000",
+    NSDictionary *shop1Info = @{kBKSShopID: @"1000",
                                 kBKShopName: @"王品",
                                 kBKShopMenu: @[shop11menu, shop12menu, @{kBKMenuName:@"牛"}, @{kBKMenuName:@"排"}],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
-                                kBKShopOpenHour: @"10:00~21:00",
+                                kBKShopBusinessHour: @"10:00~21:00",
                                 kBKShopDescription: @"王品的優惠"};
     
-    NSDictionary *shop2Info = @{kBKShopID: @"2000",
+    NSDictionary *shop2Info = @{kBKSShopID: @"2000",
                                 kBKShopName: @"舒果",
 //                                kBKShopMenu: @[@{kBKMenuName:@"素"}, @{kBKMenuName:@"食"}, @{kBKMenuName:@"新"}, @{kBKMenuName:@"鮮"}],
                                 kBKShopMenu: @[],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
-                                kBKShopOpenHour: @"10:10~21:10",
+                                kBKShopBusinessHour: @"10:10~21:10",
                                 kBKShopDescription: @"舒果的優惠"};
     
-    NSDictionary *shop3Info = @{kBKShopID: @"3000",
+    NSDictionary *shop3Info = @{kBKSShopID: @"3000",
                                 kBKShopName: @"原燒",
                                 kBKShopMenu: @[@{kBKMenuName:@"極"}, @{kBKMenuName:@"品"}, @{kBKMenuName:@"燒"}, @{kBKMenuName:@"肉"}],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",
-                                kBKShopOpenHour: @"10:20~21:20",
+                                kBKShopBusinessHour: @"10:20~21:20",
                                 kBKShopDescription: @"原燒的優惠"};
     
     NSArray *testShopInfos = [NSArray arrayWithObjects:shop1Info,shop2Info,shop3Info,nil];
@@ -55,30 +55,30 @@
 }
 
 + (NSArray *)testFavoriteShops {
-    NSDictionary *shop1Info = @{kBKShopID: @"4000",
+    NSDictionary *shop1Info = @{kBKSShopID: @"4000",
                                 kBKShopName: @"50藍",
                                 kBKShopMenu: @[@{kBKMenuName:@"飲"}, @{kBKMenuName:@"料"}, @{kBKMenuName:@"好"}, @{kBKMenuName:@"喝"}],
                                 kBKShopPhone: @"04-00000000",
                                 kBKShopAddress: @"台中市0號",
-                                kBKShopOpenHour: @"10:00~21:00",
+                                kBKShopBusinessHour: @"10:00~21:00",
                                 kBKShopDescription: @"50藍的優惠"};
     
     NSDictionary *shop2Info = @{
-                                kBKShopID: @"5000",
+                                kBKSShopID: @"5000",
                                 kBKShopName: @"成時",
                                 kBKShopMenu: @[@{kBKMenuName:@"創"}, @{kBKMenuName:@"意"}, @{kBKMenuName:@"料"}, @{kBKMenuName:@"理"}],
                                 kBKShopPhone: @"04-11111111",
                                 kBKShopAddress: @"台中市1號",
-                                kBKShopOpenHour: @"10:10~21:10",
+                                kBKShopBusinessHour: @"10:10~21:10",
                                 kBKShopDescription: @"成時的優惠"};
     
     NSDictionary *shop3Info = @{
-                                kBKShopID: @"6000",
+                                kBKSShopID: @"6000",
                                 kBKShopName: @"雞排店",
                                 kBKShopMenu: @[@{kBKMenuName:@"大"}, @{kBKMenuName:@"小"}, @{kBKMenuName:@"雞"}, @{kBKMenuName:@"排"}],
                                 kBKShopPhone: @"04-22222222",
                                 kBKShopAddress: @"台中市2號",
-                                kBKShopOpenHour: @"10:20~21:20",
+                                kBKShopBusinessHour: @"10:20~21:20",
                                 kBKShopDescription: @"雞排店的優惠"};
     
 //    BKShopInfo *shop1 = [[BKShopInfo alloc] initWithData:shop1Info];
