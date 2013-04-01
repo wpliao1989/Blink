@@ -149,7 +149,28 @@
 }
 
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness {
-    return [NSString stringWithFormat:@"%@%@(%@、%@)", size, [quantity stringValue], ice, sweetness];
+    NSMutableArray *strings = [NSMutableArray array];
+    if (ice != nil) {
+        [strings addObject:ice];
+    }
+    if (sweetness != nil) {
+        [strings addObject:sweetness];
+    }
+    
+    NSString *iceAndSweetness = strings.count > 0 ? [NSString stringWithFormat:@"(%@)", [strings componentsJoinedByString:@"、"]] : @"";
+    //    if ((ice != nil) && (sweetness != nil)) {
+    //        iceAndSweetness = [NSString stringWithFormat:@"(%@、%@)", ice, sweetness];
+    //    }
+    //    else if (ice != nil) {
+    //        iceAndSweetness = [NSString stringWithFormat:@"(%@)", ice];
+    //    }
+    //    else if (sweetness != nil) {
+    //        iceAndSweetness = [NSString stringWithFormat:@"(%@)", sweetness];
+    //    }
+    
+    return [NSString stringWithFormat:@"%@ %@ %@", [quantity stringValue], size, iceAndSweetness];
+    
+//    return [NSString stringWithFormat:@"%@%@(%@、%@)", size, [quantity stringValue], ice, sweetness];
 }
 
 #pragma mark - Tableview

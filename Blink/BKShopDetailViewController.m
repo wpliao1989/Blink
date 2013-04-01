@@ -79,12 +79,21 @@
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopImageDidDownload:) name:BKShopImageDidDownloadNotification object:nil];
     self.navigationItem.title = self.shopInfo.name;
-    [self initShop];
-    
     [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
+    
+    self.scrollView.userInteractionEnabled = NO;
+    [self initShop];
     [self configureIntroSection];
     [self configureBottomSection];
-    [self configureScrollView];    
+    [self configureScrollView];
+    
+    [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID completeHandler:^{
+        self.scrollView.userInteractionEnabled = YES;
+        [self initShop];
+        [self configureIntroSection];
+        [self configureBottomSection];
+        [self configureScrollView];        
+    }];        
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -128,13 +137,13 @@
     [self configureShopImage];
     
     self.shopNameLabel.text = self.shopInfo.name;
-    self.shopCommerceTypeLabel.text = self.shopInfo.type;
+    self.shopCommerceTypeLabel.text = [self.shopInfo localizedTypeString];
     self.shopAddressLabel.text = self.shopInfo.address;
     self.shopPhoneLabel.text = self.shopInfo.phone;
     self.shopOpenTimeLabel.text = self.shopInfo.businessHours;
     self.shopIntro.text = self.shopInfo.shopDescription;
     self.shopURL.text = self.shopInfo.shopURL;
-    self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.deliverCost];
+    self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.minPrice];
 }
 
 - (void)configureShopImage {

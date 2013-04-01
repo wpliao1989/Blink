@@ -64,8 +64,6 @@ NSString *const kBKAPIResultWrong = @"0";
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
 - (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
 
-- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler) completeHandler;
-
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
 - (BOOL)isCorrectResult:(id)data;
 - (BOOL)isWrongResult:(id)data;
@@ -494,34 +492,39 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         NSLog(@"list criteria keys = %@", self.listCriteriaKeys);
         NSLog(@"localized list criterias = %@", self.localizedListCriteria);
         return;
-    }
-    
-    self.isLoadingData = YES;
+    }   
     
     NSDictionary *parameterDictionary;
 //    NSLog(@"!!!! %@", [self.listCriteria class]);
     NSString *criteriaString = [self.listCriteriaKeys objectAtIndex:criteria];
     
-    parameterDictionary = @{ kListCriteria : criteriaString, kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude], kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude]};
+    parameterDictionary = @{ kListCriteria : criteriaString,
+                             kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude],
+                             kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude]};
     
+    self.isLoadingData = YES;
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
 - (void)sortWithCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler {
     static NSString *kSortCriteria = @"sortCriteria";
+    static NSString *kLongitude = @"longitude";
+    static NSString *kLatitude = @"latitude";
+    
+    NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
+    NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
     
     if (criteria >= self.sortCriteria.count || criteria < 0) {
         NSLog(@"Warning: invalid sort criteria!");
         return;
-    }
-    
-    self.isLoadingData = YES;
+    }   
     
     NSDictionary *parameterDictionary;
     NSString *criteriaString = [self.sortCriteria objectAtIndex:criteria];
     
-    parameterDictionary = @{ kSortCriteria : criteriaString};
+    parameterDictionary = @{ kSortCriteria : criteriaString, kLatitude : latitude, kLongitude : longitude};
     
+    self.isLoadingData = YES;
     [self callAPI:@"sort" withPostBody:parameterDictionary completionHandler:completeHandler];    
 }
 
@@ -540,9 +543,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler)completeHandler {
     static NSString *kShopID = @"sShopID";
+    static NSString *kLongitude = @"longitude";
+    static NSString *kLatitude = @"latitude";
     
-    NSDictionary *parameterDictionary = @{kShopID : shopID};
-    [self callAPI:@"shop" withPostBody:parameterDictionary completionHandler:completeHandler];
+    NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
+    NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
+    
+    NSDictionary *parameterDictionary = @{kShopID : shopID, kLatitude : latitude, kLongitude : longitude};
+    self.isLoadingData = YES;
+    [self callAPI:@"shop" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        self.isLoadingData = NO;
+        completeHandler(response, data, error);
+    }];
 }
 
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
@@ -698,28 +710,50 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)updateSortCriteria {
-    self.sortCriteria = @[@"中式料理",
-                          @"日式料理",
-                          @"亞洲料理",
-                          @"泰式料理",
-                          @"美式料理",
-                          @"韓式料理",
-                          @"港式料理",
-                          @"義式料理",
-                          @"輕食",
-                          @"其他異國料理",
-                          @"燒烤類",
-                          @"鍋類",
-                          @"咖啡、簡餐、茶",
-                          @"素食",
-                          @"速食料理",
-                          @"主題特色餐廳",
-                          @"早餐",
-                          @"buffet自助餐",
-                          @"小吃",
-                          @"冰品、飲料、甜湯",
-                          @"烘焙、甜點、零食",
-                          @"其他美食"];
+//    self.sortCriteria = @[@"中式料理",
+//                          @"日式料理",
+//                          @"亞洲料理",
+//                          @"泰式料理",
+//                          @"美式料理",
+//                          @"韓式料理",
+//                          @"港式料理",
+//                          @"義式料理",
+//                          @"輕食",
+//                          @"其他異國料理",
+//                          @"燒烤類",
+//                          @"鍋類",
+//                          @"咖啡、簡餐、茶",
+//                          @"素食",
+//                          @"速食料理",
+//                          @"主題特色餐廳",
+//                          @"早餐",
+//                          @"buffet自助餐",
+//                          @"小吃",
+//                          @"冰品、飲料、甜湯",
+//                          @"烘焙、甜點、零食",
+//                          @"其他美食"];
+    self.sortCriteria = @[@"1",
+                          @"2",
+                          @"3",
+                          @"4",
+                          @"5",
+                          @"6",
+                          @"7",
+                          @"8",
+                          @"9",
+                          @"10",
+                          @"11",
+                          @"12",
+                          @"13",
+                          @"14",
+                          @"15",
+                          @"16",
+                          @"17",
+                          @"18",
+                          @"19",
+                          @"20",
+                          @"21",
+                          @"22"];
 }
 
 

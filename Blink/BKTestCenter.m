@@ -137,6 +137,8 @@ static NSInteger quantity = 1;
 
 + (void)testMethods {
     NSLog(@"Testing..");
+    NSNumber *testNumber = @(1);
+    NSLog(@"testNumber: %d", [testNumber intValue]);
 }
 
 @end

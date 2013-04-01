@@ -94,8 +94,11 @@ typedef enum  {
 - (void)registerNotifications;
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
-- (NSString *)stringForDeliverCost:(NSNumber *)cost;
-- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation;
+//- (NSString *)stringForDeliverCostAndService:(NSNumber *)cost;
+- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo;
+- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo;
+//- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation;
+- (NSString *)stringForDistance:(NSNumber *)distance;
 
 - (UIImage *)defaultPicture;
 
@@ -137,7 +140,7 @@ typedef enum  {
         _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
         NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;        
         for (NSString *theCriteria in sortCriterias) {
-            [_sortActionSheet addButtonWithTitle:theCriteria];
+            [_sortActionSheet addButtonWithTitle:[BKShopInfo localizedTypeStringForType:theCriteria]];
         }
         _sortActionSheet.cancelButtonIndex = [_sortActionSheet addButtonWithTitle:@"取消"];
         [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
@@ -225,7 +228,8 @@ typedef enum  {
         NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
         BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
 //        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
-        shopDetailViewController.shopID = [[BKShopInfoManager sharedBKShopInfoManager] shopIDAtIndex:selectedIndex];
+        NSString *shopID = [[BKShopInfoManager sharedBKShopInfoManager] shopIDAtIndex:selectedIndex];
+        shopDetailViewController.shopID = shopID;        
     }
 }
 
@@ -398,20 +402,66 @@ typedef enum  {
     return [currencyFormatter stringFromNumber:price];
 }
 
-- (NSString *)stringForDeliverCost:(NSNumber *)cost {
-    return [NSString stringWithFormat:@"%@免費外送", [self currencyStringForPrice:cost]];
+//- (NSString *)stringForDeliverCostAndServiceShopInfo:(NSNumber *)cost {
+//    return [NSString stringWithFormat:@"%@%@", [self currencyStringForPrice:cost], ];
+//}
+
+- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo {
+    NSMutableArray *strings = [NSMutableArray array];
+    NSString *deliverCostString = [self stringForDeliverCostAndServiceOfShopInfo:shopInfo];
+    NSString *distanceString = [self stringForDistance:shopInfo.distance];
+    if (deliverCostString.length > 0) {
+        [strings addObject:deliverCostString];
+    }
+    if (distanceString.length > 0) {
+        [strings addObject:distanceString];
+    }
+    return [strings componentsJoinedByString:@"，"];
 }
 
-- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation {
-    CLLocation *userLocation = [BKAPIManager sharedBKAPIManager].userLocation;
-    CLLocationDistance distance = [userLocation distanceFromLocation:shopLocation];
+- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo {
+    static NSString *freeDelivery = @"免費外送";
+    static NSString *chargeDelivery = @"自費外送";
+    NSString *minPirce = [self currencyStringForPrice:shopInfo.minPrice];
     
-    if (distance > 1000.0) {
-        distance = distance/1000.0;
-        return [NSString stringWithFormat:@"距離%0.1f公里", distance];
+    NSMutableArray *strings = [NSMutableArray arrayWithObject:minPirce];
+    
+    
+    if ([shopInfo isServiceFreeDelivery]) {
+        [strings addObject:freeDelivery];
+        return [strings componentsJoinedByString:@""];
+    }
+    else if ([shopInfo isServiceHasDeliveryCost]) {
+        [strings addObject:chargeDelivery];
+        return [strings componentsJoinedByString:@""];
+    }
+    else {
+        return [NSString stringWithFormat:@""];
+    }    
+}
+
+//- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation {
+//    CLLocation *userLocation = [BKAPIManager sharedBKAPIManager].userLocation;
+//    CLLocationDistance distance = [userLocation distanceFromLocation:shopLocation];
+//    
+//    if (distance > 1000.0) {
+//        distance = distance/1000.0;
+//        return [NSString stringWithFormat:@"距離%0.1f公里", distance];
+//    }
+//    
+//    return [NSString stringWithFormat:@"距離%d公尺", (NSInteger)distance];
+//}
+
+- (NSString *)stringForDistance:(NSNumber *)distance {
+    double kmValue = round([distance doubleValue]);
+//    NSLog(@"distanceValue %f", kmValue);
+    
+    if (kmValue < 1.0) {
+        double mValue = floor(kmValue * 1000);
+        return [NSString stringWithFormat:@"距離%d公尺", (int)mValue];
     }
     
-    return [NSString stringWithFormat:@"距離%d公尺", (NSInteger)distance];
+    return [NSString stringWithFormat:@"距離%d公里", (NSInteger)kmValue];
 }
 
 - (UIImage *)defaultPicture {
@@ -486,15 +536,15 @@ typedef enum  {
         cell.shopNameLabel.text = theShopInfo.name;       
         
         // Configure deliver price and distance
-        CLLocation *shopLocation = theShopInfo.shopLocaiton;
-        NSString *deliverCostAndDistanceString = [NSString stringWithFormat:@"%@，%@", [self stringForDeliverCost:theShopInfo.deliverCost], [self stringForDistanceFrom:shopLocation]];
-        cell.priceAndDistanceLabel.text = deliverCostAndDistanceString;
+//        CLLocation *shopLocation = theShopInfo.shopLocaiton;
+
+        cell.priceAndDistanceLabel.text = [self stringForDeliveryCostAndDistanceLabelOfShopInfo:theShopInfo];
         
         // Configure commerce type
-        cell.commerceTypeLabel.text = theShopInfo.type;
+        cell.commerceTypeLabel.text = [theShopInfo localizedTypeString];
         
         // Configure score
-        NSInteger shopScore = 4;        
+        NSInteger shopScore = [theShopInfo.score intValue];
         if (shopScore <= ((BKShopListCell *)cell).scoreImageViews.count) {            
             for (NSInteger i = 0; i < shopScore; i++) {                
                 UIImageView *scoreImageView = [((BKShopListCell *)cell).scoreImageViews objectAtIndex:i];

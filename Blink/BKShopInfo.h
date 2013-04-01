@@ -75,3 +75,17 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 @property (weak, nonatomic) UIImage *pictureImage;
 
 @end
+
+@interface BKShopInfo (ServiceAndType)
+
+- (BOOL)isServiceFreeDelivery;
+- (BOOL)isServiceHasDeliveryCost;
+
+- (NSString *)localizedServiceString;
+- (NSString *)localizedTypeString;
++ (NSString *)localizedTypeStringForType:(NSString *)type;
+
++ (NSDictionary *)serviceLookup;
++ (NSDictionary *)typeLookup;
+
+@end

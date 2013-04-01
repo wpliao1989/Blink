@@ -101,6 +101,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     }];
 }
 
+- (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        if (data) {
+            [self addShopInfoWithRawData:data forShopID:shopID];
+        }
+        completeHandler();
+    }];
+}
+
 #pragma mark - Shop info update
 
 - (void)updateShopIDs:(NSArray *)shopIDs {
