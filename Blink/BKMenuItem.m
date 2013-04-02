@@ -8,7 +8,7 @@
 
 #import "BKMenuItem.h"
 #import "NSObject+NullObject.h"
-#import "NSObject+IdentifyMyself.m"
+#import "NSObject+IdentifyMyself.h"
 #import "NSMutableArray+Sort.h"
 
 NSString *const kBKMenuUUID = @"UUID";
