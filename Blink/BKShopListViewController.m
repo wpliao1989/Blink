@@ -138,9 +138,9 @@ typedef enum  {
 - (UIActionSheet *)sortActionSheet {
     if (_sortActionSheet == nil) {       
         _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-        NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].sortCriteria;        
+        NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].localizedSortCriteria;        
         for (NSString *theCriteria in sortCriterias) {
-            [_sortActionSheet addButtonWithTitle:[BKShopInfo localizedTypeStringForType:theCriteria]];
+            [_sortActionSheet addButtonWithTitle:theCriteria];
         }
         _sortActionSheet.cancelButtonIndex = [_sortActionSheet addButtonWithTitle:@"取消"];
         [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];

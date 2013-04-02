@@ -13,5 +13,7 @@
 - (BOOL)isNullOrNil;
 - (BOOL)isString;
 - (BOOL)isNumber;
+- (BOOL)isArray;
+- (BOOL)isDictionary;
 
 @end

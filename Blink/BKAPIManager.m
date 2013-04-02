@@ -11,18 +11,32 @@
 #import "BKOrder.h"
 #import "BKAPIError.h"
 #import "BKShopInfo.h"
+#import "NSMutableArray+Sort.h"
 
+// Notification keys
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
 
 NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
 
+// String defined in APIError.h
 NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
 NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
+NSString *const BKErrorDomainNetwork = @"BKErrorDomainNetwork";
 
+// Localized string for display
+NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
+
+// Result decode keys
 NSString *const kBKAPIResult = @"result";
 NSString *const kBKAPIResultCorrect = @"1";
 NSString *const kBKAPIResultWrong = @"0";
+
+// Define Delivery and Takeout method code
+typedef NS_ENUM(NSUInteger, BKOrderMethod) {
+    BKOrderMethodDelivery = 0,
+    BKOrderMethodTakeout = 1    
+};
 
 @interface NSData (JSONValue)
 
@@ -52,6 +66,7 @@ NSString *const kBKAPIResultWrong = @"0";
 - (void)updateToLocation:(CLLocation *)location;
 
 @property (strong, nonatomic) NSArray *listCriteriaKeys;
+@property (strong, nonatomic) NSArray *sortCriteriaKeys;
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
 //-(id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON timeout:(NSTimeInterval)time completionHandler:(asynchronousCompleteHandler)completeHandler;
@@ -84,7 +99,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 @synthesize cities = _regions;
 @synthesize localizedListCriteria = _listCriteria;
 @synthesize listCriteriaKeys = _listCriteriaKeys;
-@synthesize sortCriteria = _sortCriteria;
+@synthesize localizedSortCriteria = _sortCriteria;
 
 #pragma mark - Getters and Setters
 
@@ -131,7 +146,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return _listCriteriaKeys;
 }
 
-- (NSArray *)sortCriteria {
+- (NSArray *)localizedSortCriteria {
     if (_sortCriteria == nil) {
         _sortCriteria = @[];
     }
@@ -252,7 +267,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (BOOL)isServiceInfoValid {
-    return self.localizedListCriteria.count > 0 && self.sortCriteria.count > 0;
+    return self.localizedListCriteria.count > 0 && self.localizedSortCriteria.count > 0;
 }
 
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject {   
@@ -358,13 +373,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {     
         
         if (error != nil) {
-            completeHandler(nil, error);
+            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+            completeHandler(nil, BKError);
         }
 //        else if ([self isCorrectResult:data]) {
 //            completeHandler(data, nil);
 //        }
         else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:nil];
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:@{kBKErrorMessage : @"帳號或密碼錯誤"}];
             completeHandler(nil, wrongResultError);
         }
         else {
@@ -514,13 +530,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
     NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
     
-    if (criteria >= self.sortCriteria.count || criteria < 0) {
+    if (criteria >= self.localizedSortCriteria.count || criteria < 0) {
         NSLog(@"Warning: invalid sort criteria!");
         return;
     }   
     
     NSDictionary *parameterDictionary;
-    NSString *criteriaString = [self.sortCriteria objectAtIndex:criteria];
+    NSString *criteriaString = [self.sortCriteriaKeys objectAtIndex:criteria];
     
     parameterDictionary = @{ kSortCriteria : criteriaString, kLatitude : latitude, kLongitude : longitude};
     
@@ -560,7 +576,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
     static NSString *kBKOrderUserToken = @"token";
     static NSString *kBKOrderShopID = @"sShopID";
-    static NSString *kBKOrderRecordTime = @"recordTime";
+    static NSString *kBKOrderRecordTime = @"time";
     static NSString *kBKOrderUserAddress = @"address";
     static NSString *kBKOrderUserPhone = @"phone";
     static NSString *kBKOrderContent = @"content";
@@ -647,21 +663,17 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)updateListCriteriaWithObject:(id)listCriteriaObject {
     if (listCriteriaObject != [NSNull null] && [listCriteriaObject isKindOfClass:[NSDictionary class]]) {
-        static NSString *kListCriteriaDistant = @"distant";
+        NSString *kListCriteriaDistant = @"distant";
+        NSString *kListCriteriaPrice = @"price";
+        NSString *kListCriteriaScore = @"score";
+        NSArray *sortOrder = @[kListCriteriaDistant, kListCriteriaPrice, kListCriteriaScore];
+        
         NSDictionary *listCriteriaDict = listCriteriaObject;
         NSMutableArray *keys = [NSMutableArray array];
-        NSMutableArray *values = [NSMutableArray array];
+        NSMutableArray *values = [NSMutableArray array];        
         
         keys = [[listCriteriaDict allKeys] mutableCopy];
-        [keys sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            if ([obj1 isEqualToString:kListCriteriaDistant]) {
-                return NSOrderedAscending;
-            }
-            if ([obj2 isEqualToString:kListCriteriaDistant]) {
-                return NSOrderedDescending;
-            }
-            return NSOrderedSame;
-        }];
+        [keys sortUsingAnotherArray:sortOrder];
         
         for (NSString *theKey in keys) {
             //NSLog(@"the key = %@, the value = %@", theKey, [listCriteriaDict objectForKey:theKey]);
@@ -710,50 +722,36 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)updateSortCriteria {
-//    self.sortCriteria = @[@"中式料理",
-//                          @"日式料理",
-//                          @"亞洲料理",
-//                          @"泰式料理",
-//                          @"美式料理",
-//                          @"韓式料理",
-//                          @"港式料理",
-//                          @"義式料理",
-//                          @"輕食",
-//                          @"其他異國料理",
-//                          @"燒烤類",
-//                          @"鍋類",
-//                          @"咖啡、簡餐、茶",
-//                          @"素食",
-//                          @"速食料理",
-//                          @"主題特色餐廳",
-//                          @"早餐",
-//                          @"buffet自助餐",
-//                          @"小吃",
-//                          @"冰品、飲料、甜湯",
-//                          @"烘焙、甜點、零食",
-//                          @"其他美食"];
-    self.sortCriteria = @[@"1",
-                          @"2",
-                          @"3",
-                          @"4",
-                          @"5",
-                          @"6",
-                          @"7",
-                          @"8",
-                          @"9",
-                          @"10",
-                          @"11",
-                          @"12",
-                          @"13",
-                          @"14",
-                          @"15",
-                          @"16",
-                          @"17",
-                          @"18",
-                          @"19",
-                          @"20",
-                          @"21",
-                          @"22"];
+//    self.sortCriteriaKeys = @[@"1",
+//                              @"2",
+//                              @"3",
+//                              @"4",
+//                              @"5",
+//                              @"6",
+//                              @"7",
+//                              @"8",
+//                              @"9",
+//                              @"10",
+//                              @"11",
+//                              @"12",
+//                              @"13",
+//                              @"14",
+//                              @"15",
+//                              @"16",
+//                              @"17",
+//                              @"18",
+//                              @"19",
+//                              @"20",
+//                              @"21",
+//                              @"22"];
+    self.sortCriteriaKeys = [NSArray arrayWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SortCriteriaArray" withExtension:@"plist"]];
+    
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSString *sortCriteria in self.sortCriteriaKeys) {
+        //NSLog(@"sortCriteria: %@", sortCriteria);
+        [array addObject:[BKShopInfo localizedTypeStringForType:sortCriteria]];
+    }
+    self.localizedSortCriteria = [NSArray arrayWithArray:array];
 }
 
 

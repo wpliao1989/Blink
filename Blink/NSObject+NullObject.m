@@ -22,4 +22,12 @@
     return [self isKindOfClass:[NSNumber class]];
 }
 
+- (BOOL)isArray {
+    return [self isKindOfClass:[NSArray class]];
+}
+
+- (BOOL)isDictionary {
+    return [self isKindOfClass:[NSDictionary class]];
+}
+
 @end

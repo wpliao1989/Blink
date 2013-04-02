@@ -9,7 +9,9 @@
 #ifndef Blink_BKAPIError_h
 #define Blink_BKAPIError_h
 
+FOUNDATION_EXPORT NSString *const BKErrorDomainNetwork;
 FOUNDATION_EXPORT NSString *const BKErrorDomainWrongUserNameOrPassword;
 FOUNDATION_EXPORT NSString *const BKErrorDomainWrongOrder;
+FOUNDATION_EXPORT NSString *const kBKErrorMessage;
 
 #endif

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>0</key>
+	<string>無糖</string>
+	<key>3</key>
+	<string>三分糖(微糖)</string>
+	<key>5</key>
+	<string>半糖</string>
+	<key>7</key>
+	<string>七分糖(少糖)</string>
+	<key>10</key>
+	<string>正常</string>
+	<key>12</key>
+	<string>多糖</string>
+</dict>
+</plist>

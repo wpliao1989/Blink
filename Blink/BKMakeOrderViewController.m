@@ -231,7 +231,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
     self.shopNameLabel.text = self.shopInfo.name;
     self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
-    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.deliverCost];
+    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.minPrice];
     
     [self initButtons];
     [self initTimePicker];
@@ -322,7 +322,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    NSLog(@"totalPriceDidChange!");
     NSNumber *totalPrice = [[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo];
     self.totalPrice.text = [self stringForTotalPrice:totalPrice];
-    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.deliverCost];
+    self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.minPrice];
 }
 
 #pragma mark - String for price and delivery cost label
@@ -385,8 +385,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
-    ice.text = orderContent.ice;
-    sweetness.text = orderContent.sweetness;
+    ice.text = [BKMenuItem localizedStringForIce:orderContent.ice];
+    sweetness.text = [BKMenuItem localizedStringForSweetness:orderContent.sweetness];
     quantityAndSize.text = [NSString stringWithFormat:@"%@ %@", [orderContent.quantity stringValue], orderContent.size];
     price.text = [self currencyStringForPrice:orderContent.priceValue];
     
@@ -433,12 +433,12 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
         if (component == iceComponent) {
             if ([self hasSelectableIce]) {
-                count = self.selectedMenuItem.iceLevels.count;
+                count = self.selectedMenuItem.localizedIceLevels.count;
             }
         }        
         else if (component == sweetnessComponent) {
             if ([self hasSelectableSweetness]) {
-                count = self.selectedMenuItem.sweetnessLevels.count;
+                count = self.selectedMenuItem.localizedSweetnessLevels.count;
             }
         }    
         
@@ -520,13 +520,13 @@ static NSString *noSelectableItem = @"無可選擇項目";
         if (component == iceComponent) {
             if ([self hasSelectableIce]) {
 //                NSLog(@"%@", self.selectedMenuItem.iceLevels);
-                label.text = [self.selectedMenuItem.iceLevels objectAtIndex:row];
+                label.text = [self.selectedMenuItem.localizedIceLevels objectAtIndex:row];
             }
         }
         else if (component == sweetnessComponent) {
             if ([self hasSelectableSweetness]) {
 //                NSLog(@"%@", self.selectedMenuItem.sweetnessLevels);
-                label.text = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+                label.text = [self.selectedMenuItem.localizedSweetnessLevels objectAtIndex:row];
             }
         } 
         
@@ -713,12 +713,12 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //        return BKSelectionItemNotSelected;
     }
     else {
-        if ((self.selectedMenuItem.iceLevels.count > 0) && (self.selectedIceLevel == nil)) {
+        if ((self.selectedMenuItem.localizedIceLevels.count > 0) && (self.selectedIceLevel == nil)) {
 //            NSLog(@"%@", [NSNumber numberWithInt:BKSelectionIceNotSelected]);
             [result addObject:[NSNumber numberWithInt:BKSelectionIceNotSelected]];
 //            return BKSelectionIceNotSelected;
         }
-        if ((self.selectedMenuItem.sweetnessLevels.count > 0) && (self.selectedSweetness == nil)) {
+        if ((self.selectedMenuItem.localizedSweetnessLevels.count > 0) && (self.selectedSweetness == nil)) {
 //            NSLog(@"%@", [NSNumber numberWithInt:BKSelectionSweetnessNotSelected]);
             [result addObject:[NSNumber numberWithInt:BKSelectionSweetnessNotSelected]];
 //            return BKSelectionSweetnessNotSelected;
@@ -786,7 +786,17 @@ static NSString *noSelectableItem = @"無可選擇項目";
 } 
 
 - (void)updateIceAndSweetnessButtonTitle {
-    NSString *title = [NSString stringWithFormat:@"%@ %@", self.selectedIceLevel, self.selectedSweetness];
+    NSMutableArray *result = [NSMutableArray array];
+    
+    NSString *ice = [BKMenuItem localizedStringForIce:self.selectedIceLevel];
+    if (ice != nil) {
+        [result addObject:ice];
+    }
+    NSString *sweetness = [BKMenuItem localizedStringForSweetness:self.selectedSweetness];
+    if (sweetness != nil) {
+        [result addObject:sweetness];
+    }
+    NSString *title = [result componentsJoinedByString:@" "];
     [self changeButtonTitleButton:self.iceAndSweetnessButton title:title];
 }
 
@@ -822,14 +832,14 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    NSLog(@"self.selectedMenuItem.iceLevels: %@", self.selectedMenuItem.iceLevels);
 //    NSLog(@"self.selectedMenuItem.iceLevels class: %@", [self.selectedMenuItem.iceLevels class]);
 //    return NO;
-    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.iceLevels.count > 0);
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.localizedIceLevels.count > 0);
 }
 
 - (BOOL)hasSelectableSweetness {
 //    NSLog(@"self.selectedMenuItem.sweetnessLevels: %@", self.selectedMenuItem.sweetnessLevels);
 //    NSLog(@"self.selectedMenuItem.sweetnessLevels class: %@", [self.selectedMenuItem.sweetnessLevels class]);
 //    return NO;
-    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.sweetnessLevels.count > 0);
+    return (self.selectedMenuItem != nil) && (self.selectedMenuItem.localizedSweetnessLevels.count > 0);
 }
 
 - (BOOL)hasSelectableSize {

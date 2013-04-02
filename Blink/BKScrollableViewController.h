@@ -9,24 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "BKAPIError.h"
 
-@protocol MBProgressHUDDelegate;
-
-@interface BKScrollableViewController : UIViewController<UITextFieldDelegate, MBProgressHUDDelegate>
+@interface BKScrollableViewController : UIViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) UIView *activeResponder;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
-typedef void (^aBlock)();
+@protocol MBProgressHUDDelegate;
+
+typedef void (^aBlock)(NSString *successMessage);
 typedef void (^failBlock)(NSError *error);
 
-@interface BKScrollableViewController (SupportLogin)
+@interface BKScrollableViewController (HUDview)<MBProgressHUDDelegate>
 
-- (void)beginLogin;
+- (void)showHUDViewWithMessage:(NSString *)message;
 
-// Sub classes should overwrite this method to provide a custom login mechanism
-// Call successBlock and failBlock for successful and unsuccessful login result, respectively
+// Sub classes should overwrite this method to provide a custom mechanism
+// Call successBlock and failBlock for successful and unsuccessful event, respectively
 - (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock;
 
 @end

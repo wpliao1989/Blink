@@ -36,6 +36,7 @@ typedef void (^loadDataCompleteHandler)(NSArray *shopIDs, NSArray *rawDatas);
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
+// Location
 @property (nonatomic) BOOL isLocationServiceAvailable;
 //@property (nonatomic) CLLocationCoordinate2D userCoordinate;
 @property (strong, nonatomic) CLLocation *userLocation;
@@ -43,13 +44,16 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)startUpdatingUserLocation;
 - (void)stopUpdatingUserLocation;
 
+// BOOL flag indicating whether APIManager is loading new data
 @property (nonatomic) BOOL isLoadingData;
 
-@property (strong, nonatomic) NSArray *sortCriteria;
+// Server info
 @property (strong, nonatomic) NSArray *cities;
 - (NSArray *)regionsForCity:(NSString *)city;
 @property (strong, nonatomic) NSArray *localizedListCriteria;
+@property (strong, nonatomic) NSArray *localizedSortCriteria;
 
+// APIs
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 
 //- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;

@@ -16,6 +16,7 @@
 #import "BKAPIError.h"
 #import "MBProgressHUD.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "BKMenuItem.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -151,10 +152,10 @@
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness {
     NSMutableArray *strings = [NSMutableArray array];
     if (ice != nil) {
-        [strings addObject:ice];
+        [strings addObject:[BKMenuItem localizedStringForIce:ice]];
     }
     if (sweetness != nil) {
-        [strings addObject:sweetness];
+        [strings addObject:[BKMenuItem localizedStringForSweetness:sweetness]];
     }
     
     NSString *iceAndSweetness = strings.count > 0 ? [NSString stringWithFormat:@"(%@)", [strings componentsJoinedByString:@"、"]] : @"";

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1</key>
+	<string>中式料理</string>
+	<key>2</key>
+	<string>日式料理</string>
+	<key>3</key>
+	<string>亞洲料理</string>
+	<key>4</key>
+	<string>泰式料理</string>
+	<key>5</key>
+	<string>美式料理</string>
+	<key>6</key>
+	<string>韓式料理</string>
+	<key>7</key>
+	<string>港式料理</string>
+	<key>8</key>
+	<string>義式料理</string>
+	<key>9</key>
+	<string>輕食</string>
+	<key>10</key>
+	<string>其他異國料理</string>
+	<key>11</key>
+	<string>燒烤類</string>
+	<key>12</key>
+	<string>鍋類</string>
+	<key>13</key>
+	<string>咖啡、簡餐、茶</string>
+	<key>14</key>
+	<string>素食</string>
+	<key>15</key>
+	<string>速食料理</string>
+	<key>16</key>
+	<string>主題特色餐廳</string>
+	<key>17</key>
+	<string>早餐</string>
+	<key>18</key>
+	<string>buffet自助餐</string>
+	<key>19</key>
+	<string>小吃</string>
+	<key>20</key>
+	<string>冰品、飲料、甜湯</string>
+	<key>21</key>
+	<string>烘焙、甜點、零食</string>
+	<key>22</key>
+	<string>其他美食</string>
+</dict>
+</plist>

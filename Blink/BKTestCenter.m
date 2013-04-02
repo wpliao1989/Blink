@@ -12,6 +12,8 @@
 #import "BKOrderManager.h"
 #import "BKOrderContent.h"
 #import "BKOrder.h"
+#import "NSObject+NullObject.h"
+#import "NSMutableArray+Sort.h"
 
 @implementation BKTestCenter
 
@@ -137,8 +139,24 @@ static NSInteger quantity = 1;
 
 + (void)testMethods {
     NSLog(@"Testing..");
-    NSNumber *testNumber = @(1);
-    NSLog(@"testNumber: %d", [testNumber intValue]);
+//    NSNumber *testNumber = @(1);
+//    NSLog(@"testNumber: %d", [testNumber intValue]);
+//    NSString *large = @"large";
+//    NSString *medium = @"medium";
+//    NSString *small = @"small";
+//    
+//    NSArray *sortOrder = @[medium, large, small];
+//    NSDictionary *price = @{small:@"1", large:@"2", medium:@"3", @"none":@"4"};
+//    NSMutableArray *allKeys = [[price allKeys] mutableCopy];
+//    
+//    NSLog(@"All keys before sorting: %@", allKeys);
+//    
+//    [allKeys sortUsingAnotherArray:sortOrder];
+//    
+//    NSLog(@"All keys after sorting: %@", allKeys);
+    
+//    NSDictionary *test = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"APICodeTable" withExtension:@"plist"]];
+//    NSLog(@"test = %@", test);
 }
 
 @end

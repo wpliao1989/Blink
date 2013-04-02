@@ -100,7 +100,12 @@
     [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
             [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
-            successBlock();
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self dismissViewControllerAnimated:YES completion:^{}];
+            });
+            successBlock(BKLoginSuccessMessage);
         }
         else {
             if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
@@ -114,7 +119,7 @@
 #pragma mark - IBActions
 
 - (IBAction)loginButtonPressed:(id)sender {
-    [self beginLogin];
+    [self showHUDViewWithMessage:BKLoggingMessage];
     return;
     
 //    [self.activeResponder resignFirstResponder];

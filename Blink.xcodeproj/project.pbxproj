@@ -92,6 +92,12 @@
 		42A9789F17096BAF00494658 /* sign in2.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A9784B17096BAF00494658 /* sign in2.png */; };
 		42A978A017096BAF00494658 /* star_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A9784C17096BAF00494658 /* star_press.png */; };
 		42A978A117096BAF00494658 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A9784D17096BAF00494658 /* star.png */; };
+		42A978A6170AAD4700494658 /* NSMutableArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A978A5170AAD4700494658 /* NSMutableArray+Sort.m */; };
+		42A978A8170ABC4100494658 /* TypeDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978A7170ABC4100494658 /* TypeDictionary.plist */; };
+		42A978AA170AC34800494658 /* SortCriteriaArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978A9170AC34800494658 /* SortCriteriaArray.plist */; };
+		42A978B0170AD2C800494658 /* NSObject+IdentifyMyself.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */; };
+		42A978B2170AD77500494658 /* IceDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978B1170AD77500494658 /* IceDictionary.plist */; };
+		42A978B4170AD7B400494658 /* SweetnessDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978B3170AD7B400494658 /* SweetnessDictionary.plist */; };
 		42B2665B1705A50900183C6A /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B2665A1705A50900183C6A /* orange.png */; };
 		42B2665E1705D3D600183C6A /* BKScrollableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B2665D1705D3D600183C6A /* BKScrollableViewController.m */; };
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
@@ -339,6 +345,14 @@
 		42A9784B17096BAF00494658 /* sign in2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign in2.png"; sourceTree = "<group>"; };
 		42A9784C17096BAF00494658 /* star_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_press.png; sourceTree = "<group>"; };
 		42A9784D17096BAF00494658 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		42A978A4170AAD4700494658 /* NSMutableArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Sort.h"; sourceTree = "<group>"; };
+		42A978A5170AAD4700494658 /* NSMutableArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Sort.m"; sourceTree = "<group>"; };
+		42A978A7170ABC4100494658 /* TypeDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TypeDictionary.plist; sourceTree = "<group>"; };
+		42A978A9170AC34800494658 /* SortCriteriaArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortCriteriaArray.plist; sourceTree = "<group>"; };
+		42A978AE170AD2C700494658 /* NSObject+IdentifyMyself.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IdentifyMyself.h"; sourceTree = "<group>"; };
+		42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IdentifyMyself.m"; sourceTree = "<group>"; };
+		42A978B1170AD77500494658 /* IceDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IceDictionary.plist; sourceTree = "<group>"; };
+		42A978B3170AD7B400494658 /* SweetnessDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SweetnessDictionary.plist; sourceTree = "<group>"; };
 		42B2665A1705A50900183C6A /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
 		42B2665C1705D3D600183C6A /* BKScrollableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKScrollableViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		42B2665D1705D3D600183C6A /* BKScrollableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKScrollableViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
@@ -536,7 +550,6 @@
 		CE8ED96916D32FB200307FF1 /* BKAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAPIManager.m; sourceTree = "<group>"; };
 		CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSConnectionManager.h; sourceTree = "<group>"; };
 		CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSConnectionManager.m; sourceTree = "<group>"; };
-		CE99FA3F16E9B9EA00D558ED /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopDetailViewController.h; sourceTree = "<group>"; };
 		CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopDetailViewController.m; sourceTree = "<group>"; };
 		CEC8656B16D781F9007F7375 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -567,6 +580,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42A978A2170AAB2800494658 /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				42B2665C1705D3D600183C6A /* BKScrollableViewController.h */,
+				42B2665D1705D3D600183C6A /* BKScrollableViewController.m */,
+			);
+			name = BaseViewController;
+			sourceTree = "<group>";
+		};
+		42A978A3170AABAE00494658 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
+				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
+				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
+				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
+				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
+				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
+				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
+				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
+				CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
 		42B266671705E04A00183C6A /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,6 +613,10 @@
 				42B266651705E03C00183C6A /* UIButton+ChangeTitle.m */,
 				42A45763170927C900553F36 /* NSObject+NullObject.h */,
 				42A45764170927C900553F36 /* NSObject+NullObject.m */,
+				42A978A4170AAD4700494658 /* NSMutableArray+Sort.h */,
+				42A978A5170AAD4700494658 /* NSMutableArray+Sort.m */,
+				42A978AE170AD2C700494658 /* NSObject+IdentifyMyself.h */,
+				42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -658,14 +701,15 @@
 				CE3AAF6E16EDC734007E6A82 /* Images */,
 				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
 				CE82B62316F07C36008828CB /* AKSegmentedControl */,
-				CE55EA3816D718490005C70F /* TestCenter */,
-				CE805B9516C388F20040095F /* ModelObjects */,
-				42B266671705E04A00183C6A /* Category */,
 				CE793BCF16E7235F00472188 /* MBProgressHUD */,
 				CE8097E216DB57CF0036C047 /* CustomButton */,
 				CE82B5E516F05ABB008828CB /* CustomCell */,
 				CE7BFAE216E4AB8F00248B3E /* base64 */,
 				CE7E4D1916E598F4009B44F3 /* Sha1 */,
+				CE55EA3816D718490005C70F /* TestCenter */,
+				42A978A3170AABAE00494658 /* Singletons */,
+				CE805B9516C388F20040095F /* ModelObjects */,
+				42B266671705E04A00183C6A /* Category */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
 				CE7A78CB16B760610072519F /* Supporting Files */,
 			);
@@ -684,7 +728,10 @@
 				CE7A78D616B760610072519F /* Default.png */,
 				CE7A78D816B760610072519F /* Default@2x.png */,
 				CE7A78DA16B760610072519F /* Default-568h@2x.png */,
-				CE99FA3F16E9B9EA00D558ED /* 37x-Checkmark.png */,
+				42A978A7170ABC4100494658 /* TypeDictionary.plist */,
+				42A978A9170AC34800494658 /* SortCriteriaArray.plist */,
+				42A978B1170AD77500494658 /* IceDictionary.plist */,
+				42A978B3170AD7B400494658 /* SweetnessDictionary.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -692,12 +739,11 @@
 		CE7A78EC16B762490072519F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				42A978A2170AAB2800494658 /* BaseViewController */,
 				CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */,
 				CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */,
 				CE7A78F016B766CD0072519F /* BKUserToolViewController.h */,
 				CE7A78F116B766CD0072519F /* BKUserToolViewController.m */,
-				42B2665C1705D3D600183C6A /* BKScrollableViewController.h */,
-				42B2665D1705D3D600183C6A /* BKScrollableViewController.m */,
 				CE7A78E616B762210072519F /* BKMainPageViewController.h */,
 				CE7A78E716B762210072519F /* BKMainPageViewController.m */,
 				CE7A78E916B762410072519F /* BKShopListViewController.h */,
@@ -741,20 +787,10 @@
 		CE805B9516C388F20040095F /* ModelObjects */ = {
 			isa = PBXGroup;
 			children = (
-				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
-				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 				CE81758D16D47CE6002FA6BB /* BKOrderContent.h */,
 				CE81758E16D47CE7002FA6BB /* BKOrderContent.m */,
 				CE55EA3C16D765990005C70F /* BKOrder.h */,
 				CE55EA3D16D765990005C70F /* BKOrder.m */,
-				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
-				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
-				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
-				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
-				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
-				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
-				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
-				CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */,
 				CE81758A16D47C2F002FA6BB /* BKShopInfo.h */,
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
@@ -1249,6 +1285,10 @@
 				42A9789F17096BAF00494658 /* sign in2.png in Resources */,
 				42A978A017096BAF00494658 /* star_press.png in Resources */,
 				42A978A117096BAF00494658 /* star.png in Resources */,
+				42A978A8170ABC4100494658 /* TypeDictionary.plist in Resources */,
+				42A978AA170AC34800494658 /* SortCriteriaArray.plist in Resources */,
+				42A978B2170AD77500494658 /* IceDictionary.plist in Resources */,
+				42A978B4170AD7B400494658 /* SweetnessDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,6 +1338,8 @@
 				42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */,
 				42B266661705E03C00183C6A /* UIButton+ChangeTitle.m in Sources */,
 				42A45765170927C900553F36 /* NSObject+NullObject.m in Sources */,
+				42A978A6170AAD4700494658 /* NSMutableArray+Sort.m in Sources */,
+				42A978B0170AD2C800494658 /* NSObject+IdentifyMyself.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

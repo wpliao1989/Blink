@@ -25,6 +25,9 @@
     
     // Customize scroll view
     [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -36,10 +39,6 @@
     // Set content size of scroll view
     CGSize sizeOfView = self.view.frame.size;
     self.scrollView.contentSize = sizeOfView;
-    
-    // Register for input view event
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -70,14 +69,15 @@
     //NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
     //    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
     //NSLog(@"avtiveField frame: %@", NSStringFromCGRect(self.activeField.frame));
-    
-    if (!CGRectContainsRect(aRect, self.activeResponder.frame)) {
-//        CGPoint scrollPoint = CGPointMake(0, self.activeButton.frame.origin.y + self.activeButton.frame.size.height - aRect.size.height);
-        //NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
-        //        [self.scrollView setContentOffset:scrollPoint animated:YES];
-        [self.scrollView scrollRectToVisible:self.activeResponder.frame animated:YES];
-    }
-    
+    if (self.activeResponder != nil) {
+        if (!CGRectContainsRect(aRect, self.activeResponder.frame)) {
+            //        CGPoint scrollPoint = CGPointMake(0, self.activeButton.frame.origin.y + self.activeButton.frame.size.height - aRect.size.height);
+            //NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
+            //        [self.scrollView setContentOffset:scrollPoint animated:YES];
+            [self.scrollView scrollRectToVisible:self.activeResponder.frame animated:YES];
+        }
+    }    
+
     //    if (!CGRectContainsRect(aRect, self.activeField.frame)) {
     //        CGPoint scrollPoint = CGPointMake(0, self.activeField.frame.origin.y + self.activeField.frame.size.height - aRect.size.height);
     //        NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
@@ -112,42 +112,42 @@
 
 @end
 
-@implementation BKScrollableViewController (SupportLogin)
+@implementation BKScrollableViewController (HUDview)
 
-- (void)beginLogin {
+- (void)showHUDViewWithMessage:(NSString *)message {
     [self.activeResponder resignFirstResponder];
     
     //    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.HUD];
     self.HUD.delegate = self;
-    self.HUD.labelText = BKLoggingMessage;
+    self.HUD.labelText = message;
     [self.HUD show:YES];
     
-    [self loginCustomMethodSuccessBlock:^{
+    [self loginCustomMethodSuccessBlock:^(NSString *successMessage) {
         self.HUD.mode = MBProgressHUDModeText;
-        self.HUD.labelText = BKLoginSuccessMessage;
+        self.HUD.labelText = successMessage;
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self dismissViewControllerAnimated:YES completion:^{}];
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){            
             [self.HUD hide:YES];
         });
     } failBlock:^(NSError *error) {
         self.HUD.mode = MBProgressHUDModeText;
-        if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
-            self.HUD.labelText = @"帳號或密碼錯誤";
-        }
-        else {
-            self.HUD.labelText = @"網路無回應";
-        }
+        self.HUD.labelText = error.userInfo[kBKErrorMessage];
+//        if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
+//            self.HUD.labelText = @"帳號或密碼錯誤";
+//        }
+//        else {
+//            self.HUD.labelText = @"網路無回應";
+//        }
         [self.HUD hide:YES afterDelay:1.0];
     }];
 }
 
 - (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     // Do success block by default
-    successBlock();
+    successBlock(@"");
 }
 
 @end

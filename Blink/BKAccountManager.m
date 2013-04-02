@@ -24,6 +24,7 @@ NSString *const kBKUserPreferedIsSaving = @"kBKUserPreferedIsSaving";
 
 NSString *const BKLoggingMessage = @"登入中...";
 NSString *const BKLoginSuccessMessage = @"登入成功!";
+NSString *const kBKErrorMessage = @"kBKErrorMessage";
 //NSString *const kBKLoginFailed = @"Login failed...";
 
 NSString *const emptyString = @"Null data";
