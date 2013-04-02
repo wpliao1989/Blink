@@ -14,7 +14,6 @@
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
 #import "BKAPIError.h"
-#import "MBProgressHUD.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKMenuItem.h"
 
@@ -37,7 +36,7 @@
 @property (strong, nonatomic) NSString *userPhone;
 @property (strong, nonatomic) NSString *userAddress;
 
-@property (strong, nonatomic) MBProgressHUD *HUD;
+//@property (strong, nonatomic) MBProgressHUD *HUD;
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
@@ -207,43 +206,65 @@
     return cell;
 }
 
-- (IBAction)orderConfirmButtonPressed:(id)sender {
-#warning Poping method should be changed to popToViewController
-    [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
-    
-    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.HUD];
-    self.HUD.delegate = self;
-    self.HUD.labelText = @"送出中...";
-    [self.HUD show:YES];
-    
+#pragma mark - Send order
+
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
-            self.HUD.mode = MBProgressHUDModeText;
-            self.HUD.labelText = @"訂購成功!";
             [[BKOrderManager sharedBKOrderManager] clear];
+            successBlock(@"訂購成功!");
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self.HUD hide:YES];
                 UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
                 if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
                 }
-                                                                                        
-            });            
+            });
         }
         else {
-            NSLog(@"Warning: order failed, error: %@", error);
-            self.HUD.mode = MBProgressHUDModeText;
-            if ([error.domain isEqualToString:BKErrorDomainWrongOrder]) {                
-                self.HUD.labelText = @"訂單錯誤";
-            }
-            else {
-                self.HUD.labelText = @"網路無回應";
-            }
-            [self.HUD hide:YES afterDelay:1.0];
-        }
-    }];   
+            failBlock(error);
+        }        
+    }];
+}
+
+- (IBAction)orderConfirmButtonPressed:(id)sender {
+#warning Poping method should be changed to popToViewController
+    [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
+    [self showHUDViewWithMessage:@"送出中..."];
+//    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//    [self.navigationController.view addSubview:self.HUD];
+//    self.HUD.delegate = self;
+//    self.HUD.labelText = @"送出中...";
+//    [self.HUD show:YES];
+//    
+//    [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {
+//        if (success) {
+//            self.HUD.mode = MBProgressHUDModeText;
+//            self.HUD.labelText = @"訂購成功!";
+//            [[BKOrderManager sharedBKOrderManager] clear];
+//            double delayInSeconds = 1.0;
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                [self.HUD hide:YES];
+//                UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
+//                if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
+//                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+//                }
+//                                                                                        
+//            });            
+//        }
+//        else {
+//            NSLog(@"Warning: order failed, error: %@", error);
+//            self.HUD.mode = MBProgressHUDModeText;
+//            if ([error.domain isEqualToString:BKErrorDomainWrongOrder]) {                
+//                self.HUD.labelText = @"訂單錯誤";
+//            }
+//            else {
+//                self.HUD.labelText = @"網路無回應";
+//            }
+//            [self.HUD hide:YES afterDelay:1.0];
+//        }
+//    }];   
 }
 @end

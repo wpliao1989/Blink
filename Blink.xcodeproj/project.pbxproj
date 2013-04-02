@@ -98,6 +98,7 @@
 		42A978B0170AD2C800494658 /* NSObject+IdentifyMyself.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */; };
 		42A978B2170AD77500494658 /* IceDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978B1170AD77500494658 /* IceDictionary.plist */; };
 		42A978B4170AD7B400494658 /* SweetnessDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A978B3170AD7B400494658 /* SweetnessDictionary.plist */; };
+		42A978B7170B10F100494658 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A978B6170B10F100494658 /* UIImage+Resize.m */; };
 		42B2665B1705A50900183C6A /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B2665A1705A50900183C6A /* orange.png */; };
 		42B2665E1705D3D600183C6A /* BKScrollableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B2665D1705D3D600183C6A /* BKScrollableViewController.m */; };
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
@@ -353,6 +354,8 @@
 		42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IdentifyMyself.m"; sourceTree = "<group>"; };
 		42A978B1170AD77500494658 /* IceDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IceDictionary.plist; sourceTree = "<group>"; };
 		42A978B3170AD7B400494658 /* SweetnessDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SweetnessDictionary.plist; sourceTree = "<group>"; };
+		42A978B5170B10F100494658 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		42A978B6170B10F100494658 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		42B2665A1705A50900183C6A /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
 		42B2665C1705D3D600183C6A /* BKScrollableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKScrollableViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		42B2665D1705D3D600183C6A /* BKScrollableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKScrollableViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
@@ -617,6 +620,8 @@
 				42A978A5170AAD4700494658 /* NSMutableArray+Sort.m */,
 				42A978AE170AD2C700494658 /* NSObject+IdentifyMyself.h */,
 				42A978AF170AD2C700494658 /* NSObject+IdentifyMyself.m */,
+				42A978B5170B10F100494658 /* UIImage+Resize.h */,
+				42A978B6170B10F100494658 /* UIImage+Resize.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -1340,6 +1345,7 @@
 				42A45765170927C900553F36 /* NSObject+NullObject.m in Sources */,
 				42A978A6170AAD4700494658 /* NSMutableArray+Sort.m in Sources */,
 				42A978B0170AD2C800494658 /* NSObject+IdentifyMyself.m in Sources */,
+				42A978B7170B10F100494658 /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

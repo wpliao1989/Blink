@@ -124,7 +124,7 @@
     self.HUD.labelText = message;
     [self.HUD show:YES];
     
-    [self loginCustomMethodSuccessBlock:^(NSString *successMessage) {
+    [self dismissHUDSuccessBlock:^(NSString *successMessage) {
         self.HUD.mode = MBProgressHUDModeText;
         self.HUD.labelText = successMessage;
         double delayInSeconds = 1.0;
@@ -145,7 +145,7 @@
     }];
 }
 
-- (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     // Do success block by default
     successBlock(@"");
 }

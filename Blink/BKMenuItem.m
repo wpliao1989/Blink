@@ -17,6 +17,7 @@ NSString *const kBKMenuPrice = @"price";
 NSString *const kBKMenuIce = @"ice";
 NSString *const kBKMenuSweetness = @"sweetness";
 NSString *const kBKMenuDetail = @"detail";
+NSString *const kBKMenuPicURL = @"picture";
 
 NSString *const kBKMenuPriceMedium = @"Medium";
 NSString *const kBKMenuPriceLarge = @"Large";
@@ -238,6 +239,19 @@ NSString *const BKMenuNullString = @"null";
         _sizeLevels = [NSArray arrayWithArray:allKeys];
     }
     return _sizeLevels;
+}
+
+- (NSURL *)picURL {
+    if (_picURL == nil) {
+        id object = [self.data objectForKey:kBKMenuPicURL];
+        if ([object isNullOrNil] || ![object isString]) {
+            _picURL = nil;
+        }
+        else {
+            _picURL = [NSURL URLWithString:object];
+        }
+    }
+    return _picURL;
 }
 
 - (NSNumber *)priceForSize:(NSString *)size {

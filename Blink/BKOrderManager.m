@@ -76,7 +76,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     }
     NSString *recordTime = [formatter stringFromDate:date];
     self.order.recordTime = recordTime;
-    self.recordTime = date;
+    _recordTime = date;
     
     // The followings are for testing format
 //    static NSDateFormatter *formatter;

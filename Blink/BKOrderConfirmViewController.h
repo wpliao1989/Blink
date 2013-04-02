@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKScrollableViewController.h"
 
 @class BKShopInfo;
 
-@protocol MBProgressHUDDelegate;
-
-@interface BKOrderConfirmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate>
+@interface BKOrderConfirmViewController : BKScrollableViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSString *shopID;
 

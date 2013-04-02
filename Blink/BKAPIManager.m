@@ -608,11 +608,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         NSLog(@"data = %@", data);
         
-        if (error != nil) {            
-            completeHandler(nil, error);
+        if (error != nil) {
+            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+            completeHandler(nil, BKError);
         }        
         else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:nil];
+            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
             completeHandler(nil, wrongResultError);
         }
         else {            

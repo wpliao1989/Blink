@@ -10,17 +10,37 @@
 #import "BKShopDetailViewController.h"
 #import "BKMenuItem.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "UIImage+Resize.h"
 
 @interface BKMenuViewController ()
 
 - (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item;
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 
+- (UIImage *)defaultPicture;
+
+@property (strong, nonatomic) NSMutableArray *picImageArray; // Retain strong pointer to keep image alive
+
 @end
 
 @implementation BKMenuViewController
 
 @synthesize menu = _menu;
+
+- (NSMutableArray *)picImageArray {
+    if (_picImageArray == nil) {
+        _picImageArray = [NSMutableArray array];
+    }
+    return _picImageArray;
+}
+
+- (UIImage *)defaultPicture {
+    static UIImage *pic;
+    if (pic == nil) {
+        pic = [UIImage imageNamed:@"picture"];
+    }
+    return pic;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -77,7 +97,26 @@
     UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
     itemNameLabel.text = item.name;
     
-    cell.imageView.image = [UIImage imageNamed:@"picture"];
+    //NSLog(@"cell.imageView.contentMode = %d", cell.imageView.contentMode);
+    cell.imageView.image = [self defaultPicture];
+    
+    if (item.picImage == nil) {
+        NSLog(@"Downloading pic image");
+        NSURLRequest *request = [NSURLRequest requestWithURL:item.picURL];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+            UIImage *itemPic = [UIImage imageWithData:data];
+            if (itemPic != nil) {
+                itemPic = [UIImage imageWithImage:itemPic scaledToSize:cell.imageView.frame.size];
+                NSLog(@"item pic = %@, size = %@", itemPic, NSStringFromCGSize(itemPic.size));
+                [self.picImageArray addObject:itemPic];
+                item.picImage = itemPic;
+                cell.imageView.image = itemPic;
+            }            
+        }];
+    }
+    else {
+        cell.imageView.image = item.picImage;
+    }
     
     UILabel *priceLabel = (UILabel *)[cell viewWithTag:2];
     priceLabel.text = [self stringForPriceFromMenuItem:item];
@@ -86,12 +125,14 @@
 }
 
 - (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item {
-    NSString *result = @"";
+//    NSString *result = @"";
+    NSMutableArray *result = [NSMutableArray array];
     
     for (NSString *size in item.sizeLevels) {
-        result = [result stringByAppendingFormat:@"%@%@ ", size, [self currencyStringForPrice:[item priceForSize:size]]];
+        [result addObject:[NSString stringWithFormat:@"%@%@", size, [self currencyStringForPrice:[item priceForSize:size]]]];
+//        result = [result stringByAppendingFormat:@"%@%@ ", size, [self currencyStringForPrice:[item priceForSize:size]]];
     }
-    return result;
+    return [result componentsJoinedByString:@", "];
 }
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price {

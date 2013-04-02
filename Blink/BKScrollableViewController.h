@@ -27,6 +27,6 @@ typedef void (^failBlock)(NSError *error);
 
 // Sub classes should overwrite this method to provide a custom mechanism
 // Call successBlock and failBlock for successful and unsuccessful event, respectively
-- (void)loginCustomMethodSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock;
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock;
 
 @end
