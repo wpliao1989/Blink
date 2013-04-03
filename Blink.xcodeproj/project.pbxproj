@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
+		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
 		42A9784E17096BAF00494658 /* yes_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FA17096BAE00494658 /* yes_press.png */; };
 		42A9784F17096BAF00494658 /* send_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FB17096BAE00494658 /* send_press.png */; };
 		42A9785017096BAF00494658 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FC17096BAE00494658 /* shadow.png */; };
@@ -266,6 +267,9 @@
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
 		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
 		422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MKCoordinateRegion.m"; sourceTree = "<group>"; };
+		422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKBaseAPIManager.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKBaseAPIManager.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		422861B5170CED9100E10F8E /* BKAPIError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKAPIError.h; sourceTree = "<group>"; };
 		42A977FA17096BAE00494658 /* yes_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_press.png; sourceTree = "<group>"; };
 		42A977FB17096BAE00494658 /* send_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_press.png; sourceTree = "<group>"; };
 		42A977FC17096BAE00494658 /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
@@ -475,7 +479,6 @@
 		CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CWLSynthesizeSingleton.h; sourceTree = "<group>"; };
 		CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKRegisterViewController.h; sourceTree = "<group>"; };
 		CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKRegisterViewController.m; sourceTree = "<group>"; };
-		CE7AAFFF16E82DC40053F829 /* BKAPIError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKAPIError.h; sourceTree = "<group>"; };
 		CE7BFAE316E4AB8F00248B3E /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		CE7BFAE416E4AB8F00248B3E /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		CE7CACE216F80F4000778CEB /* demo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demo.png; sourceTree = "<group>"; };
@@ -607,6 +610,9 @@
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
 				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
+				422861B5170CED9100E10F8E /* BKAPIError.h */,
+				422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */,
+				422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */,
 				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
 				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
 				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
@@ -810,7 +816,6 @@
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
 				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
-				CE7AAFFF16E82DC40053F829 /* BKAPIError.h */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -1358,6 +1363,7 @@
 				42A978D6170B219E00494658 /* NSObject+IdentifyMyself.m in Sources */,
 				422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */,
 				422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */,
+				422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

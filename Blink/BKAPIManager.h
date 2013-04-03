@@ -13,26 +13,17 @@
 #import "OSConnectionManager.h"
 #import "CWLSynthesizeSingleton.h"
 
-#ifndef NS_ENUM
-#define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
-#endif
-
 @class BKOrder;
-
-//typedef NS_ENUM(NSInteger, BKListCriteria) {
-//  BKListCriteriaDistant = 1,
-//  BKListCriteriaPrice = 2,
-//  BKListCriteriaScore = 3
-//};
 
 FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
 FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
-typedef void (^apiCompleteHandler)(id data, NSError *error);
 typedef void (^loadDataCompleteHandler)(NSArray *shopIDs, NSArray *rawDatas);
 
-@interface BKAPIManager : OSConnectionManager<CLLocationManagerDelegate>
+#import "BKBaseAPIManager.h"
+
+@interface BKAPIManager : BKBaseAPIManager<CLLocationManagerDelegate>
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 

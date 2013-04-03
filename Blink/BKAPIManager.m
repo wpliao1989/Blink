@@ -5,11 +5,8 @@
 //  Created by Wei Ping on 13/2/19.
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
-#import "Base64.h"
-#import "Sha1.h"
 #import "BKAPIManager.h"
 #import "BKOrder.h"
-#import "BKAPIError.h"
 #import "BKShopInfo.h"
 #import "NSMutableArray+Sort.h"
 
@@ -18,21 +15,6 @@ NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotific
 NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvailableNotification";
 
 NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
-
-// String defined in APIError.h
-NSString *const BKErrorDomainWrongResult = @"BKErrorDomainWrongResult";
-//NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
-//NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
-NSString *const BKErrorDomainNetwork = @"BKErrorDomainNetwork";
-
-// Localized string for display
-NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
-NSString *const BKWrongResultMessage = @"";
-
-// Result decode keys
-NSString *const kBKAPIResult = @"result";
-NSString *const kBKAPIResultCorrect = @"1";
-NSString *const kBKAPIResultWrong = @"0";
 
 // Define Delivery and Takeout method code
 typedef NS_ENUM(NSUInteger, BKOrderMethod) {
@@ -71,11 +53,6 @@ typedef NS_ENUM(NSUInteger, BKOrderMethod) {
 @property (strong, nonatomic) NSArray *sortCriteriaKeys;
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
-//-(id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON timeout:(NSTimeInterval)time completionHandler:(asynchronousCompleteHandler)completeHandler;
-- (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
-- (NSString *)encodePWD:(NSString *)pwd;
-- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
-- (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler;
 
 - (void)listWithListCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)sortWithCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
@@ -83,8 +60,6 @@ typedef NS_ENUM(NSUInteger, BKOrderMethod) {
 - (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
-- (BOOL)isCorrectResult:(id)data;
-- (BOOL)isWrongResult:(id)data;
 - (BOOL)isServiceInfoValid;
 
 @end
@@ -273,91 +248,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return self.localizedListCriteria.count > 0 && self.localizedSortCriteria.count > 0;
 }
 
-- (NSData *)packedJSONWithFoundationObJect:(id)foundationObject {   
-    static NSString *encodeKey = @"data";
-    
-    NSError *firstEncodedDataError;    
-    NSData *firstEncodedData = [NSJSONSerialization dataWithJSONObject:foundationObject options:0 error:&firstEncodedDataError];
-    if (firstEncodedDataError) {
-        NSLog(@"%@", firstEncodedDataError);
-    }
-    NSString *firstEncodedDataString = [[NSString alloc] initWithData:firstEncodedData encoding:NSUTF8StringEncoding];
-//    NSLog(@"firstEncodedDataString = %@", firstEncodedDataString);
-    
-    NSDictionary *secondDataToBeEncoded = @{encodeKey : firstEncodedDataString};
-    NSError *secondEncodedError;
-    NSData *secondEncodedData = [NSJSONSerialization dataWithJSONObject:secondDataToBeEncoded options:0 error:&secondEncodedError];
-    if (secondEncodedError) {
-        NSLog(@"%@", secondEncodedError);
-    }    
-    NSString *secondEncodedDataString = [[NSString alloc] initWithData:secondEncodedData encoding:NSUTF8StringEncoding];    
-//    NSLog(@"secondEncodedDataString = %@", secondEncodedDataString);
-    
-    NSString *result = [NSString stringWithFormat:@"%@=%@",encodeKey, secondEncodedDataString];
-    NSData *encodedData = [result dataUsingEncoding:NSUTF8StringEncoding];
-//    NSLog(@"finalResult:%@",result);
-//    NSMutableDictionary *finalDataToBeEncoded = [NSMutableDictionary dictionary];
-//    [finalDataToBeEncoded setValue:secondEncodedDataString forKey:encodeKey];
-//    NSError *finalEncodedError;
-//    NSData *encodedData =[NSJSONSerialization dataWithJSONObject:finalDataToBeEncoded options:0 error:&finalEncodedError];
-//    if (finalEncodedError) {
-//        NSLog(@"%@", finalEncodedError);
-//    }
-//    NSLog(@"finalDataToBeEncoded = %@", finalDataToBeEncoded);
-//    NSData *encodedData =
-    return encodedData;
-}
-
-- (NSString *)encodePWD:(NSString *)pwd {
-//    NSString *sha1String = [Sha1 dataUsingSha1:pwd];
-//    NSLog(@"sha1String: %@", sha1String);
-//    
-//    NSString *base64String = [Base64 encodeWithNSString:sha1String];
-//    NSLog(@"base64String: %@", base64String);
-    
-//    NSString *base64String123 = [Base64 encodeWithNSString:@"ffc9bb611e2b3c47f74b12293c29924a5ff872cc"];
-//    NSLog(@"base64String123: %@", base64String123);
-    
-    return [Base64 encode:[Sha1 dataUsingSha1:pwd]];
-}
-
-- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler {
-    NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
-    NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
-    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//        NSLog(@"callAPI, data:%@", data);
-//        self.isLoadingData = NO;
-        completeHandler(response, data, error);
-    }];
-}
-
-- (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler {
-    NSLog(@"response = %@", response);
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSInteger statusCode = [httpResponse statusCode];
-    NSLog(@"status code = %d", statusCode);
-    NSLog(@"data = %@", data);
-    NSLog(@"error = %@", error);
-    
-    if (error != nil || statusCode != 200) {
-        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
-        handler(nil, BKError);
-    }
-    else if (![self isCorrectResult:data]) {
-        NSError *wrongResultError;
-        if (customError) {
-            wrongResultError = customError;
-        }
-        else {
-            wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage : BKErrorDomainWrongResult}];
-        }
-        handler(nil, wrongResultError);
-    }
-    else {
-        handler(data, nil);
-    }
-}
-
 #pragma mark - Get regions
 
 - (NSArray *)regionsForCity:(NSString *)city {
@@ -378,20 +268,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 #pragma mark - Returned data checking
 
-- (BOOL)isCorrectResult:(id)data {
-//    NSLog(@"result class: %@", [[data objectForKey:kBKAPIResult] class]);
-    if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultCorrect]) {
-        return YES;
-    }
-    return NO;
-}
 
-- (BOOL)isWrongResult:(id)data {
-    if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultWrong]) {
-        return YES;
-    }
-    return NO;
-}
 
 #pragma mark - APIs
 

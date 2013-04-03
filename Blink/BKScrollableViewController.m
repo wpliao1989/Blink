@@ -112,6 +112,8 @@
 
 @end
 
+#import "BKAPIError.h"
+
 @implementation BKScrollableViewController (HUDview)
 
 - (void)showHUDViewWithMessage:(NSString *)message {

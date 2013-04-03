@@ -15,6 +15,10 @@ FOUNDATION_EXPORT NSString *const BKErrorDomainWrongResult;
 //FOUNDATION_EXPORT NSString *const BKErrorDomainWrongOrder;
 FOUNDATION_EXPORT NSString *const kBKErrorMessage;
 
+#ifndef NS_ENUM
+#define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
+#endif
+
 // Define wrong result codes
 typedef NS_ENUM(NSUInteger, BKErrorWrongResult) {
     BKErrorWrongResultGeneral = 0,

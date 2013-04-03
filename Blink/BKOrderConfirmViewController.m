@@ -13,7 +13,6 @@
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
-#import "BKAPIError.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKMenuItem.h"
 
