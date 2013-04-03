@@ -1486,6 +1486,75 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Shop List View Controller - 搜尋美食-->
         <scene sceneID="bkQ-NF-e52">
             <objects>
+                <barButtonItem title="列表顯示" id="O6q-Pv-Tho"/>
+                <searchDisplayController id="YgZ-y2-eli">
+                    <connections>
+                        <outlet property="delegate" destination="oaA-HK-GSf" id="GgV-MG-oTw"/>
+                        <outlet property="searchContentsController" destination="oaA-HK-GSf" id="i9y-iX-B21"/>
+                        <outlet property="searchResultsDataSource" destination="oaA-HK-GSf" id="eyG-RH-hF7"/>
+                        <outlet property="searchResultsDelegate" destination="oaA-HK-GSf" id="Cb3-uV-bqm"/>
+                    </connections>
+                </searchDisplayController>
+                <barButtonItem style="plain" id="a3x-l0-deu">
+                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t1S-VU-JVr">
+                        <rect key="frame" x="245" y="2" width="70" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
+                        <state key="normal" image="my.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" image="my_press.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="locateUserButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="Qk5-UG-XIE"/>
+                        </connections>
+                    </button>
+                </barButtonItem>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z9a-Gg-Xun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="我的位置" id="593-lc-0CZ"/>
+                <barButtonItem title="地圖顯示" id="6tm-dq-BMG"/>
+                <barButtonItem title="分類" id="TrR-zQ-T33"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture.png" id="7Kc-gF-y0T">
+                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <barButtonItem title="排序" id="g3k-di-MCF"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ahome.png" id="H2l-Pm-DYL">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="379"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <barButtonItem style="plain" id="pua-CK-Gry">
+                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4u5-fl-qMe">
+                        <rect key="frame" x="222" y="7" width="93" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <state key="normal" image="b4.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" image="b4_press.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="listButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="zCv-w0-LH4"/>
+                        </connections>
+                    </button>
+                </barButtonItem>
+                <searchBar contentMode="redraw" barStyle="blackOpaque" placeholder="搜尋店名" id="FBV-Nn-B7M">
+                    <rect key="frame" x="0.0" y="0.0" width="247" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <scopeButtonTitles>
+                        <string>Title</string>
+                        <string>Title</string>
+                    </scopeButtonTitles>
+                </searchBar>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list.png" id="QdG-7a-9H5">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <viewController id="oaA-HK-GSf" customClass="BKShopListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6je-86-ylp">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1760,75 +1829,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <segue destination="mgw-hS-r6z" kind="push" identifier="shopDetailSegue" id="qSY-7S-ko2"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z9a-Gg-Xun" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchBar contentMode="redraw" barStyle="blackOpaque" placeholder="搜尋店名" id="FBV-Nn-B7M">
-                    <rect key="frame" x="0.0" y="0.0" width="247" height="44"/>
-                    <textInputTraits key="textInputTraits"/>
-                    <scopeButtonTitles>
-                        <string>Title</string>
-                        <string>Title</string>
-                    </scopeButtonTitles>
-                </searchBar>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ahome.png" id="H2l-Pm-DYL">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="379"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture.png" id="7Kc-gF-y0T">
-                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list.png" id="QdG-7a-9H5">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <barButtonItem title="地圖顯示" id="6tm-dq-BMG"/>
-                <barButtonItem title="排序" id="g3k-di-MCF"/>
-                <barButtonItem title="分類" id="TrR-zQ-T33"/>
-                <barButtonItem title="列表顯示" id="O6q-Pv-Tho"/>
-                <barButtonItem style="plain" id="pua-CK-Gry">
-                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4u5-fl-qMe">
-                        <rect key="frame" x="222" y="7" width="93" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <state key="normal" image="b4.png">
-                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="highlighted" image="b4_press.png">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="listButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="zCv-w0-LH4"/>
-                        </connections>
-                    </button>
-                </barButtonItem>
-                <barButtonItem title="我的位置" id="593-lc-0CZ"/>
-                <barButtonItem style="plain" id="a3x-l0-deu">
-                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t1S-VU-JVr">
-                        <rect key="frame" x="245" y="2" width="70" height="40"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
-                        <state key="normal" image="my.png">
-                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="highlighted" image="my_press.png">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="locateUserButtonPressed:" destination="oaA-HK-GSf" eventType="touchUpInside" id="Qk5-UG-XIE"/>
-                        </connections>
-                    </button>
-                </barButtonItem>
-                <searchDisplayController id="YgZ-y2-eli">
-                    <connections>
-                        <outlet property="delegate" destination="oaA-HK-GSf" id="GgV-MG-oTw"/>
-                        <outlet property="searchContentsController" destination="oaA-HK-GSf" id="i9y-iX-B21"/>
-                        <outlet property="searchResultsDataSource" destination="oaA-HK-GSf" id="eyG-RH-hF7"/>
-                        <outlet property="searchResultsDelegate" destination="oaA-HK-GSf" id="Cb3-uV-bqm"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="766" y="-33"/>
         </scene>
@@ -2390,7 +2390,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="noteText" candidateClass="UITextView"/>
             </relationships>
         </class>
-        <class className="BKOrderConfirmViewController" superclassName="UIViewController">
+        <class className="BKOrderConfirmViewController" superclassName="BKScrollableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKOrderConfirmViewController.h"/>
             <relationships>
                 <relationship kind="action" name="orderConfirmButtonPressed:"/>
@@ -2499,7 +2499,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qSY-7S-ko2"/>
         <segue reference="Fqf-f2-bQo"/>
+        <segue reference="qSY-7S-ko2"/>
     </inferredMetricsTieBreakers>
 </document>

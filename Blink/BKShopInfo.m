@@ -135,7 +135,15 @@ NSString *const BKShopInfoEmptyString = @"Null content";
 
 - (CLLocationDegrees)latitude {
     id object = self.data[kBKShopLatitude];
+    //NSLog(@"Warning: latitude is %@, class %@", object, [object class]);
     if ([object isNullOrNil] || ![object isNumber]) {
+        if ([object isString]) {
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            NSNumber *lat = [formatter numberFromString:object];
+            if (lat) {
+                return [lat doubleValue];
+            }
+        }
         return 0.0;
     }
     return [object doubleValue];
@@ -143,7 +151,15 @@ NSString *const BKShopInfoEmptyString = @"Null content";
 
 - (CLLocationDegrees)longitude {
     id object = self.data[kBKShopLongitude];
+    //NSLog(@"Warning: longitude is %@, class %@", object, [object class]);
     if ([object isNullOrNil] || ![object isNumber]) {
+        if ([object isString]) {
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            NSNumber *lon = [formatter numberFromString:object];
+            if (lon) {
+                return [lon doubleValue];
+            }
+        }
         return 0.0;
     }
     return [object doubleValue];
@@ -345,6 +361,22 @@ NSString *const BKShopInfoServiceNone = @"5";
         typeLookup = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"TypeDictionary" withExtension:@"plist"]];
     });
     return typeLookup;
+}
+
+@end
+
+@implementation BKShopInfo (Map)
+
+- (CLLocationCoordinate2D)coordinate {
+    return self.shopLocaiton.coordinate;
+}
+
+- (NSString *)title {
+    return self.name;
+}
+
+- (NSString *)subtitle {
+    return [self localizedTypeString];
 }
 
 @end

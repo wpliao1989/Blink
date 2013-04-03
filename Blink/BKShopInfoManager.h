@@ -49,3 +49,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 
 @end
+
+@interface BKShopInfoManager (Map)
+
+- (NSArray *)annotations;
+
+@end

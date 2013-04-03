@@ -196,3 +196,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 //}
 
 @end
+
+@implementation BKShopInfoManager (Map)
+
+- (NSArray *)annotations {
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *theShopID in self.shopIDs) {
+        [result addObject:[self shopInfoForShopID:theShopID]];
+    }
+    return [NSArray arrayWithArray:result];
+}
+
+@end

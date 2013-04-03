@@ -14,6 +14,7 @@
 #import "BKShopInfo.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKShopListCell.h"
+#import "MKMapView+AnnotationOperation.h"
 
 #import "BKTestCenter.h"
 
@@ -87,6 +88,7 @@ typedef enum  {
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
 - (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria;
 - (void)reloadDefault;
+- (void)updateMapViewRegion;
 
 - (void)locationDidChange;
 - (void)locationBecameAvailable;
@@ -175,7 +177,8 @@ typedef enum  {
     NSLog(@"viewDidLoad");    
     NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);   
     
-    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];    
+    [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
+    [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
    
     if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {        
 //        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
@@ -197,6 +200,7 @@ typedef enum  {
     if (selectedIndexPath != nil) {
         [self.shopListTableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
     }
+    NSLog(@"map annotations: %@", self.shopListMapView.annotations);
 //    if (selectedIndexPath != nil) {
 //        NSLog(@"selectedIndexPath :%@", [self.shopListTableView indexPathForSelectedRow]);
 //        NSArray *indexPathsToBeReloaded = [self.shopListTableView indexPathsForVisibleRows];
@@ -225,11 +229,16 @@ typedef enum  {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"shopDetailSegue"]) {
-        NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
-        BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
-//        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
-        NSString *shopID = [[BKShopInfoManager sharedBKShopInfoManager] shopIDAtIndex:selectedIndex];
-        shopDetailViewController.shopID = shopID;        
+        if ([sender isKindOfClass:[BKShopInfo class]]) {
+            BKShopInfo *shopInfo = sender;
+            //NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
+            BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
+            //        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
+            //NSString *shopID = [[BKShopInfoManager sharedBKShopInfoManager] shopIDAtIndex:selectedIndex];
+            NSString *shopID = shopInfo.sShopID;
+            shopDetailViewController.shopID = shopID;
+        }
+        
     }
 }
 
@@ -357,11 +366,17 @@ typedef enum  {
     
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
+    [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
     
     loadDataComplete handler = ^() {
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
         
         [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
+        NSLog(@"map annotations: %@", self.shopListMapView.annotations);
+        if (self.shopListMapView.hidden == NO) {
+            [self updateMapViewRegion];
+        }
         //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
     };
     
@@ -585,7 +600,8 @@ typedef enum  {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[tableView cellForRowAtIndexPath:indexPath].reuseIdentifier isEqualToString:@"cell"]) {
-        [self performSegueWithIdentifier:@"shopDetailSegue" sender:self];
+        BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"shopDetailSegue" sender:shopInfo];
     }
 }
 
@@ -630,6 +646,63 @@ typedef enum  {
 
 #pragma mark - Mapview delegate
 
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    if ([view.annotation isKindOfClass:[BKShopInfo class]]) {
+        BKShopInfo *shopInfo = view.annotation;
+        [self performSegueWithIdentifier:@"shopDetailSegue" sender:shopInfo];
+    }    
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    NSLog(@"region did changed!");
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    static NSString *annotationViewID = @"annotationViewID";
+    
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+    [mapView dequeueReusableAnnotationViewWithIdentifier:annotationViewID];
+    
+    if (pinView == nil)
+    {
+        // if an existing pin view was not available, create one
+        MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                              initWithAnnotation:annotation reuseIdentifier:annotationViewID];
+        customPinView.pinColor = MKPinAnnotationColorPurple;
+        customPinView.animatesDrop = YES;
+        customPinView.canShowCallout = YES;
+        
+        // add a detail disclosure button to the callout which will open a new view controller page
+        //
+        // note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
+        //  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
+        //
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        customPinView.rightCalloutAccessoryView = rightButton;
+        
+        return customPinView;
+    }
+    else
+    {
+        pinView.annotation = annotation;
+    }
+    
+    if ([pinView.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
+        UIImageView *imageView = (UIImageView *)(pinView.leftCalloutAccessoryView);
+        imageView.image = nil;
+    }
+    
+    return pinView;
+}
+
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
     self.locateUserButton.enabled = !(mode == MKUserTrackingModeFollow);
 }
@@ -669,6 +742,51 @@ typedef enum  {
 //    self.isLocationServiceEnabled = NO;
 //    [self.shopListTableView reloadData];
 //}
+
+#pragma mark - Update region
+
+//
+- (void)updateMapViewRegion {
+    if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] <= 0) {
+        return;
+    }
+    
+    NSArray *visibleIndexPaths = [self.shopListTableView indexPathsForVisibleRows];    
+    NSMutableArray *visibleAnnotations = [NSMutableArray array];
+    for (NSIndexPath *indexpath in visibleIndexPaths) {
+        BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexpath.row];
+        [visibleAnnotations addObject:shopInfo];  
+    }
+    
+    // Add user location
+    if (self.shopListMapView.userLocation) {
+        [visibleAnnotations addObject:self.shopListMapView.userLocation];
+    }
+    
+    CGRect boundingRect;
+    BOOL started = NO;
+    for (id <MKAnnotation> annotation in visibleAnnotations) {
+        CGRect annotationRect = CGRectMake(annotation.coordinate.latitude, annotation.coordinate.longitude, 0, 0);
+        if (!started) {
+            started = YES;
+            boundingRect = annotationRect;
+        } else {
+            boundingRect = CGRectUnion(boundingRect, annotationRect);
+        }
+    }
+    if (started) {
+        boundingRect = CGRectInset(boundingRect, -0.2, -0.2);
+        if ((boundingRect.size.width < 20) && (boundingRect.size.height < 20)) {
+            MKCoordinateRegion region;
+            region.center.latitude = boundingRect.origin.x + boundingRect.size.width / 2;
+            region.center.longitude = boundingRect.origin.y + boundingRect.size.height / 2;
+            region.span.latitudeDelta = boundingRect.size.width;
+            region.span.longitudeDelta = boundingRect.size.height;
+            [self.shopListMapView setRegion:region animated:YES];
+        }
+    }
+    
+}
 
 #pragma mark - Action Sheet delegate
 
@@ -714,10 +832,9 @@ typedef enum  {
 //        
 //    }];
 //    self.shopListMapView.frame = self.mainContentView.frame;
-    return;
+    
     self.mapButton.enabled = NO;
     self.sortButton.enabled = NO;
-    
     
     [UIView transitionWithView:self.mainContentView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
         self.shopListMapView.hidden = NO;
@@ -730,6 +847,8 @@ typedef enum  {
         self.bottomToolBar.items = [NSArray arrayWithArray:bottomToolBarItems];
         self.mapButton.enabled = YES;
         self.navigationItem.rightBarButtonItem = self.locateUserButton;
+        
+        [self updateMapViewRegion];
     }];
 }
 

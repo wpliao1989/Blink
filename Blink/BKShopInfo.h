@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 FOUNDATION_EXPORT NSString *const kBKShopName;
 FOUNDATION_EXPORT NSString *const kBKShopMenu;
@@ -87,5 +88,13 @@ FOUNDATION_EXPORT NSString *const kBKShopIsDeliverable;
 
 + (NSDictionary *)serviceLookup;
 + (NSDictionary *)typeLookup;
+
+@end
+
+@interface BKShopInfo (Map)<MKAnnotation>
+
+- (CLLocationCoordinate2D)coordinate;
+- (NSString *)title;
+- (NSString *)subtitle;
 
 @end
