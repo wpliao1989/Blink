@@ -108,7 +108,7 @@
             successBlock(BKLoginSuccessMessage);
         }
         else {
-            if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
+            if ([error.domain isEqualToString:BKErrorDomainWrongResult] && (error.code == BKErrorWrongResultUserNameOrPassword)) {
                 [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
             }
             failBlock(error);

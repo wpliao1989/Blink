@@ -13,6 +13,7 @@
 #import "BKMenuViewController.h"
 #import "BKMakeOrderViewController.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "BKOrderManager.h"
 
 @interface BKShopDetailViewController ()
 
@@ -306,10 +307,12 @@
 }
 
 - (IBAction)orderDeliverButtonPressed:(id)sender {
+    [[BKOrderManager sharedBKOrderManager] setOrderMethod:BKOrderMethodDelivery];
     [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
 }
 
 - (IBAction)takeAwayButtonPressed:(id)sender {
+    [[BKOrderManager sharedBKOrderManager] setOrderMethod:BKOrderMethodTakeout];
     [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
 }
 - (void)viewDidUnload {

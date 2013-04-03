@@ -13,6 +13,16 @@
 @class BKOrderContent;
 @class BKShopInfo;
 
+#ifndef NS_ENUM
+#define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
+#endif
+
+typedef NS_ENUM(NSUInteger, BKOrderMethod) {
+    BKOrderMethodDelivery = 0,
+    BKOrderMethodTakeout = 1
+};
+
+
 FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
 
 @interface BKOrderManager : NSObject
@@ -27,6 +37,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 // ------------------------------------------------------------------
 - (void)setOrderTime:(NSDate *)date;
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address;
+- (void)setOrderMethod:(BKOrderMethod)method;
 
 // ------------------------------------------------------------------
 // Order content

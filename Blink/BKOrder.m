@@ -11,6 +11,9 @@
 
 NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNotification";
 
+NSString *const kBKOrderMethodDelivery = @"0";
+NSString *const kBKOrderMethodTakeout = @"1";
+
 @interface BKOrder ()
 
 // Return already existed orderContent if the UUID, name, ice, sweetness are all the same, return nil otherwise
@@ -98,6 +101,7 @@ NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNot
     theOrder.address = self.address != nil ? self.address : @"none";
     theOrder.phone = self.phone != nil ? self.phone : @"none";
     theOrder.note = self.note != nil ? self.note : @"";
+    theOrder.method = self.method != nil ? self.method : @"none";
     
     NSMutableArray *newContensArray = [NSMutableArray array];
     for (BKOrderContent *content in self.content) {

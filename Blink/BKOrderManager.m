@@ -123,6 +123,20 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     }];   
 }
 
+- (void)setOrderMethod:(BKOrderMethod)method {
+    switch (method) {
+        case BKOrderMethodDelivery:
+            self.order.method = kBKOrderMethodDelivery;
+            break;
+        case BKOrderMethodTakeout:
+            self.order.method = kBKOrderMethodTakeout;
+            break;
+        default:
+            NSLog(@"Warning: invalid BKOrderMethod!");
+            break;
+    }
+}
+
 #pragma mark - Order content operations
 
 - (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo {

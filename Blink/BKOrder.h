@@ -10,12 +10,15 @@
 
 @class BKOrderContent;
 
-FOUNDATION_EXPORT NSString *const kBKOrderUserToken;
-FOUNDATION_EXPORT NSString *const kBKOrderShopID;
-FOUNDATION_EXPORT NSString *const kBKOrderRecordTime;
-FOUNDATION_EXPORT NSString *const kBKOrderUserAddress;
-FOUNDATION_EXPORT NSString *const kBKOrderUserPhone;
-FOUNDATION_EXPORT NSString *const kBKOrderContent;
+//FOUNDATION_EXPORT NSString *const kBKOrderUserToken;
+//FOUNDATION_EXPORT NSString *const kBKOrderShopID;
+//FOUNDATION_EXPORT NSString *const kBKOrderRecordTime;
+//FOUNDATION_EXPORT NSString *const kBKOrderUserAddress;
+//FOUNDATION_EXPORT NSString *const kBKOrderUserPhone;
+//FOUNDATION_EXPORT NSString *const kBKOrderContent;
+
+FOUNDATION_EXPORT NSString *const kBKOrderMethodDelivery;
+FOUNDATION_EXPORT NSString *const kBKOrderMethodTakeout;
 
 @interface BKOrder : NSObject
 
@@ -30,6 +33,7 @@ FOUNDATION_EXPORT NSString *const kBKOrderContent;
 @property (nonatomic, strong) NSMutableArray *content;
 
 @property (nonatomic, strong) NSString *note;
+@property (nonatomic, strong) NSString *method;
 
 - (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;

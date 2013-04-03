@@ -20,12 +20,14 @@ NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvai
 NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
 
 // String defined in APIError.h
-NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
-NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
+NSString *const BKErrorDomainWrongResult = @"BKErrorDomainWrongResult";
+//NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
+//NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
 NSString *const BKErrorDomainNetwork = @"BKErrorDomainNetwork";
 
 // Localized string for display
 NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
+NSString *const BKWrongResultMessage = @"";
 
 // Result decode keys
 NSString *const kBKAPIResult = @"result";
@@ -73,6 +75,7 @@ typedef NS_ENUM(NSUInteger, BKOrderMethod) {
 - (NSData *)packedJSONWithFoundationObJect:(id)foundationObject;
 - (NSString *)encodePWD:(NSString *)pwd;
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler;
+- (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler;
 
 - (void)listWithListCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
 - (void)sortWithCriteria:(NSInteger)criteria completionHandler:(asynchronousCompleteHandler)completeHandler;
@@ -328,6 +331,33 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+- (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler {
+    NSLog(@"response = %@", response);
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSInteger statusCode = [httpResponse statusCode];
+    NSLog(@"status code = %d", statusCode);
+    NSLog(@"data = %@", data);
+    NSLog(@"error = %@", error);
+    
+    if (error != nil || statusCode != 200) {
+        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+        handler(nil, BKError);
+    }
+    else if (![self isCorrectResult:data]) {
+        NSError *wrongResultError;
+        if (customError) {
+            wrongResultError = customError;
+        }
+        else {
+            wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage : BKErrorDomainWrongResult}];
+        }
+        handler(nil, wrongResultError);
+    }
+    else {
+        handler(data, nil);
+    }
+}
+
 #pragma mark - Get regions
 
 - (NSArray *)regionsForCity:(NSString *)city {
@@ -370,22 +400,25 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     static NSString *kPWD = @"password";
     
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
-    [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {     
+    [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        if (error != nil) {
-            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
-            completeHandler(nil, BKError);
-        }
-//        else if ([self isCorrectResult:data]) {
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"帳號或密碼錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+//        if (error != nil) {
+//            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+//            completeHandler(nil, BKError);
+//        }
+////        else if ([self isCorrectResult:data]) {
+////            completeHandler(data, nil);
+////        }
+//        else if ([self isWrongResult:data]) {            
+//            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:];
+//            completeHandler(nil, wrongResultError);
+//        }
+//        else {
 //            completeHandler(data, nil);
 //        }
-        else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:@{kBKErrorMessage : @"帳號或密碼錯誤"}];
-            completeHandler(nil, wrongResultError);
-        }
-        else {
-            completeHandler(data, nil);
-        }
     }];
 }
 
@@ -574,14 +607,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 }
 
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
-    static NSString *kBKOrderUserToken = @"token";
-    static NSString *kBKOrderShopID = @"sShopID";
-    static NSString *kBKOrderRecordTime = @"time";
-    static NSString *kBKOrderUserAddress = @"address";
-    static NSString *kBKOrderUserPhone = @"phone";
-    static NSString *kBKOrderContent = @"content";
-    static NSString *kBKNote = @"note";
-    static NSString *kBKOrderUserName = @"name";
+    NSString *kBKOrderUserToken = @"token";
+    NSString *kBKOrderShopID = @"sShopID";    
+    NSString *kBKOrderUserAddress = @"address";
+    NSString *kBKOrderUserPhone = @"phone";
+    NSString *kBKOrderContent = @"content";
+    NSString *kBKNote = @"note";
+    NSString *kBKOrderUserName = @"name";
+    NSString *kBKOrderRecordTime = @"time";
+    NSString *kBKOrderMethod = @"method";
     
 //    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
 //    [parameterDictionary setObject:order.userToken forKey:kBKOrderUserToken];
@@ -601,24 +635,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           kBKOrderUserPhone : order.phone,
                                           kBKOrderContent : order.content,
                                             kBKNote : order.note,
-                                            kBKOrderUserName : order.userName};
+                                            kBKOrderUserName : order.userName,
+                                            kBKOrderMethod : order.method};
     
     NSLog(@"order = %@", parameterDictionary);
     
     [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSLog(@"data = %@", data);
         
-        if (error != nil) {
-            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
-            completeHandler(nil, BKError);
-        }        
-        else if ([self isWrongResult:data]) {            
-            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
-            completeHandler(nil, wrongResultError);
-        }
-        else {            
-            completeHandler(data, nil);
-        }
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+        
+//        if (error != nil) {
+//            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+//            completeHandler(nil, BKError);
+//        }        
+//        else if (![self isCorrectResult:data]) {
+//            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
+//            completeHandler(nil, wrongResultError);
+//        }
+//        else {            
+//            completeHandler(data, nil);
+//        }
     }];
 }
 
