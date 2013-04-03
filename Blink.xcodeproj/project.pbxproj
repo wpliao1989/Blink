@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
+		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		42A9784E17096BAF00494658 /* yes_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FA17096BAE00494658 /* yes_press.png */; };
 		42A9784F17096BAF00494658 /* send_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FB17096BAE00494658 /* send_press.png */; };
 		42A9785017096BAF00494658 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FC17096BAE00494658 /* shadow.png */; };
@@ -263,6 +264,8 @@
 /* Begin PBXFileReference section */
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
+		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
+		422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MKCoordinateRegion.m"; sourceTree = "<group>"; };
 		42A977FA17096BAE00494658 /* yes_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_press.png; sourceTree = "<group>"; };
 		42A977FB17096BAE00494658 /* send_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_press.png; sourceTree = "<group>"; };
 		42A977FC17096BAE00494658 /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
@@ -627,6 +630,8 @@
 				42A978C8170B219E00494658 /* UIImage+Resize.m */,
 				422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */,
 				422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */,
+				422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */,
+				422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1352,6 +1357,7 @@
 				42A978D5170B219E00494658 /* NSMutableArray+Sort.m in Sources */,
 				42A978D6170B219E00494658 /* NSObject+IdentifyMyself.m in Sources */,
 				422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */,
+				422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,7 @@
 #import "UIViewController+BKBaseViewController.h"
 #import "BKShopListCell.h"
 #import "MKMapView+AnnotationOperation.h"
+#import "NSString+MKCoordinateRegion.h"
 
 #import "BKTestCenter.h"
 
@@ -89,6 +90,7 @@ typedef enum  {
 - (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria;
 - (void)reloadDefault;
 - (void)updateMapViewRegion;
+- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo;
 
 - (void)locationDidChange;
 - (void)locationBecameAvailable;
@@ -487,6 +489,32 @@ typedef enum  {
     return pic;
 }
 
+- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo {
+    [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:shopInfo completeHandler:^(UIImage *image) {
+        
+        NSUInteger indexForShop = [[BKShopInfoManager sharedBKShopInfoManager] indexForShopID:shopInfo.sShopID];
+        
+        if ( indexForShop != NSNotFound) {
+            // Configure table view
+            UITableViewCell *cell = [self.shopListTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexForShop inSection:0]];
+            cell.imageView.image = image;
+            
+            // Configure map view
+            if (self.shopListMapView.hidden == NO) {
+                MKAnnotationView *view = [self.shopListMapView viewForAnnotation:shopInfo];
+                if (view) {
+                    if ([view.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
+                        UIImageView *imageView = (UIImageView *)view.leftCalloutAccessoryView;
+                        imageView.image = image;
+                    }
+                }
+            }
+            
+            NSLog(@"Shop list: image did download! %@", shopInfo.name);
+        }
+    }];
+}
+
 #pragma mark - TableViewDataSource, TableViewDelegate
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -617,10 +645,7 @@ typedef enum  {
     
     if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
         
-        [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:theShopInfo completeHandler:^(UIImage *image) {
-            cell.imageView.image = image;
-            NSLog(@"Shop list: image did download! %@", theShopInfo.name);
-        }];
+        [self downloadImageForShopInfo:theShopInfo];
 
         // Test image
 //        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
@@ -654,12 +679,22 @@ typedef enum  {
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    
+    if ([view.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
+        UIImageView *imageView = (UIImageView *)(view.leftCalloutAccessoryView);
+        BKShopInfo *shopInfo = view.annotation;
+        if (shopInfo.pictureImage == nil) {
+            imageView.image = [self defaultPicture];
+            [self downloadImageForShopInfo:shopInfo];
+        }
+        else {
+            imageView.image = shopInfo.pictureImage;
+        }        
+    }
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    NSLog(@"region did changed!");
-}
+//- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+//    NSLog(@"region did changed!");
+//}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
@@ -687,7 +722,7 @@ typedef enum  {
         //
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         customPinView.rightCalloutAccessoryView = rightButton;
-        
+        customPinView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
         return customPinView;
     }
     else
@@ -776,13 +811,19 @@ typedef enum  {
     }
     if (started) {
         boundingRect = CGRectInset(boundingRect, -0.2, -0.2);
-        if ((boundingRect.size.width < 20) && (boundingRect.size.height < 20)) {
+        
+        CLLocationDegrees latitudeSpanLimit = 20.0;
+        CLLocationDegrees longitudeSpanLimit = 20.0;
+        
+        if ((boundingRect.size.width < latitudeSpanLimit) && (boundingRect.size.height < longitudeSpanLimit)) {
             MKCoordinateRegion region;
             region.center.latitude = boundingRect.origin.x + boundingRect.size.width / 2;
             region.center.longitude = boundingRect.origin.y + boundingRect.size.height / 2;
             region.span.latitudeDelta = boundingRect.size.width;
             region.span.longitudeDelta = boundingRect.size.height;
             [self.shopListMapView setRegion:region animated:YES];
+            
+            NSLog(@"Original region:%@, resized by map:%@", [NSString stringFromRegion:region],            [NSString stringFromRegion:[self.shopListMapView regionThatFits:region]]);
         }
     }
     
@@ -835,6 +876,7 @@ typedef enum  {
     
     self.mapButton.enabled = NO;
     self.sortButton.enabled = NO;
+    [self.shopListTableView reloadData];
     
     [UIView transitionWithView:self.mainContentView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
         self.shopListMapView.hidden = NO;
@@ -857,12 +899,11 @@ typedef enum  {
 //        
 //    }];
     self.listButton.enabled = NO;
-    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = nil;    
     
     [UIView transitionWithView:self.mainContentView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         self.shopListMapView.hidden = YES;
-        self.shopListTableView.hidden = NO;
-        
+        self.shopListTableView.hidden = NO;                
         
     } completion:^(BOOL finished) {
         

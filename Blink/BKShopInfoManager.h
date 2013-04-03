@@ -21,6 +21,7 @@ typedef void (^loadDataComplete)();
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 - (NSUInteger)shopCount;
+- (NSUInteger)indexForShopID:(NSString *)shopID; // Return NSNotFound if not found
 - (NSString *)shopNameAtIndex:(NSUInteger)index;
 - (NSString *)shopIDAtIndex:(NSUInteger)index;
 - (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;

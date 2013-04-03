@@ -66,6 +66,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return self.shopIDs.count;
 }
 
+- (NSUInteger)indexForShopID:(NSString *)shopID {
+    return [self.shopIDs indexOfObject:shopID];
+}
+
 - (NSString *)shopNameAtIndex:(NSUInteger)index {
     return ((BKShopInfo *)[self.shopInfoDictionary objectForKey:[self.shopIDs objectAtIndex:index]]).name;
 }
