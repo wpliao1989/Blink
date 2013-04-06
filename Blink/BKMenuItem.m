@@ -10,6 +10,7 @@
 #import "NSObject+NullObject.h"
 #import "NSObject+IdentifyMyself.h"
 #import "NSMutableArray+Sort.h"
+#import "BKLookup.h"
 
 NSString *const kBKMenuUUID = @"UUID";
 NSString *const kBKMenuName = @"name";
@@ -28,41 +29,45 @@ NSString *const BKMenuNullString = @"null";
 @implementation BKMenuItem (Lookup)
 
 + (NSString *)localizedStringForIce:(NSString *)ice {
-    id result = [[[self class] iceLookup] objectForKey:ice];
-    if ([result isNullOrNil] || ![result isString]) {
-        result = nil;
-    }
-    return result;
+//    id result = [[[self class] iceLookup] objectForKey:ice];
+//    if ([result isNullOrNil] || ![result isString]) {
+//        result = nil;
+//    }
+//    return result;
+    return [BKLookup localizedStringForIce:ice];
 }
 
 + (NSString *)localizedStringForSweetness:(NSString *)sweetness {
-    id result = [[[self class] sweetnessLookup] objectForKey:sweetness];
-    if ([result isNullOrNil] || ![result isString]) {
-        result = nil;
-    }
-    return result;
+//    id result = [[[self class] sweetnessLookup] objectForKey:sweetness];
+//    if ([result isNullOrNil] || ![result isString]) {
+//        result = nil;
+//    }
+//    return result;
+    return [BKLookup localizedStringForSweetness:sweetness];
 }
 
 + (NSDictionary *)iceLookup {
-    static NSDictionary *result;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"IceDictionary" withExtension:@"plist"]];
-    });
-    //[result identifyMyself];
-    return result;
+//    static NSDictionary *result;
+//    
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"IceDictionary" withExtension:@"plist"]];
+//    });
+//    //[result identifyMyself];
+//    return result;
+    return [BKLookup iceLookup];
 }
 
 + (NSDictionary *)sweetnessLookup {
-    static NSDictionary *result;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SweetnessDictionary" withExtension:@"plist"]];
-    });
-    //[result identifyMyself];
-    return result;
+//    static NSDictionary *result;
+//    
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SweetnessDictionary" withExtension:@"plist"]];
+//    });
+//    //[result identifyMyself];
+//    return result;
+    return [BKLookup sweetnessLookup];
 }
 
 @end

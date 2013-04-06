@@ -54,6 +54,9 @@
 
 - (void)keyBoardWillShow:(NSNotification *)notification {
     //NSLog(@"keyBoardDidShow");
+    if (self.scrollView == nil) {
+        return;
+    }
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
@@ -88,6 +91,9 @@
 
 - (void)keyBoardWillHide:(NSNotification *)notification {
     //NSLog(@"keyBoardWillHide");
+    if (self.scrollView == nil) {
+        return;
+    }
     NSDictionary* info = [notification userInfo];
     NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:animationTime animations:^{
@@ -150,6 +156,14 @@
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     // Do success block by default
     successBlock(@"");
+}
+
+#pragma mark - HUD delegate
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    NSLog(@"hudWasHidden");
+    [self.HUD removeFromSuperview];
+    self.HUD = nil;
 }
 
 @end

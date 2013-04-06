@@ -105,12 +105,13 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:item.picURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             UIImage *itemPic = [UIImage imageWithData:data];
-            if (itemPic != nil) {
+            if (itemPic != nil) {                
                 itemPic = [UIImage imageWithImage:itemPic scaledToSize:cell.imageView.frame.size];
                 NSLog(@"item pic = %@, size = %@", itemPic, NSStringFromCGSize(itemPic.size));
                 [self.picImageArray addObject:itemPic];
                 item.picImage = itemPic;
-                cell.imageView.image = itemPic;
+                UITableViewCell *theCell = [tableView cellForRowAtIndexPath:indexPath];
+                theCell.imageView.image = itemPic;
             }            
         }];
     }

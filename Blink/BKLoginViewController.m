@@ -182,11 +182,11 @@
 //    }
 //}
 
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-    NSLog(@"hudWasHidden");
-    [self.HUD removeFromSuperview];
-    self.HUD = nil;
-}
+//- (void)hudWasHidden:(MBProgressHUD *)hud {
+//    NSLog(@"hudWasHidden");
+//    [self.HUD removeFromSuperview];
+//    self.HUD = nil;
+//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];

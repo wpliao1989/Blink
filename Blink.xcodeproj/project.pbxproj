@@ -10,6 +10,7 @@
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
+		422861CF170D781F00E10F8E /* BKLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861CE170D781E00E10F8E /* BKLookup.m */; };
 		42A9784E17096BAF00494658 /* yes_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FA17096BAE00494658 /* yes_press.png */; };
 		42A9784F17096BAF00494658 /* send_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FB17096BAE00494658 /* send_press.png */; };
 		42A9785017096BAF00494658 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A977FC17096BAE00494658 /* shadow.png */; };
@@ -270,6 +271,8 @@
 		422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKBaseAPIManager.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKBaseAPIManager.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		422861B5170CED9100E10F8E /* BKAPIError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKAPIError.h; sourceTree = "<group>"; };
+		422861CD170D781E00E10F8E /* BKLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKLookup.h; sourceTree = "<group>"; };
+		422861CE170D781E00E10F8E /* BKLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKLookup.m; sourceTree = "<group>"; };
 		42A977FA17096BAE00494658 /* yes_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_press.png; sourceTree = "<group>"; };
 		42A977FB17096BAE00494658 /* send_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send_press.png; sourceTree = "<group>"; };
 		42A977FC17096BAE00494658 /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
@@ -816,6 +819,8 @@
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
 				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
+				422861CD170D781E00E10F8E /* BKLookup.h */,
+				422861CE170D781E00E10F8E /* BKLookup.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -1364,6 +1369,7 @@
 				422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */,
 				422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */,
 				422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */,
+				422861CF170D781F00E10F8E /* BKLookup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
