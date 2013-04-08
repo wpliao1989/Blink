@@ -22,7 +22,6 @@ typedef NS_ENUM(NSUInteger, BKOrderMethod) {
     BKOrderMethodTakeout = 1
 };
 
-
 FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
 
 @interface BKOrderManager : NSObject

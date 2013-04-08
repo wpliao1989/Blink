@@ -9,6 +9,7 @@
 #import "BKShopInfoManager.h"
 #import "BKShopInfo.h"
 #import "BKAPIManager.h"
+#import "BKSearchParameter.h"
 
 NSString *const BKShopImageDidDownloadNotification = @"BKShopImageDidDownloadNotification";
 NSString *const kBKShopImageDidDownloadUserInfoShopInfo = @"kBKShopImageDidDownloadUserInfoShopInfo";
@@ -46,9 +47,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return _shopInfoDictionary;
 }
 
-- (NSMutableArray *)shopIDs {
+- (NSArray *)shopIDs {
     if (_shopIDs == nil) {
-        _shopIDs = [NSMutableArray array];
+        _shopIDs = @[];
     }
     return _shopIDs;
 }
@@ -89,16 +90,30 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 #pragma mark - Load data
 
-- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
-        self.shopIDs = shopIDs;
-        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
-        completeHandler();
-    }];
-}
+//- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
+//    BKSearchParameter *params = [[BKSearchParameter alloc] init];
+//    params.method = @"11111";
+//    
+//    [[BKAPIManager sharedBKAPIManager] loadDataWithListCriteria:criteria parameter:params completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+//        self.shopIDs = shopIDs;
+//        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+//        completeHandler();
+//    }];
+//}
+//
+//- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
+//    BKSearchParameter *params = [[BKSearchParameter alloc] init];
+//    params.method = @"22222";
+//    
+//    [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria parameter:params completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+//        self.shopIDs = shopIDs;
+//        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+//        completeHandler();
+//    }];
+//}
 
-- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] loadDataWithSortCriteria:criteria completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+- (void)loadDataOption:(BKSearchOption)option criteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadData:option criteria:criteria parameter:nil completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
         self.shopIDs = shopIDs;
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
         completeHandler();

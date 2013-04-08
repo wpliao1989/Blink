@@ -217,7 +217,7 @@ NSString *const BKMenuNullString = @"null";
 - (NSArray *)sizeLevels {
     if (_sizeLevels == nil) {
 //        _sizeLevels = @[@"正常", @"大", @"小"];
-        NSArray *sortOrder = @[kBKMenuPriceMedium, kBKMenuPriceLarge, kBKMenuPriceSmall];
+        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
         NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
         [allKeys sortUsingAnotherArray:sortOrder];
 //            if ([obj1 isKindOfClass:[NSString class]] && [obj2 isKindOfClass:[NSString class]]) {

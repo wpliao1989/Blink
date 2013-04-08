@@ -13,4 +13,6 @@
 
 @interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate/*, CLLocationManagerDelegate*/>
 
+//@property (nonatomic) BKReloadMethod method;
+
 @end

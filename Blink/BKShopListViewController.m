@@ -16,6 +16,7 @@
 #import "BKShopListCell.h"
 #import "MKMapView+AnnotationOperation.h"
 #import "NSString+MKCoordinateRegion.h"
+#import "BKSearchOption.h"
 
 #import "BKTestCenter.h"
 
@@ -51,11 +52,6 @@
 //    BKListActionSheetButtonIndexScore = 2
 //}BKListActionSheetButtonIndex;
 
-typedef enum  {
-    BKReloadMethodList = 0,
-    BKReloadMethodSort = 1,
-}BKReloadMethod;
-
 //- (IBAction)homeButtonPressed:(id)sender;
 - (IBAction)mapButtonPressed:(id)sender;
 - (IBAction)listButtonPressed:(id)sender;
@@ -87,7 +83,7 @@ typedef enum  {
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
 // Methods for reloading data based on list criteria
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
-- (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria;
+- (void)reloadDataUsing:(BKSearchOption)method criteria:(NSInteger)criteria;
 - (void)reloadDefault;
 - (void)updateMapViewRegion;
 - (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo;
@@ -182,10 +178,11 @@ typedef enum  {
     [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
     [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
    
-    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {        
-//        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
-        [self reloadDefault];
-    }
+//    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {        
+////        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+//        [self reloadDefault];
+//    }
+    [self reloadDefault];
 
     [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
@@ -364,13 +361,25 @@ typedef enum  {
 ////    [self saveTestShopInfosWithShopIDs:nil];
 //}
 
-- (void)reloadDataUsing:(BKReloadMethod)method criteria:(NSInteger)criteria {
+- (void)reloadDataUsing:(BKSearchOption)method criteria:(NSInteger)criteria {
     
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
     
-    loadDataComplete handler = ^() {
+//    loadDataComplete handler = ^() {
+//        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
+//        
+//        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
+//        NSLog(@"map annotations: %@", self.shopListMapView.annotations);
+//        if (self.shopListMapView.hidden == NO) {
+//            [self updateMapViewRegion];
+//        }
+//        //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
+//    };
+    
+    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method criteria:criteria completeHandler:^{
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
         
         [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -379,28 +388,26 @@ typedef enum  {
         if (self.shopListMapView.hidden == NO) {
             [self updateMapViewRegion];
         }
-        //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
-    };
-    
-    switch (method) {
-        case BKReloadMethodList:
-            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithListCriteria:criteria completeHandler:handler];
-            break;
-            
-        case BKReloadMethodSort:
-            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithSortCriteria:criteria completeHandler:handler];
-            break;
-        default:
-            NSLog(@"Warning: invalid reload method!");
-            break;
-    }
+    }];
+//    switch (method) {
+//        case BKReloadMethodList:
+//            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithListCriteria:criteria completeHandler:handler];
+//            break;
+//            
+//        case BKReloadMethodSort:
+//            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithSortCriteria:criteria completeHandler:handler];
+//            break;
+//        default:
+//            NSLog(@"Warning: invalid reload method!");
+//            break;
+//    }
     
     // The folling line is for testing
     //    [self saveTestShopInfosWithShopIDs:nil];
 }
 
 - (void)reloadDefault {
-    [self reloadDataUsing:BKReloadMethodList criteria:0];
+    [self reloadDataUsing:BKSearchOptionList criteria:0];
 }
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price {
@@ -852,12 +859,12 @@ typedef enum  {
 //                break;
 //        }
         if (buttonIndex != actionSheet.cancelButtonIndex) {
-            [self reloadDataUsing:BKReloadMethodList criteria:buttonIndex];
+            [self reloadDataUsing:BKSearchOptionList criteria:buttonIndex];
         }    
     }
     else if (actionSheet == self.sortActionSheet) {
         if (buttonIndex != actionSheet.cancelButtonIndex) {
-            [self reloadDataUsing:BKReloadMethodSort criteria:buttonIndex];
+            [self reloadDataUsing:BKSearchOptionSort criteria:buttonIndex];
         }    
     }
 }

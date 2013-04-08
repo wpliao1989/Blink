@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
+#import "BKSearchOption.h"
 
 FOUNDATION_EXPORT NSString *const BKShopImageDidDownloadNotification;
 FOUNDATION_EXPORT NSString *const kBKShopImageDidDownloadUserInfoShopInfo;
@@ -28,8 +29,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (BKShopInfo *)shopInfoForShopID:(NSString *)shopID;
 
 // Methods for loading new datas
-- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
-- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
+//- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
+//- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
+- (void)loadDataOption:(BKSearchOption)option criteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
 - (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler;
 
 // Use this method to change current displaying shops in shoplist view controller

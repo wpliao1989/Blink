@@ -109,6 +109,7 @@
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
 		42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */; };
 		42B266691705E2B800183C6A /* orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B266681705E2B800183C6A /* orange@2x.png */; };
+		42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
 		CE3AAFFD16EDDB05007E6A82 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD116EDDB05007E6A82 /* a2@2x.png */; };
@@ -378,6 +379,9 @@
 		42B266611705DE2300183C6A /* UIButton+AKSegmentedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AKSegmentedButton.h"; sourceTree = "<group>"; };
 		42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AKSegmentedButton.m"; sourceTree = "<group>"; };
 		42B266681705E2B800183C6A /* orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange@2x.png"; sourceTree = "<group>"; };
+		42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKSearchParameter.h; sourceTree = "<group>"; };
+		42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKSearchParameter.m; sourceTree = "<group>"; };
+		42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKSearchOption.h; sourceTree = "<group>"; };
 		CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2_press@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD116EDDB05007E6A82 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
@@ -613,7 +617,6 @@
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
 				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
-				422861B5170CED9100E10F8E /* BKAPIError.h */,
 				422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */,
 				422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */,
 				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
@@ -643,6 +646,15 @@
 				422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		42C2DEC01712CF8A0045B3F7 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				422861B5170CED9100E10F8E /* BKAPIError.h */,
+				42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */,
+			);
+			name = Header;
 			sourceTree = "<group>";
 		};
 		CE3AAF6E16EDC734007E6A82 /* Images */ = {
@@ -732,6 +744,7 @@
 				CE7E4D1916E598F4009B44F3 /* Sha1 */,
 				CE55EA3816D718490005C70F /* TestCenter */,
 				42A978A3170AABAE00494658 /* Singletons */,
+				42C2DEC01712CF8A0045B3F7 /* Header */,
 				CE805B9516C388F20040095F /* ModelObjects */,
 				42A978C7170B218700494658 /* Category */,
 				CE7A78EC16B762490072519F /* ViewControllers */,
@@ -821,6 +834,8 @@
 				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
 				422861CD170D781E00E10F8E /* BKLookup.h */,
 				422861CE170D781E00E10F8E /* BKLookup.m */,
+				42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */,
+				42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */,
 			);
 			name = ModelObjects;
 			sourceTree = "<group>";
@@ -1370,6 +1385,7 @@
 				422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */,
 				422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */,
 				422861CF170D781F00E10F8E /* BKLookup.m in Sources */,
+				42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
