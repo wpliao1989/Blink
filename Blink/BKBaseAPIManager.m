@@ -91,12 +91,12 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
 }
 
 - (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler {
-    NSLog(@"response = %@", response);
+    //NSLog(@"response = %@", response);
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSInteger statusCode = [httpResponse statusCode];
-    NSLog(@"status code = %d", statusCode);
-    NSLog(@"data = %@", data);
-    NSLog(@"error = %@", error);
+    //NSLog(@"status code = %d", statusCode);
+    //NSLog(@"data = %@", data);
+    //NSLog(@"error = %@", error);
     
     if (error != nil || statusCode != 200) {
         NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];

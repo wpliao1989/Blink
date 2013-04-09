@@ -942,18 +942,18 @@ static NSString *noSelectableItem = @"無可選擇項目";
         [formatter setDateStyle:NSDateFormatterFullStyle];
         [formatter setTimeStyle:NSDateFormatterFullStyle];
     }
-    NSLog(@"picker date: %@", [formatter stringFromDate:self.timePicker.date] );
-    NSLog(@"min date: %@", [formatter stringFromDate:self.timePicker.minimumDate]);
-    NSLog(@"max date: %@", [formatter stringFromDate:self.timePicker.maximumDate]);
+    //NSLog(@"picker date: %@", [formatter stringFromDate:self.timePicker.date] );
+    //NSLog(@"min date: %@", [formatter stringFromDate:self.timePicker.minimumDate]);
+    //NSLog(@"max date: %@", [formatter stringFromDate:self.timePicker.maximumDate]);
     
     NSDate *oneSecondAfterPickerDate = [self.timePicker.date dateByAddingTimeInterval:1];
     if ([self.timePicker.date isEqualToDate:self.timePicker.minimumDate]) {
-        NSLog(@"date is at or below minimum");
+        //NSLog(@"date is at or below minimum");
         self.timePicker.date = oneSecondAfterPickerDate;        
         [self.timePicker setDate:self.timePicker.minimumDate animated:YES];
     }
     else if ([self.timePicker.date isEqualToDate:self.timePicker.maximumDate]) {
-        NSLog(@"date is at or above maximum");
+        //NSLog(@"date is at or above maximum");
         self.timePicker.date = oneSecondAfterPickerDate;
         [self.timePicker setDate:self.timePicker.maximumDate animated:YES];
     }    

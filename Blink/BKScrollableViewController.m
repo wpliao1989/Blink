@@ -161,7 +161,7 @@
 #pragma mark - HUD delegate
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
-    NSLog(@"hudWasHidden");
+    //NSLog(@"hudWasHidden");
     [self.HUD removeFromSuperview];
     self.HUD = nil;
 }

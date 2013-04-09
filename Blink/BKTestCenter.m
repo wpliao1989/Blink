@@ -157,6 +157,9 @@ static NSInteger quantity = 1;
     
 //    NSDictionary *test = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"APICodeTable" withExtension:@"plist"]];
 //    NSLog(@"test = %@", test);
+    NSDate *now = [NSDate date];
+    NSNumber *unixTime = [NSNumber numberWithDouble:[now timeIntervalSince1970]];
+    NSLog(@"now:%@, unix time:%@", now, unixTime);
 }
 
 @end

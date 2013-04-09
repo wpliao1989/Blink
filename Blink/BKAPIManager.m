@@ -531,11 +531,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
 //    NSLog(@"order.content.count = %d", order.content.count);
 //    NSLog(@"order.content = %@", order.content);
+    //NSNumber *unixTime = [NSNumber numberWithDouble:[order.recordTime timeIntervalSince1970]];
     
     NSDictionary *parameterDictionary =   @{kBKOrderUserToken: order.userToken,
                                           kBKOrderShopID : order.shopID,
                                           kBKOrderRecordTime : order.recordTime,
-                                            //kBKOrderRecordTime : [NSNumber numberWithDouble:[NSDate timeIntervalSinceReferenceDate]],
                                           kBKOrderUserAddress : order.address,
                                           kBKOrderUserPhone : order.phone,
                                           kBKOrderContent : order.content,

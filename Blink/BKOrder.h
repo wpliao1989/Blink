@@ -25,7 +25,9 @@ FOUNDATION_EXPORT NSString *const kBKOrderMethodTakeout;
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *shopID;
-@property (nonatomic, strong) NSString *recordTime;
+//@property (nonatomic, strong) NSString *recordTime;
+//@property (nonatomic, strong) NSDate *recordTime;
+@property (nonatomic, strong) NSNumber *recordTime; // Unix time
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *address;
 

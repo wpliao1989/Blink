@@ -788,22 +788,75 @@
 #pragma mark - Update region
 
 //
+//- (void)updateMapViewRegion {
+//    if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] <= 0) {
+//        return;
+//    }
+//    
+//    NSArray *visibleIndexPaths = [self.shopListTableView indexPathsForVisibleRows];    
+//    NSMutableArray *visibleAnnotations = [NSMutableArray array];
+//    for (NSIndexPath *indexpath in visibleIndexPaths) {
+//        BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexpath.row];
+//        [visibleAnnotations addObject:shopInfo];  
+//    }
+//    
+//    // Add user location
+//    if (self.shopListMapView.userLocation) {
+//        [visibleAnnotations addObject:self.shopListMapView.userLocation];
+//    }
+//    
+//    CGRect boundingRect;
+//    BOOL started = NO;
+//    for (id <MKAnnotation> annotation in visibleAnnotations) {
+//        CGRect annotationRect = CGRectMake(annotation.coordinate.latitude, annotation.coordinate.longitude, 0, 0);
+//        if (!started) {
+//            started = YES;
+//            boundingRect = annotationRect;
+//        } else {
+//            boundingRect = CGRectUnion(boundingRect, annotationRect);
+//        }
+//    }
+//    if (started) {
+//        boundingRect = CGRectInset(boundingRect, -0.2, -0.2);
+//        
+//        CLLocationDegrees latitudeSpanLimit = 2.0;
+//        CLLocationDegrees longitudeSpanLimit = 2.0;
+//        
+//        if ((boundingRect.size.width < latitudeSpanLimit) && (boundingRect.size.height < longitudeSpanLimit)) {
+//            MKCoordinateRegion region;
+//            region.center.latitude = boundingRect.origin.x + boundingRect.size.width / 2;
+//            region.center.longitude = boundingRect.origin.y + boundingRect.size.height / 2;
+//            region.span.latitudeDelta = boundingRect.size.width;
+//            region.span.longitudeDelta = boundingRect.size.height;
+//            [self.shopListMapView setRegion:region animated:YES];
+//            
+//            NSLog(@"Original region:%@, resized by map:%@", [NSString stringFromRegion:region],            [NSString stringFromRegion:[self.shopListMapView regionThatFits:region]]);
+//        }
+//    }    
+//}
+
 - (void)updateMapViewRegion {
     if ([[BKShopInfoManager sharedBKShopInfoManager] shopCount] <= 0) {
         return;
     }
     
-    NSArray *visibleIndexPaths = [self.shopListTableView indexPathsForVisibleRows];    
+    NSArray *visibleIndexPaths = [self.shopListTableView indexPathsForVisibleRows];
     NSMutableArray *visibleAnnotations = [NSMutableArray array];
     for (NSIndexPath *indexpath in visibleIndexPaths) {
         BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexpath.row];
-        [visibleAnnotations addObject:shopInfo];  
+        [visibleAnnotations addObject:shopInfo];
     }
     
     // Add user location
     if (self.shopListMapView.userLocation) {
         [visibleAnnotations addObject:self.shopListMapView.userLocation];
     }
+    
+    // One degree is approximately 111km
+    CLLocationDegrees latitudeSpanLimit = 0.1;
+    CLLocationDegrees longitudeSpanLimit = 0.1;
+    CLLocationDegrees latitudePadding = 0.01;
+    CLLocationDegrees longitudePadding = 0.01;
     
     CGRect boundingRect;
     BOOL started = NO;
@@ -813,16 +866,15 @@
             started = YES;
             boundingRect = annotationRect;
         } else {
-            boundingRect = CGRectUnion(boundingRect, annotationRect);
+            CGRect rectUnion = CGRectUnion(boundingRect, annotationRect);
+            if ((rectUnion.size.width < latitudeSpanLimit) && (rectUnion.size.height < longitudeSpanLimit)) {
+                boundingRect = CGRectUnion(boundingRect, annotationRect);
+            }
         }
     }
-    if (started) {
-        boundingRect = CGRectInset(boundingRect, -0.2, -0.2);
-        
-        CLLocationDegrees latitudeSpanLimit = 20.0;
-        CLLocationDegrees longitudeSpanLimit = 20.0;
-        
-        if ((boundingRect.size.width < latitudeSpanLimit) && (boundingRect.size.height < longitudeSpanLimit)) {
+    if (started) {        
+        if ((boundingRect.size.width > 0) && (boundingRect.size.height > 0)) {
+            boundingRect = CGRectInset(boundingRect, -latitudePadding, -longitudePadding);
             MKCoordinateRegion region;
             region.center.latitude = boundingRect.origin.x + boundingRect.size.width / 2;
             region.center.longitude = boundingRect.origin.y + boundingRect.size.height / 2;
@@ -833,7 +885,6 @@
             NSLog(@"Original region:%@, resized by map:%@", [NSString stringFromRegion:region],            [NSString stringFromRegion:[self.shopListMapView regionThatFits:region]]);
         }
     }
-    
 }
 
 #pragma mark - Action Sheet delegate

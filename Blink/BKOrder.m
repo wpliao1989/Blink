@@ -93,10 +93,11 @@ NSString *const kBKOrderMethodTakeout = @"1";
     theOrder.userName = self.userName != nil ? self.userName : @"none";
     theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateStyle = NSDateFormatterShortStyle;
-    formatter.timeStyle = NSDateFormatterShortStyle;
-    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [formatter stringFromDate:[NSDate date]];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateStyle = NSDateFormatterShortStyle;
+//    formatter.timeStyle = NSDateFormatterShortStyle;
+    //theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSDate date];
+    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
     
     theOrder.address = self.address != nil ? self.address : @"none";
     theOrder.phone = self.phone != nil ? self.phone : @"none";

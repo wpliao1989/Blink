@@ -15,6 +15,7 @@ NSString *const kBKOrderContentSize = @"size";
 NSString *const kBKOrderContentIce = @"ice";
 NSString *const kBKOrderContentSweetness = @"sweetness";
 NSString *const kBKOrderContentQuantity = @"quantity";
+NSString *const kBKOrderContentPrice = @"price";
 
 @implementation BKOrderContent
 
@@ -62,7 +63,9 @@ NSString *const kBKOrderContentQuantity = @"quantity";
                                  kBKOrderContentSize: self.size != nil ? self.size : @"none",
                                  kBKOrderContentIce: self.ice != nil ? self.ice : @"none",
                                  kBKOrderContentSweetness: self.sweetness != nil ? self.sweetness : @"none",
-                                 kBKOrderContentQuantity: self.quantity != nil ? self. quantity : @0};
+                                 kBKOrderContentQuantity: self.quantity != nil ? self. quantity : @(0),
+                                 kBKOrderContentPrice : self.basePrice != nil ? self.basePrice : @(0),
+                                 /*@"hello world!" : @"hello!"*/};
     return theContent;
 }
 

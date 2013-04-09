@@ -46,6 +46,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 @synthesize order = _order;
 @synthesize shopInfo = _shopInfo;
+@synthesize recordTime = _recordTime;
 
 - (BKOrder *)order {
     if (_order == nil) {
@@ -61,45 +62,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     _shopInfo = shopInfo;
 }
 
+- (NSDate *)recordTime {
+    return [NSDate dateWithTimeIntervalSince1970:[self.order.recordTime doubleValue]];
+}
+
 //- (BOOL)isValidOrder {
 //    return YES;
 //}
 
 - (void)setOrderTime:(NSDate *)date {
-    static NSDateFormatter *formatter;
-    if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
-        //        [formatter setDateStyle:NSDateFormatterShortStyle];
-        //        [formatter setTimeStyle:NSDateFormatterShortStyle];
-        //        NSLog(@"formatter string: %@", formatter.dateFormat);
-    }
-    NSString *recordTime = [formatter stringFromDate:date];
-    self.order.recordTime = recordTime;
-    _recordTime = date;
-    
-    // The followings are for testing format
 //    static NSDateFormatter *formatter;
 //    if (formatter == nil) {
 //        formatter = [[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"yyyy/M/d H:mm"];
+//        [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
 //        //        [formatter setDateStyle:NSDateFormatterShortStyle];
 //        //        [formatter setTimeStyle:NSDateFormatterShortStyle];
 //        //        NSLog(@"formatter string: %@", formatter.dateFormat);
 //    }
-//    NSDate *today = [NSDate date];
-//    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-//    NSDateComponents *newComp = [currentCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
-//    [newComp setDay:1];
-//    [newComp setHour:1];
-//    [newComp setMinute:1];
-//    today = [currentCalendar dateFromComponents:newComp];
-//    
-//    NSString *recordTime = [formatter stringFromDate:today];
-//    NSLog(@"1. %@", recordTime);
-//    [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
-//    recordTime = [formatter stringFromDate:today];
-//    NSLog(@"2. %@", recordTime);
+//    NSString *recordTime = [formatter stringFromDate:date];    
+    self.order.recordTime = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+    //NSLog(@"Order time is set to %@", self.order.recordTime);
+    //NSLog(@"Readable time %@", [NSDate dateWithTimeIntervalSince1970:[self.order.recordTime doubleValue]]);
+    //_recordTime = date;
 }
 
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
