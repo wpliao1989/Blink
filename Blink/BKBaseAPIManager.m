@@ -74,14 +74,20 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
 
 @implementation BKBaseAPIManager
 
-- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(asynchronousCompleteHandler)completeHandler {
+- (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler {
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
-    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES isAsynchronous:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //        NSLog(@"callAPI, data:%@", data);
 //        self.isLoadingData = NO;
         completeHandler(response, data, error);
     }];
+}
+
+- (void)callSynchronousAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler {
+    NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
+    NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
+    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES isAsynchronous:YES completionHandler:completeHandler];
 }
 
 - (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler {

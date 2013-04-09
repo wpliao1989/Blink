@@ -58,8 +58,8 @@ NSString *const kDistrict = @"district";
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
 
-- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(asynchronousCompleteHandler)completeHandler;
-- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(asynchronousCompleteHandler)completeHandler;
+- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
+- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
 - (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
 
@@ -270,10 +270,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
 }
 
-#pragma mark - Returned data checking
-
-
-
 #pragma mark - APIs
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler {
@@ -397,7 +393,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)loadData:(BKSearchOption)option criteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
     
-    asynchronousCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
+    serviceCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
         [self handleListAndSortResponse:response data:data error:error completeHandler:completeHandler];
     };
     
@@ -426,7 +422,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }];
 //}
 
-- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(asynchronousCompleteHandler)completeHandler{
+- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kListCriteria = @"listCriteria";
     
     if ([self isEmptyCoordinate:self.userLocation.coordinate]) {
@@ -459,7 +455,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
-- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(asynchronousCompleteHandler)completeHandler{
+- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kSortCriteria = @"sortCriteria";
     
     NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
@@ -487,7 +483,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"sort" withPostBody:parameterDictionary completionHandler:completeHandler];    
 }
 
-- (void)searchWithShopName:(NSString *)shopName completionHandler:(asynchronousCompleteHandler)completeHandler{
+- (void)searchWithShopName:(NSString *)shopName completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kShopName = @"ShopName";
     
     NSDictionary *parameterDictionary = @{kShopName : shopName};
@@ -500,7 +496,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }];    
 }
 
-- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(asynchronousCompleteHandler)completeHandler {
+- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(serviceCompleteHandler)completeHandler {
     NSString *kShopID = @"sShopID";
     
     NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
@@ -576,7 +572,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     self.isLoadingData = YES;
     
-    [self service:@"info" method:@"GET" postData:nil useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [self service:@"info" method:@"GET" postData:nil useJSONDecode:YES isAsynchronous:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         NSLog(@"response = %@", response);
         NSLog(@"data = %@", data);
         NSLog(@"error = %@", error);

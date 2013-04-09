@@ -57,7 +57,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
     return request;
 }
 
-- (id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON completionHandler:(asynchronousCompleteHandler) completeHandler{
+- (void)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON isAsynchronous:(BOOL)isAsynchronous completionHandler:(serviceCompleteHandler)completeHandler{
     
     NSMutableURLRequest *request;
     
@@ -68,21 +68,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
         }
         else {
             request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
-        }        
+        }
     }else{
         request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
         [request setHTTPMethod:method];
         [request setHTTPBody:postData];
     }
-    request = [self modifyOriginalRequest:request];
-    
-    NSHTTPURLResponse *response = nil;
-    NSError *error = nil;
+    request = [self modifyOriginalRequest:request];    
     
     NSLog(@"Request is %@", request);
     
     NSData *data = nil;
-    if (completeHandler != nil) {
+    if (isAsynchronous) {
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if (useJSON) {
                 NSLog(@"service: data string %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
@@ -91,18 +88,65 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
             completeHandler(response,data,error);
         }];
     }else{
-        data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];        
+        NSHTTPURLResponse *response = nil;
+        NSError *error = nil;
+        data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         if (useJSON) {
-//            NSString *test = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//            NSLog(@"test:%@",test);
+            //            NSString *test = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            //            NSLog(@"test:%@",test);
             
             data = [data JSONValue];
         }
-    }
-    
-    
-    return data;    
+        completeHandler(response, data, error);
+    }   
 }
+
+//- (id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON completionHandler:(serviceCompleteHandler) completeHandler{
+//    
+//    NSMutableURLRequest *request;
+//    
+//    if ([method isEqualToString:@"GET"]) {
+//        if (postData != nil) {
+//            NSString *param = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+//            request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@?%@",service,param]];
+//        }
+//        else {
+//            request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
+//        }        
+//    }else{
+//        request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
+//        [request setHTTPMethod:method];
+//        [request setHTTPBody:postData];
+//    }
+//    request = [self modifyOriginalRequest:request];
+//    
+//    NSHTTPURLResponse *response = nil;
+//    NSError *error = nil;
+//    
+//    NSLog(@"Request is %@", request);
+//    
+//    NSData *data = nil;
+//    if (completeHandler != nil) {
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//            if (useJSON) {
+//                NSLog(@"service: data string %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+//                data = [data JSONValue];
+//            }
+//            completeHandler(response,data,error);
+//        }];
+//    }else{
+//        data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];        
+//        if (useJSON) {
+////            NSString *test = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+////            NSLog(@"test:%@",test);
+//            
+//            data = [data JSONValue];
+//        }
+//    }
+//    
+//    
+//    return data;    
+//}
 
 
 -(NSString *)specifyStrFromDict:(NSDictionary *)dict withDiv:(NSString *)div{

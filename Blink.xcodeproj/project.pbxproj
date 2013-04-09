@@ -611,16 +611,11 @@
 		42A978A3170AABAE00494658 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
+				42C2DEC117130E380045B3F7 /* API Family */,
 				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
 				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
-				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
-				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
-				422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */,
-				422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */,
-				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
-				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
 				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
 				CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */,
 			);
@@ -655,6 +650,19 @@
 				42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */,
 			);
 			name = Header;
+			sourceTree = "<group>";
+		};
+		42C2DEC117130E380045B3F7 /* API Family */ = {
+			isa = PBXGroup;
+			children = (
+				CE8ED96C16D357E100307FF1 /* OSConnectionManager.h */,
+				CE8ED96D16D357E100307FF1 /* OSConnectionManager.m */,
+				422861B2170C6BC600E10F8E /* BKBaseAPIManager.h */,
+				422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */,
+				CE8ED96816D32FB200307FF1 /* BKAPIManager.h */,
+				CE8ED96916D32FB200307FF1 /* BKAPIManager.m */,
+			);
+			name = "API Family";
 			sourceTree = "<group>";
 		};
 		CE3AAF6E16EDC734007E6A82 /* Images */ = {
