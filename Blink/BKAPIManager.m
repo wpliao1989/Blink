@@ -57,11 +57,13 @@ NSString *const kDistrict = @"district";
 @property (strong, nonatomic) NSArray *sortCriteriaKeys;
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
-- (void)searchWithShopName:(NSString *)shopName parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler) completeHandler;
+- (void)searchWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler) completeHandler;
 - (void)listWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
 - (void)sortWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
+- (void)getUserFavoriteWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
+- (NSDictionary *)dictionaryByAddingParameter:(BKSearchParameter *)parameter toDictionary:(NSDictionary *)baseDictionary ;
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
-- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
+- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
 - (BOOL)isServiceInfoValid;
@@ -301,18 +303,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 #pragma mark - User favorite
 
-- (void)getUserFavoriteShopToken:(NSString *)token {
+- (void)getUserFavoriteWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler {
     NSString *kToken = @"token";
     
-    NSDictionary *parameterDictionary =   @{kToken: token};
+    NSString *userToken = parameter.token;
+    NSDictionary *parameterDictionary =   @{kToken: userToken};
     
-    [self callAPI:@"favorite" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage:@"伺服器錯誤"}];
-        
-//        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
-    }];
-    
+    self.isLoadingData = YES;
+    [self callAPI:@"favorite" withPostBody:parameterDictionary completionHandler:completeHandler];    
 }
 
 #pragma mark - Load data
@@ -367,7 +365,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }
 //}
 
-- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler {
+- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler {
     static NSString *kShops = @"shop";
     
     NSLog(@"response: %@", response);
@@ -412,7 +410,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)loadData:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
     
     serviceCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
-        [self handleListAndSortResponse:response data:data error:error completeHandler:completeHandler];
+        [self handleLoadDataResponse:response data:data error:error completeHandler:completeHandler];
     };
     
     switch (option) {
@@ -421,6 +419,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             break;
         case BKSearchOptionSort:
             [self sortWithParameter:parameter completionHandler:handler];
+            break;
+            
+        case BKSearchOptionSearch:
+            [self searchWithParameter:parameter completionHandler:handler];
+            break;
+        case BKSearchOptionUserFavorite:
+            [self getUserFavoriteWithParameter:parameter completionHandler:handler];
             break;
             
         default:
@@ -461,15 +466,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    NSLog(@"!!!! %@", [self.listCriteria class]);
     NSString *criteriaString = [self.listCriteriaKeys objectAtIndex:criteria];
     
-    parameterDictionary = @{ kListCriteria : criteriaString,
-                             kLongitude : [NSNumber numberWithDouble:self.userLocation.coordinate.longitude],
-                             kLatitude : [NSNumber numberWithDouble:self.userLocation.coordinate.latitude],
-//                             kOffSet : parameter.offset != nil ? parameter.offset : [NSNull null],
-//                             kQNum : parameter.qNum != nil ? parameter.qNum : [NSNull null],
-//                             kMethod : parameter.method != nil ? parameter.method : [NSNull null],
-//                             kCity : parameter.city != nil ? parameter.city : [NSNull null],
-//                             kDistrict : parameter.district != nil ? parameter.district : [NSNull null]
-                             };
+    parameterDictionary = @{ kListCriteria : criteriaString};
+    parameterDictionary = [self dictionaryByAddingParameter:parameter toDictionary:parameterDictionary];
     
     self.isLoadingData = YES;
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
@@ -479,8 +477,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSString *kSortCriteria = @"sortCriteria";
     
     NSInteger criteria = parameter.criteria;
-    NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
-    NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
     
     if (criteria >= self.localizedSortCriteria.count || criteria < 0) {
         NSLog(@"Warning: invalid sort criteria!");
@@ -490,25 +486,46 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary;
     NSString *criteriaString = [self.sortCriteriaKeys objectAtIndex:criteria];
     
-    parameterDictionary = @{ kSortCriteria : criteriaString,
-                             kLatitude : latitude,
-                             kLongitude : longitude,
-//                             kOffSet : parameter.offset != nil ? parameter.offset : [NSNull null],
-//                             kQNum : parameter.qNum != nil ? parameter.qNum : [NSNull null],
-//                             kMethod : parameter.method != nil ? parameter.method : [NSNull null],
-//                             kCity : parameter.city != nil ? parameter.city : [NSNull null],
-//                             kDistrict : parameter.district != nil ? parameter.district : [NSNull null]
-                             };
+    parameterDictionary = @{ kSortCriteria : criteriaString};
+    parameterDictionary = [self dictionaryByAddingParameter:parameter toDictionary:parameterDictionary];
     
     self.isLoadingData = YES;
     [self callAPI:@"sort" withPostBody:parameterDictionary completionHandler:completeHandler];    
 }
 
-- (void)searchWithShopName:(NSString *)shopName  completionHandler:(serviceCompleteHandler)completeHandler{
+- (void)searchWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kShopName = @"ShopName";
     
+    NSString *shopName = parameter.shopName;
     NSDictionary *parameterDictionary = @{kShopName : shopName};
-    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];   
+    parameterDictionary = [self dictionaryByAddingParameter:parameter toDictionary:parameterDictionary];
+                                        
+    self.isLoadingData = YES;
+    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
+}
+
+- (NSDictionary *)dictionaryByAddingParameter:(BKSearchParameter *)parameter toDictionary:(NSDictionary *)baseDictionary {
+    NSMutableDictionary *result = [baseDictionary mutableCopy];
+
+    NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
+    NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
+    NSString *method = parameter.method;
+    NSString *city = parameter.city;
+    NSString *district = parameter.district;
+    NSNumber *offset = parameter.offset;
+    NSNumber *qNum = parameter.qNum;
+    
+    [result addEntriesFromDictionary:@{
+                          kLatitude : latitude,
+                         kLongitude : longitude,
+                            //kMethod : method != nil ? method : [NSNull null],
+                              //kCity : city != nil ? city : [NSNull null],
+                          //kDistrict : district != nil ? district : [NSNull null],
+                            //kOffSet : offset != nil ? kOffSet : [NSNull null],
+                              //kQNum : qNum != nil ? qNum : [NSNull null]
+     }];
+    
+    return [NSDictionary dictionaryWithDictionary:result];
 }
 
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(serviceCompleteHandler)completeHandler {

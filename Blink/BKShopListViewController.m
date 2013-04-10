@@ -961,9 +961,7 @@
 
 - (IBAction)searchButtonPressed:(id)sender {
     if ([self.searchBar.text length] > 0) {
-//        [[BKAPIManager sharedBKAPIManager] searchWithShopName:self.searchBar.text completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//            NSLog(@"%@", data);
-//        }];
+        [self reloadDataUsingSearchWithShopName:self.searchBar.text];
     }
     [self.searchBar resignFirstResponder];
 }

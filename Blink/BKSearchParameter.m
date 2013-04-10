@@ -11,9 +11,10 @@
 @implementation BKSearchParameter
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"criteria:%d shopName:%@ offset:%@ qNum:%@ method:%@ city:%@ district:%@",
+    return [NSString stringWithFormat:@"criteria:%d shopName:%@ token:%@ offset:%@ qNum:%@ method:%@ city:%@ district:%@",
             self.criteria,
             self.shopName,
+            self.token,
             [self.offset stringValue],
             [self.qNum stringValue],
             self.method,
