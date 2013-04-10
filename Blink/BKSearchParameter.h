@@ -10,6 +10,12 @@
 
 @interface BKSearchParameter : NSObject
 
+/// For List and Sort
+@property (nonatomic) NSInteger criteria;
+
+/// For Search
+@property (strong, nonatomic) NSString *shopName;
+
 @property (strong, nonatomic) NSNumber *offset;
 @property (strong, nonatomic) NSNumber *qNum;
 @property (strong, nonatomic) NSString *method;

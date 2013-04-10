@@ -17,6 +17,7 @@
 #import "MKMapView+AnnotationOperation.h"
 #import "NSString+MKCoordinateRegion.h"
 #import "BKSearchOption.h"
+#import "BKSearchParameter.h"
 
 #import "BKTestCenter.h"
 
@@ -76,7 +77,10 @@
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
 // Methods for reloading data based on list criteria
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
-- (void)reloadDataUsing:(BKSearchOption)method criteria:(NSInteger)criteria;
+- (void)reloadDataUsingListWithActionSheetIndex:(NSUInteger)index;
+- (void)reloadDataUsingSortWithActionSheetIndex:(NSUInteger)index;
+- (void)reloadDataUsingSearchWithShopName:(NSString *)shopName;
+- (void)reloadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter;
 - (void)reloadDefault;
 - (void)updateMapViewRegion;
 - (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo;
@@ -111,6 +115,13 @@
 @synthesize searchBar = _searchBar;
 
 #pragma mark - Setters, late instantiation
+
+- (BKSearchParameter *)searchParameter {
+    if (_searchParameter == nil) {
+        _searchParameter = [[BKSearchParameter alloc] init];
+    }
+    return _searchParameter;
+}
 
 - (UIActionSheet *)listActionSheet {
     if (_listActionSheet == nil) {
@@ -241,6 +252,45 @@
     [self reloadDefault];
 }
 
+#pragma mark - Reload Data
+
+- (void)reloadDataUsingListWithActionSheetIndex:(NSUInteger)index {
+    self.searchParameter.criteria = index;
+    [self reloadDataUsing:BKSearchOptionList parameter:self.searchParameter];
+}
+
+- (void)reloadDataUsingSortWithActionSheetIndex:(NSUInteger)index {
+    self.searchParameter.criteria = index;
+    [self reloadDataUsing:BKSearchOptionSort parameter:self.searchParameter];
+}
+
+- (void)reloadDataUsingSearchWithShopName:(NSString *)shopName {
+    self.searchParameter.shopName = shopName;
+    [self reloadDataUsing:BKSearchOptionSearch parameter:self.searchParameter];    
+}
+
+- (void)reloadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter{
+    
+    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
+    [self.shopListTableView reloadData];
+    [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
+    
+    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method parameter:parameter completeHandler:^{
+        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
+        
+        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
+        NSLog(@"map annotations: %@", self.shopListMapView.annotations);
+        if (self.shopListMapView.hidden == NO) {
+            [self updateMapViewRegion];
+        }
+    }];
+}
+
+- (void)reloadDefault {
+    [self reloadDataUsingListWithActionSheetIndex:0];
+}
+
 #pragma mark - Utility methods
 
 - (void)registerNotifications {
@@ -333,55 +383,6 @@
 //    // The folling line is for testing
 ////    [self saveTestShopInfosWithShopIDs:nil];
 //}
-
-- (void)reloadDataUsing:(BKSearchOption)method criteria:(NSInteger)criteria {
-    
-    [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
-    [self.shopListTableView reloadData];
-    [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
-    
-//    loadDataComplete handler = ^() {
-//        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
-//        
-//        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
-//        NSLog(@"map annotations: %@", self.shopListMapView.annotations);
-//        if (self.shopListMapView.hidden == NO) {
-//            [self updateMapViewRegion];
-//        }
-//        //                                                    [[BKShopInfoManager sharedBKShopInfoManager] printShopIDs];
-//    };
-    
-    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method criteria:criteria completeHandler:^{
-        NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
-        
-        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
-        NSLog(@"map annotations: %@", self.shopListMapView.annotations);
-        if (self.shopListMapView.hidden == NO) {
-            [self updateMapViewRegion];
-        }
-    }];
-//    switch (method) {
-//        case BKReloadMethodList:
-//            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithListCriteria:criteria completeHandler:handler];
-//            break;
-//            
-//        case BKReloadMethodSort:
-//            [[BKShopInfoManager sharedBKShopInfoManager] loadDataWithSortCriteria:criteria completeHandler:handler];
-//            break;
-//        default:
-//            NSLog(@"Warning: invalid reload method!");
-//            break;
-//    }
-    
-    // The folling line is for testing
-    //    [self saveTestShopInfosWithShopIDs:nil];
-}
-
-- (void)reloadDefault {
-    [self reloadDataUsing:BKSearchOptionList criteria:0];
-}
 
 - (NSString *)currencyStringForPrice:(NSNumber *)price {
     static NSNumberFormatter *currencyFormatter;
@@ -883,12 +884,12 @@
 //                break;
 //        }
         if (buttonIndex != actionSheet.cancelButtonIndex) {
-            [self reloadDataUsing:BKSearchOptionList criteria:buttonIndex];
+            [self reloadDataUsingListWithActionSheetIndex:buttonIndex];
         }    
     }
     else if (actionSheet == self.sortActionSheet) {
         if (buttonIndex != actionSheet.cancelButtonIndex) {
-            [self reloadDataUsing:BKSearchOptionSort criteria:buttonIndex];
+            [self reloadDataUsingSortWithActionSheetIndex:buttonIndex];
         }    
     }
 }
@@ -960,9 +961,9 @@
 
 - (IBAction)searchButtonPressed:(id)sender {
     if ([self.searchBar.text length] > 0) {
-        [[BKAPIManager sharedBKAPIManager] searchWithShopName:self.searchBar.text completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-            NSLog(@"%@", data);
-        }];
+//        [[BKAPIManager sharedBKAPIManager] searchWithShopName:self.searchBar.text completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+//            NSLog(@"%@", data);
+//        }];
     }
     [self.searchBar resignFirstResponder];
 }

@@ -112,8 +112,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 //    }];
 //}
 
-- (void)loadDataOption:(BKSearchOption)option criteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] loadData:option criteria:criteria parameter:nil completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+- (void)loadDataOption:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadData:option parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
         self.shopIDs = shopIDs;
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
         completeHandler();

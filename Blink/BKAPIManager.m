@@ -57,9 +57,9 @@ NSString *const kDistrict = @"district";
 @property (strong, nonatomic) NSArray *sortCriteriaKeys;
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
-
-- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
-- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
+- (void)searchWithShopName:(NSString *)shopName parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler) completeHandler;
+- (void)listWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
+- (void)sortWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
 - (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
 
@@ -270,7 +270,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
 }
 
-#pragma mark - APIs
+#pragma mark - Login
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler {
     static NSString *kUserName = @"username";
@@ -298,6 +298,24 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        }
     }];
 }
+
+#pragma mark - User favorite
+
+- (void)getUserFavoriteShopToken:(NSString *)token {
+    NSString *kToken = @"token";
+    
+    NSDictionary *parameterDictionary =   @{kToken: token};
+    
+    [self callAPI:@"favorite" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage:@"伺服器錯誤"}];
+        
+//        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+    
+}
+
+#pragma mark - Load data
 
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler {
 //    static NSString *kShopIDs = @"sShopID";
@@ -388,10 +406,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             [shopIDs addObject:dict[kBKSShopID]];
         }
         completeHandler([NSArray arrayWithArray:shopIDs], shopRawDatas);
-    }   
+    }
 }
 
-- (void)loadData:(BKSearchOption)option criteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
+- (void)loadData:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
     
     serviceCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
         [self handleListAndSortResponse:response data:data error:error completeHandler:completeHandler];
@@ -399,10 +417,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     switch (option) {
         case BKSearchOptionList:
-            [self listWithListCriteria:criteria parameter:parameter completionHandler:handler];
+            [self listWithParameter:parameter completionHandler:handler];
             break;
         case BKSearchOptionSort:
-            [self sortWithCriteria:criteria parameter:parameter completionHandler:handler];
+            [self sortWithParameter:parameter completionHandler:handler];
             break;
             
         default:
@@ -422,13 +440,15 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }];
 //}
 
-- (void)listWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
+- (void)listWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kListCriteria = @"listCriteria";
     
     if ([self isEmptyCoordinate:self.userLocation.coordinate]) {
         NSLog(@"Warning: userCoordinate is empty!");      
         return;
     }
+    
+    NSInteger criteria = parameter.criteria;
     
     if (criteria >= self.listCriteriaKeys.count || criteria < 0) {
         NSLog(@"Warning: invalid list criteria! %d", criteria);
@@ -455,9 +475,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"list" withPostBody:parameterDictionary completionHandler:completeHandler];
 }
 
-- (void)sortWithCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
+- (void)sortWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kSortCriteria = @"sortCriteria";
     
+    NSInteger criteria = parameter.criteria;
     NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
     NSNumber *longitude =[NSNumber numberWithDouble:self.userLocation.coordinate.longitude];
     
@@ -483,17 +504,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     [self callAPI:@"sort" withPostBody:parameterDictionary completionHandler:completeHandler];    
 }
 
-- (void)searchWithShopName:(NSString *)shopName completionHandler:(serviceCompleteHandler)completeHandler{
+- (void)searchWithShopName:(NSString *)shopName  completionHandler:(serviceCompleteHandler)completeHandler{
     NSString *kShopName = @"ShopName";
     
     NSDictionary *parameterDictionary = @{kShopName : shopName};
-    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];
-//    NSData *postBody = [self packedJSONWithFoundationObJect:parameterDictionary];
-//    NSLog(@"postBody = %@", [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding]);
-//   [self service:@"search" method:@"POST" postData:postBody useJSONDecode:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//        NSLog(@"%@", data);
-//       completeHandler(response, data, error);
-//    }];    
+    [self callAPI:@"search" withPostBody:parameterDictionary completionHandler:completeHandler];   
 }
 
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(serviceCompleteHandler)completeHandler {
@@ -510,6 +525,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+#pragma mark - Order
+
 - (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
     NSString *kBKOrderUserToken = @"token";
     NSString *kBKOrderShopID = @"sShopID";    
@@ -521,16 +538,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSString *kBKOrderRecordTime = @"time";
     NSString *kBKOrderMethod = @"method";
     
-//    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
-//    [parameterDictionary setObject:order.userToken forKey:kBKOrderUserToken];
-//    [parameterDictionary setObject:order.shopID forKey:kBKOrderShopID];
-//    [parameterDictionary setObject:order.recordTime forKey:kBKOrderRecordTime];
-//    [parameterDictionary setObject:order.address forKey:kBKOrderUserAddress];
-//    [parameterDictionary setObject:order.phone forKey:kBKOrderUserPhone];
-//    [parameterDictionary setObject:order.content.count != 0? order.content : [NSNull null] forKey:kBKOrderContent];
-    
-//    NSLog(@"order.content.count = %d", order.content.count);
-//    NSLog(@"order.content = %@", order.content);
     //NSNumber *unixTime = [NSNumber numberWithDouble:[order.recordTime timeIntervalSince1970]];
     
     NSDictionary *parameterDictionary =   @{kBKOrderUserToken: order.userToken,
@@ -550,20 +557,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
-        
-//        if (error != nil) {
-//            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
-//            completeHandler(nil, BKError);
-//        }        
-//        else if (![self isCorrectResult:data]) {
-//            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongOrder code:0 userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
-//            completeHandler(nil, wrongResultError);
-//        }
-//        else {            
-//            completeHandler(data, nil);
-//        }
     }];
 }
+
+#pragma mark - Update info methods
 
 - (void)updateServerInfo {
     static NSString *kRegion = @"region";
@@ -602,8 +599,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         }
     }];
 }
-
-#pragma mark - Update info methods
 
 - (void)updateListCriteriaWithObject:(id)listCriteriaObject {
     if (listCriteriaObject != [NSNull null] && [listCriteriaObject isKindOfClass:[NSDictionary class]]) {
