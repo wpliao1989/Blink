@@ -29,45 +29,27 @@ NSString *const BKMenuNullString = @"null";
 @implementation BKMenuItem (Lookup)
 
 + (NSString *)localizedStringForIce:(NSString *)ice {
-//    id result = [[[self class] iceLookup] objectForKey:ice];
-//    if ([result isNullOrNil] || ![result isString]) {
-//        result = nil;
-//    }
-//    return result;
     return [BKLookup localizedStringForIce:ice];
 }
 
 + (NSString *)localizedStringForSweetness:(NSString *)sweetness {
-//    id result = [[[self class] sweetnessLookup] objectForKey:sweetness];
-//    if ([result isNullOrNil] || ![result isString]) {
-//        result = nil;
-//    }
-//    return result;
     return [BKLookup localizedStringForSweetness:sweetness];
 }
 
++ (NSString *)localizedStringForSize:(NSString *)size {
+    return [BKLookup localizedStringForSize:size];
+}
+
 + (NSDictionary *)iceLookup {
-//    static NSDictionary *result;
-//    
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"IceDictionary" withExtension:@"plist"]];
-//    });
-//    //[result identifyMyself];
-//    return result;
     return [BKLookup iceLookup];
 }
 
 + (NSDictionary *)sweetnessLookup {
-//    static NSDictionary *result;
-//    
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SweetnessDictionary" withExtension:@"plist"]];
-//    });
-//    //[result identifyMyself];
-//    return result;
     return [BKLookup sweetnessLookup];
+}
+
++ (NSDictionary *)sizeLookup {
+    return [BKLookup sizeLookup];
 }
 
 @end
@@ -77,6 +59,9 @@ NSString *const BKMenuNullString = @"null";
 @property (strong, nonatomic) NSDictionary *data;
 
 @property (strong, nonatomic) NSDictionary *price;
+
+- (NSArray *)arrayForKey:(NSString *)key validValues:(NSArray *)validValues;
+- (NSArray *)localizedArrayForArray:(NSArray *)array lookup:(NSDictionary *)lookupTable;
 
 @end
 
@@ -123,78 +108,83 @@ NSString *const BKMenuNullString = @"null";
 
 - (NSArray *)iceLevels {
     if (_iceLevels == nil) {
-        id object = [self.data objectForKey:kBKMenuIce];
-        if ([object isNullOrNil] || ![object isArray]) {
-            NSLog(@"Warning: ice is %@, class %@", object, [object class]);
-            _iceLevels = @[];
-        }
-        else {
-            NSArray *validKeys = [[[self class] iceLookup] allKeys];
-            NSMutableArray *result = [NSMutableArray array];
-            for (NSString *obj in object) {
-                if (!([validKeys indexOfObject:obj] == NSNotFound)) {
-                    [result addObject:obj];
-                }
-            }
-            _iceLevels = [NSArray arrayWithArray:result];
-        }
+        _iceLevels = [self arrayForKey:kBKMenuIce validValues:[[[self class] iceLookup] allKeys]];
     }    
     return _iceLevels;
 }
 
+- (NSArray *)sweetnessLevels {
+    if (_sweetnessLevels == nil) {
+        _sweetnessLevels = [self arrayForKey:kBKMenuSweetness validValues:[[[self class] sweetnessLookup] allKeys]];
+    }
+    return _sweetnessLevels;
+}
+
+- (NSArray *)sizeLevels {
+    if (_sizeLevels == nil) {
+        //        _sizeLevels = @[@"正常", @"大", @"小"];
+        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
+        NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
+        [allKeys sortUsingAnotherArray:sortOrder];
+        _sizeLevels = [NSArray arrayWithArray:allKeys];
+    }
+    return _sizeLevels;
+}
+
 - (NSArray *)localizedIceLevels {
     if (_localizedIceLevels == nil) {
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSString *ice in self.iceLevels) {
-            NSLog(@"ice : %@", ice);
-            id object = [[[self class] iceLookup] objectForKey:ice];
-            if (object == nil) {
-                object = BKMenuNullString;
-            }            
-            [array addObject:object];
-        }
-        _localizedIceLevels = [NSArray arrayWithArray:array];
+        _localizedIceLevels = [self localizedArrayForArray:self.iceLevels lookup:[[self class] iceLookup]];
     }
     //[_localizedIceLevels identifyMyself];
     return _localizedIceLevels;
 }
 
-- (NSArray *)sweetnessLevels {
-    if (_sweetnessLevels == nil) {
-        id object = [self.data objectForKey:kBKMenuSweetness];
-        if ([object isNullOrNil] || ![object isArray]) {
-            NSLog(@"Warning: sweetness is %@, class %@", object, [object class]);
-            _sweetnessLevels = @[];
-        }
-        else {
-            NSArray *validKeys = [[[self class] sweetnessLookup] allKeys];
-            NSMutableArray *result = [NSMutableArray array];
-            for (NSString *obj in object) {
-                if (!([validKeys indexOfObject:obj] == NSNotFound)) {
-                    [result addObject:obj];
-                }
-            }
-            _sweetnessLevels = [NSArray arrayWithArray:result];
-        }
-    }    
-    return _sweetnessLevels;
-}
-
 - (NSArray *)localizedSweetnessLevels {
     if (_localizedSweetnessLevels == nil) {
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSString *sweetness in self.sweetnessLevels) {
-            NSLog(@"sweetness: %@", sweetness);
-            id object = [[[self class] sweetnessLookup] objectForKey:sweetness];
-            if (object == nil) {
-                object = BKMenuNullString;
-            }
-            [array addObject:object];
-        }
-        _localizedSweetnessLevels = [NSArray arrayWithArray:array];
+        _localizedSweetnessLevels = [self localizedArrayForArray:self.sweetnessLevels lookup:[[self class] sweetnessLookup]];
     }
     //[_localizedSweetnessLevels identifyMyself];
     return _localizedSweetnessLevels;
+}
+
+- (NSArray *)localizedSizeLevels {
+    if (_localizedSizeLevels == nil) {
+        NSLog(@"!!!!!!!!!!!!!!!!");
+        _localizedSizeLevels = [self localizedArrayForArray:self.sizeLevels lookup:[[self class] sizeLookup]];
+        NSLog(@"localized size levels %@", _localizedSizeLevels);
+        NSLog(@"!!!!!!!!!!!!!!!!");
+    }
+    //[_localizedSizeLevels identifyMyself];
+    return _localizedSizeLevels;
+}
+
+- (NSArray *)arrayForKey:(NSString *)key validValues:(NSArray *)validValues {
+    id object = [self.data objectForKey:key];
+    if ([object isNullOrNil] || ![object isArray]) {
+        return @[];
+    }
+    else {
+        NSArray *validKeys = validValues;
+        NSMutableArray *result = [NSMutableArray array];
+        for (NSString *obj in object) {
+            if (!([validKeys indexOfObject:obj] == NSNotFound)) {
+                [result addObject:obj];
+            }
+        }
+        return [NSArray arrayWithArray:result];
+    }
+}
+
+- (NSArray *)localizedArrayForArray:(NSArray *)array lookup:(NSDictionary *)lookupTable {
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *unlocalizedString in array) {
+        id object = [lookupTable objectForKey:unlocalizedString];
+        if (object == nil) {
+            object = BKMenuNullString;
+        }
+        [result addObject:object];
+    }
+    return [NSArray arrayWithArray:result];
 }
 
 - (NSString *)detail {
@@ -212,38 +202,6 @@ NSString *const BKMenuNullString = @"null";
         _priceLevels = [NSArray arrayWithArray:thePriceLevels];
     }
     return _priceLevels;
-}
-
-- (NSArray *)sizeLevels {
-    if (_sizeLevels == nil) {
-//        _sizeLevels = @[@"正常", @"大", @"小"];
-        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
-        NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
-        [allKeys sortUsingAnotherArray:sortOrder];
-//            if ([obj1 isKindOfClass:[NSString class]] && [obj2 isKindOfClass:[NSString class]]) {
-//                NSString *leftString = obj1;
-//                NSString *rightString = obj2;
-//                
-//                if ([leftString isEqualToString:kBKMenuPriceMedium]) {
-//                    NSLog(@"1");
-//                    return NSOrderedAscending;
-//                }
-//                else if ([leftString isEqualToString:kBKMenuPriceLarge] && ![rightString isEqualToString:kBKMenuPriceMedium]) {
-//                    NSLog(@"2");
-//                    return NSOrderedAscending;
-//                }
-//                else if ([leftString isEqualToString:kBKMenuPriceSmall] && ![rightString isEqualToString:kBKMenuPriceMedium] && ![rightString isEqualToString:kBKMenuPriceLarge]) {
-//                    NSLog(@"3");
-//                    return NSOrderedAscending;
-//                }
-//            }
-//            NSLog(@"obj1 = %@", obj1);
-//            NSLog(@"obj2 = %@", obj2);            
-//            NSLog(@"4");
-//            return NSOrderedDescending;
-        _sizeLevels = [NSArray arrayWithArray:allKeys];
-    }
-    return _sizeLevels;
 }
 
 - (NSURL *)picURL {

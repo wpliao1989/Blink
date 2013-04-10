@@ -84,7 +84,7 @@ enum BKUserToolSegmentationSelection {
     if (_shopIDList == nil) {
 #warning Test shop list
 //        _shopList = [NSMutableArray arrayWithObjects:@"50藍", @"成時", @"王品", nil];
-        _shopIDList = [BKAccountManager sharedBKAccountManager].favoriteShopIDs;
+        _shopIDList = [BKAccountManager sharedBKAccountManager].favoriteShopInfos;
     }
     return  _shopIDList;
 }

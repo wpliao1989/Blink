@@ -387,7 +387,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     name.text = orderContent.name;
     ice.text = [BKMenuItem localizedStringForIce:orderContent.ice];
     sweetness.text = [BKMenuItem localizedStringForSweetness:orderContent.sweetness];
-    quantityAndSize.text = [NSString stringWithFormat:@"%@ %@", [orderContent.quantity stringValue], orderContent.size];
+    quantityAndSize.text = [NSString stringWithFormat:@"%@ %@", [orderContent.quantity stringValue], [orderContent localizedSize]];
     price.text = [self currencyStringForPrice:orderContent.priceValue];
     
     return cell;
@@ -446,7 +446,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
         
         if (component == sizeComponent) {
             if ([self hasSelectableSize]) {
-                count = self.selectedMenuItem.sizeLevels.count;
+                count = self.selectedMenuItem.localizedSizeLevels.count;
             }
         }
         else if (component == quantityComponent) {
@@ -538,7 +538,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
                 NSString *theSize = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
                 NSNumber *thePrice = [self.selectedMenuItem priceForSize:theSize];                
-                label.text = [NSString stringWithFormat:@"%@ %@", theSize, [self currencyStringForPrice:thePrice]];
+                label.text = [NSString stringWithFormat:@"%@ %@", [BKMenuItem localizedStringForSize:theSize], [self currencyStringForPrice:thePrice]];
             }
         }
         else if (component == quantityComponent) {
@@ -804,7 +804,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    [self testPrint];
     NSString *title;
     if (self.selectedSize != nil) {
-        title = [NSString stringWithFormat:@"%@ %@ %@", self.selectedQuantity, self.selectedSize, [self currencyStringForPrice:[self.selectedMenuItem priceForSize:self.selectedSize]]];
+        title = [NSString stringWithFormat:@"%@ %@ %@", self.selectedQuantity, [BKMenuItem localizedStringForSize:self.selectedSize], [self currencyStringForPrice:[self.selectedMenuItem priceForSize:self.selectedSize]]];
     }
     else {
         title = [NSString stringWithFormat:@"%@", self.selectedQuantity];

@@ -27,6 +27,14 @@
     return result;
 }
 
++ (NSString *)localizedStringForSize:(NSString *)size {
+    id result = [[[self class] sizeLookup] objectForKey:size];
+    if ([result isNullOrNil] || ![result isString]) {
+        result = nil;
+    }
+    return result;
+}
+
 + (NSDictionary *)iceLookup {
     static NSDictionary *result;
     
@@ -44,6 +52,17 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SweetnessDictionary" withExtension:@"plist"]];
+    });
+    //[result identifyMyself];
+    return result;
+}
+
++ (NSDictionary *)sizeLookup {
+    static NSDictionary *result;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        result = [NSDictionary dictionaryWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SizeDictionary" withExtension:@"plist"]];
     });
     //[result identifyMyself];
     return result;

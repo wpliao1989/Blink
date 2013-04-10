@@ -10,16 +10,6 @@
 
 @class BKOrderContent;
 
-//FOUNDATION_EXPORT NSString *const kBKOrderUserToken;
-//FOUNDATION_EXPORT NSString *const kBKOrderShopID;
-//FOUNDATION_EXPORT NSString *const kBKOrderRecordTime;
-//FOUNDATION_EXPORT NSString *const kBKOrderUserAddress;
-//FOUNDATION_EXPORT NSString *const kBKOrderUserPhone;
-//FOUNDATION_EXPORT NSString *const kBKOrderContent;
-
-FOUNDATION_EXPORT NSString *const kBKOrderMethodDelivery;
-FOUNDATION_EXPORT NSString *const kBKOrderMethodTakeout;
-
 @interface BKOrder : NSObject
 
 @property (nonatomic, strong) NSString *userToken;

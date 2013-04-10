@@ -18,10 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
 //    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];    
+//    [self.window makeKeyAndVisible];
     
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"775724ff"];
     
@@ -31,6 +32,17 @@
     [[BKAPIManager sharedBKAPIManager] updateServerInfo];
     
     [BKTestCenter testMethods];
+    
+    [self.window makeKeyAndVisible];
+    
+    UIImageView *demoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 226, 128)];
+    demoView.image = [UIImage imageNamed:@"demo"];
+    demoView.center = self.window.center;
+    demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    
+    [self.window addSubview:demoView];
+    NSLog(@"window subviews: %@", self.window.subviews);
     
     return YES;
 }

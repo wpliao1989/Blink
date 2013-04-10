@@ -12,8 +12,10 @@
 
 + (NSString *)localizedStringForIce:(NSString *)ice;
 + (NSString *)localizedStringForSweetness:(NSString *)sweetness;
++ (NSString *)localizedStringForSize:(NSString *)size;
 
 + (NSDictionary *)iceLookup;
 + (NSDictionary *)sweetnessLookup;
++ (NSDictionary *)sizeLookup;
 
 @end

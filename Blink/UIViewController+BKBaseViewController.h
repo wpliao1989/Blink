@@ -19,7 +19,7 @@
 
 @interface UIViewController (AdditionalSetup)
 
-- (void)viewDidLoad;
+//- (void)viewDidLoad;
 
 @end
 

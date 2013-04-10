@@ -109,6 +109,8 @@
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
 		42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */; };
 		42B266691705E2B800183C6A /* orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B266681705E2B800183C6A /* orange@2x.png */; };
+		42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC291714F45600A16A13 /* BKShopListCell.xib */; };
+		42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */; };
 		42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
@@ -379,6 +381,8 @@
 		42B266611705DE2300183C6A /* UIButton+AKSegmentedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AKSegmentedButton.h"; sourceTree = "<group>"; };
 		42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AKSegmentedButton.m"; sourceTree = "<group>"; };
 		42B266681705E2B800183C6A /* orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange@2x.png"; sourceTree = "<group>"; };
+		42B3DC291714F45600A16A13 /* BKShopListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BKShopListCell.xib; sourceTree = "<group>"; };
+		42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SizeDictionary.plist; sourceTree = "<group>"; };
 		42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKSearchParameter.h; sourceTree = "<group>"; };
 		42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKSearchParameter.m; sourceTree = "<group>"; };
 		42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKSearchOption.h; sourceTree = "<group>"; };
@@ -777,6 +781,7 @@
 				42A978A9170AC34800494658 /* SortCriteriaArray.plist */,
 				42A978B1170AD77500494658 /* IceDictionary.plist */,
 				42A978B3170AD7B400494658 /* SweetnessDictionary.plist */,
+				42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -873,6 +878,7 @@
 			children = (
 				CE82B5E616F05AE5008828CB /* BKShopListCell.h */,
 				CE82B5E716F05AE5008828CB /* BKShopListCell.m */,
+				42B3DC291714F45600A16A13 /* BKShopListCell.xib */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -1337,6 +1343,8 @@
 				42A978AA170AC34800494658 /* SortCriteriaArray.plist in Resources */,
 				42A978B2170AD77500494658 /* IceDictionary.plist in Resources */,
 				42A978B4170AD7B400494658 /* SweetnessDictionary.plist in Resources */,
+				42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */,
+				42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

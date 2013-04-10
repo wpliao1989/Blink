@@ -31,9 +31,13 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @property (nonatomic) BOOL isLogin;
 // Array of shopInfos
-@property (strong, nonatomic) NSArray *favoriteShopIDs;
+@property (strong, nonatomic) NSArray *favoriteShopInfos;
 
 - (void)loginWithAccount:(NSString *)account password:(NSString *)pwd CompleteHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 - (void)logout;
+
+@end
+
+@interface BKAccountManager (UserTool)
 
 @end

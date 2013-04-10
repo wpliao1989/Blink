@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Large</key>
+	<string>大</string>
+	<key>Medium</key>
+	<string>中</string>
+	<key>Small</key>
+	<string>小</string>
+</dict>
+</plist>

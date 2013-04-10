@@ -157,19 +157,8 @@
     }
     
     NSString *iceAndSweetness = strings.count > 0 ? [NSString stringWithFormat:@"(%@)", [strings componentsJoinedByString:@"、"]] : @"";
-    //    if ((ice != nil) && (sweetness != nil)) {
-    //        iceAndSweetness = [NSString stringWithFormat:@"(%@、%@)", ice, sweetness];
-    //    }
-    //    else if (ice != nil) {
-    //        iceAndSweetness = [NSString stringWithFormat:@"(%@)", ice];
-    //    }
-    //    else if (sweetness != nil) {
-    //        iceAndSweetness = [NSString stringWithFormat:@"(%@)", sweetness];
-    //    }
     
-    return [NSString stringWithFormat:@"%@ %@ %@", [quantity stringValue], size, iceAndSweetness];
-    
-//    return [NSString stringWithFormat:@"%@%@(%@、%@)", size, [quantity stringValue], ice, sweetness];
+    return [NSString stringWithFormat:@"%@ %@ %@", [quantity stringValue], [BKMenuItem localizedStringForSize:size], iceAndSweetness];
 }
 
 #pragma mark - Tableview

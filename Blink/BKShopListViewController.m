@@ -46,13 +46,6 @@
 
 @interface BKShopListViewController ()
 
-//typedef enum  {
-//    BKListActionSheetButtonIndexDistant = 0,
-//    BKListActionSheetButtonIndexPrice = 1,
-//    BKListActionSheetButtonIndexScore = 2
-//}BKListActionSheetButtonIndex;
-
-//- (IBAction)homeButtonPressed:(id)sender;
 - (IBAction)mapButtonPressed:(id)sender;
 - (IBAction)listButtonPressed:(id)sender;
 - (IBAction)sortButtonPressed:(id)sender;
@@ -116,9 +109,6 @@
 @synthesize listActionSheet = _listActionSheet;
 @synthesize sortActionSheet = _sortActionSheet;
 @synthesize searchBar = _searchBar;
-//@synthesize locationManager = _locationManager;
-//@synthesize userCoordinate = _userCoordinate;
-//@synthesize shopInfos = _shopInfos;
 
 #pragma mark - Setters, late instantiation
 
@@ -148,49 +138,38 @@
     return _sortActionSheet;
 }
 
-//- (CLLocationManager *)locationManager {
-//    if (_locationManager == nil) {
-//        _locationManager = [[CLLocationManager alloc] init];
-//        _locationManager.delegate = self;
-//        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//        _locationManager.distanceFilter = 100;
-//    }
-//    return _locationManager;
-//}
-
 #pragma mark - View Controller Life Cycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");    
+    NSLog(@"viewDidLoad");
+    NSLog(@"self.search parameter=%@", self.searchParameter);
     NSLog(@"AuthorizationStatus = %d",[CLLocationManager authorizationStatus]);   
     
+    [self setUpMapView];
+    [self setUpTableView];
+    [self setUpCustomAppearance];
+}
+
+- (void)setUpMapView {
     [self.shopListMapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
     [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
-   
-//    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {        
-////        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
-//        [self reloadDefault];
-//    }
-    [self reloadDefault];
+}
 
+- (void)setUpTableView {
+    [self.shopListTableView registerNib:[UINib nibWithNibName:@"BKShopListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"cell"];
+    //    if ([BKShopInfoManager sharedBKShopInfoManager].shopCount == 0) {
+    ////        [self reloadDataAccordingToListCriteria:BKListCriteriaDistant];
+    //        [self reloadDefault];
+    //    }
+    [self reloadDefault];
+}
+
+- (void)setUpCustomAppearance {
     [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 }
-
-//- (void)pop {
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -218,12 +197,6 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

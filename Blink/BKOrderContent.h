@@ -42,3 +42,9 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 - (void)printValuesOfProperties;
 
 @end
+
+@interface BKOrderContent (Localization)
+
+- (NSString *)localizedSize;
+
+@end

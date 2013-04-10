@@ -9,6 +9,7 @@
 #import "BKAccountManager.h"
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
+#import "NSObject+NullObject.h"
 
 #import "BKTestCenter.h"
 
@@ -33,7 +34,6 @@ NSString *const emptyString = @"Null data";
 
 @property (strong, nonatomic) NSDictionary *data;
 
-- (BOOL)isNullValue:(id)object;
 - (void)clear;
 
 @end
@@ -43,7 +43,7 @@ NSString *const emptyString = @"Null data";
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @synthesize isLogin = _isLogin;
-@synthesize favoriteShopIDs = _favoriteShops;
+@synthesize favoriteShopInfos = _favoriteShops;
 @synthesize userToken = _userToken;
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
@@ -61,46 +61,45 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 //    return _favoriteShops;
 //}
 
-- (BOOL)isNullValue:(id)object {
-    if (object == [NSNull null] || object == nil) {
-        return YES;
-    }
-    return NO;
-}
-
 - (NSString *)userToken {
-    if ([self isNullValue:[self.data objectForKey:kBKUserToken]]) {
+    id object = [self.data objectForKey:kBKUserToken];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKUserToken];
+    return object;
 }
 
 - (NSString *)userEmail {
-    if ([self isNullValue:[self.data objectForKey:kBKUserEMail]]) {
+    id object = [self.data objectForKey:kBKUserEMail];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKUserEMail];
+    return object;
+
 }
 
 - (NSString *)userName {
-    if ([self isNullValue:[self.data objectForKey:kBKUserName]]) {
+    id object = [self.data objectForKey:kBKUserName];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKUserName];
+    return object;
 }
 
 - (NSString *)userPhone {
-    if ([self isNullValue:[self.data objectForKey:kBKUserPhone]]) {
+    id object = [self.data objectForKey:kBKUserPhone];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKUserPhone];
+    return object;
 }
 
 - (NSString *)userAddress {
-    if ([self isNullValue:[self.data objectForKey:kBKUserAddress]]) {
+    id object = [self.data objectForKey:kBKUserAddress];
+    if ([object isNullOrNil] || ![object isString]) {
         return emptyString;
     }
-    return [self.data objectForKey:kBKUserAddress];
+    return object;
 }
 
 - (void)setIsSavingPreferences:(BOOL)isSavingPreferences {
@@ -135,6 +134,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
         if (data != nil) {
             self.data = data;            
             
+            NSLog(@"Login success! Data:%@", data);
             // fetch user favorite shop IDs
             //        self.favoriteShopIDs = @[@"4000", @"5000", @"6000"];
             //        NSArray *testFavShops = [BKTestCenter testFavoriteShops];

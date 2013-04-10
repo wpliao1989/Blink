@@ -31,7 +31,8 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 @property (weak, nonatomic) UIImage *picImage;
 
 @property (strong, nonatomic) NSArray *priceLevels; // array of NSString
-@property (strong, nonatomic) NSArray *sizeLevels; // array of NSNumber
+@property (strong, nonatomic) NSArray *sizeLevels;
+@property (strong, nonatomic) NSArray *localizedSizeLevels;
 
 - (NSNumber *)priceForSize:(NSString *)size;
 
@@ -41,8 +42,10 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 
 + (NSString *)localizedStringForIce:(NSString *)ice;
 + (NSString *)localizedStringForSweetness:(NSString *)sweetness;
++ (NSString *)localizedStringForSize:(NSString *)size;
 
 + (NSDictionary *)iceLookup;
 + (NSDictionary *)sweetnessLookup;
++ (NSDictionary *)sizeLookup;
 
 @end

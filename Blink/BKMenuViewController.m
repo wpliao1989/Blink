@@ -126,12 +126,10 @@
 }
 
 - (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item {
-//    NSString *result = @"";
     NSMutableArray *result = [NSMutableArray array];
     
     for (NSString *size in item.sizeLevels) {
-        [result addObject:[NSString stringWithFormat:@"%@%@", size, [self currencyStringForPrice:[item priceForSize:size]]]];
-//        result = [result stringByAppendingFormat:@"%@%@ ", size, [self currencyStringForPrice:[item priceForSize:size]]];
+        [result addObject:[NSString stringWithFormat:@"%@%@", [BKMenuItem localizedStringForSize:size], [self currencyStringForPrice:[item priceForSize:size]]]];
     }
     return [result componentsJoinedByString:@", "];
 }

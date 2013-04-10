@@ -19,4 +19,7 @@ typedef NS_ENUM(NSUInteger, BKSearchOption) {
     BKSearchOptionSort = 1,
 };
 
+FOUNDATION_EXPORT NSString *const kBKOrderMethodDelivery;
+FOUNDATION_EXPORT NSString *const kBKOrderMethodTakeout;
+
 #endif

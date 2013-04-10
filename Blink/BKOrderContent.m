@@ -144,3 +144,11 @@ NSString *const kBKOrderContentPrice = @"price";
 }
 
 @end
+
+@implementation BKOrderContent (Localization)
+
+- (NSString *)localizedSize {
+    return [BKMenuItem localizedStringForSize:self.size];
+}
+
+@end

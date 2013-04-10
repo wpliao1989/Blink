@@ -14,6 +14,8 @@
 #import "BKAPIManager.h"
 #import "UIButton+AKSegmentedButton.h"
 #import "UIButton+ChangeTitle.h"
+#import "BKSearchParameter.h"
+#import "BKShopListViewController.h"
 
 NSString *noSelectableItem = @"無可選擇項目";
 
@@ -24,22 +26,22 @@ NSString *noSelectableItem = @"無可選擇項目";
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *userToolButton;
 
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
-@property (strong, nonatomic) IBOutlet UIPickerView *countyPicker;
-@property (strong, nonatomic) IBOutlet UIPickerView *regionPicker;
-@property (strong, nonatomic) IBOutlet BKItemSelectButton *countyButton;
-@property (strong, nonatomic) IBOutlet BKItemSelectButton *regionButton;
+@property (strong, nonatomic) IBOutlet UIPickerView *cityPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *districtPicker;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *cityButton;
+@property (strong, nonatomic) IBOutlet BKItemSelectButton *districtButton;
 
 //@property (strong, nonatomic) IBOutlet UIImageView *backgound;
 
 // Picker related
-@property (strong, nonatomic) NSArray *countys;
-@property (strong, nonatomic) NSArray *regions;
-@property (strong, nonatomic) NSString *selectedCounty;
-@property (strong, nonatomic) NSString *selectedRegion;
-- (void)updateSelectedCountyWithRow:(NSInteger)row;
-- (void)updateSelectedRegionWithRow:(NSInteger)row;
-- (BOOL)hasSelectableCounty;
-- (BOOL)hasSelectableRegion;
+@property (strong, nonatomic) NSArray *cities;
+@property (strong, nonatomic) NSArray *districts;
+@property (strong, nonatomic) NSString *selectedCity;
+@property (strong, nonatomic) NSString *selectedDistrict;
+- (void)updateSelectedCityWithRow:(NSInteger)row;
+- (void)updateSelectedDistrictWithRow:(NSInteger)row;
+- (BOOL)hasSelectableCity;
+- (BOOL)hasSelectableDistrict;
 //- (void)changeButtonTitleButton:(UIButton *)button title:(NSString *)title;
 
 - (IBAction)searchShopButtonPressed:(id)sender;
@@ -47,8 +49,8 @@ NSString *noSelectableItem = @"無可選擇項目";
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)userToolButtonPressed:(id)sender;
 - (IBAction)homeButtonPressed:(id)sender;
-- (IBAction)selectCountyButtonPressed:(id)sender;
-- (IBAction)selectRegionButtonPressed:(id)sender;
+- (IBAction)selectCityButtonPressed:(id)sender;
+- (IBAction)selectDistrictButtonPressed:(id)sender;
 - (IBAction)selectRoadButtonPressed:(id)sender;
 
 - (void)setUpSegmentedControl;
@@ -66,41 +68,29 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 @implementation BKMainPageViewController
 
-@synthesize countys = _countys;
-@synthesize regions = _regions;
-
 #pragma mark Getters and Setters
 
-- (NSArray *)countys {
+- (NSArray *)cities {
     return [BKAPIManager sharedBKAPIManager].cities;
 }
 
-- (NSArray *)regions {
-    return [[BKAPIManager sharedBKAPIManager] regionsForCity:self.selectedCounty];
+- (NSArray *)districts {
+    return [[BKAPIManager sharedBKAPIManager] regionsForCity:self.selectedCity];
 }
 
-- (void)setSelectedCounty:(NSString *)selectedCounty {
-    _selectedCounty = selectedCounty;
+- (void)setSelectedCity:(NSString *)selectedCity {
+    _selectedCity = selectedCity;
 //    [self changeButtonTitleButton:self.countyButton title:selectedCounty];
-    [self.countyButton changeTitleTo:selectedCounty];
+    [self.cityButton changeTitleTo:selectedCity];
 }
 
-- (void)setSelectedRegion:(NSString *)selectedRegion {
-    _selectedRegion = selectedRegion;
+- (void)setSelectedDistrict:(NSString *)selectedDistrict {
+    _selectedDistrict = selectedDistrict;
 //    [self changeButtonTitleButton:self.regionButton title:selectedRegion];
-    [self.regionButton changeTitleTo:selectedRegion];
+    [self.districtButton changeTitleTo:selectedDistrict];
 }
 
 #pragma mark View controller life cycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -142,15 +132,16 @@ NSString *noSelectableItem = @"無可選擇項目";
 #pragma mark - Utility methods
 
 - (void)setUpPickers {
-    self.countyButton.inputView = self.countyPicker;
-    self.regionButton.inputView = self.regionPicker;
+    self.cityButton.inputView = self.cityPicker;
+    NSLog(@"pickers:%@  %@", self.cityPicker, self.districtPicker);
+    self.districtButton.inputView = self.districtPicker;
     [self initPickerSelect];    
 //    self.roadButton.inputView = self.countyPicker;
 }
 
 - (void)initPickerSelect {
-    [self updateSelectedCountyWithRow:0];
-    [self updateSelectedRegionWithRow:0];
+    [self updateSelectedCityWithRow:0];
+    [self updateSelectedDistrictWithRow:0];
     
 //    if ([self hasSelectableCounty]) {
 //        [self.countyButton setEnabled:YES];
@@ -209,14 +200,14 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {    
     NSInteger count = 1;
-    if (pickerView == self.countyPicker) {
-        if ([self hasSelectableCounty]) {
-            count = self.countys.count;
+    if (pickerView == self.cityPicker) {
+        if ([self hasSelectableCity]) {
+            count = self.cities.count;
         }
     }
-    else if (pickerView == self.regionPicker) {
-        if ([self hasSelectableRegion]) {
-            count = self.regions.count;
+    else if (pickerView == self.districtPicker) {
+        if ([self hasSelectableDistrict]) {
+            count = self.districts.count;
         }
     }
     return count;
@@ -231,14 +222,14 @@ NSString *noSelectableItem = @"無可選擇項目";
     label.backgroundColor = [UIColor clearColor];
     label.text = noSelectableItem;
     
-    if (pickerView == self.countyPicker) {
-        if ([self hasSelectableCounty]) {
-            label.text = [self.countys objectAtIndex:row];
+    if (pickerView == self.cityPicker) {
+        if ([self hasSelectableCity]) {
+            label.text = [self.cities objectAtIndex:row];
         }        
     }
-    else if (pickerView == self.regionPicker) {
-        if ([self hasSelectableRegion]) {
-            label.text = [self.regions objectAtIndex:row];
+    else if (pickerView == self.districtPicker) {
+        if ([self hasSelectableDistrict]) {
+            label.text = [self.districts objectAtIndex:row];
         }
     }
     
@@ -246,39 +237,39 @@ NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView == self.countyPicker) {
-        [self updateSelectedCountyWithRow:row];
+    if (pickerView == self.cityPicker) {
+        [self updateSelectedCityWithRow:row];
     }
-    else if (pickerView == self.regionPicker) {
-        [self updateSelectedRegionWithRow:row];
+    else if (pickerView == self.districtPicker) {
+        [self updateSelectedDistrictWithRow:row];
     }
 }
 
 # pragma mark - Check if selectable
 
-- (BOOL)hasSelectableCounty {
-    return self.countys.count > 0;
+- (BOOL)hasSelectableCity {
+    return self.cities.count > 0;
 }
 
-- (BOOL)hasSelectableRegion {
-    return self.regions.count > 0;
+- (BOOL)hasSelectableDistrict {
+    return self.districts.count > 0;
 }
 
 #pragma mark - Update selected item methods
 
-- (void)updateSelectedCountyWithRow:(NSInteger)row {
-    if ([self hasSelectableCounty]) {
-        self.selectedCounty = [self.countys objectAtIndex:row];
+- (void)updateSelectedCityWithRow:(NSInteger)row {
+    if ([self hasSelectableCity]) {
+        self.selectedCity = [self.cities objectAtIndex:row];
         
-        [self.regionPicker reloadAllComponents];
-        [self.regionPicker selectRow:0 inComponent:0 animated:NO];
-        [self pickerView:self.regionPicker didSelectRow:0 inComponent:0];
+        [self.districtPicker reloadAllComponents];
+        [self.districtPicker selectRow:0 inComponent:0 animated:NO];
+        [self pickerView:self.districtPicker didSelectRow:0 inComponent:0];
     }    
 }
 
-- (void)updateSelectedRegionWithRow:(NSInteger)row {
-    if ([self hasSelectableRegion]) {
-        self.selectedRegion = [self.regions objectAtIndex:row];
+- (void)updateSelectedDistrictWithRow:(NSInteger)row {
+    if ([self hasSelectableDistrict]) {
+        self.selectedDistrict = [self.districts objectAtIndex:row];
     }
 }
 
@@ -294,8 +285,8 @@ NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)serverInfoDidUpdate {
     NSLog(@"server info did update!");
-    [self.countyPicker reloadAllComponents];
-    [self.regionPicker reloadAllComponents];
+    [self.cityPicker reloadAllComponents];
+    [self.districtPicker reloadAllComponents];
     [self initPickerSelect];
 }
 
@@ -326,16 +317,39 @@ NSString *noSelectableItem = @"無可選擇項目";
     
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    [self.activeField resignFirstResponder];
-//}
+#pragma mark - Prepare for segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"shopSearchSegue"]) {
+        BKSearchParameter *searchParameter = [[BKSearchParameter alloc] init];
+        searchParameter.city = self.selectedCity;
+        searchParameter.district = self.selectedDistrict;
+        
+        NSInteger deliveryIndex = 0;
+        NSInteger takeoutIndex = 1;
+        if ([self.segmentedControl firstSelectedIndex] == deliveryIndex) {
+            searchParameter.method = kBKOrderMethodDelivery;
+        }
+        else if ([self.segmentedControl firstSelectedIndex] == takeoutIndex) {
+            searchParameter.method = kBKOrderMethodTakeout;
+        }
+        else {
+            NSLog(@"Warning: invalid segmented control index!");
+        }
+        NSLog(@"search parameter = %@", searchParameter);
+        BKShopListViewController *shopListVC = segue.destinationViewController;
+        shopListVC.searchParameter = searchParameter;
+    }
+}
 
 #pragma mark - IBAction
 
 - (IBAction)searchShopButtonPressed:(id)sender {
-//    [self performSegueWithIdentifier:@"shopListSegue" sender:sender];
-    NSLog(@"Selected city: %@", self.selectedCounty);
-    NSLog(@"Selected region: %@", self.selectedRegion);
+    NSLog(@"Selected city: %@", self.selectedCity);
+    NSLog(@"Selected region: %@", self.selectedDistrict);
+    if ((self.selectedCity != nil)&&(self.selectedDistrict != nil)) {
+        [self performSegueWithIdentifier:@"shopSearchSegue" sender:sender];
+    }
 }
 
 - (IBAction)searchFoodButtonPressed:(id)sender {
@@ -350,12 +364,12 @@ NSString *noSelectableItem = @"無可選擇項目";
     [self performSegueWithIdentifier:@"userToolSegue" sender:sender];
 }
 
-- (IBAction)selectCountyButtonPressed:(id)sender {
+- (IBAction)selectCityButtonPressed:(id)sender {
     self.activeResponder = sender;
     [sender becomeFirstResponder];
 }
 
-- (IBAction)selectRegionButtonPressed:(id)sender {
+- (IBAction)selectDistrictButtonPressed:(id)sender {
     self.activeResponder = sender;
     [sender becomeFirstResponder];
 }
