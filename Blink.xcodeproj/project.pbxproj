@@ -111,6 +111,7 @@
 		42B266691705E2B800183C6A /* orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B266681705E2B800183C6A /* orange@2x.png */; };
 		42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC291714F45600A16A13 /* BKShopListCell.xib */; };
 		42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */; };
+		42B3DC321715734D00A16A13 /* UIViewController+Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */; };
 		42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
@@ -383,6 +384,8 @@
 		42B266681705E2B800183C6A /* orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange@2x.png"; sourceTree = "<group>"; };
 		42B3DC291714F45600A16A13 /* BKShopListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BKShopListCell.xib; sourceTree = "<group>"; };
 		42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SizeDictionary.plist; sourceTree = "<group>"; };
+		42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Formatter.h"; sourceTree = "<group>"; };
+		42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Formatter.m"; sourceTree = "<group>"; };
 		42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKSearchParameter.h; sourceTree = "<group>"; };
 		42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKSearchParameter.m; sourceTree = "<group>"; };
 		42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKSearchOption.h; sourceTree = "<group>"; };
@@ -643,6 +646,8 @@
 				422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */,
 				422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */,
 				422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */,
+				42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */,
+				42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1402,6 +1407,7 @@
 				422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */,
 				422861CF170D781F00E10F8E /* BKLookup.m in Sources */,
 				42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */,
+				42B3DC321715734D00A16A13 /* UIViewController+Formatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

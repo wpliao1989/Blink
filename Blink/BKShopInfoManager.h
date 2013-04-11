@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
 #import "BKSearchOption.h"
+#import "BKAPIError.h"
 
 FOUNDATION_EXPORT NSString *const BKShopImageDidDownloadNotification;
 FOUNDATION_EXPORT NSString *const kBKShopImageDidDownloadUserInfoShopInfo;
-
-typedef void (^loadDataComplete)();
 
 @class BKShopInfo;
 @class BKSearchParameter;
@@ -28,6 +27,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (NSString *)shopIDAtIndex:(NSUInteger)index;
 - (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;
 - (BKShopInfo *)shopInfoForShopID:(NSString *)shopID;
+- (NSArray *)shopInfosForShopIDs:(NSArray *)shopIDs;
 
 // Methods for loading new datas
 //- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
@@ -57,5 +57,11 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 @interface BKShopInfoManager (Map)
 
 - (NSArray *)annotations;
+
+@end
+
+@interface BKShopInfoManager (UserFavorite)
+
+- (void)loadUserFavoriteShopsParameter:(BKSearchParameter *)parameter completeHandler:(loadUserFavCompleteHandler)completeHandler;
 
 @end

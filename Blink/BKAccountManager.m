@@ -10,6 +10,7 @@
 #import "BKAPIManager.h"
 #import "BKShopInfoManager.h"
 #import "NSObject+NullObject.h"
+#import "BKSearchParameter.h"
 
 #import "BKTestCenter.h"
 
@@ -43,7 +44,6 @@ NSString *const emptyString = @"Null data";
 CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @synthesize isLogin = _isLogin;
-@synthesize favoriteShopInfos = _favoriteShops;
 @synthesize userToken = _userToken;
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
@@ -167,7 +167,22 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 - (void)clear {
-    self.data = nil;    
+    self.data = nil;
+    self.userFavoriteShops = nil;
+    self.userOrderlist = nil;
 }
 
+@end
+
+@implementation BKAccountManager (UserTool)
+
+- (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler {
+    BKSearchParameter *parameter = [[BKSearchParameter alloc] init];
+    parameter.token = self.userToken;
+    [[BKShopInfoManager sharedBKShopInfoManager] loadUserFavoriteShopsParameter:parameter completeHandler:^(NSArray *shopInfos) {
+        self.userFavoriteShops = shopInfos;
+        completeHandler();
+    }];
+}
+    
 @end

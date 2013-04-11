@@ -31,7 +31,7 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *userToolTableView;
-@property (strong, nonatomic) NSArray *shopIDList;
+@property (strong, nonatomic) NSArray *userFavoriteShops;
 @property (strong, nonatomic) NSArray *orderlist;
 //@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
 @property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
@@ -58,7 +58,7 @@ enum BKUserToolSegmentationSelection {
 
 @synthesize userToolTableView = _userToolTableView;
 //@synthesize segmentaionControl = _segmentaionControl;
-@synthesize shopIDList = _shopIDList;
+@synthesize userFavoriteShops = _userFavoriteShops;
 @synthesize orderlist = _orderlist;
 @synthesize userName = _userName;
 @synthesize userEmail = _userEmail;
@@ -80,20 +80,15 @@ enum BKUserToolSegmentationSelection {
     self.userTokenLabel.text = userToken;
 }
 
-- (NSArray *)shopIDList {
-    if (_shopIDList == nil) {
-#warning Test shop list
-//        _shopList = [NSMutableArray arrayWithObjects:@"50藍", @"成時", @"王品", nil];
-        _shopIDList = [BKAccountManager sharedBKAccountManager].favoriteShopInfos;
-    }
-    return  _shopIDList;
+- (NSArray *)userFavoriteShops {
+    return [BKAccountManager sharedBKAccountManager].userFavoriteShops;
 }
 
 - (NSArray *)orderlist {
     if (_orderlist == nil) {
 #warning Test order list
 //        _orderlist = [NSMutableArray arrayWithObjects:@"雞排", @"紅茶", @"小雞腿", nil];
-        _orderlist = [NSMutableArray array];
+        _orderlist = @[];
     }
     return _orderlist;
 }
@@ -106,20 +101,13 @@ enum BKUserToolSegmentationSelection {
     return _logoutActionSheet;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#pragma mark - View controller life cycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSLog(@"self.shopIDs = %@", self.shopIDList);
+    NSLog(@"self.shopIDs = %@", self.userFavoriteShops);
     self.userName = [BKAccountManager sharedBKAccountManager].userName;
     self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
     self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
@@ -128,6 +116,13 @@ enum BKUserToolSegmentationSelection {
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
 //    CGRect frame = self.segmentaionControl.frame;
 //    [self.segmentaionControl setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 100)];
+    
+    [self.userToolTableView registerNib:[UINib nibWithNibName:@"BKShopListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"cell"];
+    if (self.userFavoriteShops == nil) {
+        [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^{
+            //NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
+        }];
+    }
 }
 
 - (void)initSegmentedControl {
@@ -142,23 +137,14 @@ enum BKUserToolSegmentationSelection {
     UIColor *hilightedColor = [UIColor whiteColor];
     UIImage *pressedImage = [UIImage imageNamed:@"orange"];
     // Button 1    
-//    UIImage *leftButtonImage = [UIImage imageNamed:@"orange"];
-//    UIImage *leftButtonPressedImage = [UIImage imageNamed:@"orange"];
-//    UIButton *leftButton = [UIButton buttonForNormalImage:nil pressedImage:leftButtonPressedImage];
     [self.firstButton changeButtonImage:nil pressedImage:pressedImage];
     [self.firstButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
     // Button 2
-//    UIImage *midButtonImage = [UIImage imageNamed:@"orange"];
-//    UIImage *midButtonPressedImage = [UIImage imageNamed:@"orange"];
-//    UIButton *midButton = [UIButton buttonForNormalImage:nil pressedImage:midButtonPressedImage];
     [self.secondButton changeButtonImage:nil pressedImage:pressedImage];
     [self.secondButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
     // Button 3
-//    UIImage *rightButtonImage = [UIImage imageNamed:@"e2.png"];
-//    UIImage *rightButtonPressedImage = [UIImage imageNamed:@"orange"];
-//    UIButton *rightButton = [UIButton buttonForNormalImage:nil pressedImage:rightButtonPressedImage];
     [self.thirdButton changeButtonImage:nil pressedImage:pressedImage];
     [self.thirdButton changeTextColor:normalTextColor highlightedColor:hilightedColor];
     
@@ -170,18 +156,12 @@ enum BKUserToolSegmentationSelection {
     [self.userToolTableView deselectRowAtIndexPath:[self.userToolTableView indexPathForSelectedRow] animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"fromFavoriteShopDetailSegue"]) {
         BKShopDetailViewController *detailVC = segue.destinationViewController;
 //        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
         NSInteger selectedIndex = [self.userToolTableView indexPathForSelectedRow].row;
-        detailVC.shopID = [self.shopIDList objectAtIndex:selectedIndex];
+        detailVC.shopID = [self.userFavoriteShops objectAtIndex:selectedIndex];
         
     }
     else if ([segue.identifier isEqualToString:@"fromUnfinishedOrderSegue"]) {
@@ -196,7 +176,7 @@ enum BKUserToolSegmentationSelection {
     NSInteger dataCount;
     
     if(self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionShop) {
-        dataCount = self.shopIDList.count;
+        dataCount = self.userFavoriteShops.count;
     }
     else if (self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         dataCount = self.orderlist.count;
@@ -212,7 +192,7 @@ enum BKUserToolSegmentationSelection {
     
     if(self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionShop) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];        
-        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:[self.shopIDList objectAtIndex:indexPath.row]].name;
+        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:[self.userFavoriteShops objectAtIndex:indexPath.row]].name;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Shop #%d", indexPath.row];
     }
     else if (self.segmentedControl.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {

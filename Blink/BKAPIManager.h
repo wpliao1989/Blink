@@ -21,8 +21,6 @@ FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
 FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
-typedef void (^loadDataCompleteHandler)(NSArray *shopIDs, NSArray *rawDatas);
-
 #import "BKBaseAPIManager.h"
 
 @interface BKAPIManager : BKBaseAPIManager<CLLocationManagerDelegate>

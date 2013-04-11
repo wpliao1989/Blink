@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
+#import "BKAPIError.h"
 
 FOUNDATION_EXPORT NSString *const BKLoggingMessage;
 FOUNDATION_EXPORT NSString *const BKLoginSuccessMessage;
@@ -27,11 +28,12 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 @property (strong, nonatomic) NSString *userPreferedPassword;
 @property (nonatomic) BOOL isSavingPreferences;
 
+@property (strong, nonatomic) NSArray *userFavoriteShops;
+@property (strong, nonatomic) NSArray *userOrderlist;
+
 - (void)saveUserPreferedAccount:(NSString *)account password:(NSString *)password;
 
 @property (nonatomic) BOOL isLogin;
-// Array of shopInfos
-@property (strong, nonatomic) NSArray *favoriteShopInfos;
 
 - (void)loginWithAccount:(NSString *)account password:(NSString *)pwd CompleteHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 - (void)logout;
@@ -39,5 +41,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 @end
 
 @interface BKAccountManager (UserTool)
+
+- (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler;
 
 @end

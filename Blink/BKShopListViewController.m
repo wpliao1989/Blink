@@ -18,6 +18,7 @@
 #import "NSString+MKCoordinateRegion.h"
 #import "BKSearchOption.h"
 #import "BKSearchParameter.h"
+#import "UIViewController+Formatter.h"
 
 #import "BKTestCenter.h"
 
@@ -67,14 +68,9 @@
 
 @property (strong, nonatomic) UIActionSheet *listActionSheet;
 @property (strong, nonatomic) UIActionSheet *sortActionSheet;
-//@property (strong, nonatomic) CLLocationManager *locationManager;
-//@property (nonatomic) CLLocationCoordinate2D userCoordinate;
-//@property (nonatomic) BOOL isLoadingNewData;
-//@property (nonatomic) BOOL isLocationServiceEnabled;
-
-//@property (strong, nonatomic) NSMutableArray *shopInfos;
 
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
+
 // Methods for reloading data based on list criteria
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
 - (void)reloadDataUsingListWithActionSheetIndex:(NSUInteger)index;
@@ -89,13 +85,6 @@
 - (void)locationBecameAvailable;
 - (void)serverInfoDidUpdate;
 - (void)registerNotifications;
-
-- (NSString *)currencyStringForPrice:(NSNumber *)price;
-//- (NSString *)stringForDeliverCostAndService:(NSNumber *)cost;
-- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo;
-- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo;
-//- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation;
-- (NSString *)stringForDistance:(NSNumber *)distance;
 
 - (UIImage *)defaultPicture;
 
@@ -384,84 +373,6 @@
 ////    [self saveTestShopInfosWithShopIDs:nil];
 //}
 
-- (NSString *)currencyStringForPrice:(NSNumber *)price {
-    static NSNumberFormatter *currencyFormatter;
-    
-    if (currencyFormatter == nil) {
-        currencyFormatter = [[NSNumberFormatter alloc] init];
-        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [currencyFormatter setPositiveFormat:@"¤#,###"];
-        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-        [currencyFormatter setLocale:twLocale];
-        [currencyFormatter setCurrencySymbol:@"$"];
-        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-    }
-    
-    return [currencyFormatter stringFromNumber:price];
-}
-
-//- (NSString *)stringForDeliverCostAndServiceShopInfo:(NSNumber *)cost {
-//    return [NSString stringWithFormat:@"%@%@", [self currencyStringForPrice:cost], ];
-//}
-
-- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo {
-    NSMutableArray *strings = [NSMutableArray array];
-    NSString *deliverCostString = [self stringForDeliverCostAndServiceOfShopInfo:shopInfo];
-    NSString *distanceString = [self stringForDistance:shopInfo.distance];
-    if (deliverCostString.length > 0) {
-        [strings addObject:deliverCostString];
-    }
-    if (distanceString.length > 0) {
-        [strings addObject:distanceString];
-    }
-    return [strings componentsJoinedByString:@"，"];
-}
-
-- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo {
-    static NSString *freeDelivery = @"免費外送";
-    static NSString *chargeDelivery = @"自費外送";
-    NSString *minPirce = [self currencyStringForPrice:shopInfo.minPrice];
-    
-    NSMutableArray *strings = [NSMutableArray arrayWithObject:minPirce];
-    
-    
-    if ([shopInfo isServiceFreeDelivery]) {
-        [strings addObject:freeDelivery];
-        return [strings componentsJoinedByString:@""];
-    }
-    else if ([shopInfo isServiceHasDeliveryCost]) {
-        [strings addObject:chargeDelivery];
-        return [strings componentsJoinedByString:@""];
-    }
-    else {
-        return [NSString stringWithFormat:@""];
-    }    
-}
-
-//- (NSString *)stringForDistanceFrom:(CLLocation *)shopLocation {
-//    CLLocation *userLocation = [BKAPIManager sharedBKAPIManager].userLocation;
-//    CLLocationDistance distance = [userLocation distanceFromLocation:shopLocation];
-//    
-//    if (distance > 1000.0) {
-//        distance = distance/1000.0;
-//        return [NSString stringWithFormat:@"距離%0.1f公里", distance];
-//    }
-//    
-//    return [NSString stringWithFormat:@"距離%d公尺", (NSInteger)distance];
-//}
-
-- (NSString *)stringForDistance:(NSNumber *)distance {
-    double kmValue = round([distance doubleValue]);
-//    NSLog(@"distanceValue %f", kmValue);
-    
-    if (kmValue < 1.0) {
-        double mValue = floor(kmValue * 1000);
-        return [NSString stringWithFormat:@"距離%d公尺", (int)mValue];
-    }
-    
-    return [NSString stringWithFormat:@"距離%d公里", (NSInteger)kmValue];
-}
-
 - (UIImage *)defaultPicture {
     static UIImage *pic;
     if (pic == nil) {
@@ -546,35 +457,10 @@
     else {
         BKShopListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
-
-        UIImage *backgroundImage = [UIImage imageNamed:@"list"];
-        UIImage *pressImage = [UIImage imageNamed:@"list_press"];        
-        
-        cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];        
-        cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:pressImage];
         if (theShopInfo.pictureImage == nil) {
             cell.imageView.image = [self defaultPicture];
-        }        
-        
-        // Configure shop name
-        cell.shopNameLabel.text = theShopInfo.name;       
-        
-        // Configure deliver price and distance
-//        CLLocation *shopLocation = theShopInfo.shopLocaiton;
-
-        cell.priceAndDistanceLabel.text = [self stringForDeliveryCostAndDistanceLabelOfShopInfo:theShopInfo];
-        
-        // Configure commerce type
-        cell.commerceTypeLabel.text = [theShopInfo localizedTypeString];
-        
-        // Configure score
-        NSInteger shopScore = [theShopInfo.score intValue];
-        if (shopScore <= ((BKShopListCell *)cell).scoreImageViews.count) {            
-            for (NSInteger i = 0; i < shopScore; i++) {                
-                UIImageView *scoreImageView = [((BKShopListCell *)cell).scoreImageViews objectAtIndex:i];
-                scoreImageView.image = [UIImage imageNamed:@"star_press"];
-            }
         }
+        [self configureCell:cell withShopInfo:theShopInfo];
         
 //        NSLog(@"shopID :%@", theShopInfo.shopID);
 //        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);
@@ -591,9 +477,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (self.isLoadingNewData == YES) {
-//        return 1;
-//    }
     if ([BKAPIManager sharedBKAPIManager].isLocationServiceAvailable == NO) {        
         return 1;
     }
@@ -641,10 +524,6 @@
     }
     
 }
-
-//-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.searchBar resignFirstResponder];

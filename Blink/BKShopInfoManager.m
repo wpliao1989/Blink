@@ -88,6 +88,17 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     return [self.shopInfoDictionary objectForKey:shopID];
 }
 
+- (NSArray *)shopInfosForShopIDs:(NSArray *)shopIDs {
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *theShopID in shopIDs) {
+        BKShopInfo *theShopInfo = [self shopInfoForShopID:theShopID];
+        if (theShopInfo) {
+            [result addObject:theShopInfo];
+        }
+    }
+    return [NSArray arrayWithArray:result];
+}
+
 #pragma mark - Load data
 
 //- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler {
@@ -224,6 +235,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
         [result addObject:[self shopInfoForShopID:theShopID]];
     }
     return [NSArray arrayWithArray:result];
+}
+
+@end
+
+@implementation BKShopInfoManager (UserFavorite)
+
+- (void)loadUserFavoriteShopsParameter:(BKSearchParameter *)parameter completeHandler:(loadUserFavCompleteHandler)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadData:BKSearchOptionUserFavorite parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+        [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+        NSArray *shopInfos = [self shopInfosForShopIDs:shopIDs];
+        completeHandler(shopInfos);
+    }];
 }
 
 @end

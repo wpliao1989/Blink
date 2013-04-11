@@ -26,4 +26,9 @@ typedef NS_ENUM(NSUInteger, BKErrorWrongResult) {
     BKErrorWrongResultOrder = 2
 };
 
+// For API complete handler
+typedef void (^loadDataCompleteHandler)(NSArray *shopIDs, NSArray *rawDatas);
+typedef void (^loadDataComplete)();
+typedef void (^loadUserFavCompleteHandler)(NSArray *shopInfos);
+
 #endif
