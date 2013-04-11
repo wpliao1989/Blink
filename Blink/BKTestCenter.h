@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class BKOrder;
-@class BKOrderContent;
+@class BKOrderForSending;
+@class BKOrderContentForSending;
 
 @interface BKTestCenter : NSObject
 
 + (NSArray *)testShopInfos;
 + (NSArray *)testFavoriteShops;
-+ (BKOrder *)testOrder;
-+ (BKOrderContent *)testOrderContent;
++ (BKOrderForSending *)testOrder;
++ (BKOrderContentForSending *)testOrderContent;
 
 + (void)testPrint;
 + (void)testMethods;

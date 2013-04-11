@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class BKOrderContent;
+@class BKOrderContentForSending;
 
-@interface BKOrder : NSObject
+@interface BKOrderForSending : NSObject
 
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *userName;
@@ -27,16 +27,16 @@
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, strong) NSString *method;
 
-- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
+- (void)addNewOrderContent:(BKOrderContentForSending *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
-- (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
+- (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index;
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContents;
 
 @property (nonatomic, strong) NSNumber *totalPrice;
 - (void)updateTotalPrice;
 
-- (BKOrder *)orderForAPI;
+- (BKOrderForSending *)orderForAPI;
 
 - (void)printValuesOfProperties;
 

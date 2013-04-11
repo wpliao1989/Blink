@@ -17,7 +17,7 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 
 @class BKMenuItem;
 
-@interface BKOrderContent : NSObject
+@interface BKOrderContentForSending : NSObject
 
 - initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size;
 
@@ -37,13 +37,13 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentQuantity;
 - (NSNumber *)priceValue;
 
 - (NSDictionary *)contentForAPI;
-- (BOOL)isEqualExceptQuantity:(BKOrderContent *)theOrderContent;
+- (BOOL)isEqualExceptQuantity:(BKOrderContentForSending *)theOrderContent;
 
 - (void)printValuesOfProperties;
 
 @end
 
-@interface BKOrderContent (Localization)
+@interface BKOrderContentForSending (Localization)
 
 - (NSString *)localizedSize;
 

@@ -460,7 +460,7 @@
         if (theShopInfo.pictureImage == nil) {
             cell.imageView.image = [self defaultPicture];
         }
-        [self configureCell:cell withShopInfo:theShopInfo];
+        [self configureShopListCell:cell withShopInfo:theShopInfo];
         
 //        NSLog(@"shopID :%@", theShopInfo.shopID);
 //        NSLog(@"order shopID: %@", [[BKOrderManager sharedBKOrderManager] shopID]);

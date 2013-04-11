@@ -112,6 +112,12 @@
 		42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC291714F45600A16A13 /* BKShopListCell.xib */; };
 		42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */; };
 		42B3DC321715734D00A16A13 /* UIViewController+Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */; };
+		42B3DC38171660E600A16A13 /* BKOrderForReceiving.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC35171660E600A16A13 /* BKOrderForReceiving.m */; };
+		42B3DC3C1716642C00A16A13 /* BKOrderContentForReceiving.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC3B1716642C00A16A13 /* BKOrderContentForReceiving.m */; };
+		42B3DC421716873D00A16A13 /* BKUserOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC411716873D00A16A13 /* BKUserOrderListCell.m */; };
+		42B3DC441716874E00A16A13 /* BKUserOrderListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC431716874D00A16A13 /* BKUserOrderListCell.xib */; };
+		42B3DC4717168B6100A16A13 /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC4517168B6100A16A13 /* circle@2x.png */; };
+		42B3DC4817168B6100A16A13 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC4617168B6100A16A13 /* circle.png */; };
 		42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
@@ -159,7 +165,7 @@
 		CE3AB07E16EDDB5E007E6A82 /* under.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AB05216EDDB5E007E6A82 /* under.png */; };
 		CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3616D715E50005C70F /* BKMenuItem.m */; };
 		CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3A16D718600005C70F /* BKTestCenter.m */; };
-		CE55EA3E16D765990005C70F /* BKOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3D16D765990005C70F /* BKOrder.m */; };
+		CE55EA3E16D765990005C70F /* BKOrderForSending.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3D16D765990005C70F /* BKOrderForSending.m */; };
 		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
 		CE79023E16F6A6F0004E4FB9 /* bg_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE79023D16F6A6F0004E4FB9 /* bg_small@2x.png */; };
 		CE79024216F6B8ED004E4FB9 /* note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE79024116F6B8ED004E4FB9 /* note@2x.png */; };
@@ -216,7 +222,7 @@
 		CE81758516D46AB4002FA6BB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81758416D46AB4002FA6BB /* CoreLocation.framework */; };
 		CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */; };
 		CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758B16D47C2F002FA6BB /* BKShopInfo.m */; };
-		CE81758F16D47CE7002FA6BB /* BKOrderContent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758E16D47CE7002FA6BB /* BKOrderContent.m */; };
+		CE81758F16D47CE7002FA6BB /* BKOrderContentForSending.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81758E16D47CE7002FA6BB /* BKOrderContentForSending.m */; };
 		CE81949E16F31E75006A29EB /* introduce.png in Resources */ = {isa = PBXBuildFile; fileRef = CE81948816F31E75006A29EB /* introduce.png */; };
 		CE8194A516F31E75006A29EB /* list_try.png in Resources */ = {isa = PBXBuildFile; fileRef = CE81948F16F31E75006A29EB /* list_try.png */; };
 		CE8194BE16F31ECA006A29EB /* a4_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8194A816F31ECA006A29EB /* a4_press@2x.png */; };
@@ -386,6 +392,15 @@
 		42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SizeDictionary.plist; sourceTree = "<group>"; };
 		42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Formatter.h"; sourceTree = "<group>"; };
 		42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Formatter.m"; sourceTree = "<group>"; };
+		42B3DC34171660E600A16A13 /* BKOrderForReceiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BKOrderForReceiving.h; path = ../../BlinkIPad/BlinkIPad/BKOrderForReceiving.h; sourceTree = "<group>"; };
+		42B3DC35171660E600A16A13 /* BKOrderForReceiving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BKOrderForReceiving.m; path = ../../BlinkIPad/BlinkIPad/BKOrderForReceiving.m; sourceTree = "<group>"; };
+		42B3DC3A1716642C00A16A13 /* BKOrderContentForReceiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BKOrderContentForReceiving.h; path = ../../BlinkIPad/BlinkIPad/BKOrderContentForReceiving.h; sourceTree = "<group>"; };
+		42B3DC3B1716642C00A16A13 /* BKOrderContentForReceiving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BKOrderContentForReceiving.m; path = ../../BlinkIPad/BlinkIPad/BKOrderContentForReceiving.m; sourceTree = "<group>"; };
+		42B3DC401716873D00A16A13 /* BKUserOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKUserOrderListCell.h; sourceTree = "<group>"; };
+		42B3DC411716873D00A16A13 /* BKUserOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKUserOrderListCell.m; sourceTree = "<group>"; };
+		42B3DC431716874D00A16A13 /* BKUserOrderListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BKUserOrderListCell.xib; sourceTree = "<group>"; };
+		42B3DC4517168B6100A16A13 /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
+		42B3DC4617168B6100A16A13 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKSearchParameter.h; sourceTree = "<group>"; };
 		42C2DEBD1712C1B00045B3F7 /* BKSearchParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKSearchParameter.m; sourceTree = "<group>"; };
 		42C2DEBF1712CA280045B3F7 /* BKSearchOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKSearchOption.h; sourceTree = "<group>"; };
@@ -437,8 +452,8 @@
 		CE55EA3616D715E50005C70F /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; };
 		CE55EA3916D718600005C70F /* BKTestCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKTestCenter.h; sourceTree = "<group>"; };
 		CE55EA3A16D718600005C70F /* BKTestCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKTestCenter.m; sourceTree = "<group>"; };
-		CE55EA3C16D765990005C70F /* BKOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrder.h; sourceTree = "<group>"; };
-		CE55EA3D16D765990005C70F /* BKOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrder.m; sourceTree = "<group>"; };
+		CE55EA3C16D765990005C70F /* BKOrderForSending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderForSending.h; sourceTree = "<group>"; };
+		CE55EA3D16D765990005C70F /* BKOrderForSending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderForSending.m; sourceTree = "<group>"; };
 		CE78482B16D20CEB00A80031 /* BKOrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderManager.h; sourceTree = "<group>"; };
 		CE78482C16D20CEB00A80031 /* BKOrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderManager.m; sourceTree = "<group>"; };
 		CE79023D16F6A6F0004E4FB9 /* bg_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_small@2x.png"; sourceTree = "<group>"; };
@@ -523,8 +538,8 @@
 		CE81758816D47BB2002FA6BB /* BKShopInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfoManager.m; sourceTree = "<group>"; };
 		CE81758A16D47C2F002FA6BB /* BKShopInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfo.h; sourceTree = "<group>"; };
 		CE81758B16D47C2F002FA6BB /* BKShopInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfo.m; sourceTree = "<group>"; };
-		CE81758D16D47CE6002FA6BB /* BKOrderContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderContent.h; sourceTree = "<group>"; };
-		CE81758E16D47CE7002FA6BB /* BKOrderContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderContent.m; sourceTree = "<group>"; };
+		CE81758D16D47CE6002FA6BB /* BKOrderContentForSending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderContentForSending.h; sourceTree = "<group>"; };
+		CE81758E16D47CE7002FA6BB /* BKOrderContentForSending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKOrderContentForSending.m; sourceTree = "<group>"; };
 		CE81948816F31E75006A29EB /* introduce.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = introduce.png; sourceTree = "<group>"; };
 		CE81948F16F31E75006A29EB /* list_try.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list_try.png; sourceTree = "<group>"; };
 		CE8194A816F31ECA006A29EB /* a4_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a4_press@2x.png"; sourceTree = "<group>"; };
@@ -650,6 +665,17 @@
 				42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		42B3DC33171660D000A16A13 /* Managed by BlindIPad */ = {
+			isa = PBXGroup;
+			children = (
+				42B3DC34171660E600A16A13 /* BKOrderForReceiving.h */,
+				42B3DC35171660E600A16A13 /* BKOrderForReceiving.m */,
+				42B3DC3A1716642C00A16A13 /* BKOrderContentForReceiving.h */,
+				42B3DC3B1716642C00A16A13 /* BKOrderContentForReceiving.m */,
+			);
+			name = "Managed by BlindIPad";
 			sourceTree = "<group>";
 		};
 		42C2DEC01712CF8A0045B3F7 /* Header */ = {
@@ -842,10 +868,11 @@
 		CE805B9516C388F20040095F /* ModelObjects */ = {
 			isa = PBXGroup;
 			children = (
-				CE81758D16D47CE6002FA6BB /* BKOrderContent.h */,
-				CE81758E16D47CE7002FA6BB /* BKOrderContent.m */,
-				CE55EA3C16D765990005C70F /* BKOrder.h */,
-				CE55EA3D16D765990005C70F /* BKOrder.m */,
+				42B3DC33171660D000A16A13 /* Managed by BlindIPad */,
+				CE81758D16D47CE6002FA6BB /* BKOrderContentForSending.h */,
+				CE81758E16D47CE7002FA6BB /* BKOrderContentForSending.m */,
+				CE55EA3C16D765990005C70F /* BKOrderForSending.h */,
+				CE55EA3D16D765990005C70F /* BKOrderForSending.m */,
 				CE81758A16D47C2F002FA6BB /* BKShopInfo.h */,
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
@@ -884,6 +911,9 @@
 				CE82B5E616F05AE5008828CB /* BKShopListCell.h */,
 				CE82B5E716F05AE5008828CB /* BKShopListCell.m */,
 				42B3DC291714F45600A16A13 /* BKShopListCell.xib */,
+				42B3DC401716873D00A16A13 /* BKUserOrderListCell.h */,
+				42B3DC411716873D00A16A13 /* BKUserOrderListCell.m */,
+				42B3DC431716874D00A16A13 /* BKUserOrderListCell.xib */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -904,6 +934,7 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				42B3DC4617168B6100A16A13 /* circle.png */,
 				42B2665A1705A50900183C6A /* orange.png */,
 				CE81948816F31E75006A29EB /* introduce.png */,
 				CE81948F16F31E75006A29EB /* list_try.png */,
@@ -1000,6 +1031,7 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				42B3DC4517168B6100A16A13 /* circle@2x.png */,
 				42B266681705E2B800183C6A /* orange@2x.png */,
 				CE79027716F6FA3C004E4FB9 /* e1_press@2x.png */,
 				CE79027816F6FA3D004E4FB9 /* e1@2x.png */,
@@ -1350,6 +1382,9 @@
 				42A978B4170AD7B400494658 /* SweetnessDictionary.plist in Resources */,
 				42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */,
 				42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */,
+				42B3DC441716874E00A16A13 /* BKUserOrderListCell.xib in Resources */,
+				42B3DC4717168B6100A16A13 /* circle@2x.png in Resources */,
+				42B3DC4817168B6100A16A13 /* circle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1381,10 +1416,10 @@
 				CE8ED96E16D357E100307FF1 /* OSConnectionManager.m in Sources */,
 				CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */,
 				CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */,
-				CE81758F16D47CE7002FA6BB /* BKOrderContent.m in Sources */,
+				CE81758F16D47CE7002FA6BB /* BKOrderContentForSending.m in Sources */,
 				CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */,
 				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
-				CE55EA3E16D765990005C70F /* BKOrder.m in Sources */,
+				CE55EA3E16D765990005C70F /* BKOrderForSending.m in Sources */,
 				CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */,
 				CE7BFAE516E4AB8F00248B3E /* Base64.m in Sources */,
 				CE7E4D1C16E59918009B44F3 /* Sha1.m in Sources */,
@@ -1408,6 +1443,9 @@
 				422861CF170D781F00E10F8E /* BKLookup.m in Sources */,
 				42C2DEBE1712C1B00045B3F7 /* BKSearchParameter.m in Sources */,
 				42B3DC321715734D00A16A13 /* UIViewController+Formatter.m in Sources */,
+				42B3DC38171660E600A16A13 /* BKOrderForReceiving.m in Sources */,
+				42B3DC3C1716642C00A16A13 /* BKOrderContentForReceiving.m in Sources */,
+				42B3DC421716873D00A16A13 /* BKUserOrderListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

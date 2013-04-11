@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
 #import "BKAPIManager.h"
-#import "BKOrder.h"
+#import "BKOrderForSending.h"
 #import "BKShopInfo.h"
 #import "NSMutableArray+Sort.h"
 #import "BKSearchParameter.h"
@@ -25,6 +25,9 @@ NSString *const kQNum = @"qNum";
 NSString *const kMethod = @"method";
 NSString *const kCity = @"city";
 NSString *const kDistrict = @"district";
+
+// Post keys
+NSString *const kToken = @"token";
 
 @interface NSData (JSONValue)
 
@@ -301,10 +304,21 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+#pragma mark - User orders
+
+- (void)getOrderWithToken:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
+    
+    NSDictionary *parameterDictionary = @{kToken : token};
+    [self callAPI:@"follow" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"訂單下載錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
 #pragma mark - User favorite
 
 - (void)getUserFavoriteWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler {
-    NSString *kToken = @"token";
     
     NSString *userToken = parameter.token;
     NSDictionary *parameterDictionary =   @{kToken: userToken};
@@ -544,7 +558,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 #pragma mark - Order
 
-- (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler)completeHandler {
+- (void)orderWithData:(BKOrderForSending *)order completionHandler:(apiCompleteHandler)completeHandler {
     NSString *kBKOrderUserToken = @"token";
     NSString *kBKOrderShopID = @"sShopID";    
     NSString *kBKOrderUserAddress = @"address";

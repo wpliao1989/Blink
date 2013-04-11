@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CWLSynthesizeSingleton.h"
 
-@class BKOrder;
-@class BKOrderContent;
+@class BKOrderForSending;
+@class BKOrderContentForSending;
 @class BKShopInfo;
 
 #ifndef NS_ENUM
@@ -28,7 +28,7 @@ FOUNDATION_EXPORT NSString *const kBKTotalPriceDidChangeNotification;
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 
-@property (nonatomic, strong) BKOrder *order;
+@property (nonatomic, strong) BKOrderForSending *order;
 @property (nonatomic, strong, readonly) NSDate *recordTime;
 
 // ------------------------------------------------------------------
@@ -41,9 +41,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 // ------------------------------------------------------------------
 // Order content
 // ------------------------------------------------------------------
-- (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
+- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
-- (BKOrderContent *)orderContentAtIndex:(NSInteger)index;
+- (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index;
 //- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
 - (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo;
 

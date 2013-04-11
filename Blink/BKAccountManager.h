@@ -43,5 +43,6 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 @interface BKAccountManager (UserTool)
 
 - (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler;
+- (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler;
 
 @end

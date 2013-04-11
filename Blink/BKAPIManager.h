@@ -14,7 +14,7 @@
 #import "CWLSynthesizeSingleton.h"
 #import "BKSearchOption.h"
 
-@class BKOrder;
+@class BKOrderForSending;
 @class BKSearchParameter;
 
 FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
@@ -47,6 +47,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 // APIs
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler) completeHandler;
 
+- (void)getOrderWithToken:(NSString *)token completionHandler:(apiCompleteHandler) completeHandler;
+
 //- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(void (^)(NSArray *shopIDs, NSArray *shopRawDatas))completeHandler;
 //- (void)loadDataWithListCriteria:(NSInteger)criteria parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler;
 //
@@ -55,7 +57,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(serviceCompleteHandler) completeHandler;
 
-- (void)orderWithData:(BKOrder *)order completionHandler:(apiCompleteHandler) completeHandler;
+- (void)orderWithData:(BKOrderForSending *)order completionHandler:(apiCompleteHandler) completeHandler;
 
 - (void)updateServerInfo;
 

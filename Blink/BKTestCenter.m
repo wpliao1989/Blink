@@ -10,8 +10,8 @@
 #import "BKShopInfo.h"
 #import "BKMenuItem.h"
 #import "BKOrderManager.h"
-#import "BKOrderContent.h"
-#import "BKOrder.h"
+#import "BKOrderContentForSending.h"
+#import "BKOrderForSending.h"
 #import "NSObject+NullObject.h"
 #import "NSMutableArray+Sort.h"
 
@@ -91,7 +91,7 @@
     return testShopInfos;
 }
 
-+ (BKOrder *)testOrder {
++ (BKOrderForSending *)testOrder {
     NSArray *testContent = @[@{kBKOrderContentUUID: @1000,
                                kBKOrderContentName: @"123",
                                kBKOrderContentSize: @"big",
@@ -99,7 +99,7 @@
                                kBKOrderContentSweetness: @"half",
                                kBKOrderContentQuantity: @10}];
     
-    BKOrder *testOrder = [[BKOrder alloc] init];
+    BKOrderForSending *testOrder = [[BKOrderForSending alloc] init];
     testOrder.userToken = @"test";
     testOrder.shopID = @"123";
     testOrder.recordTime = @"123";
@@ -114,8 +114,8 @@
 }
 
 static NSInteger quantity = 1;
-+ (BKOrderContent *)testOrderContent {    
-    BKOrderContent *testOC = [[BKOrderContent alloc] init];
++ (BKOrderContentForSending *)testOrderContent {    
+    BKOrderContentForSending *testOC = [[BKOrderContentForSending alloc] init];
     testOC.name = @"test a reeeeeeeeaaaaaaally long name";
     testOC.UUID = [NSNumber numberWithInt:1000];
     testOC.ice = @"noneqweqweqwe";

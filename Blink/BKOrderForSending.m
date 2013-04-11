@@ -6,22 +6,22 @@
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
 
-#import "BKOrder.h"
-#import "BKOrderContent.h"
+#import "BKOrderForSending.h"
+#import "BKOrderContentForSending.h"
 
 NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNotification";
 
 NSString *const kBKOrderMethodDelivery = @"0";
 NSString *const kBKOrderMethodTakeout = @"1";
 
-@interface BKOrder ()
+@interface BKOrderForSending ()
 
 // Return already existed orderContent if the UUID, name, ice, sweetness are all the same, return nil otherwise
-- (BKOrderContent *)hasOrderContent:(BKOrderContent *)anotherOrderContent;
+- (BKOrderContentForSending *)hasOrderContent:(BKOrderContentForSending *)anotherOrderContent;
 
 @end
 
-@implementation BKOrder
+@implementation BKOrderForSending
 
 @synthesize userToken = _userToken;
 @synthesize shopID = _shopID;
@@ -55,8 +55,8 @@ NSString *const kBKOrderMethodTakeout = @"1";
     _totalPrice = totalPrice;   
 }
 
-- (void)addNewOrderContent:(BKOrderContent *)content completeHandler:(void (^)(NSInteger, BOOL))completeHandler{
-    BKOrderContent *orderContentToBeModified = [self hasOrderContent:content];
+- (void)addNewOrderContent:(BKOrderContentForSending *)content completeHandler:(void (^)(NSInteger, BOOL))completeHandler{
+    BKOrderContentForSending *orderContentToBeModified = [self hasOrderContent:content];
     
     if (orderContentToBeModified != nil) {
         orderContentToBeModified.quantity = [NSNumber numberWithInt:([orderContentToBeModified.quantity intValue]+[content.quantity intValue])];
@@ -73,12 +73,12 @@ NSString *const kBKOrderMethodTakeout = @"1";
     [self.content removeObjectAtIndex:index];
 }
 
-- (BKOrderContent *)orderContentAtIndex:(NSInteger)index {
+- (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index {
     return [self.content objectAtIndex:index];
 }
 
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index {
-    BKOrderContent *theContent = [self.content objectAtIndex:index];
+    BKOrderContentForSending *theContent = [self.content objectAtIndex:index];
     theContent.quantity = quantity;
 }
 
@@ -87,8 +87,8 @@ NSString *const kBKOrderMethodTakeout = @"1";
 }
 
 #warning Must fill out empty properties before submission
-- (BKOrder *)orderForAPI {
-    BKOrder *theOrder = [[BKOrder alloc] init];
+- (BKOrderForSending *)orderForAPI {
+    BKOrderForSending *theOrder = [[BKOrderForSending alloc] init];
     theOrder.userToken = self.userToken != nil ? self.userToken : @"none";
     theOrder.userName = self.userName != nil ? self.userName : @"none";
     theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
@@ -105,7 +105,7 @@ NSString *const kBKOrderMethodTakeout = @"1";
     theOrder.method = self.method != nil ? self.method : @"none";
     
     NSMutableArray *newContensArray = [NSMutableArray array];
-    for (BKOrderContent *content in self.content) {
+    for (BKOrderContentForSending *content in self.content) {
         NSDictionary *newContent = [content contentForAPI];
         [newContensArray addObject:newContent];
     }
@@ -116,15 +116,15 @@ NSString *const kBKOrderMethodTakeout = @"1";
 
 - (void)updateTotalPrice {
     double totalPrice = 0.0;
-    for (BKOrderContent *orderContent in self.content) {
+    for (BKOrderContentForSending *orderContent in self.content) {
         totalPrice = totalPrice + [[orderContent priceValue] doubleValue];
     }
     self.totalPrice = [NSNumber numberWithDouble:totalPrice];
 }
 
-- (BKOrderContent *)hasOrderContent:(BKOrderContent *)anotherOrderContent {   
+- (BKOrderContentForSending *)hasOrderContent:(BKOrderContentForSending *)anotherOrderContent {   
     
-    for (BKOrderContent *theOrderContent in self.content) {
+    for (BKOrderContentForSending *theOrderContent in self.content) {
         if ([theOrderContent isEqualExceptQuantity:anotherOrderContent]) {
             return theOrderContent;
         }
@@ -140,7 +140,7 @@ NSString *const kBKOrderMethodTakeout = @"1";
     NSLog(@"phone is %@", self.phone);
     NSLog(@"note is %@", self.note);
     NSLog(@"content is: ");
-    for (BKOrderContent *content in self.content) {
+    for (BKOrderContentForSending *content in self.content) {
         [content printValuesOfProperties];
     }
 }

@@ -13,7 +13,7 @@
 #import "BKMainPageViewController.h"
 #import "BKNoteViewController.h"
 #import "BKOrderManager.h"
-#import "BKOrderContent.h"
+#import "BKOrderContentForSending.h"
 #import "BKMenuItem.h"
 #import "BKItemSelectButton.h"
 #import "BKShopInfo.h"
@@ -383,7 +383,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     UILabel *quantityAndSize = (UILabel *)[cell viewWithTag:4];
     UILabel *price = (UILabel *)[cell viewWithTag:5];
     
-    BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
+    BKOrderContentForSending *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     ice.text = [BKMenuItem localizedStringForIce:orderContent.ice];
     sweetness.text = [BKMenuItem localizedStringForSweetness:orderContent.sweetness];
@@ -662,7 +662,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     if ([self inValidSelectionCodes] == nil){
         [self testPrint];
         
-        BKOrderContent *newOrderContent = [[BKOrderContent alloc] initWithMenu:self.selectedMenuItem
+        BKOrderContentForSending *newOrderContent = [[BKOrderContentForSending alloc] initWithMenu:self.selectedMenuItem
                                                                            ice:self.selectedIceLevel
                                                                      sweetness:self.selectedSweetness
                                                                       quantity:self.selectedQuantity

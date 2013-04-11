@@ -9,8 +9,8 @@
 #import "BKOrderManager.h"
 #import "BKAccountManager.h"
 #import "BKAPIManager.h"
-#import "BKOrder.h"
-#import "BKOrderContent.h"
+#import "BKOrderForSending.h"
+#import "BKOrderContentForSending.h"
 #import "BKShopInfo.h"
 
 #import "BKTestCenter.h"
@@ -48,9 +48,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 @synthesize shopInfo = _shopInfo;
 @synthesize recordTime = _recordTime;
 
-- (BKOrder *)order {
+- (BKOrderForSending *)order {
     if (_order == nil) {
-        _order = [[BKOrder alloc] init];
+        _order = [[BKOrderForSending alloc] init];
     }
     return _order;
 }
@@ -131,7 +131,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return self.shopInfo != nil;
 }
 
-- (BOOL)addNewOrderContent:(BKOrderContent *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
+- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
 //    NSLog(@"%@", self.shopInfo);
 //    NSLog(@"%@", shopInfo);
     
@@ -156,7 +156,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     [self ifNoContentLeftThenClear];
 }
 
-- (BKOrderContent *)orderContentAtIndex:(NSInteger)index {
+- (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index {
     return [self.order orderContentAtIndex:index];
 }
 

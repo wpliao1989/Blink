@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 flyingman. All rights reserved.
 //
 
-#import "BKOrderContent.h"
+#import "BKOrderContentForSending.h"
 #import "BKMenuItem.h"
 
 NSString *const kBKOrderContentUUID = @"UUID";
@@ -17,7 +17,7 @@ NSString *const kBKOrderContentSweetness = @"sweetness";
 NSString *const kBKOrderContentQuantity = @"quantity";
 NSString *const kBKOrderContentPrice = @"price";
 
-@implementation BKOrderContent
+@implementation BKOrderContentForSending
 
 @synthesize UUID = _UUID;
 @synthesize name = _name;
@@ -112,7 +112,7 @@ NSString *const kBKOrderContentPrice = @"price";
     return price;
 }
 
-- (BOOL)isEqualExceptQuantity:(BKOrderContent *)theOrderContent {
+- (BOOL)isEqualExceptQuantity:(BKOrderContentForSending *)theOrderContent {
 //    NSLog([self.UUID isEqualToNumber:theOrderContent.UUID]?@"YES":@"NO");
 //    NSLog([self.name isEqualToString:theOrderContent.name]?@"YES":@"NO");
 //    NSLog(([self.ice isEqualToString:theOrderContent.ice]) || ((self.ice == nil) && (theOrderContent.ice == nil))?@"YES":@"NO");
@@ -145,7 +145,7 @@ NSString *const kBKOrderContentPrice = @"price";
 
 @end
 
-@implementation BKOrderContent (Localization)
+@implementation BKOrderContentForSending (Localization)
 
 - (NSString *)localizedSize {
     return [BKMenuItem localizedStringForSize:self.size];

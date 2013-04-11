@@ -11,6 +11,7 @@
 #import "BKShopInfoManager.h"
 #import "NSObject+NullObject.h"
 #import "BKSearchParameter.h"
+#import "BKOrderForReceiving.h"
 
 #import "BKTestCenter.h"
 
@@ -184,5 +185,23 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
         completeHandler();
     }];
 }
-    
+
+- (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] getOrderWithToken:self.userToken completionHandler:^(id data, NSError *error) {
+        NSLog(@"data = %@", data);
+        NSString *kOrderList = @"orderList"; // For getting order list return from API
+        data = [data objectForKey:kOrderList];
+        
+        //NSLog(@"new orders data: %@", data);
+        NSMutableArray *result = [NSMutableArray array];
+        for (NSDictionary *rawData in data) {
+            BKOrderForReceiving *theItem = [[BKOrderForReceiving alloc] initWithData:rawData];
+            //[theItem testPrint];
+            [result addObject:theItem];
+        }
+        self.userOrderlist = [NSArray arrayWithArray:result];
+        completeHandler();
+    }];
+}
+
 @end

@@ -10,13 +10,27 @@
 
 @class BKShopInfo;
 @class BKShopListCell;
+@class BKUserOrderListCell;
+@class BKOrderForReceiving;
 
 @interface UIViewController (Formatter)
 
+- (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
+- (NSString *)currencyStringForPrice:(NSNumber *)price;
+
+@end
+
+@interface UIViewController (ShopListCell)
+
+- (NSString *)stringForDistance:(NSNumber *)distance;
 - (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo;
 - (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo;
-- (NSString *)currencyStringForPrice:(NSNumber *)price;
-- (NSString *)stringForDistance:(NSNumber *)distance;
-- (void)configureCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo;
+- (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo;
+
+@end
+
+@interface UIViewController (UserOrderListCell)
+
+- (void)configureUserOrderListCell:(BKUserOrderListCell *)cell withOrder:(BKOrderForReceiving *)order;
 
 @end

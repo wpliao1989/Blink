@@ -9,12 +9,13 @@
 #import "BKOrderConfirmViewController.h"
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
-#import "BKOrderContent.h"
+#import "BKOrderContentForSending.h"
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKMenuItem.h"
+#import "UIViewController+Formatter.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -37,8 +38,6 @@
 
 //@property (strong, nonatomic) MBProgressHUD *HUD;
 
-- (NSString *)currencyStringForPrice:(NSNumber *)price;
-- (NSString *)stringForTotalPrice:(NSNumber *)totalPrice;
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness;
 
 - (void)initUserInfos;
@@ -104,36 +103,7 @@
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Utility methods
-
-- (NSString *)currencyStringForPrice:(NSNumber *)price {
-    static NSNumberFormatter *currencyFormatter;
-    
-    if (currencyFormatter == nil) {
-        currencyFormatter = [[NSNumberFormatter alloc] init];
-        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [currencyFormatter setPositiveFormat:@"¤#,###"];
-        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-        [currencyFormatter setLocale:twLocale];
-        [currencyFormatter setCurrencySymbol:@"$"];
-        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-    }
-    
-    return [currencyFormatter stringFromNumber:price];
-}
-
-- (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
-//    static NSString *preString = @"總金額: ";
-    static NSString *postString = @"元";
-    NSString *result = [NSString stringWithFormat:@"%@%@", [totalPrice stringValue], postString];
-    return result;
-}
 
 - (NSString *)stringFromDate:(NSDate *)date {
     static NSDateFormatter *formatter;
@@ -182,7 +152,7 @@
 //    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
 //    UILabel *ice = (UILabel *)[cell viewWithTag:6];
     
-    BKOrderContent *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
+    BKOrderContentForSending *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];
