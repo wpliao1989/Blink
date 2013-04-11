@@ -10,12 +10,13 @@
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
 #import "BKOrderContentForSending.h"
-#import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKMenuItem.h"
 #import "UIViewController+Formatter.h"
+#import "BKOrder.h"
+#import "BKOrderForSending.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -29,27 +30,20 @@
 @property (strong, nonatomic) IBOutlet UILabel *serviceTypeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
-@property (strong, nonatomic) BKShopInfo *shopInfo;
-
-@property (strong, nonatomic) NSString *userToken;
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
 @property (strong, nonatomic) NSString *userAddress;
 
-//@property (strong, nonatomic) MBProgressHUD *HUD;
-
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness;
+- (NSString *)stringFromDate:(NSDate *)date;
 
 - (void)initUserInfos;
-- (NSString *)stringFromDate:(NSDate *)date;
+- (void)setUpLabels;
 
 @end
 
 @implementation BKOrderConfirmViewController
 
-@synthesize shopInfo = _shopInfo;
-
-@synthesize userToken = _userToken;
 @synthesize userName = _userName;
 @synthesize userPhone = _userPhone;
 @synthesize userAddress = _userAddress;
@@ -69,24 +63,22 @@
     self.userAddressLabel.text = userAddress;
 }
 
-- (BKShopInfo *)shopInfo {
-    return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
-}
-
 - (void)initUserInfos {
-    self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
-    self.userName = [BKAccountManager sharedBKAccountManager].userName;
-    self.userPhone = [BKAccountManager sharedBKAccountManager].userPhone;
-    self.userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
+    self.userName = self.order.name;
+    self.userPhone = self.order.phone;
+    self.userAddress = self.order.address;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (void)setUpLabels {
+    NSLog(@"date: %@", [BKOrderManager sharedBKOrderManager].recordTime);
+    
+//    self.timeLabel.text = [self stringFromDate:[BKOrderManager sharedBKOrderManager].recordTime];
+//    self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
+//    self.shopNameLabel.text = [[BKOrderManager sharedBKOrderManager] shopName];
+    self.timeLabel.text = [self stringFromDate:self.order.recordTime];
+    self.totalPriceLabel.text = [self stringForTotalPrice:self.order.totalPrice];
+    self.shopNameLabel.text = self.order.shopName;
+
 }
 
 - (void)viewDidLoad
@@ -94,11 +86,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self initUserInfos];
-    NSLog(@"date: %@", [BKOrderManager sharedBKOrderManager].recordTime);
-    
-    self.timeLabel.text = [self stringFromDate:[BKOrderManager sharedBKOrderManager].recordTime];
-    self.totalPriceLabel.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
-    self.shopNameLabel.text = [[BKOrderManager sharedBKOrderManager] shopName];
+    [self setUpLabels];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
 }
@@ -134,7 +122,7 @@
 #pragma mark - Tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[BKOrderManager sharedBKOrderManager] numberOfOrderContentsForShopInfo:self.shopInfo];
+    return [self.order numberOfOrderContents];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +140,7 @@
 //    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
 //    UILabel *ice = (UILabel *)[cell viewWithTag:6];
     
-    BKOrderContentForSending *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
+    BKOrderContentForSending *orderContent = [self.order orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];
@@ -188,7 +176,7 @@
 
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
-    [[BKOrderManager sharedBKOrderManager] setUserToken:self.userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
+    [[BKOrderManager sharedBKOrderManager] setUserToken:((BKOrderForSending *)self.order).userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
     [self showHUDViewWithMessage:@"送出中..."];
 //    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 //    [self.navigationController.view addSubview:self.HUD];

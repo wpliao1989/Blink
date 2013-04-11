@@ -21,6 +21,7 @@
 #import "BKOrderForReceiving.h"
 #import "UIViewController+Formatter.h"
 #import "BKUserOrderListCell.h"
+#import "BKOrderConfirmViewController.h"
 
 @interface BKUserToolViewController ()
 
@@ -117,14 +118,14 @@ enum BKUserToolSegmentationSelection {
     [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];
     
     if (self.userFavoriteShops == nil) {
-        [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^{
+        [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^(BOOL success) {
             //NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
             [self.favoriteShopTableView reloadData];
         }];
     }
     
-    [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^{
-        NSLog(@"get order!");
+    [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
+        NSLog(success ? @"Get order success!" : @"Get order failed!");
         //NSLog(@"self.orderlist = %@", self.orderlist);
         [self.orderListTableView reloadData];
     }];
@@ -171,11 +172,14 @@ enum BKUserToolSegmentationSelection {
 //        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
         NSInteger selectedIndex = [self.favoriteShopTableView indexPathForSelectedRow].row;
         detailVC.shopID = [self.userFavoriteShops objectAtIndex:selectedIndex];
-        
     }
     else if ([segue.identifier isEqualToString:@"fromUnfinishedOrderSegue"]) {
         BKShopDetailViewController *detailVC = segue.destinationViewController;       
         detailVC.shopID = [[BKOrderManager sharedBKOrderManager] shopID];
+    }
+    else if ([segue.identifier isEqualToString:@"userToolToOrderConfirmSegue"]) {
+        BKOrderConfirmViewController *orderConfirmVC = segue.destinationViewController;
+        orderConfirmVC.order = sender;
     }
 }
 
@@ -218,11 +222,14 @@ enum BKUserToolSegmentationSelection {
     if(tableView == self.favoriteShopTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"shopCell"]) {
-            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:self];
+            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:[self.orderlist objectAtIndex:indexPath.row]];
         }    
     }
     else if (tableView == self.orderListTableView) {
-        
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if ([cell.reuseIdentifier isEqualToString:@"orderListCell"]) {
+            [self performSegueWithIdentifier:@"userToolToOrderConfirmSegue" sender:self];
+        }
     }
 }
 

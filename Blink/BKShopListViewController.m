@@ -264,7 +264,7 @@
     [self.shopListTableView reloadData];
     [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
     
-    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method parameter:parameter completeHandler:^{
+    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method parameter:parameter completeHandler:^(BOOL success) {
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
         
         [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];

@@ -122,7 +122,11 @@
 
 - (void)configureUserOrderListCell:(BKUserOrderListCell *)cell withOrder:(BKOrderForReceiving *)order {
     UIImage *backgroundImage = [UIImage imageNamed:@"list"];
+    UIImage *pressImage = [UIImage imageNamed:@"list_press"];
+    
     cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:pressImage];
+    
     cell.totalPriceLabel.text = [self stringForTotalPrice:order.totalPrice];
     cell.shopNameLabel.text = order.name;
 }

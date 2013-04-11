@@ -88,7 +88,7 @@
     [self configureBottomSection];
     [self configureScrollView];
     
-    [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID completeHandler:^{
+    [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID completeHandler:^(BOOL success) {
         self.scrollView.userInteractionEnabled = YES;
         [self initShop];
         [self configureIntroSection];

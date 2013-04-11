@@ -19,6 +19,7 @@
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "BKOrderForSending.h"
 
 #import "BKTestCenter.h"
 
@@ -312,7 +313,17 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"orderConfirmSegue"]) {
         BKOrderConfirmViewController *orderConfirmVC = segue.destinationViewController;
-        orderConfirmVC.shopID = self.shopID;
+        //orderConfirmVC.shopID = self.shopID;
+        orderConfirmVC.order = [BKOrderManager sharedBKOrderManager].order;
+        orderConfirmVC.order.shopName = self.shopInfo.name;
+        
+        NSString *userToken = [BKAccountManager sharedBKAccountManager].userToken;
+        NSString *userName = [BKAccountManager sharedBKAccountManager].userName;
+        NSString *userPhone = [BKAccountManager sharedBKAccountManager].userPhone;
+        NSString *userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
+        
+        [[BKOrderManager sharedBKOrderManager] setUserToken:userToken userName:userName userPhone:userPhone userAddress:userAddress];
+        [self updateSelectedTimeWithDate:self.timePicker.date];
     }
 }
 

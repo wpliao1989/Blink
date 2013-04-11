@@ -9,22 +9,7 @@
 #import "BKOrderContentForSending.h"
 #import "BKMenuItem.h"
 
-NSString *const kBKOrderContentUUID = @"UUID";
-NSString *const kBKOrderContentName = @"name";
-NSString *const kBKOrderContentSize = @"size";
-NSString *const kBKOrderContentIce = @"ice";
-NSString *const kBKOrderContentSweetness = @"sweetness";
-NSString *const kBKOrderContentQuantity = @"quantity";
-NSString *const kBKOrderContentPrice = @"price";
-
 @implementation BKOrderContentForSending
-
-@synthesize UUID = _UUID;
-@synthesize name = _name;
-@synthesize size = _size;
-@synthesize ice = _ice;
-@synthesize sweetness = _sweetness;
-@synthesize quantity = _quantity;
 
 @synthesize basePrice = _basePrice;
 //@synthesize price = _price;
@@ -42,13 +27,6 @@ NSString *const kBKOrderContentPrice = @"price";
     }
     return self;
 }
-
-//- (NSString *)basePrice {
-//    if (_basePrice == nil) {
-//        _basePrice = [[NSNumber numberWithDouble:0.0] stringValue];
-//    }
-//    return _basePrice;
-//}
 
 - (NSNumber *)basePrice {
     if (_basePrice == nil) {
@@ -69,49 +47,6 @@ NSString *const kBKOrderContentPrice = @"price";
     return theContent;
 }
 
-//- (NSString *)price {
-//    static NSNumberFormatter *currencyFormatter;    
-//    
-//    if (currencyFormatter == nil) {
-//        currencyFormatter = [[NSNumberFormatter alloc] init];
-//        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-//        [currencyFormatter setPositiveFormat:@"¤#,###"];
-//        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-//        [currencyFormatter setLocale:twLocale];
-//        [currencyFormatter setCurrencySymbol:@"$"];
-////        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-//    }
-//    
-//    NSNumber *price = [self priceValue];
-//   
-////    NSLog(@"basePrice string is %@", self.basePrice);    
-////    NSLog(@"price is %@", price);
-////    NSLog(@"currency symbol is %@", [currencyFormatter currencySymbol]);
-//    
-//    return [currencyFormatter stringFromNumber:price];
-//}
-
-- (NSNumber *)priceValue {
-//    static NSNumberFormatter *numberFormatter;
-//    if (numberFormatter == nil) {
-//        numberFormatter = [[NSNumberFormatter alloc] init];
-//        [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-//    }
-    
-//    NSNumber *basePrice = [numberFormatter numberFromString:self.basePrice];
-    NSNumber *basePrice = self.basePrice;
-//    if (basePrice == nil) {
-//        basePrice = [[NSNumber alloc] initWithDouble:0.0];
-//    }
-    
-//    NSLog(@"basePrice is %@", basePrice);
-    
-    double bp = [basePrice doubleValue];
-    double q = [self.quantity doubleValue];
-    NSNumber *price = [NSNumber numberWithDouble:(bp*q)];
-    return price;
-}
-
 - (BOOL)isEqualExceptQuantity:(BKOrderContentForSending *)theOrderContent {
 //    NSLog([self.UUID isEqualToNumber:theOrderContent.UUID]?@"YES":@"NO");
 //    NSLog([self.name isEqualToString:theOrderContent.name]?@"YES":@"NO");
@@ -130,25 +65,6 @@ NSString *const kBKOrderContentPrice = @"price";
         return YES;
     }
     return NO;
-}
-
-- (void)printValuesOfProperties {
-    NSLog(@"UUID is: %@", self.UUID);
-    NSLog(@"name is: %@", self.name);
-    NSLog(@"size is: %@", self.size);
-    NSLog(@"ice is: %@", self.ice);
-    NSLog(@"sweetness is: %@", self.sweetness);
-    NSLog(@"quantity is: %@", self.quantity);
-    NSLog(@"basePrice is: %@", self.basePrice);
-//    NSLog(@"price is: %@", self.price);
-}
-
-@end
-
-@implementation BKOrderContentForSending (Localization)
-
-- (NSString *)localizedSize {
-    return [BKMenuItem localizedStringForSize:self.size];
 }
 
 @end

@@ -10,9 +10,11 @@
 #import "BKScrollableViewController.h"
 
 @class BKShopInfo;
+@class BKOrder;
 
 @interface BKOrderConfirmViewController : BKScrollableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSString *shopID;
+//@property (strong, nonatomic) NSString *shopID;
+@property (strong, nonatomic) BKOrder *order;
 
 @end

@@ -63,7 +63,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 }
 
 - (NSDate *)recordTime {
-    return [NSDate dateWithTimeIntervalSince1970:[self.order.recordTime doubleValue]];
+    return self.order.recordTime;
 }
 
 //- (BOOL)isValidOrder {
@@ -80,7 +80,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 //        //        NSLog(@"formatter string: %@", formatter.dateFormat);
 //    }
 //    NSString *recordTime = [formatter stringFromDate:date];    
-    self.order.recordTime = [NSNumber numberWithDouble:[date timeIntervalSince1970]];
+    self.order.recordTime = date;
     //NSLog(@"Order time is set to %@", self.order.recordTime);
     //NSLog(@"Readable time %@", [NSDate dateWithTimeIntervalSince1970:[self.order.recordTime doubleValue]]);
     //_recordTime = date;
@@ -88,7 +88,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (void)setUserToken:(NSString *)token userName:(NSString *)name userPhone:(NSString *)phone userAddress:(NSString *)address {
     self.order.userToken = token;
-    self.order.userName = name;
+    self.order.name = name;
     self.order.phone = phone;
     self.order.address = address;
 }

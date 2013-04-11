@@ -127,7 +127,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     [[BKAPIManager sharedBKAPIManager] loadData:option parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
         self.shopIDs = shopIDs;
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
-        completeHandler();
+        completeHandler(YES);
     }];
 }
 
@@ -135,8 +135,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         if (data) {
             [self addShopInfoWithRawData:data forShopID:shopID];
+            completeHandler(YES);
         }
-        completeHandler();
+        else {
+            completeHandler(NO);
+        }
     }];
 }
 

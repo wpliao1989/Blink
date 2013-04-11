@@ -73,31 +73,23 @@ NSString *const kBKOrderMethodTakeout = @"1";
     [self.content removeObjectAtIndex:index];
 }
 
-- (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index {
-    return [self.content objectAtIndex:index];
-}
-
 - (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index {
     BKOrderContentForSending *theContent = [self.content objectAtIndex:index];
     theContent.quantity = quantity;
-}
-
-- (NSUInteger)numberOfOrderContents {
-    return self.content.count;
 }
 
 #warning Must fill out empty properties before submission
 - (BKOrderForSending *)orderForAPI {
     BKOrderForSending *theOrder = [[BKOrderForSending alloc] init];
     theOrder.userToken = self.userToken != nil ? self.userToken : @"none";
-    theOrder.userName = self.userName != nil ? self.userName : @"none";
+    theOrder.name = self.name != nil ? self.name : @"none";
     theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
     
 //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    formatter.dateStyle = NSDateFormatterShortStyle;
 //    formatter.timeStyle = NSDateFormatterShortStyle;
     //theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSDate date];
-    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
+    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSDate dateWithTimeIntervalSince1970:0];
     
     theOrder.address = self.address != nil ? self.address : @"none";
     theOrder.phone = self.phone != nil ? self.phone : @"none";
