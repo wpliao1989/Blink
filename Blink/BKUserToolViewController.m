@@ -115,20 +115,7 @@ enum BKUserToolSegmentationSelection {
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     
     [self.favoriteShopTableView registerNib:[UINib nibWithNibName:@"BKShopListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"cell"];
-    [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];
-    
-    if (self.userFavoriteShops == nil) {
-        [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^(BOOL success) {
-            //NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
-            [self.favoriteShopTableView reloadData];
-        }];
-    }
-    
-    [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
-        NSLog(success ? @"Get order success!" : @"Get order failed!");
-        //NSLog(@"self.orderlist = %@", self.orderlist);
-        [self.orderListTableView reloadData];
-    }];
+    [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];    
     
     // Set the selected view to show, and make others to hide
     [self segmentationChanged:self.segmentedControl];
@@ -166,17 +153,41 @@ enum BKUserToolSegmentationSelection {
     self.scrollView.contentSize = self.scrollView.frame.size;
 }
 
+- (void)configureFavoriteShops {
+    if (self.userFavoriteShops == nil) {
+        [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^(BOOL success) {
+            NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
+            [self.favoriteShopTableView reloadData];
+        }];
+    }
+}
+
+- (void)configureOrderList {
+    if (self.orderlist == nil) {
+        [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
+            NSLog(success ? @"Get order success!" : @"Get order failed!");
+            //NSLog(@"self.orderlist = %@", self.orderlist);
+            [self.orderListTableView reloadData];
+        }];
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self.favoriteShopTableView deselectRowAtIndexPath:[self.favoriteShopTableView indexPathForSelectedRow] animated:YES];
     [self.orderListTableView deselectRowAtIndexPath:[self.orderListTableView indexPathForSelectedRow] animated:YES];
+    
+    [self configureFavoriteShops];
+    [self configureOrderList];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"fromFavoriteShopDetailSegue"]) {
-        BKShopDetailViewController *detailVC = segue.destinationViewController;
-//        detailVC.shopInfo = [self.shopList objectAtIndex:[self.userToolTableView indexPathForSelectedRow].row];
-        NSInteger selectedIndex = [self.favoriteShopTableView indexPathForSelectedRow].row;
-        detailVC.shopID = [self.userFavoriteShops objectAtIndex:selectedIndex];
+        if ([sender isKindOfClass:[BKShopInfo class]]) {
+            BKShopInfo *shopInfo = sender;
+            BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
+            NSString *shopID = shopInfo.sShopID;
+            shopDetailViewController.shopID = shopID;
+        }
     }
     else if ([segue.identifier isEqualToString:@"fromUnfinishedOrderSegue"]) {
         BKShopDetailViewController *detailVC = segue.destinationViewController;       
@@ -209,9 +220,9 @@ enum BKUserToolSegmentationSelection {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(tableView == self.favoriteShopTableView) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopCell"];
-        cell.textLabel.text = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:[self.userFavoriteShops objectAtIndex:indexPath.row]].name;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"Shop #%d", indexPath.row];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+        [self configureShopListCell:cell withShopInfo:theShopInfo];
         return cell;
     }
     else if (tableView == self.orderListTableView) {
@@ -224,11 +235,27 @@ enum BKUserToolSegmentationSelection {
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
+        return;
+    }
+    BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+    
+    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
+        
+        [self downloadImageForShopInfo:theShopInfo completeHandler:^(UIImage *image) {
+            UITableViewCell *theCell = [self.favoriteShopTableView cellForRowAtIndexPath:indexPath];
+            [self setImageView:theCell.imageView withImage:image];
+        }];
+    }    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(tableView == self.favoriteShopTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([cell.reuseIdentifier isEqualToString:@"shopCell"]) {
-            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:self];
+        if ([cell.reuseIdentifier isEqualToString:@"cell"]) {
+            BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:theShopInfo];
         }    
     }
     else if (tableView == self.orderListTableView) {

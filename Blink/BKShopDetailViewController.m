@@ -14,12 +14,14 @@
 #import "BKMakeOrderViewController.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKOrderManager.h"
+#import "BKAccountManager+Favorite.h"
 
 @interface BKShopDetailViewController ()
 
 - (IBAction)menuButtonPressed:(id)sender;
 - (IBAction)orderDeliverButtonPressed:(id)sender;
 - (IBAction)takeAwayButtonPressed:(id)sender;
+- (IBAction)addFavoriteShopButtonPressed:(id)sender;
 
 @property (nonatomic, strong) BKShopInfo *shopInfo;
 @property (strong, nonatomic) UIImage *shopImage; // Keep a strong pointer to prevent image from dealloc
@@ -156,7 +158,7 @@
         //    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
         //    [self.shopPic.layer setBorderWidth:3];
     }
-    else {        
+    else {
         NSLog([[BKShopInfoManager sharedBKShopInfoManager] isDownloadingImageForShopInfo:self.shopInfo]?@"Yes downloading %@":@"NO not downloading %@", self.shopInfo.name);
     }
 }
@@ -314,6 +316,17 @@
 - (IBAction)takeAwayButtonPressed:(id)sender {
     [[BKOrderManager sharedBKOrderManager] setOrderMethod:BKOrderMethodTakeout];
     [self performSegueWithIdentifier:@"makeOrderSegue" sender:self];
+}
+
+- (IBAction)addFavoriteShopButtonPressed:(id)sender {
+    [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
+        if (success) {
+            NSLog(@"Add user favorite success! shopID:%@", self.shopID);
+        }
+        else {
+            NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
+        }
+    }];
 }
 - (void)viewDidUnload {
     [self setShopURL:nil];

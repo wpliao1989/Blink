@@ -66,7 +66,7 @@ NSString *const kToken = @"token";
 - (void)getUserFavoriteWithParameter:(BKSearchParameter *)parameter completionHandler:(serviceCompleteHandler)completeHandler;
 - (NSDictionary *)dictionaryByAddingParameter:(BKSearchParameter *)parameter toDictionary:(NSDictionary *)baseDictionary ;
 //- (void)handleListAndSortResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(void (^)(NSArray *, NSArray *))completeHandler;
-- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler;
+- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error dataKey:(NSString *)key completeHandler:(loadDataCompleteHandler)completeHandler;
 
 - (BOOL)isEmptyCoordinate:(CLLocationCoordinate2D)cooridnate;
 - (BOOL)isServiceInfoValid;
@@ -389,9 +389,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //    }
 //}
 
-- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error completeHandler:(loadDataCompleteHandler)completeHandler {
-    static NSString *kShops = @"shop";
-    
+- (void)handleLoadDataResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error dataKey:(NSString *)key completeHandler:(loadDataCompleteHandler)completeHandler {    
     NSLog(@"response: %@", response);
     NSLog(@"data :%@", data);
     NSLog(@"error: %@", error);
@@ -416,7 +414,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        NSLog(@"type is %@, class is %@", dict[type], [dict[type] class]);
 //    }
     
-    NSArray *shopRawDatas = data[kShops];
+    NSArray *shopRawDatas = data[key];
     self.isLoadingData = NO;
     
     if (shopRawDatas.count == 0) {        
@@ -425,7 +423,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     else {
         NSMutableArray *shopIDs = [NSMutableArray array];
         for (NSDictionary *dict in shopRawDatas) {
-            [shopIDs addObject:dict[kBKSShopID]];
+            if (dict[kBKSShopID]) {
+                [shopIDs addObject:dict[kBKSShopID]];
+            }
+            else if (dict[kBKShopID]) {
+                [shopIDs addObject:dict[kBKShopID]];
+            }        
         }
         completeHandler([NSArray arrayWithArray:shopIDs], shopRawDatas);
     }
@@ -434,7 +437,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)loadData:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
     
     serviceCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
-        [self handleLoadDataResponse:response data:data error:error completeHandler:completeHandler];
+         NSString *const kShops = @"shop";
+        [self handleLoadDataResponse:response data:data error:error dataKey:kShops completeHandler:completeHandler];
+    };
+    
+    serviceCompleteHandler favHandler = ^(NSURLResponse *response, id data, NSError *error) {
+        NSString *const kShops = @"favShopID";
+        [self handleLoadDataResponse:response data:data error:error dataKey:kShops completeHandler:completeHandler];
     };
     
     switch (option) {
@@ -449,7 +458,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
             [self searchWithParameter:parameter completionHandler:handler];
             break;
         case BKSearchOptionUserFavorite:
-            [self getUserFavoriteWithParameter:parameter completionHandler:handler];
+            [self getUserFavoriteWithParameter:parameter completionHandler:favHandler];
             break;
             
         default:
@@ -734,5 +743,19 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     self.localizedSortCriteria = [NSArray arrayWithArray:array];
 }
 
+
+@end
+
+@implementation BKAPIManager (Favorite)
+
+- (void)addUserFavoriteWithToken:(NSString *)token sShopID:(NSString *)sShopID completeHandler:(apiCompleteHandler)completeHandler{
+    NSDictionary *parameterDictionary = @{kToken : token, kBKSShopID : sShopID};
+    [self callAPI:@"fav_add" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"新增錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
 
 @end

@@ -65,6 +65,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *locateUserButton;
 //@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
+@property (strong, nonatomic) IBOutlet UIButton *searchButton;
 
 @property (strong, nonatomic) UIActionSheet *listActionSheet;
 @property (strong, nonatomic) UIActionSheet *sortActionSheet;
@@ -85,8 +86,6 @@
 - (void)locationBecameAvailable;
 - (void)serverInfoDidUpdate;
 - (void)registerNotifications;
-
-- (UIImage *)defaultPicture;
 
 @end
 
@@ -373,14 +372,6 @@
 ////    [self saveTestShopInfosWithShopIDs:nil];
 //}
 
-- (UIImage *)defaultPicture {
-    static UIImage *pic;
-    if (pic == nil) {
-        pic = [UIImage imageNamed:@"picture"];
-    }    
-    return pic;
-}
-
 - (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo {
     [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:shopInfo completeHandler:^(UIImage *image) {
         
@@ -389,7 +380,7 @@
         if ( indexForShop != NSNotFound) {
             // Configure table view
             UITableViewCell *cell = [self.shopListTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexForShop inSection:0]];
-            cell.imageView.image = image;
+            [self setImageView:cell.imageView withImage:image];
             
             // Configure map view
             if (self.shopListMapView.hidden == NO) {
@@ -397,7 +388,7 @@
                 if (view) {
                     if ([view.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
                         UIImageView *imageView = (UIImageView *)view.leftCalloutAccessoryView;
-                        imageView.image = image;
+                        [self setImageView:imageView withImage:image];
                     }
                 }
             }
@@ -457,9 +448,6 @@
     else {
         BKShopListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
-        if (theShopInfo.pictureImage == nil) {
-            cell.imageView.image = [self defaultPicture];
-        }
         [self configureShopListCell:cell withShopInfo:theShopInfo];
         
 //        NSLog(@"shopID :%@", theShopInfo.shopID);
@@ -497,7 +485,7 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
         return;
     }
@@ -771,6 +759,13 @@
             [self reloadDataUsingSortWithActionSheetIndex:buttonIndex];
         }    
     }
+}
+
+#pragma mark - Search bar text field delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self searchButtonPressed:self.searchButton];
+    return YES;
 }
 
 #pragma mark - IBActions

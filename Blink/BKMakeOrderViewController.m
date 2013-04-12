@@ -165,7 +165,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (NSArray *)quantityLevels {
     if (_quantityLevels == nil) {
         NSMutableArray *newQLs = [NSMutableArray array];
-        for (int i = 1; i <= 99; i++) {
+        for (int i = 1; i <= 10; i++) {
             [newQLs addObject:[NSNumber numberWithInt:i]];
         }
         _quantityLevels = [NSArray arrayWithArray:newQLs];

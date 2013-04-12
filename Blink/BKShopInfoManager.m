@@ -247,7 +247,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (void)loadUserFavoriteShopsParameter:(BKSearchParameter *)parameter completeHandler:(loadUserFavCompleteHandler)completeHandler {
     [[BKAPIManager sharedBKAPIManager] loadData:BKSearchOptionUserFavorite parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
+        //NSLog(@"33333 :%@", self.shopInfoDictionary);
         NSArray *shopInfos = [self shopInfosForShopIDs:shopIDs];
+        //NSLog(@"22222 :%@", shopInfos);
         completeHandler(shopInfos);
     }];
 }

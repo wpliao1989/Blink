@@ -126,10 +126,10 @@
 
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness {
     NSMutableArray *strings = [NSMutableArray array];
-    if (ice != nil) {
+    if ([BKMenuItem localizedStringForIce:ice] != nil) {
         [strings addObject:[BKMenuItem localizedStringForIce:ice]];
     }
-    if (sweetness != nil) {
+    if ([BKMenuItem localizedStringForSweetness:sweetness] != nil) {
         [strings addObject:[BKMenuItem localizedStringForSweetness:sweetness]];
     }
     

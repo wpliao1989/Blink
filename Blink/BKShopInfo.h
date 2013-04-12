@@ -16,6 +16,7 @@ FOUNDATION_EXPORT NSString *const kBKShopPhone;
 FOUNDATION_EXPORT NSString *const kBKShopAddress;
 FOUNDATION_EXPORT NSString *const kBKShopBusinessHour;
 
+FOUNDATION_EXPORT NSString *const kBKShopID;
 FOUNDATION_EXPORT NSString *const kBKSShopID;
 FOUNDATION_EXPORT NSString *const kBKShopExternalID;
 FOUNDATION_EXPORT NSString *const kBKShopRegion;

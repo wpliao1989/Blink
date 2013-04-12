@@ -46,3 +46,4 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler;
 
 @end
+

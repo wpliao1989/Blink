@@ -11,6 +11,7 @@
 #import "BKShopListCell.h"
 #import "BKUserOrderListCell.h"
 #import "BKOrderForReceiving.h"
+#import "NSNumber+NullNumber.h"
 
 @implementation UIViewController (Formatter)
 
@@ -39,9 +40,14 @@
 
 @end
 
+#import "BKShopInfoManager.h"
+
 @implementation UIViewController (ShopListCell)
 
 - (NSString *)stringForDistance:(NSNumber *)distance {
+    if ([distance isEqualToNumber:[NSNumber nullNumber]]) {
+        return nil;
+    }
     double kmValue = round([distance doubleValue]);
     //    NSLog(@"distanceValue %f", kmValue);
     
@@ -54,6 +60,13 @@
 }
 
 - (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo {
+    if (shopInfo.pictureImage == nil) {
+        cell.imageView.image = [self defaultPicture];
+    }
+    else {
+        cell.imageView.image = shopInfo.pictureImage;
+    }
+    
     UIImage *backgroundImage = [UIImage imageNamed:@"list"];
     UIImage *pressImage = [UIImage imageNamed:@"list_press"];
     
@@ -115,6 +128,26 @@
     }
 }
 
+- (UIImage *)defaultPicture {
+    static UIImage *pic;
+    if (pic == nil) {
+        pic = [UIImage imageNamed:@"picture"];
+    }
+    return pic;
+}
+
+- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
+    [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:shopInfo completeHandler:completeHandler];
+}
+
+- (void)setImageView:(UIImageView *)imageView withImage:(UIImage *)image {
+    if (image) {
+        imageView.image = image;
+    }
+    else {
+        imageView.image = [self defaultPicture];
+    }
+}
 
 @end
 
@@ -131,21 +164,21 @@
     cell.shopNameLabel.text = order.shopName;
     
     cell.statusImageView.image = nil;
-    cell.statusImageView.image = [UIImage imageNamed:@"circle"];
+   
     if ([order.status isEqualToString:BKOrderItemStatusSent]) {
-        
+        cell.statusImageView.image = [UIImage imageNamed:@"circle_ok"];
     }
     else if ([order.status isEqualToString:BKOrderItemStatusProccessed]) {
-        
+        cell.statusImageView.image = [UIImage imageNamed:@"circle_do"];
     }
     else if ([order.status isEqualToString:BKOrderItemStatusDelivered]) {
-        
+        cell.statusImageView.image = [UIImage imageNamed:@"circle_go"];
     }
     else if ([order.status isEqualToString:BKOrderItemStatusFinished]) {
         cell.statusImageView.image = [UIImage imageNamed:@"circle"];
     }
     else {
-        //assert(true);
+        assert(true);
     }
 }
 

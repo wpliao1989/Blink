@@ -13,7 +13,7 @@
 
 @class BKSearchParameter;
 
-@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate/*, CLLocationManagerDelegate*/>
+@interface BKShopListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate,UIActionSheetDelegate, MKMapViewDelegate/*, CLLocationManagerDelegate*/, UITextFieldDelegate>
 
 @property (strong, nonatomic) BKSearchParameter *searchParameter;
 

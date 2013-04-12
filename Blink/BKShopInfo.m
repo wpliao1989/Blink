@@ -9,6 +9,7 @@
 #import "BKShopInfo.h"
 #import "BKMenuItem.h"
 #import "NSObject+NullObject.h"
+#import "NSNumber+NullNumber.h"
 
 NSString *const kBKShopName = @"name";
 NSString *const kBKShopMenu = @"menu";
@@ -16,6 +17,7 @@ NSString *const kBKShopPhone = @"phone";
 NSString *const kBKShopAddress = @"address";
 NSString *const kBKShopBusinessHour = @"businessHours";
 
+NSString *const kBKShopID = @"shopID";
 NSString *const kBKSShopID = @"sShopID";
 //NSString *const kBKShopExternalID = @"extID";
 //NSString *const kBKShopRegion = @"region";
@@ -90,7 +92,10 @@ NSString *const BKShopInfoEmptyString = @"Null content";
 - (NSString *)sShopID {
     id object = self.data[kBKSShopID];
     if ([object isNullOrNil] || ![object isString]) {
-        return BKShopInfoEmptyString;
+        object = self.data[kBKShopID];
+        if ([object isNullOrNilOrNotString]) {
+            return BKShopInfoEmptyString;
+        }        
     }
     return object;
 }
@@ -175,7 +180,7 @@ NSString *const BKShopInfoEmptyString = @"Null content";
 - (NSNumber *)distance {
     id object = self.data[kBKShopDistance];
     if ([object isNullOrNil] || ![object isNumber]) {
-        return @(-1);
+        return [NSNumber nullNumber];
     }
     return object;
 }

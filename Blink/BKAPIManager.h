@@ -64,3 +64,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 @end
 
+@interface BKAPIManager (Favorite)
+
+- (void)addUserFavoriteWithToken:(NSString *)token sShopID:(NSString *)sShopID completeHandler:(apiCompleteHandler)completeHandler;
+
+@end
+

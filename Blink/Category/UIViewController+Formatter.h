@@ -26,6 +26,9 @@
 - (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo;
 - (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo;
 - (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo;
+- (UIImage *)defaultPicture;
+- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler;
+- (void)setImageView:(UIImageView *)imageView withImage:(UIImage *)image;
 
 @end
 

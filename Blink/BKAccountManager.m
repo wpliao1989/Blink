@@ -65,7 +65,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (NSString *)userToken {
     id object = [self.data objectForKey:kBKUserToken];
     if ([object isNullOrNil] || ![object isString]) {
-        return emptyString;
+        return nil;
     }
     return object;
 }
@@ -183,15 +183,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler {
     BKSearchParameter *parameter = [[BKSearchParameter alloc] init];
     parameter.token = self.userToken;
-    [[BKShopInfoManager sharedBKShopInfoManager] loadUserFavoriteShopsParameter:parameter completeHandler:^(NSArray *shopInfos) {
+    [[BKShopInfoManager sharedBKShopInfoManager] loadUserFavoriteShopsParameter:parameter completeHandler:^(NSArray *shopInfos) {        
         self.userFavoriteShops = shopInfos;
+        NSLog(@"Shop info!!   %@", self.userFavoriteShops);
         completeHandler(YES);
     }];
 }
 
 - (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler {
     [[BKAPIManager sharedBKAPIManager] getOrderWithToken:self.userToken completionHandler:^(id data, NSError *error) {
-        NSLog(@"data = %@", data);
+        //NSLog(@"data = %@", data);
         if (data != nil) {
             NSString *kOrderList = @"orderList"; // For getting order list return from API
             data = [data objectForKey:kOrderList];
@@ -214,3 +215,4 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 @end
+

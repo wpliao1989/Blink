@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		421001FC17183EAD00EE476E /* NSNumber+NullNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 421001FB17183EAD00EE476E /* NSNumber+NullNumber.m */; };
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
@@ -109,6 +110,13 @@
 		42B266601705D4AD00183C6A /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2665F1705D4AD00183C6A /* BugSense-iOS.framework */; };
 		42B266631705DE2300183C6A /* UIButton+AKSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */; };
 		42B266691705E2B800183C6A /* orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B266681705E2B800183C6A /* orange@2x.png */; };
+		42B33BB41718049F006C2F7C /* circle_do@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB11718049F006C2F7C /* circle_do@2x.png */; };
+		42B33BB51718049F006C2F7C /* circle_go@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB21718049F006C2F7C /* circle_go@2x.png */; };
+		42B33BB61718049F006C2F7C /* circle_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB31718049F006C2F7C /* circle_ok@2x.png */; };
+		42B33BBA171804E9006C2F7C /* circle_do 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB7171804E9006C2F7C /* circle_do 2.png */; };
+		42B33BBB171804E9006C2F7C /* circle_go 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB8171804E9006C2F7C /* circle_go 2.png */; };
+		42B33BBC171804E9006C2F7C /* circle_ok 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B33BB9171804E9006C2F7C /* circle_ok 2.png */; };
+		42B33BBF171819AA006C2F7C /* BKAccountManager+Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B33BBE171819AA006C2F7C /* BKAccountManager+Favorite.m */; };
 		42B3DC2A1714F45600A16A13 /* BKShopListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC291714F45600A16A13 /* BKShopListCell.xib */; };
 		42B3DC2C1714F9EE00A16A13 /* SizeDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */; };
 		42B3DC321715734D00A16A13 /* UIViewController+Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */; };
@@ -276,6 +284,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		421001FA17183EAD00EE476E /* NSNumber+NullNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+NullNumber.h"; sourceTree = "<group>"; };
+		421001FB17183EAD00EE476E /* NSNumber+NullNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+NullNumber.m"; sourceTree = "<group>"; };
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
 		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
@@ -390,6 +400,14 @@
 		42B266611705DE2300183C6A /* UIButton+AKSegmentedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AKSegmentedButton.h"; sourceTree = "<group>"; };
 		42B266621705DE2300183C6A /* UIButton+AKSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AKSegmentedButton.m"; sourceTree = "<group>"; };
 		42B266681705E2B800183C6A /* orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orange@2x.png"; sourceTree = "<group>"; };
+		42B33BB11718049F006C2F7C /* circle_do@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_do@2x.png"; sourceTree = "<group>"; };
+		42B33BB21718049F006C2F7C /* circle_go@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_go@2x.png"; sourceTree = "<group>"; };
+		42B33BB31718049F006C2F7C /* circle_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_ok@2x.png"; sourceTree = "<group>"; };
+		42B33BB7171804E9006C2F7C /* circle_do 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_do 2.png"; sourceTree = "<group>"; };
+		42B33BB8171804E9006C2F7C /* circle_go 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_go 2.png"; sourceTree = "<group>"; };
+		42B33BB9171804E9006C2F7C /* circle_ok 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_ok 2.png"; sourceTree = "<group>"; };
+		42B33BBD171819AA006C2F7C /* BKAccountManager+Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BKAccountManager+Favorite.h"; sourceTree = "<group>"; };
+		42B33BBE171819AA006C2F7C /* BKAccountManager+Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BKAccountManager+Favorite.m"; sourceTree = "<group>"; };
 		42B3DC291714F45600A16A13 /* BKShopListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BKShopListCell.xib; sourceTree = "<group>"; };
 		42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SizeDictionary.plist; sourceTree = "<group>"; };
 		42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Formatter.h"; sourceTree = "<group>"; };
@@ -642,6 +660,8 @@
 				42C2DEC117130E380045B3F7 /* API Family */,
 				CE7A78F316B7686E0072519F /* BKAccountManager.h */,
 				CE7A78F416B7686E0072519F /* BKAccountManager.m */,
+				42B33BBD171819AA006C2F7C /* BKAccountManager+Favorite.h */,
+				42B33BBE171819AA006C2F7C /* BKAccountManager+Favorite.m */,
 				CE78482B16D20CEB00A80031 /* BKOrderManager.h */,
 				CE78482C16D20CEB00A80031 /* BKOrderManager.m */,
 				CE81758716D47BB1002FA6BB /* BKShopInfoManager.h */,
@@ -671,6 +691,8 @@
 				42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */,
 				CE847A8016EF1D3000CB75CB /* UIViewController+BKBaseViewController.h */,
 				CE847A8116EF1D3000CB75CB /* UIViewController+BKBaseViewController.m */,
+				421001FA17183EAD00EE476E /* NSNumber+NullNumber.h */,
+				421001FB17183EAD00EE476E /* NSNumber+NullNumber.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -944,6 +966,9 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				42B33BB7171804E9006C2F7C /* circle_do 2.png */,
+				42B33BB8171804E9006C2F7C /* circle_go 2.png */,
+				42B33BB9171804E9006C2F7C /* circle_ok 2.png */,
 				42B3DC4617168B6100A16A13 /* circle.png */,
 				42B2665A1705A50900183C6A /* orange.png */,
 				CE81948816F31E75006A29EB /* introduce.png */,
@@ -1041,6 +1066,9 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				42B33BB11718049F006C2F7C /* circle_do@2x.png */,
+				42B33BB21718049F006C2F7C /* circle_go@2x.png */,
+				42B33BB31718049F006C2F7C /* circle_ok@2x.png */,
 				42B3DC4517168B6100A16A13 /* circle@2x.png */,
 				42B266681705E2B800183C6A /* orange@2x.png */,
 				CE79027716F6FA3C004E4FB9 /* e1_press@2x.png */,
@@ -1395,6 +1423,12 @@
 				42B3DC441716874E00A16A13 /* BKUserOrderListCell.xib in Resources */,
 				42B3DC4717168B6100A16A13 /* circle@2x.png in Resources */,
 				42B3DC4817168B6100A16A13 /* circle.png in Resources */,
+				42B33BB41718049F006C2F7C /* circle_do@2x.png in Resources */,
+				42B33BB51718049F006C2F7C /* circle_go@2x.png in Resources */,
+				42B33BB61718049F006C2F7C /* circle_ok@2x.png in Resources */,
+				42B33BBA171804E9006C2F7C /* circle_do 2.png in Resources */,
+				42B33BBB171804E9006C2F7C /* circle_go 2.png in Resources */,
+				42B33BBC171804E9006C2F7C /* circle_ok 2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1458,6 +1492,8 @@
 				42B3DC421716873D00A16A13 /* BKUserOrderListCell.m in Sources */,
 				42B3DC4B1716A64400A16A13 /* BKOrder.m in Sources */,
 				42B3DC541716BC4100A16A13 /* BKOrderContent.m in Sources */,
+				42B33BBF171819AA006C2F7C /* BKAccountManager+Favorite.m in Sources */,
+				421001FC17183EAD00EE476E /* NSNumber+NullNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
