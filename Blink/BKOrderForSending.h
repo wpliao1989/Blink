@@ -27,6 +27,4 @@
 
 - (BKOrderForSending *)orderForAPI;
 
-- (void)printValuesOfProperties;
-
 @end

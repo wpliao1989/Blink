@@ -29,7 +29,6 @@ NSString *const kBKOrderMethodTakeout = @"1";
 @synthesize address = _address;
 @synthesize phone = _phone;
 @synthesize content = _content;
-@synthesize note = _note;
 @synthesize totalPrice = _totalPrice;
 
 - (NSMutableArray *)content {
@@ -80,21 +79,30 @@ NSString *const kBKOrderMethodTakeout = @"1";
 
 #warning Must fill out empty properties before submission
 - (BKOrderForSending *)orderForAPI {
+    assert(self.userToken);
+    assert(self.name);
+    assert(self.shopID);
+    assert(self.recordTime);
+    assert(self.address);
+    assert(self.phone);
+    assert(self.note);
+    assert(self.method);
+    
     BKOrderForSending *theOrder = [[BKOrderForSending alloc] init];
-    theOrder.userToken = self.userToken != nil ? self.userToken : @"none";
-    theOrder.name = self.name != nil ? self.name : @"none";
-    theOrder.shopID = self.shopID != nil ? self.shopID : @"none";
+    theOrder.userToken = self.userToken;
+    theOrder.name = self.name;
+    theOrder.shopID = self.shopID;
     
 //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    formatter.dateStyle = NSDateFormatterShortStyle;
 //    formatter.timeStyle = NSDateFormatterShortStyle;
     //theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSDate date];
-    theOrder.recordTime = self.recordTime != nil ? self.recordTime : [NSDate dateWithTimeIntervalSince1970:0];
+    theOrder.recordTime = self.recordTime;
     
-    theOrder.address = self.address != nil ? self.address : @"none";
-    theOrder.phone = self.phone != nil ? self.phone : @"none";
-    theOrder.note = self.note != nil ? self.note : @"";
-    theOrder.method = self.method != nil ? self.method : @"none";
+    theOrder.address = self.address;
+    theOrder.phone = self.phone;
+    theOrder.note = self.note;
+    theOrder.method = self.method;
     
     NSMutableArray *newContensArray = [NSMutableArray array];
     for (BKOrderContentForSending *content in self.content) {
@@ -102,6 +110,7 @@ NSString *const kBKOrderMethodTakeout = @"1";
         [newContensArray addObject:newContent];
     }
     theOrder.content = newContensArray;
+    
 //    NSLog(@"theOrder.content = %@", self.content);
     return theOrder;
 }
@@ -124,17 +133,14 @@ NSString *const kBKOrderMethodTakeout = @"1";
     return nil;
 }
 
-- (void)printValuesOfProperties {
-    NSLog(@"userToken is %@", self.userToken);
-    NSLog(@"shopID is %@", self.shopID);
-    NSLog(@"recordTime is %@", self.recordTime);
-    NSLog(@"address is %@", self.address);
-    NSLog(@"phone is %@", self.phone);
-    NSLog(@"note is %@", self.note);
-    NSLog(@"content is: ");
-    for (BKOrderContentForSending *content in self.content) {
-        [content printValuesOfProperties];
-    }
+- (NSString *)description {
+    NSMutableArray *result = [NSMutableArray array];
+    [result addObject:[super description]];
+    [result addObject:[NSString stringWithFormat:@"userToken:%@", self.userToken]];
+    [result addObject:[NSString stringWithFormat:@"shopID:%@", self.shopID]];
+    [result addObject:[NSString stringWithFormat:@"shopName:%@", self.shopName]];
+    
+    return [result componentsJoinedByString:@"\n\t"];
 }
 
 @end

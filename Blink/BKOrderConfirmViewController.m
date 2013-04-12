@@ -9,14 +9,14 @@
 #import "BKOrderConfirmViewController.h"
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
-#import "BKOrderContentForSending.h"
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKMenuItem.h"
 #import "UIViewController+Formatter.h"
-#import "BKOrder.h"
 #import "BKOrderForSending.h"
+#import "BKOrderForReceiving.h"
+#import "BKOrderContent.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *serviceTypeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UIButton *orderConfirmButton;
 
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
@@ -81,12 +82,19 @@
 
 }
 
+- (void)setUpButtons {
+    if ([self.order isKindOfClass:[BKOrderForReceiving class]]) {
+        self.orderConfirmButton.hidden = YES;
+    }    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self initUserInfos];
     [self setUpLabels];
+    [self setUpButtons];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
 }
@@ -140,7 +148,7 @@
 //    UILabel *sweetness = (UILabel *)[cell viewWithTag:5];
 //    UILabel *ice = (UILabel *)[cell viewWithTag:6];
     
-    BKOrderContentForSending *orderContent = [self.order orderContentAtIndex:indexPath.row];
+    BKOrderContent *orderContent = [self.order orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
     basePrice.text = [orderContent.basePrice stringValue];
     quantity.text = [orderContent.quantity stringValue];

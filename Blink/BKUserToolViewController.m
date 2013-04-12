@@ -267,7 +267,7 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (IBAction)logoutButtonPressed:(id)sender {    
-    [self.logoutActionSheet showInView:self.view];    
+    [self.logoutActionSheet showInView:self.view];
 }
 
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender {

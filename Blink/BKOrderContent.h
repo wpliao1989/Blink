@@ -28,8 +28,6 @@ FOUNDATION_EXPORT NSString *const kBKOrderContentPrice;
 
 - (NSNumber *)priceValue;
 
-- (void)printValuesOfProperties;
-
 @end
 
 @interface BKOrderContent (Localization)

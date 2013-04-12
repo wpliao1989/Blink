@@ -275,11 +275,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return [NSURL URLWithString:@"http://www.blink.com.tw:8051/Mobile"];
 }
 
-#pragma mark - Login
+#pragma mark - Login, Logout
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler {
-    static NSString *kUserName = @"username";
-    static NSString *kPWD = @"password";
+    NSString *const kUserName = @"username";
+    NSString *const kPWD = @"password";
     
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
@@ -301,6 +301,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        else {
 //            completeHandler(data, nil);
 //        }
+    }];
+}
+
+- (void)logoutWithToken:(NSString *)token completeHandler:(apiCompleteHandler)completeHandler {
+    NSDictionary *parameterDictionary = @{kToken : token};
+    [self callAPI:@"logout" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"Token錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
 }
 

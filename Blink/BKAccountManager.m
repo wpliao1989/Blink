@@ -163,6 +163,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 - (void)logout {
+    [[BKAPIManager sharedBKAPIManager] logoutWithToken:self.userToken completeHandler:^(id data, NSError *error) {
+        /*Do nothing*/
+    }];
     self.isLogin = NO;
     [self clear];
 }

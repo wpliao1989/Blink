@@ -44,15 +44,17 @@ NSString *const kBKOrderContentPrice = @"price";
     return price;
 }
 
-- (void)printValuesOfProperties {
-    NSLog(@"UUID is: %@", self.UUID);
-    NSLog(@"name is: %@", self.name);
-    NSLog(@"size is: %@", self.size);
-    NSLog(@"ice is: %@", self.ice);
-    NSLog(@"sweetness is: %@", self.sweetness);
-    NSLog(@"quantity is: %@", self.quantity);
-    NSLog(@"basePrice is: %@", self.basePrice);
-    //    NSLog(@"price is: %@", self.price);
+- (NSString *)description {
+    NSMutableArray *result = [NSMutableArray array];
+    [result addObject:[NSString stringWithFormat:@"UUID:%@", self.UUID]];
+    [result addObject:[NSString stringWithFormat:@"name:%@", self.name]];
+    [result addObject:[NSString stringWithFormat:@"size:%@", self.size]];
+    [result addObject:[NSString stringWithFormat:@"ice:%@", self.ice]];
+    [result addObject:[NSString stringWithFormat:@"sweetness:%@", self.sweetness]];
+    [result addObject:[NSString stringWithFormat:@"quantity:%@", self.quantity]];
+    [result addObject:[NSString stringWithFormat:@"basePrice:%@", self.basePrice]];
+    
+    return [result componentsJoinedByString:@", "];
 }
 
 @end
