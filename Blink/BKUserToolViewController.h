@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKScrollableViewController.h"
 
-@interface BKUserToolViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface BKUserToolViewController : BKScrollableViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @end

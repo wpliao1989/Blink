@@ -15,10 +15,10 @@ NSString *const kBKAPIResult = @"result";
 NSString *const kBKAPIResultCorrect = @"1";
 NSString *const kBKAPIResultWrong = @"0";
 
-NSString *const BKErrorDomainWrongResult = @"BKErrorDomainWrongResult";
+NSString *const BKErrorDomainWrongResult = @"com.flyingman.BKErrorDomainWrongResult";
 //NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
 //NSString *const BKErrorDomainWrongOrder = @"kBKWrongOrder";
-NSString *const BKErrorDomainNetwork = @"BKErrorDomainNetwork";
+NSString *const BKErrorDomainNetwork = @"com.flyingman.BKErrorDomainNetwork";
 
 // Localized string for display
 NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
@@ -99,7 +99,13 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
     //NSLog(@"error = %@", error);
     
     if (error != nil || statusCode != 200) {
-        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+//        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
+        NSLog(@"Localized description:%@", error.localizedDescription);
+        NSLog(@"Failure reason:%@", error.localizedFailureReason);
+        NSLog(@"Recovery option:%@", error.localizedRecoveryOptions);
+        NSLog(@"Recovery suggestion:%@", error.localizedRecoverySuggestion);
+        NSString *localizedDescription = error.localizedDescription != nil ? error.localizedDescription : BKNetworkNotRespondingMessage;
+        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : localizedDescription}];
         handler(nil, BKError);
     }
     else if (![self isCorrectResult:data]) {

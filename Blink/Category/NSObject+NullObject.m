@@ -30,4 +30,12 @@
     return [self isKindOfClass:[NSDictionary class]];
 }
 
+- (BOOL)isNullOrNilOrNotString {
+    return [self isNullOrNil] || ![self isString];
+}
+
+- (BOOL)isNullorNilOrnotNumber {
+    return [self isNullOrNil] || ![self isNumber];
+}
+
 @end

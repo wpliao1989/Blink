@@ -79,11 +79,10 @@
     self.timeLabel.text = [self stringFromDate:self.order.recordTime];
     self.totalPriceLabel.text = [self stringForTotalPrice:self.order.totalPrice];
     self.shopNameLabel.text = self.order.shopName;
-
 }
 
 - (void)setUpButtons {
-    if ([self.order isKindOfClass:[BKOrderForReceiving class]]) {
+    if ([self.order isKindOfClass:[BKOrderForReceiving class]]) {        
         self.orderConfirmButton.hidden = YES;
     }    
 }
@@ -92,11 +91,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSLog(@"self.order = %@", self.order);
+    
     [self initUserInfos];
     [self setUpLabels];
     [self setUpButtons];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"Order confirm view will appear!");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"Order confirm view did appear!");
 }
 
 #pragma mark - Utility methods

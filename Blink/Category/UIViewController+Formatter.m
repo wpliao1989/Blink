@@ -128,7 +128,25 @@
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:pressImage];
     
     cell.totalPriceLabel.text = [self stringForTotalPrice:order.totalPrice];
-    cell.shopNameLabel.text = order.name;
+    cell.shopNameLabel.text = order.shopName;
+    
+    cell.statusImageView.image = nil;
+    cell.statusImageView.image = [UIImage imageNamed:@"circle"];
+    if ([order.status isEqualToString:BKOrderItemStatusSent]) {
+        
+    }
+    else if ([order.status isEqualToString:BKOrderItemStatusProccessed]) {
+        
+    }
+    else if ([order.status isEqualToString:BKOrderItemStatusDelivered]) {
+        
+    }
+    else if ([order.status isEqualToString:BKOrderItemStatusFinished]) {
+        cell.statusImageView.image = [UIImage imageNamed:@"circle"];
+    }
+    else {
+        //assert(true);
+    }
 }
 
 @end

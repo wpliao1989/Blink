@@ -161,6 +161,11 @@ enum BKUserToolSegmentationSelection {
     [self.segmentedControlView addSubview:self.segmentedControl];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.scrollView.contentSize = self.scrollView.frame.size;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self.favoriteShopTableView deselectRowAtIndexPath:[self.favoriteShopTableView indexPathForSelectedRow] animated:YES];
     [self.orderListTableView deselectRowAtIndexPath:[self.orderListTableView indexPathForSelectedRow] animated:YES];
@@ -180,6 +185,7 @@ enum BKUserToolSegmentationSelection {
     else if ([segue.identifier isEqualToString:@"userToolToOrderConfirmSegue"]) {
         BKOrderConfirmViewController *orderConfirmVC = segue.destinationViewController;
         orderConfirmVC.order = sender;
+        NSLog(@"order:%@", [orderConfirmVC.order class]);
     }
 }
 
@@ -222,13 +228,16 @@ enum BKUserToolSegmentationSelection {
     if(tableView == self.favoriteShopTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"shopCell"]) {
-            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:[self.orderlist objectAtIndex:indexPath.row]];
+            [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:self];
         }    
     }
     else if (tableView == self.orderListTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"orderListCell"]) {
-            [self performSegueWithIdentifier:@"userToolToOrderConfirmSegue" sender:self];
+            id order = [self.orderlist objectAtIndex:indexPath.row];
+            if ([order isKindOfClass:[BKOrderForReceiving class]]) {
+                [self performSegueWithIdentifier:@"userToolToOrderConfirmSegue" sender:order];
+            }        
         }
     }
 }

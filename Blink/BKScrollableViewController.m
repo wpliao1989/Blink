@@ -60,14 +60,32 @@
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    CGRect scrollViewFrameInWindowCoordinate = [self.scrollView convertRect:self.scrollView.frame toView:nil];
+    CGFloat scrollViewBottomY = CGRectGetMaxY(scrollViewFrameInWindowCoordinate);
+    CGFloat windowBottomY = CGRectGetMaxY(self.view.window.frame);
+    CGFloat bottomPaddling = windowBottomY - scrollViewBottomY;
+    
+    if (windowBottomY <= 0) {
+        return;
+    }
+    
+    //NSLog(@"window:%@", self.view.window);
+    //NSLog(@"11111 %f", scrollViewBottomY);
+    //NSLog(@"22222 %f", windowBottomY);
+    //NSLog(@"Bottom paddling %f", bottomPaddling);
+    //NSLog(@"!!!!!!!!! rect = %@", NSStringFromCGRect(scrollViewFrameInWindowCoordinate));
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height - bottomPaddling, 0.0);
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
     
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your application might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+    
+    CGRect aRect = self.scrollView.frame;
+    aRect.size.height -= self.scrollView.contentInset.bottom;
     //    NSLog(@"view frame: %@", NSStringFromCGRect(self.view.frame));
     //NSLog(@"aRect: %@", NSStringFromCGRect(aRect));
     //    NSLog(@"scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
@@ -78,6 +96,8 @@
             //NSLog(@"Scroll point: %@", NSStringFromCGPoint(scrollPoint));
             //        [self.scrollView setContentOffset:scrollPoint animated:YES];
             [self.scrollView scrollRectToVisible:self.activeResponder.frame animated:YES];
+            
+            NSLog(@"self.scrollView.contentInset:%@", NSStringFromUIEdgeInsets(self.scrollView.contentInset));
         }
     }    
 
