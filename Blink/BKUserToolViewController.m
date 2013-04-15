@@ -34,6 +34,8 @@ enum BKUserToolSegmentationSelection {
 - (void)segmentationChanged:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
 - (IBAction)completeUnfinishedOrderButtonPressed:(id)sender;
+- (IBAction)passwordModifyButtonPressed:(id)sender;
+- (IBAction)confirmEditUserInfoButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *favoriteShopTableView;
 @property (strong, nonatomic) IBOutlet UITableView *orderListTableView;
@@ -49,10 +51,15 @@ enum BKUserToolSegmentationSelection {
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
 @property (weak, nonatomic) IBOutlet UIButton *thirdButton;
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *userPhoneTextField;
+@property (weak, nonatomic) IBOutlet UITextField *userAddressTextField;
 
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 
 @property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *userPhone;
+@property (strong, nonatomic) NSString *userAddress;
 @property (strong, nonatomic) NSString *userEmail;
 @property (strong, nonatomic) NSString *userToken;
 
@@ -65,18 +72,31 @@ enum BKUserToolSegmentationSelection {
 @synthesize userFavoriteShops = _userFavoriteShops;
 @synthesize orderlist = _orderlist;
 @synthesize userName = _userName;
+@synthesize userPhone = _userPhone;
 @synthesize userEmail = _userEmail;
+@synthesize userAddress = _userAddress;
 @synthesize userToken = _userToken;
 @synthesize logoutActionSheet = _logoutActionSheet;
 
 - (void)setUserName:(NSString *)userName {
     _userName = userName;
-    self.userNameLabel.text = userName;
+    self.userNameTextField.text = userName;
+    //self.userNameLabel.text = userName;
 }
 
 - (void)setUserEmail:(NSString *)userEmail {
     _userEmail = userEmail;
-    self.userEmailLabel.text = userEmail;
+    //self.userEmailLabel.text = userEmail;
+}
+
+- (void)setUserPhone:(NSString *)userPhone {
+    _userPhone = userPhone;
+    self.userPhoneTextField.text = userPhone;
+}
+
+- (void)setUserAddress:(NSString *)userAddress {
+    _userAddress = userAddress;
+    self.userAddressTextField.text = userAddress;
 }
 
 - (void)setUserToken:(NSString *)userToken {
@@ -107,9 +127,7 @@ enum BKUserToolSegmentationSelection {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSLog(@"self.shopIDs = %@", self.userFavoriteShops);
-    self.userName = [BKAccountManager sharedBKAccountManager].userName;
-    self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
-    self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
+    [self initUserInfo];
     
     [self initSegmentedControl];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
@@ -119,6 +137,14 @@ enum BKUserToolSegmentationSelection {
     
     // Set the selected view to show, and make others to hide
     [self segmentationChanged:self.segmentedControl];
+}
+
+- (void)initUserInfo {
+    self.userName = [BKAccountManager sharedBKAccountManager].userName;
+    self.userPhone = [BKAccountManager sharedBKAccountManager].userPhone;
+    self.userEmail = [BKAccountManager sharedBKAccountManager].userEmail;
+    self.userToken = [BKAccountManager sharedBKAccountManager].userToken;
+    self.userAddress = [BKAccountManager sharedBKAccountManager].userAddress;
 }
 
 - (void)initSegmentedControl {
@@ -269,6 +295,28 @@ enum BKUserToolSegmentationSelection {
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.favoriteShopTableView) {
+        return YES;
+    }
+    return NO;
+}
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (tableView == self.favoriteShopTableView) {
+//        if (editingStyle == UITableViewCellEditingStyleDelete) {
+//            //
+//        }
+//    }    
+//}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.favoriteShopTableView) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
+}
+
 #pragma mark - Action Sheet
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -277,6 +325,24 @@ enum BKUserToolSegmentationSelection {
         [[BKAccountManager sharedBKAccountManager] logout];
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - Text field
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [super textFieldDidEndEditing:textField];
+    
+    if (textField == self.userNameTextField) {
+        self.userName = textField.text;
+    }
+    else if (textField == self.userPhoneTextField) {
+        self.userPhone = textField.text;
+    }
+    else if (textField == self.userAddressTextField) {
+        self.userAddress = textField.text;
+    }
+    
+    NSLog(@"name:%@, phone:%@, address:%@", self.userName, self.userPhone, self.userAddress);
 }
 
 #pragma mark - IBActions
@@ -311,8 +377,31 @@ enum BKUserToolSegmentationSelection {
         [self performSegueWithIdentifier:@"fromUnfinishedOrderSegue" sender:self];
     }
 }
+
+- (IBAction)passwordModifyButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"passwordModifySegue" sender:self];
+}
+
+- (IBAction)confirmEditUserInfoButtonPressed:(id)sender {
+    [self showHUDViewWithMessage:@"修改中..."];
+}
+
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
+    [[BKAccountManager sharedBKAccountManager] editUserName:self.userName address:self.userAddress email:self.userEmail phone:self.userPhone completionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            successBlock(@"修改成功!");
+        }
+        else {
+            failBlock(error);
+        }
+    }];
+}
+
 - (void)viewDidUnload {
     [self setFirstButton:nil];
+    [self setUserNameTextField:nil];
+    [self setUserPhoneTextField:nil];
+    [self setUserAddressTextField:nil];
     [super viewDidUnload];
 }
 @end

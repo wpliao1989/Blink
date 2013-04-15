@@ -273,7 +273,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="w3M-6d-kjb">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" id="w3M-6d-kjb">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
@@ -325,6 +325,36 @@
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="nRS-IZ-QxP"/>
                                                 </connections>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="98B-gq-1N7">
+                                                <rect key="frame" x="49" y="211" width="222" height="33"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="會員登入" image="fix.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted" image="fix_press.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="confirmEditUserInfoButtonPressed:" destination="Mpb-6J-6KN" eventType="touchUpInside" id="Uca-Gi-QPc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="k3P-nU-eGi">
+                                                <rect key="frame" x="49" y="265" width="222" height="33"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="會員登入" image="fix_password.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted" image="fix_password_press.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="passwordModifyButtonPressed:" destination="Mpb-6J-6KN" eventType="touchUpInside" id="vmU-24-JMv"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </scrollView>
@@ -385,13 +415,17 @@
                         <outlet property="secondButton" destination="VwO-Fd-WIJ" id="fXO-sd-trw"/>
                         <outlet property="segmentedControlView" destination="Q6r-Xw-eT3" id="PRu-vE-Vba"/>
                         <outlet property="thirdButton" destination="v0K-1A-gy2" id="m3v-U5-d6h"/>
+                        <outlet property="userAddressTextField" destination="GE9-eW-ctu" id="SLJ-fy-188"/>
                         <outlet property="userDataModificationView" destination="Lb3-9i-uK7" id="d2s-3k-cQv"/>
                         <outlet property="userEmailLabel" destination="Q1D-JS-eII" id="nIz-J8-mAh"/>
                         <outlet property="userNameLabel" destination="gVB-zT-yld" id="w7t-Ef-lWg"/>
+                        <outlet property="userNameTextField" destination="MI0-sq-x8X" id="q1W-21-GiZ"/>
+                        <outlet property="userPhoneTextField" destination="yzW-8y-4Dw" id="TrV-0f-uvj"/>
                         <outlet property="userTokenLabel" destination="R4h-sm-BAr" id="dBw-UY-jaV"/>
                         <segue destination="mgw-hS-r6z" kind="push" identifier="fromFavoriteShopDetailSegue" id="cvb-pK-M3T"/>
                         <segue destination="mgw-hS-r6z" kind="push" identifier="fromUnfinishedOrderSegue" id="Oyn-iM-HVx"/>
                         <segue destination="pr9-DW-WBx" kind="push" identifier="userToolToOrderConfirmSegue" id="0Oj-LE-aah"/>
+                        <segue destination="slj-Ga-mnr" kind="push" identifier="passwordModifySegue" id="xCB-oj-PhF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyp-KB-QKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -480,6 +514,111 @@
                 </label>
             </objects>
             <point key="canvasLocation" x="766" y="-781"/>
+        </scene>
+        <!--Password Modify View Controller - 密碼修改-->
+        <scene sceneID="PIk-FU-Ca3">
+            <objects>
+                <viewController id="slj-Ga-mnr" customClass="BKPasswordModifyViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gYu-Is-CO9">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" id="h0Y-Xf-ARf">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="舊密碼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4VC-W0-BA1">
+                                        <rect key="frame" x="54" y="47" width="57" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="新密碼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="re6-zN-SVL">
+                                        <rect key="frame" x="54" y="101" width="57" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="新密碼確認" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tst-d5-LOJ">
+                                        <rect key="frame" x="20" y="156" width="91" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="MW4-PB-Iw8">
+                                        <rect key="frame" x="119" y="43" width="181" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="slj-Ga-mnr" id="pL6-oH-Io8"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="T9i-4J-NgE">
+                                        <rect key="frame" x="119" y="97" width="181" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="slj-Ga-mnr" id="w1A-Qn-qZu"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="GrV-BQ-fI1">
+                                        <rect key="frame" x="119" y="152" width="181" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="slj-Ga-mnr" id="ZR8-9K-Uxm"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C1f-nq-5Kj">
+                                        <rect key="frame" x="49" y="216" width="222" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="會員登入" image="fix.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" image="fix_press.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="密碼修改" id="nVf-GL-Qjl">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="iWn-Wy-Sup">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="u2T-r9-CAa">
+                                <rect key="frame" x="5" y="4" width="50" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                                <state key="normal" image="back.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="back_press.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="slj-Ga-mnr" eventType="touchUpInside" id="fEz-NG-uFv"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="scrollView" destination="h0Y-Xf-ARf" id="9gp-wl-bbH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xnh-kN-TRv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1234" y="-781"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OjP-K2-hOI">
@@ -2207,6 +2346,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
+        <image name="fix.png" width="222" height="33"/>
+        <image name="fix_password.png" width="222" height="33"/>
+        <image name="fix_password_press.png" width="222" height="33"/>
+        <image name="fix_press.png" width="222" height="33"/>
         <image name="g.png" width="142" height="35"/>
         <image name="g_press.png" width="142" height="35"/>
         <image name="google.png" width="16" height="16"/>
@@ -2260,9 +2403,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="LP2-pZ-FvA"/>
-        <segue reference="cvb-pK-M3T"/>
+        <segue reference="Fqf-f2-bQo"/>
         <segue reference="b53-zt-ROB"/>
+        <segue reference="cvb-pK-M3T"/>
         <segue reference="0Oj-LE-aah"/>
     </inferredMetricsTieBreakers>
 </document>

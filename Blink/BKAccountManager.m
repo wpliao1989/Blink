@@ -214,5 +214,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
     }];
 }
 
+- (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone completionHandler:(void (^)(BOOL, NSError *))completeHandler {
+    [[BKAPIManager sharedBKAPIManager] editUserName:name address:address email:email phone:phone token:self.userToken completionHandler:^(id data, NSError *error) {
+        completeHandler(data != nil, error);
+    }];
+}
+
 @end
 

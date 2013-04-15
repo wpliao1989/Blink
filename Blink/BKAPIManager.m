@@ -314,6 +314,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
+#pragma mark - User info
+
+- (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
+    NSString *kName = @"name";
+    NSString *kPhone = @"phone";
+    NSString *kAddress = @"address";
+    NSString *kEmail = @"email";
+    
+    NSDictionary *parameterDictionary = @{kToken : token,
+                                          kName : name,
+                                          kPhone : phone,
+                                          kAddress : address,
+                                          kEmail : email
+                                          };
+    [self callAPI:@"user_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
 #pragma mark - User orders
 
 - (void)getOrderWithToken:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
