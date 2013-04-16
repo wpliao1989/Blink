@@ -2555,7 +2555,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
             </relationships>
         </class>
-        <class className="BKShopDetailViewController" superclassName="UIViewController">
+        <class className="BKShopDetailViewController" superclassName="BKScrollableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addFavoriteShopButtonPressed:"/>

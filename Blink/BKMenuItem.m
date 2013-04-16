@@ -9,6 +9,7 @@
 #import "BKMenuItem.h"
 #import "BKLookup.h"
 #import "NSObject+NullObject.h"
+#import "NSMutableArray+Sort.h"
 
 NSString *const kBKMenuName = @"name";
 NSString *const kBKMenuPrice = @"price";
@@ -31,6 +32,18 @@ NSString *const kBKMenuDetail = @"detail";
         }
         return [NSNumber numberWithInt:0];
     }
+    return result;
+}
+
++ (id)menuItemForMenuItem:(BKMenuItem *)item {
+    BKMenuItem *result = [[BKMenuItem alloc] init];
+    result.name = item.name;
+    result.iceLevels = item.iceLevels;
+    result.sweetnessLevels = item.sweetnessLevels;
+    result.sizeLevels = item.sizeLevels;
+    result.price = item.price;
+    result.detail = item.detail;
+    
     return result;
 }
 
@@ -60,6 +73,30 @@ NSString *const kBKMenuDetail = @"detail";
 
 + (NSDictionary *)sizeLookup {
     return [BKLookup sizeLookup];
+}
+
++ (NSArray *)orderedArrayOfIce {
+    return [[BKLookup iceLookup].allKeys sortedArrayByNumberValue];
+}
+
++ (NSArray *)orderedArrayOfSweetness {
+    return [[BKLookup sweetnessLookup].allKeys sortedArrayByNumberValue];
+}
+
++ (NSArray *)orderedArrayOfLocalizedIce {
+    NSMutableArray *result = [NSMutableArray array];
+    for (id unlocalizedIce in [BKMenuItem orderedArrayOfIce]) {
+        [result addObject:[BKMenuItem localizedStringForIce:unlocalizedIce]];
+    }
+    return [NSArray arrayWithArray:result];
+}
+
++ (NSArray *)orderedArrayOfLocalizedSweetness {
+    NSMutableArray *result = [NSMutableArray array];
+    for (id unlocalizedSweetness in [BKMenuItem orderedArrayOfSweetness]) {
+        [result addObject:[BKMenuItem localizedStringForSweetness:unlocalizedSweetness]];
+    }
+    return [NSArray arrayWithArray:result];
 }
 
 @end

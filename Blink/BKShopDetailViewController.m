@@ -16,6 +16,11 @@
 #import "BKOrderManager.h"
 #import "BKAccountManager+Favorite.h"
 
+typedef NS_ENUM(NSUInteger, BKHUDViewType) {
+    BKHUDViewTypeShopDetailDownload = 1,
+    BKHUDViewTypeAddUserFavorite = 2
+};
+
 @interface BKShopDetailViewController ()
 
 - (IBAction)menuButtonPressed:(id)sender;
@@ -42,6 +47,8 @@
 @property (strong, nonatomic) IBOutlet UITextView *shopURL;
 @property (strong, nonatomic) IBOutlet UITextView *shopIntro;
 
+@property (nonatomic) BKHUDViewType hudviewType;
+
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
 - (NSString *)phoneNumberExtractedFromString:(NSString *)string;
 
@@ -66,15 +73,6 @@
 
 #pragma mark - View controller life cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -91,16 +89,26 @@
     [self configureScrollView];
     
     [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID completeHandler:^(BOOL success) {
-        self.scrollView.userInteractionEnabled = YES;
-        [self initShop];
-        [self configureIntroSection];
-        [self configureBottomSection];
-        [self configureScrollView];        
+        if (success) {
+            self.scrollView.userInteractionEnabled = YES;
+            [self initShop];
+            [self configureIntroSection];
+            [self configureBottomSection];
+            [self configureScrollView];
+        }
+        else {
+            self.hudviewType = BKHUDViewTypeShopDetailDownload;
+            [self showHUDViewWithMessage:@""];
+        }
     }];        
 }
 
+- (BOOL)isUsingOwnScrollview {
+    return YES;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];   
+    [super viewWillAppear:animated];
     NSLog(self.isMovingToParentViewController?@"is being push":@"not being push");
 }
 
@@ -111,12 +119,6 @@
     if (self.isMovingToParentViewController) {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -226,6 +228,40 @@
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
 }
 
+#pragma mark - HUD view
+
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
+    
+    if (self.hudviewType == BKHUDViewTypeShopDetailDownload) {
+        failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage:@"伺服器錯誤"}]);
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    }
+    else if (self.hudviewType == BKHUDViewTypeAddUserFavorite) {
+        if ([BKAccountManager sharedBKAccountManager].isLogin == NO) {
+            failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{kBKErrorMessage:@"請先登入"}]);
+        }
+        else {
+            [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
+                if (success) {
+                    NSLog(@"Add user favorite success! shopID:%@", self.shopID);
+                    successBlock(@"新增成功!");
+                }
+                else {
+                    NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
+                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{kBKErrorMessage:@"新增失敗..."}]);
+                }
+            }];
+        }        
+    }
+    else {
+        failBlock(nil);
+    }
+}
+
 #pragma mark - Price string
 
 - (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost {
@@ -319,14 +355,8 @@
 }
 
 - (IBAction)addFavoriteShopButtonPressed:(id)sender {
-    [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
-        if (success) {
-            NSLog(@"Add user favorite success! shopID:%@", self.shopID);
-        }
-        else {
-            NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
-        }
-    }];
+    self.hudviewType = BKHUDViewTypeAddUserFavorite;
+    [self showHUDViewWithMessage:@"新增中..."];
 }
 - (void)viewDidUnload {
     [self setShopURL:nil];

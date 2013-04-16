@@ -14,3 +14,10 @@
 - (void)sortUsingAnotherArray:(NSArray *)theArray;
 
 @end
+
+@interface NSArray (Sort)
+
+- (NSArray *)sortedArrayUsingArray:(NSArray *)theArray;
+- (NSArray *)sortedArrayByNumberValue;
+
+@end

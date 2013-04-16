@@ -39,7 +39,7 @@ NSString *const kBKShopDeliverCost = @"deliverCost";
 NSString *const kBKShopMinPrice = @"minprice";
 NSString *const kBKShopPicURL = @"pic";
 
-NSString *const BKShopInfoEmptyString = @"Null content";
+NSString *const BKShopInfoEmptyString = @"";
 
 @interface BKShopInfo ()
 

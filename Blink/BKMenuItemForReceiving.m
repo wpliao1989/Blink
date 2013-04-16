@@ -48,7 +48,6 @@ NSString *const BKMenuNullString = @"null";
 @synthesize sizeLevels = _sizeLevels;
 
 - (NSString *)UUID {
-#warning UUID may need to be converted to NSNumber
     NSLog(@"UUID is %@", [self.data objectForKey:kBKMenuUUID]);
     NSLog(@"UUID class is %@", [[self.data objectForKey:kBKMenuUUID] class]);
     return [self.data objectForKey:kBKMenuUUID];
@@ -118,10 +117,7 @@ NSString *const BKMenuNullString = @"null";
 
 - (NSArray *)localizedSizeLevels {
     if (_localizedSizeLevels == nil) {
-        NSLog(@"!!!!!!!!!!!!!!!!");
         _localizedSizeLevels = [self localizedArrayForArray:self.sizeLevels lookup:[[self class] sizeLookup]];
-        NSLog(@"localized size levels %@", _localizedSizeLevels);
-        NSLog(@"!!!!!!!!!!!!!!!!");
     }
     //[_localizedSizeLevels identifyMyself];
     return _localizedSizeLevels;

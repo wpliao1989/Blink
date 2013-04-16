@@ -18,8 +18,8 @@ NSString *const kBKLocationBecameAvailableNotification = @"kBKLocationBecameAvai
 NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
 
 // List and Sort post keys
-NSString *const kLongitude = @"longitude";
-NSString *const kLatitude = @"latitude";
+NSString *const kLongitude = @"lng";
+NSString *const kLatitude = @"lat";
 NSString *const kOffSet = @"offset";
 NSString *const kQNum = @"qNum";
 NSString *const kMethod = @"method";
@@ -597,7 +597,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return [NSDictionary dictionaryWithDictionary:result];
 }
 
-- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(serviceCompleteHandler)completeHandler {
+- (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(apiCompleteHandler)completeHandler {
     NSString *kShopID = @"sShopID";
     
     NSNumber *latitude = [NSNumber numberWithDouble:self.userLocation.coordinate.latitude];
@@ -607,7 +607,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     self.isLoadingData = YES;
     [self callAPI:@"shop" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         self.isLoadingData = NO;
-        completeHandler(response, data, error);
+        //NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"伺服器錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:nil completeHandler:^(id data, NSError *error) {
+            NSLog(@"Shop detail:%@", data);
+            completeHandler(data, error);
+        }];
     }];
 }
 

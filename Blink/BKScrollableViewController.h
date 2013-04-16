@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) UIView *activeResponder;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+- (BOOL)isUsingOwnScrollview; // Return YES if default scorllview setting is not favorable, default is NO
 
 @end
 

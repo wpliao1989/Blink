@@ -22,15 +22,12 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 @property (strong, nonatomic) NSArray *sweetnessLevels;
 @property (strong, nonatomic) NSArray *sizeLevels;
 
-@property (strong, nonatomic) NSArray *localizedIceLevels; // Use this for display
-@property (strong, nonatomic) NSArray *localizedSweetnessLevels; // Use this for display
-@property (strong, nonatomic) NSArray *localizedSizeLevels;
-
 @property (strong, nonatomic) NSDictionary *price;
 
 @property (strong, nonatomic) NSString *detail;
 
 - (NSNumber *)priceForSize:(NSString *)size;
++ (id)menuItemForMenuItem:(BKMenuItem *)item;
 
 @end
 
@@ -43,5 +40,10 @@ FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 + (NSDictionary *)iceLookup;
 + (NSDictionary *)sweetnessLookup;
 + (NSDictionary *)sizeLookup;
+
++ (NSArray *)orderedArrayOfIce;
++ (NSArray *)orderedArrayOfSweetness;
++ (NSArray *)orderedArrayOfLocalizedIce;
++ (NSArray *)orderedArrayOfLocalizedSweetness;
 
 @end

@@ -18,6 +18,9 @@ FOUNDATION_EXPORT NSString *const kBKMenuUUID;
 
 //@property (strong, nonatomic) NSNumber *UUID;
 @property (strong, nonatomic, readonly) NSString *UUID;
+@property (strong, nonatomic) NSArray *localizedIceLevels; // Use this for display
+@property (strong, nonatomic) NSArray *localizedSweetnessLevels; // Use this for display
+@property (strong, nonatomic) NSArray *localizedSizeLevels;
 @property (strong, nonatomic, readonly) NSArray *priceLevels;
 @property (strong, nonatomic, readonly) NSURL *picURL;
 @property (weak, nonatomic) UIImage *picImage;

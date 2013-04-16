@@ -132,7 +132,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(id data, NSError *error) {
+        
+        NSLog(@"Shop detail:%@", data);
         if (data) {
             [self addShopInfoWithRawData:data forShopID:shopID];
             completeHandler(YES);
@@ -250,6 +252,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
         //NSLog(@"33333 :%@", self.shopInfoDictionary);
         NSArray *shopInfos = [self shopInfosForShopIDs:shopIDs];
         //NSLog(@"22222 :%@", shopInfos);
+        NSLog(@"RawData:%@", rawDatas);
         completeHandler(shopInfos);
     }];
 }

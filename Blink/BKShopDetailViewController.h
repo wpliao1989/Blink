@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "BKScrollableViewController.h"
 
 @class BKShopInfo;
 
-@interface BKShopDetailViewController : UIViewController
+@interface BKShopDetailViewController : BKScrollableViewController
 
 @property (strong, nonatomic) NSString *shopID;
 // This home button is for menu view controller

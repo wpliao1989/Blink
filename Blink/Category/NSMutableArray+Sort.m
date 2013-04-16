@@ -33,3 +33,43 @@
 }
 
 @end
+
+@implementation NSArray (Sort)
+
+- (NSArray *)sortedArrayUsingArray:(NSArray *)theArray {
+    NSMutableArray *result = [NSMutableArray arrayWithArray:self];
+    [result sortedArrayUsingArray:theArray];
+    return result;
+}
+
+- (NSArray *)sortedArrayByNumberValue {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    
+    return [self sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        if ([obj1 isKindOfClass:[NSString class]]) {
+            obj1 = [formatter numberFromString:obj1];
+        }
+        else if (![obj1 isKindOfClass:[NSNumber class]]) {
+            return NSOrderedDescending;
+        }
+        
+        if ([obj2 isKindOfClass:[NSString class]]) {
+            obj2 = [formatter numberFromString:obj2];
+        }
+        else if ([obj2 isKindOfClass:[NSNumber class]]) {
+            return NSOrderedAscending;
+        }
+        
+        if ([obj1 doubleValue] < [obj2 doubleValue]) {
+            return NSOrderedAscending;
+        }
+        else if ([obj1 doubleValue] > [obj2 doubleValue]) {
+            return NSOrderedDescending;
+        }
+        else {
+            return NSOrderedSame;
+        }
+    }];
+}
+
+@end

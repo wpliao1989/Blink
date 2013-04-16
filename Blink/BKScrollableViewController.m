@@ -24,10 +24,16 @@
     [super viewDidLoad];
     
     // Customize scroll view
-    [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    if (![self isUsingOwnScrollview]) {
+        [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    }    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (BOOL)isUsingOwnScrollview {
+    return NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -37,8 +43,10 @@
 //    NSLog(@"%@", NSStringFromCGSize(self.navigationController.view.frame.size));
     
     // Set content size of scroll view
-    CGSize sizeOfView = self.view.frame.size;
-    self.scrollView.contentSize = sizeOfView;
+    if (![self isUsingOwnScrollview]) {
+        CGSize sizeOfView = self.view.frame.size;
+        self.scrollView.contentSize = sizeOfView;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
