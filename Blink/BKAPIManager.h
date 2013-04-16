@@ -48,6 +48,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler;
 - (void)logoutWithToken:(NSString *)token completeHandler:(apiCompleteHandler)completeHandler;
 - (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
+- (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
 
 - (void)getOrderWithToken:(NSString *)token completionHandler:(apiCompleteHandler) completeHandler;
 

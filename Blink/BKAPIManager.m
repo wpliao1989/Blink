@@ -330,7 +330,21 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           };
     [self callAPI:@"user_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"修改個人資料錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
+- (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
+    NSString *kNewPWD = @"newpwd";
+    
+    NSDictionary *parameterDictionary = @{kToken : token,
+                                          kNewPWD : [self encodePWD:password]
+                                          };
+    [self callAPI:@"pwd_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"修改密碼錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];

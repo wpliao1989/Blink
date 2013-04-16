@@ -8,7 +8,7 @@
 
 #import "BKTestCenter.h"
 #import "BKShopInfo.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 #import "BKOrderManager.h"
 #import "BKOrderContentForSending.h"
 #import "BKOrderForSending.h"

@@ -7,14 +7,14 @@
 //
 
 #import "BKOrderContentForSending.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 
 @implementation BKOrderContentForSending
 
 @synthesize basePrice = _basePrice;
 //@synthesize price = _price;
 
-- (id)initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size{
+- (id)initWithMenu:(BKMenuItemForReceiving *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size{
     self = [super init];
     if (self) {
         self.UUID = menu.UUID;
@@ -36,13 +36,20 @@
 }
 
 - (NSDictionary *)contentForAPI {
-    NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID != nil ? self.UUID : @"none",
-                                 kBKOrderContentName: self.name != nil ? self.name : @"none",
-                                 kBKOrderContentSize: self.size != nil ? self.size : @"none",
-                                 kBKOrderContentIce: self.ice != nil ? self.ice : @"none",
-                                 kBKOrderContentSweetness: self.sweetness != nil ? self.sweetness : @"none",
-                                 kBKOrderContentQuantity: self.quantity != nil ? self. quantity : @(0),
-                                 kBKOrderContentPrice : self.basePrice != nil ? self.basePrice : @(0),
+    
+    assert(self.UUID);
+    assert(self.name);
+    assert(self.size);
+    assert(self.quantity);
+    assert(self.basePrice);
+    
+    NSDictionary *theContent = @{kBKOrderContentUUID: self.UUID,
+                                 kBKOrderContentName: self.name,
+                                 kBKOrderContentSize: self.size,
+                                 kBKOrderContentIce: self.ice != nil ? self.ice : [NSNull null],
+                                 kBKOrderContentSweetness: self.sweetness != nil ? self.sweetness : [NSNull null],
+                                 kBKOrderContentQuantity: self.quantity,
+                                 kBKOrderContentPrice : self.basePrice,
                                  /*@"hello world!" : @"hello!"*/};
     return theContent;
 }

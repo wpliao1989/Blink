@@ -22,6 +22,7 @@
 #import "UIViewController+Formatter.h"
 #import "BKUserOrderListCell.h"
 #import "BKOrderConfirmViewController.h"
+#import "NSString+Numeric.h"
 
 @interface BKUserToolViewController ()
 
@@ -328,6 +329,26 @@ enum BKUserToolSegmentationSelection {
 }
 
 #pragma mark - Text field
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+   
+    if (textField == self.userPhoneTextField) {
+        NSLog(@"text change in range: %@, with string: %@", NSStringFromRange(range), string);
+        NSLog(@"current string length: %d", textField.text.length);
+        
+        if ([string isAllDigits]) {
+            return YES;
+        }
+        else if ([string isEqualToString:@" "] && range.length > 0) {
+            // The character is space, but the action is deleting, thus return YES
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];

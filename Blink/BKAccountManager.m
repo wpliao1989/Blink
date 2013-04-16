@@ -35,7 +35,7 @@ NSString *const emptyString = @"Null data";
 @interface BKAccountManager ()
 
 @property (strong, nonatomic) NSDictionary *data;
-
+@property (strong, nonatomic) NSString *pwd;
 - (void)clear;
 
 @end
@@ -134,7 +134,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
     [[BKAPIManager sharedBKAPIManager] loginWithUserName:account password:pwd completionHandler:^(id data, NSError *error) {
         if (data != nil) {
             self.data = data;            
-            
+            self.pwd = pwd;
             NSLog(@"Login success! Data:%@", data);
             // fetch user favorite shop IDs
             //        self.favoriteShopIDs = @[@"4000", @"5000", @"6000"];
@@ -172,6 +172,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 - (void)clear {
     self.data = nil;
+    self.pwd = nil;
     self.userFavoriteShops = nil;
     self.userOrderlist = nil;
 }
@@ -218,6 +219,17 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
     [[BKAPIManager sharedBKAPIManager] editUserName:name address:address email:email phone:phone token:self.userToken completionHandler:^(id data, NSError *error) {
         completeHandler(data != nil, error);
     }];
+}
+
+- (void)editUserPWD:(NSString *)password completionHandler:(void (^)(BOOL, NSError *))completeHandler {
+    [[BKAPIManager sharedBKAPIManager] editUserPWD:password token:self.userToken completionHandler:^(id data, NSError *error) {
+        completeHandler(data != nil, error);
+    }];
+}
+
+- (BOOL)isPasswordMatch:(NSString *)password {
+    NSLog(@"self.password = %@, compared to %@", self.pwd, password);
+    return [password isEqualToString:self.pwd];
 }
 
 @end

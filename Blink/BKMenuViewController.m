@@ -8,13 +8,13 @@
 
 #import "BKMenuViewController.h"
 #import "BKShopDetailViewController.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "UIImage+Resize.h"
 
 @interface BKMenuViewController ()
 
-- (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item;
+- (NSString *)stringForPriceFromMenuItem:(BKMenuItemForReceiving *)item;
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 
 - (UIImage *)defaultPicture;
@@ -92,7 +92,7 @@
     static NSString *CellIdentifier = @"menuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    BKMenuItem *item = [self.menu objectAtIndex:indexPath.row];
+    BKMenuItemForReceiving *item = [self.menu objectAtIndex:indexPath.row];
     
     UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
     itemNameLabel.text = item.name;
@@ -125,11 +125,11 @@
     return cell;
 }
 
-- (NSString *)stringForPriceFromMenuItem:(BKMenuItem *)item {
+- (NSString *)stringForPriceFromMenuItem:(BKMenuItemForReceiving *)item {
     NSMutableArray *result = [NSMutableArray array];
     
     for (NSString *size in item.sizeLevels) {
-        [result addObject:[NSString stringWithFormat:@"%@%@", [BKMenuItem localizedStringForSize:size], [self currencyStringForPrice:[item priceForSize:size]]]];
+        [result addObject:[NSString stringWithFormat:@"%@%@", [BKMenuItemForReceiving localizedStringForSize:size], [self currencyStringForPrice:[item priceForSize:size]]]];
     }
     return [result componentsJoinedByString:@", "];
 }

@@ -14,7 +14,7 @@
 #import "BKNoteViewController.h"
 #import "BKOrderManager.h"
 #import "BKOrderContentForSending.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 #import "BKItemSelectButton.h"
 #import "BKShopInfo.h"
 #import "BKShopInfoManager.h"
@@ -66,7 +66,7 @@ NSInteger quantityComponent = 0;
 @property (strong, nonatomic) BKShopInfo *shopInfo;
 @property (strong, readonly, nonatomic) NSArray *menu;
 @property (strong, nonatomic) NSArray *quantityLevels;
-@property (strong, nonatomic) BKMenuItem *selectedMenuItem;
+@property (strong, nonatomic) BKMenuItemForReceiving *selectedMenuItem;
 @property (strong, nonatomic) NSString *selectedItemName;
 @property (strong, nonatomic) NSString *selectedIceLevel;
 @property (strong, nonatomic) NSString *selectedSweetness;
@@ -396,8 +396,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
     
     BKOrderContentForSending *orderContent = [[BKOrderManager sharedBKOrderManager] orderContentAtIndex:indexPath.row];
     name.text = orderContent.name;
-    ice.text = [BKMenuItem localizedStringForIce:orderContent.ice];
-    sweetness.text = [BKMenuItem localizedStringForSweetness:orderContent.sweetness];
+    ice.text = [BKMenuItemForReceiving localizedStringForIce:orderContent.ice];
+    sweetness.text = [BKMenuItemForReceiving localizedStringForSweetness:orderContent.sweetness];
     quantityAndSize.text = [NSString stringWithFormat:@"%@ %@", [orderContent.quantity stringValue], [orderContent localizedSize]];
     price.text = [self currencyStringForPrice:orderContent.priceValue];
     
@@ -522,7 +522,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     if (pickerView == self.itemPicker) {
         
         if (self.menu.count > 0) {
-            BKMenuItem *theItem = [self.menu objectAtIndex:row];
+            BKMenuItemForReceiving *theItem = [self.menu objectAtIndex:row];
             label.text = theItem.name;
         }           
         
@@ -549,7 +549,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //                NSLog(@"%@", self.selectedMenuItem.sizeLevels);
                 NSString *theSize = [self.selectedMenuItem.sizeLevels objectAtIndex:row];
                 NSNumber *thePrice = [self.selectedMenuItem priceForSize:theSize];                
-                label.text = [NSString stringWithFormat:@"%@ %@", [BKMenuItem localizedStringForSize:theSize], [self currencyStringForPrice:thePrice]];
+                label.text = [NSString stringWithFormat:@"%@ %@", [BKMenuItemForReceiving localizedStringForSize:theSize], [self currencyStringForPrice:thePrice]];
             }
         }
         else if (component == quantityComponent) {
@@ -583,7 +583,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (void)updateSelectedMenuItemWithRow:(NSInteger)row {
     if (self.menu.count > 0) {
-        BKMenuItem *theItem = [self.menu objectAtIndex:row];
+        BKMenuItemForReceiving *theItem = [self.menu objectAtIndex:row];
         if (theItem != self.selectedMenuItem) {
             self.selectedMenuItem = theItem;
             self.selectedItemName = theItem.name;
@@ -799,11 +799,11 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (void)updateIceAndSweetnessButtonTitle {
     NSMutableArray *result = [NSMutableArray array];
     
-    NSString *ice = [BKMenuItem localizedStringForIce:self.selectedIceLevel];
+    NSString *ice = [BKMenuItemForReceiving localizedStringForIce:self.selectedIceLevel];
     if (ice != nil) {
         [result addObject:ice];
     }
-    NSString *sweetness = [BKMenuItem localizedStringForSweetness:self.selectedSweetness];
+    NSString *sweetness = [BKMenuItemForReceiving localizedStringForSweetness:self.selectedSweetness];
     if (sweetness != nil) {
         [result addObject:sweetness];
     }
@@ -815,7 +815,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    [self testPrint];
     NSString *title;
     if (self.selectedSize != nil) {
-        title = [NSString stringWithFormat:@"%@ %@ %@", self.selectedQuantity, [BKMenuItem localizedStringForSize:self.selectedSize], [self currencyStringForPrice:[self.selectedMenuItem priceForSize:self.selectedSize]]];
+        title = [NSString stringWithFormat:@"%@ %@ %@", self.selectedQuantity, [BKMenuItemForReceiving localizedStringForSize:self.selectedSize], [self currencyStringForPrice:[self.selectedMenuItem priceForSize:self.selectedSize]]];
     }
     else {
         title = [NSString stringWithFormat:@"%@", self.selectedQuantity];
@@ -859,7 +859,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (void)testPrint {
-    for (BKMenuItem *item in self.menu) {
+    for (BKMenuItemForReceiving *item in self.menu) {
         NSLog(@"name of item is %@", item.name);
         NSLog(@"%@", item.UUID);
     }

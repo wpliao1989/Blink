@@ -12,7 +12,7 @@
 #import "BKShopInfoManager.h"
 #import "BKAccountManager.h"
 #import "UIViewController+BKBaseViewController.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 #import "UIViewController+Formatter.h"
 #import "BKOrderForSending.h"
 #import "BKOrderForReceiving.h"
@@ -126,16 +126,16 @@
 
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness {
     NSMutableArray *strings = [NSMutableArray array];
-    if ([BKMenuItem localizedStringForIce:ice] != nil) {
-        [strings addObject:[BKMenuItem localizedStringForIce:ice]];
+    if ([BKMenuItemForReceiving localizedStringForIce:ice] != nil) {
+        [strings addObject:[BKMenuItemForReceiving localizedStringForIce:ice]];
     }
-    if ([BKMenuItem localizedStringForSweetness:sweetness] != nil) {
-        [strings addObject:[BKMenuItem localizedStringForSweetness:sweetness]];
+    if ([BKMenuItemForReceiving localizedStringForSweetness:sweetness] != nil) {
+        [strings addObject:[BKMenuItemForReceiving localizedStringForSweetness:sweetness]];
     }
     
     NSString *iceAndSweetness = strings.count > 0 ? [NSString stringWithFormat:@"(%@)", [strings componentsJoinedByString:@"、"]] : @"";
     
-    return [NSString stringWithFormat:@"%@ %@ %@", [quantity stringValue], [BKMenuItem localizedStringForSize:size], iceAndSweetness];
+    return [NSString stringWithFormat:@"%@ %@ %@", [quantity stringValue], [BKMenuItemForReceiving localizedStringForSize:size], iceAndSweetness];
 }
 
 #pragma mark - Tableview

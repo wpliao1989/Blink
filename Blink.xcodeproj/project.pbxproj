@@ -19,6 +19,8 @@
 		42100211171BA44100EE476E /* fix_password.png in Resources */ = {isa = PBXBuildFile; fileRef = 4210020D171BA44100EE476E /* fix_password.png */; };
 		42100212171BA44100EE476E /* fix_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 4210020E171BA44100EE476E /* fix_press.png */; };
 		42100213171BA44100EE476E /* fix.png in Resources */ = {isa = PBXBuildFile; fileRef = 4210020F171BA44100EE476E /* fix.png */; };
+		42100217171C0BD700EE476E /* NSString+Numeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100216171C0BD700EE476E /* NSString+Numeric.m */; };
+		4210021A171CEDD800EE476E /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100219171CEDD800EE476E /* BKMenuItem.m */; };
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
@@ -182,7 +184,7 @@
 		CE3AB02416EDDB05007E6A82 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFF816EDDB05007E6A82 /* star@2x.png */; };
 		CE3AB02616EDDB05007E6A82 /* under@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFFA16EDDB05007E6A82 /* under@2x.png */; };
 		CE3AB07E16EDDB5E007E6A82 /* under.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AB05216EDDB5E007E6A82 /* under.png */; };
-		CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3616D715E50005C70F /* BKMenuItem.m */; };
+		CE55EA3716D715E50005C70F /* BKMenuItemForReceiving.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3616D715E50005C70F /* BKMenuItemForReceiving.m */; };
 		CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3A16D718600005C70F /* BKTestCenter.m */; };
 		CE55EA3E16D765990005C70F /* BKOrderForSending.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EA3D16D765990005C70F /* BKOrderForSending.m */; };
 		CE78482D16D20CEB00A80031 /* BKOrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE78482C16D20CEB00A80031 /* BKOrderManager.m */; };
@@ -307,6 +309,10 @@
 		4210020D171BA44100EE476E /* fix_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fix_password.png; sourceTree = "<group>"; };
 		4210020E171BA44100EE476E /* fix_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fix_press.png; sourceTree = "<group>"; };
 		4210020F171BA44100EE476E /* fix.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fix.png; sourceTree = "<group>"; };
+		42100215171C0BD700EE476E /* NSString+Numeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Numeric.h"; path = "../../../BlinkIPad/BlinkIPad/NSString+Numeric.h"; sourceTree = "<group>"; };
+		42100216171C0BD700EE476E /* NSString+Numeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Numeric.m"; path = "../../../BlinkIPad/BlinkIPad/NSString+Numeric.m"; sourceTree = "<group>"; };
+		42100218171CEDD800EE476E /* BKMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuItem.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		42100219171CEDD800EE476E /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
 		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
@@ -491,8 +497,8 @@
 		CE3AAFF816EDDB05007E6A82 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		CE3AAFFA16EDDB05007E6A82 /* under@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "under@2x.png"; sourceTree = "<group>"; };
 		CE3AB05216EDDB5E007E6A82 /* under.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = under.png; sourceTree = "<group>"; };
-		CE55EA3516D715E50005C70F /* BKMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuItem.h; sourceTree = "<group>"; };
-		CE55EA3616D715E50005C70F /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; };
+		CE55EA3516D715E50005C70F /* BKMenuItemForReceiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuItemForReceiving.h; sourceTree = "<group>"; };
+		CE55EA3616D715E50005C70F /* BKMenuItemForReceiving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItemForReceiving.m; sourceTree = "<group>"; };
 		CE55EA3916D718600005C70F /* BKTestCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKTestCenter.h; sourceTree = "<group>"; };
 		CE55EA3A16D718600005C70F /* BKTestCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKTestCenter.m; sourceTree = "<group>"; };
 		CE55EA3C16D765990005C70F /* BKOrderForSending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKOrderForSending.h; sourceTree = "<group>"; };
@@ -664,6 +670,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42100214171C0BC300EE476E /* Managed by BlinkIPad */ = {
+			isa = PBXGroup;
+			children = (
+				42100215171C0BD700EE476E /* NSString+Numeric.h */,
+				42100216171C0BD700EE476E /* NSString+Numeric.m */,
+			);
+			name = "Managed by BlinkIPad";
+			sourceTree = "<group>";
+		};
 		42A978A2170AAB2800494658 /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +707,7 @@
 		42A978C7170B218700494658 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				42100214171C0BC300EE476E /* Managed by BlinkIPad */,
 				42A978D1170B219E00494658 /* UIButton+ChangeTitle.h */,
 				42A978C9170B219E00494658 /* UIButton+ChangeTitle.m */,
 				42A978CA170B219E00494658 /* NSObject+NullObject.h */,
@@ -928,8 +944,10 @@
 				CE55EA3D16D765990005C70F /* BKOrderForSending.m */,
 				CE81758A16D47C2F002FA6BB /* BKShopInfo.h */,
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
-				CE55EA3516D715E50005C70F /* BKMenuItem.h */,
-				CE55EA3616D715E50005C70F /* BKMenuItem.m */,
+				42100218171CEDD800EE476E /* BKMenuItem.h */,
+				42100219171CEDD800EE476E /* BKMenuItem.m */,
+				CE55EA3516D715E50005C70F /* BKMenuItemForReceiving.h */,
+				CE55EA3616D715E50005C70F /* BKMenuItemForReceiving.m */,
 				422861CD170D781E00E10F8E /* BKLookup.h */,
 				422861CE170D781E00E10F8E /* BKLookup.m */,
 				42C2DEBC1712C1B00045B3F7 /* BKSearchParameter.h */,
@@ -1498,7 +1516,7 @@
 				CE81758916D47BB2002FA6BB /* BKShopInfoManager.m in Sources */,
 				CE81758C16D47C2F002FA6BB /* BKShopInfo.m in Sources */,
 				CE81758F16D47CE7002FA6BB /* BKOrderContentForSending.m in Sources */,
-				CE55EA3716D715E50005C70F /* BKMenuItem.m in Sources */,
+				CE55EA3716D715E50005C70F /* BKMenuItemForReceiving.m in Sources */,
 				CE55EA3B16D718600005C70F /* BKTestCenter.m in Sources */,
 				CE55EA3E16D765990005C70F /* BKOrderForSending.m in Sources */,
 				CE8097E516DB57FC0036C047 /* BKItemSelectButton.m in Sources */,
@@ -1532,6 +1550,8 @@
 				42B33BBF171819AA006C2F7C /* BKAccountManager+Favorite.m in Sources */,
 				421001FC17183EAD00EE476E /* NSNumber+NullNumber.m in Sources */,
 				42100203171B9E6100EE476E /* BKPasswordModifyViewController.m in Sources */,
+				42100217171C0BD700EE476E /* NSString+Numeric.m in Sources */,
+				4210021A171CEDD800EE476E /* BKMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "BKOrderContent.h"
 
-@class BKMenuItem;
+@class BKMenuItemForReceiving;
 
 @interface BKOrderContentForSending : BKOrderContent
 
-- initWithMenu:(BKMenuItem *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size;
+- initWithMenu:(BKMenuItemForReceiving *)menu ice:(NSString *)ice sweetness:(NSString *)sweetness quantity:(NSNumber *)quantity size:(NSString *)size;
 
 - (NSDictionary *)contentForAPI;
 - (BOOL)isEqualExceptQuantity:(BKOrderContentForSending *)theOrderContent;

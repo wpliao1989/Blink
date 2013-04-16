@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKScrollableViewController.h"
 
 //@protocol BKRegisterViewControllerDelegate <NSObject>
 //
@@ -14,7 +15,7 @@
 //
 //@end
 
-@interface BKRegisterViewController : UIViewController
+@interface BKRegisterViewController : BKScrollableViewController
 
 //@property (nonatomic, weak) id<BKRegisterViewControllerDelegate> delegate;
 

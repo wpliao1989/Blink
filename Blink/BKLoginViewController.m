@@ -159,7 +159,7 @@
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {
-//    [self performSegueWithIdentifier:@"registrationSegue" sender:self];
+    [self performSegueWithIdentifier:@"registrationSegue" sender:self];
 }
 
 - (IBAction)closeButtonPressed:(id)sender {

@@ -7,7 +7,7 @@
 //
 
 #import "BKShopInfo.h"
-#import "BKMenuItem.h"
+#import "BKMenuItemForReceiving.h"
 #import "NSObject+NullObject.h"
 #import "NSNumber+NullNumber.h"
 
@@ -113,7 +113,7 @@ NSString *const BKShopInfoEmptyString = @"Null content";
         NSMutableArray *newMemuArray = [NSMutableArray array];
         NSArray *arrayOfDicts = [self.data objectForKey:kBKShopMenu];
         for (NSDictionary *menuItem in arrayOfDicts) {
-            [newMemuArray addObject:[[BKMenuItem alloc] initWithData:menuItem]];
+            [newMemuArray addObject:[[BKMenuItemForReceiving alloc] initWithData:menuItem]];
         }
         _menu = [NSArray arrayWithArray:newMemuArray];
     }
