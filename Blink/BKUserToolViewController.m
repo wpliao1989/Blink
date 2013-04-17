@@ -192,13 +192,18 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (void)configureOrderList {
-    if (self.orderlist == nil) {
-        [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
-            NSLog(success ? @"Get order success!" : @"Get order failed!");
-            //NSLog(@"self.orderlist = %@", self.orderlist);
-            [self.orderListTableView reloadData];
-        }];
-    }
+//    if (self.orderlist == nil) {
+//        [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
+//            NSLog(success ? @"Get order success!" : @"Get order failed!");
+//            //NSLog(@"self.orderlist = %@", self.orderlist);
+//            [self.orderListTableView reloadData];
+//        }];
+//    }
+    [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
+        NSLog(success ? @"Get order success!" : @"Get order failed!");
+        //NSLog(@"self.orderlist = %@", self.orderlist);
+        [self.orderListTableView reloadData];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

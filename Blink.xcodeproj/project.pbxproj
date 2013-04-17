@@ -26,6 +26,7 @@
 		42100235171E4BE000EE476E /* UIViewController+MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100234171E4BE000EE476E /* UIViewController+MenuCell.m */; };
 		42100238171E4C8200EE476E /* UIViewController+ShopListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */; };
 		4210023B171E4CF000EE476E /* UIViewController+UserOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */; };
+		42100246171E723F00EE476E /* BKMenuItem+PriceEnabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100245171E723F00EE476E /* BKMenuItem+PriceEnabled.m */; };
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
@@ -327,6 +328,8 @@
 		42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ShopListCell.m"; sourceTree = "<group>"; };
 		42100239171E4CEF00EE476E /* UIViewController+UserOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UserOrderListCell.h"; sourceTree = "<group>"; };
 		4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UserOrderListCell.m"; sourceTree = "<group>"; };
+		42100244171E723F00EE476E /* BKMenuItem+PriceEnabled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BKMenuItem+PriceEnabled.h"; sourceTree = "<group>"; };
+		42100245171E723F00EE476E /* BKMenuItem+PriceEnabled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BKMenuItem+PriceEnabled.m"; sourceTree = "<group>"; };
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
 		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
@@ -974,6 +977,8 @@
 				CE81758B16D47C2F002FA6BB /* BKShopInfo.m */,
 				42100218171CEDD800EE476E /* BKMenuItem.h */,
 				42100219171CEDD800EE476E /* BKMenuItem.m */,
+				42100244171E723F00EE476E /* BKMenuItem+PriceEnabled.h */,
+				42100245171E723F00EE476E /* BKMenuItem+PriceEnabled.m */,
 				CE55EA3516D715E50005C70F /* BKMenuItemForReceiving.h */,
 				CE55EA3616D715E50005C70F /* BKMenuItemForReceiving.m */,
 				422861CD170D781E00E10F8E /* BKLookup.h */,
@@ -1588,6 +1593,7 @@
 				42100235171E4BE000EE476E /* UIViewController+MenuCell.m in Sources */,
 				42100238171E4C8200EE476E /* UIViewController+ShopListCell.m in Sources */,
 				4210023B171E4CF000EE476E /* UIViewController+UserOrderListCell.m in Sources */,
+				42100246171E723F00EE476E /* BKMenuItem+PriceEnabled.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
