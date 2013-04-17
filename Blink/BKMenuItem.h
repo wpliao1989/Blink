@@ -14,6 +14,10 @@ FOUNDATION_EXPORT NSString *const kBKMenuIce;
 FOUNDATION_EXPORT NSString *const kBKMenuSweetness;
 FOUNDATION_EXPORT NSString *const kBKMenuDetail;
 
+FOUNDATION_EXPORT NSString *const kBKMenuPriceMedium;
+FOUNDATION_EXPORT NSString *const kBKMenuPriceLarge;
+FOUNDATION_EXPORT NSString *const kBKMenuPriceSmall;
+
 @interface BKMenuItem : NSObject
 
 @property (strong, nonatomic) NSString *name;

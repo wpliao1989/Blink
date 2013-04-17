@@ -11,13 +11,16 @@
 #import "BKMenuItemForReceiving.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "UIImage+Resize.h"
+#import "UIViewController+Formatter.h"
+#import "UIViewController+MenuCell.h"
+#import "BKMenuListCell.h"
 
 @interface BKMenuViewController ()
 
 - (NSString *)stringForPriceFromMenuItem:(BKMenuItemForReceiving *)item;
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
 
-- (UIImage *)defaultPicture;
+//- (UIImage *)defaultPicture;
 
 @property (strong, nonatomic) NSMutableArray *picImageArray; // Retain strong pointer to keep image alive
 
@@ -34,27 +37,19 @@
     return _picImageArray;
 }
 
-- (UIImage *)defaultPicture {
-    static UIImage *pic;
-    if (pic == nil) {
-        pic = [UIImage imageNamed:@"picture"];
-    }
-    return pic;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (UIImage *)defaultPicture {
+//    static UIImage *pic;
+//    if (pic == nil) {
+//        pic = [UIImage imageNamed:@"picture"];
+//    }
+//    return pic;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"BKMenuListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"menuCell"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -62,12 +57,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKShopDetailViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2]).homeButton;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -90,15 +79,17 @@
 {
     NSLog(@"tableview:%@",tableView);
     static NSString *CellIdentifier = @"menuCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    BKMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     BKMenuItemForReceiving *item = [self.menu objectAtIndex:indexPath.row];
     
-    UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
-    itemNameLabel.text = item.name;
+    [self configureMenuCell:cell withMenuItem:item];
     
-    //NSLog(@"cell.imageView.contentMode = %d", cell.imageView.contentMode);
-    cell.imageView.image = [self defaultPicture];
+//    UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
+//    itemNameLabel.text = item.name;
+//    
+//    //NSLog(@"cell.imageView.contentMode = %d", cell.imageView.contentMode);
+//    cell.imageView.image = [self defaultPicture];
     
     if (item.picImage == nil) {
         NSLog(@"Downloading pic image");
@@ -119,36 +110,36 @@
         cell.imageView.image = item.picImage;
     }
     
-    UILabel *priceLabel = (UILabel *)[cell viewWithTag:2];
-    priceLabel.text = [self stringForPriceFromMenuItem:item];
+//    UILabel *priceLabel = (UILabel *)[cell viewWithTag:2];
+//    priceLabel.text = [self stringForPriceFromMenuItem:item];
     
     return cell;
 }
 
-- (NSString *)stringForPriceFromMenuItem:(BKMenuItemForReceiving *)item {
-    NSMutableArray *result = [NSMutableArray array];
-    
-    for (NSString *size in item.sizeLevels) {
-        [result addObject:[NSString stringWithFormat:@"%@%@", [BKMenuItemForReceiving localizedStringForSize:size], [self currencyStringForPrice:[item priceForSize:size]]]];
-    }
-    return [result componentsJoinedByString:@", "];
-}
+//- (NSString *)stringForPriceFromMenuItem:(BKMenuItemForReceiving *)item {
+//    NSMutableArray *result = [NSMutableArray array];
+//    
+//    for (NSString *size in item.sizeLevels) {
+//        [result addObject:[NSString stringWithFormat:@"%@%@", [BKMenuItemForReceiving localizedStringForSize:size], [self currencyStringForPrice:[item priceForSize:size]]]];
+//    }
+//    return [result componentsJoinedByString:@", "];
+//}
 
-- (NSString *)currencyStringForPrice:(NSNumber *)price {
-    static NSNumberFormatter *currencyFormatter;
-    
-    if (currencyFormatter == nil) {
-        currencyFormatter = [[NSNumberFormatter alloc] init];
-        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-        [currencyFormatter setPositiveFormat:@"¤#,###"];
-        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
-        [currencyFormatter setLocale:twLocale];
-        [currencyFormatter setCurrencySymbol:@"$"];
-        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
-    }
-    
-    return [currencyFormatter stringFromNumber:price];
-}
+//- (NSString *)currencyStringForPrice:(NSNumber *)price {
+//    static NSNumberFormatter *currencyFormatter;
+//    
+//    if (currencyFormatter == nil) {
+//        currencyFormatter = [[NSNumberFormatter alloc] init];
+//        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+//        [currencyFormatter setPositiveFormat:@"¤#,###"];
+//        NSLocale *twLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hant_TW"];
+//        [currencyFormatter setLocale:twLocale];
+//        [currencyFormatter setCurrencySymbol:@"$"];
+//        //        NSLog(@"positive format: %@", [currencyFormatter positiveFormat]);
+//    }
+//    
+//    return [currencyFormatter stringFromNumber:price];
+//}
 
 /*
 // Override to support conditional editing of the table view.

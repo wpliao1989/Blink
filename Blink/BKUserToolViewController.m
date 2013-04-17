@@ -23,6 +23,8 @@
 #import "BKUserOrderListCell.h"
 #import "BKOrderConfirmViewController.h"
 #import "NSString+Numeric.h"
+#import "UIViewController+UserOrderListCell.h"
+#import "UIViewController+ShopListCell.h"
 
 @interface BKUserToolViewController ()
 

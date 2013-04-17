@@ -21,6 +21,11 @@
 		42100213171BA44100EE476E /* fix.png in Resources */ = {isa = PBXBuildFile; fileRef = 4210020F171BA44100EE476E /* fix.png */; };
 		42100217171C0BD700EE476E /* NSString+Numeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100216171C0BD700EE476E /* NSString+Numeric.m */; };
 		4210021A171CEDD800EE476E /* BKMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100219171CEDD800EE476E /* BKMenuItem.m */; };
+		42100225171E468400EE476E /* BKMenuListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42100224171E468400EE476E /* BKMenuListCell.xib */; };
+		42100228171E475300EE476E /* BKMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100227171E475300EE476E /* BKMenuListCell.m */; };
+		42100235171E4BE000EE476E /* UIViewController+MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100234171E4BE000EE476E /* UIViewController+MenuCell.m */; };
+		42100238171E4C8200EE476E /* UIViewController+ShopListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */; };
+		4210023B171E4CF000EE476E /* UIViewController+UserOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */; };
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
@@ -313,6 +318,15 @@
 		42100216171C0BD700EE476E /* NSString+Numeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Numeric.m"; path = "../../../BlinkIPad/BlinkIPad/NSString+Numeric.m"; sourceTree = "<group>"; };
 		42100218171CEDD800EE476E /* BKMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuItem.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		42100219171CEDD800EE476E /* BKMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuItem.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		42100224171E468400EE476E /* BKMenuListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BKMenuListCell.xib; sourceTree = "<group>"; };
+		42100226171E475300EE476E /* BKMenuListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMenuListCell.h; sourceTree = "<group>"; };
+		42100227171E475300EE476E /* BKMenuListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKMenuListCell.m; sourceTree = "<group>"; };
+		42100233171E4BE000EE476E /* UIViewController+MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MenuCell.h"; sourceTree = "<group>"; };
+		42100234171E4BE000EE476E /* UIViewController+MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MenuCell.m"; sourceTree = "<group>"; };
+		42100236171E4C8100EE476E /* UIViewController+ShopListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ShopListCell.h"; sourceTree = "<group>"; };
+		42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ShopListCell.m"; sourceTree = "<group>"; };
+		42100239171E4CEF00EE476E /* UIViewController+UserOrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UserOrderListCell.h"; sourceTree = "<group>"; };
+		4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UserOrderListCell.m"; sourceTree = "<group>"; };
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
 		422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+AnnotationOperation.m"; sourceTree = "<group>"; };
 		422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKCoordinateRegion.h"; sourceTree = "<group>"; };
@@ -679,6 +693,21 @@
 			name = "Managed by BlinkIPad";
 			sourceTree = "<group>";
 		};
+		42100232171E4BA400EE476E /* Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */,
+				42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */,
+				42100233171E4BE000EE476E /* UIViewController+MenuCell.h */,
+				42100234171E4BE000EE476E /* UIViewController+MenuCell.m */,
+				42100236171E4C8100EE476E /* UIViewController+ShopListCell.h */,
+				42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */,
+				42100239171E4CEF00EE476E /* UIViewController+UserOrderListCell.h */,
+				4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */,
+			);
+			name = Formatter;
+			sourceTree = "<group>";
+		};
 		42A978A2170AAB2800494658 /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,6 +736,7 @@
 		42A978C7170B218700494658 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				42100232171E4BA400EE476E /* Formatter */,
 				42100214171C0BC300EE476E /* Managed by BlinkIPad */,
 				42A978D1170B219E00494658 /* UIButton+ChangeTitle.h */,
 				42A978C9170B219E00494658 /* UIButton+ChangeTitle.m */,
@@ -722,8 +752,6 @@
 				422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */,
 				422861AE170C24CD00E10F8E /* NSString+MKCoordinateRegion.h */,
 				422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */,
-				42B3DC301715734D00A16A13 /* UIViewController+Formatter.h */,
-				42B3DC311715734D00A16A13 /* UIViewController+Formatter.m */,
 				CE847A8016EF1D3000CB75CB /* UIViewController+BKBaseViewController.h */,
 				CE847A8116EF1D3000CB75CB /* UIViewController+BKBaseViewController.m */,
 				421001FA17183EAD00EE476E /* NSNumber+NullNumber.h */,
@@ -985,6 +1013,9 @@
 				42B3DC401716873D00A16A13 /* BKUserOrderListCell.h */,
 				42B3DC411716873D00A16A13 /* BKUserOrderListCell.m */,
 				42B3DC431716874D00A16A13 /* BKUserOrderListCell.xib */,
+				42100226171E475300EE476E /* BKMenuListCell.h */,
+				42100227171E475300EE476E /* BKMenuListCell.m */,
+				42100224171E468400EE476E /* BKMenuListCell.xib */,
 			);
 			name = CustomCell;
 			sourceTree = "<group>";
@@ -1484,6 +1515,7 @@
 				42100211171BA44100EE476E /* fix_password.png in Resources */,
 				42100212171BA44100EE476E /* fix_press.png in Resources */,
 				42100213171BA44100EE476E /* fix.png in Resources */,
+				42100225171E468400EE476E /* BKMenuListCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1552,6 +1584,10 @@
 				42100203171B9E6100EE476E /* BKPasswordModifyViewController.m in Sources */,
 				42100217171C0BD700EE476E /* NSString+Numeric.m in Sources */,
 				4210021A171CEDD800EE476E /* BKMenuItem.m in Sources */,
+				42100228171E475300EE476E /* BKMenuListCell.m in Sources */,
+				42100235171E4BE000EE476E /* UIViewController+MenuCell.m in Sources */,
+				42100238171E4C8200EE476E /* UIViewController+ShopListCell.m in Sources */,
+				4210023B171E4CF000EE476E /* UIViewController+UserOrderListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,7 @@
 #import "BKSearchOption.h"
 #import "BKSearchParameter.h"
 #import "UIViewController+Formatter.h"
+#import "UIViewController+ShopListCell.h"
 
 #import "BKTestCenter.h"
 

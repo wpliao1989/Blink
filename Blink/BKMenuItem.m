@@ -17,6 +17,10 @@ NSString *const kBKMenuIce = @"ice";
 NSString *const kBKMenuSweetness = @"sweetness";
 NSString *const kBKMenuDetail = @"detail";
 
+NSString *const kBKMenuPriceMedium = @"Medium";
+NSString *const kBKMenuPriceLarge = @"Large";
+NSString *const kBKMenuPriceSmall = @"Small";
+
 @implementation BKMenuItem
 
 - (NSNumber *)priceForSize:(NSString *)size {
@@ -40,11 +44,32 @@ NSString *const kBKMenuDetail = @"detail";
     result.name = item.name;
     result.iceLevels = item.iceLevels;
     result.sweetnessLevels = item.sweetnessLevels;
-    result.sizeLevels = item.sizeLevels;
     result.price = item.price;
     result.detail = item.detail;
     
+    
     return result;
+}
+
+- (NSArray *)sizeLevels {
+    if (_sizeLevels == nil) {
+        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
+        NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
+        [allKeys sortUsingAnotherArray:sortOrder];
+        _sizeLevels = [NSArray arrayWithArray:allKeys];
+    }
+    return _sizeLevels;
+}
+
+- (NSString *)description {
+    NSMutableArray *result = [NSMutableArray array];
+    [result addObject:[NSString stringWithFormat:@"name:%@", self.name]];
+    [result addObject:[NSString stringWithFormat:@"detail:%@", self.detail]];
+    [result addObject:[NSString stringWithFormat:@"ice:%@", self.iceLevels]];
+    [result addObject:[NSString stringWithFormat:@"sweetness:%@", self.sweetnessLevels]];
+    [result addObject:[NSString stringWithFormat:@"price:%@", self.price]];
+    
+    return [result componentsJoinedByString:@"\n\t"];
 }
 
 @end

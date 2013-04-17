@@ -44,7 +44,7 @@
     
     // Set content size of scroll view
     if (![self isUsingOwnScrollview]) {
-        CGSize sizeOfView = self.view.frame.size;
+        CGSize sizeOfView = self.scrollView.frame.size;
         self.scrollView.contentSize = sizeOfView;
     }
 }
@@ -77,6 +77,7 @@
         return;
     }
     
+    NSLog(@"keyboard will show = %@", notification.userInfo);
     //NSLog(@"window:%@", self.view.window);
     //NSLog(@"11111 %f", scrollViewBottomY);
     //NSLog(@"22222 %f", windowBottomY);
@@ -123,6 +124,7 @@
         return;
     }
     NSDictionary* info = [notification userInfo];
+    NSLog(@"keyboard will hide = %@", notification.userInfo);
     NSTimeInterval animationTime = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     [UIView animateWithDuration:animationTime animations:^{
         UIEdgeInsets contentInsets = UIEdgeInsetsZero;

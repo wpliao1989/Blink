@@ -15,10 +15,6 @@
 NSString *const kBKMenuUUID = @"UUID";
 NSString *const kBKMenuPicURL = @"picture";
 
-NSString *const kBKMenuPriceMedium = @"Medium";
-NSString *const kBKMenuPriceLarge = @"Large";
-NSString *const kBKMenuPriceSmall = @"Small";
-
 NSString *const BKMenuNullString = @"null";
 
 @interface BKMenuItemForReceiving ()
@@ -45,7 +41,7 @@ NSString *const BKMenuNullString = @"null";
 @synthesize detail = _detail;
 @synthesize picURL = _picURL;
 @synthesize priceLevels = _priceLevels;
-@synthesize sizeLevels = _sizeLevels;
+//@synthesize sizeLevels = _sizeLevels;
 
 - (NSString *)UUID {
     NSLog(@"UUID is %@", [self.data objectForKey:kBKMenuUUID]);
@@ -89,15 +85,15 @@ NSString *const BKMenuNullString = @"null";
     return _sweetnessLevels;
 }
 
-- (NSArray *)sizeLevels {
-    if (_sizeLevels == nil) {
-        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
-        NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
-        [allKeys sortUsingAnotherArray:sortOrder];
-        _sizeLevels = [NSArray arrayWithArray:allKeys];
-    }
-    return _sizeLevels;
-}
+//- (NSArray *)sizeLevels {
+//    if (_sizeLevels == nil) {
+//        NSArray *sortOrder = @[kBKMenuPriceLarge, kBKMenuPriceMedium, kBKMenuPriceSmall];
+//        NSMutableArray *allKeys = [[self.price allKeys] mutableCopy];
+//        [allKeys sortUsingAnotherArray:sortOrder];
+//        _sizeLevels = [NSArray arrayWithArray:allKeys];
+//    }
+//    return _sizeLevels;
+//}
 
 - (NSArray *)localizedIceLevels {
     if (_localizedIceLevels == nil) {
