@@ -774,14 +774,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //                              @"20",
 //                              @"21",
 //                              @"22"];
-    self.sortCriteriaKeys = [NSArray arrayWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"SortCriteriaArray" withExtension:@"plist"]];
-    
-    NSMutableArray *array = [NSMutableArray array];
-    for (NSString *sortCriteria in self.sortCriteriaKeys) {
-        //NSLog(@"sortCriteria: %@", sortCriteria);
-        [array addObject:[BKShopInfoForUser localizedTypeStringForType:sortCriteria]];
-    }
-    self.localizedSortCriteria = [NSArray arrayWithArray:array];
+    self.sortCriteriaKeys = [BKShopInfo shopTypes];
+    self.localizedSortCriteria = [BKShopInfo localizedShopTypes];
 }
 
 

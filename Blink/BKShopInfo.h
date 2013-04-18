@@ -29,7 +29,11 @@ FOUNDATION_EXPORT NSString *const kBKShopDeliverCost;
 FOUNDATION_EXPORT NSString *const kBKShopMinPrice;
 FOUNDATION_EXPORT NSString *const kBKShopPicURL;
 
+FOUNDATION_EXPORT NSString *const BKShopInfoEmptyString;
+
 @interface BKShopInfo : NSObject
+
+@property (strong, nonatomic) NSDictionary *data;
 
 @property (strong, nonatomic) NSString *name;
 // Menu is an array of dictionaries(keys: UUID, name, price)
@@ -59,5 +63,25 @@ FOUNDATION_EXPORT NSString *const kBKShopPicURL;
 // Image
 @property (strong, nonatomic) NSURL *pictureURL;
 @property (weak, nonatomic) UIImage *pictureImage;
+
+- (id)initWithData:(NSDictionary *)data;
+- (void)updateWithData:(NSDictionary *)data;
+
+@end
+
+@interface BKShopInfo (ServiceAndType)
+
+- (BOOL)isServiceFreeDelivery;
+- (BOOL)isServiceHasDeliveryCost;
+
+- (NSString *)localizedServiceString;
+- (NSString *)localizedTypeString;
++ (NSString *)localizedTypeStringForType:(NSString *)type;
+
++ (NSArray *)shopTypes;
++ (NSArray *)localizedShopTypes;
+
++ (NSDictionary *)serviceLookup;
++ (NSDictionary *)typeLookup;
 
 @end

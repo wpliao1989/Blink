@@ -82,7 +82,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
     if (isAsynchronous) {
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if (useJSON) {
-                //NSLog(@"service: data string %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                NSLog(@"service: data string %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                 data = [data JSONValue];
             }
             completeHandler(response,data,error);
