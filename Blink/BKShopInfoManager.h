@@ -14,7 +14,7 @@
 FOUNDATION_EXPORT NSString *const BKShopImageDidDownloadNotification;
 FOUNDATION_EXPORT NSString *const kBKShopImageDidDownloadUserInfoShopInfo;
 
-@class BKShopInfo;
+@class BKShopInfoForUser;
 @class BKSearchParameter;
 
 @interface BKShopInfoManager : NSObject
@@ -25,8 +25,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (NSUInteger)indexForShopID:(NSString *)shopID; // Return NSNotFound if not found
 - (NSString *)shopNameAtIndex:(NSUInteger)index;
 - (NSString *)shopIDAtIndex:(NSUInteger)index;
-- (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index;
-- (BKShopInfo *)shopInfoForShopID:(NSString *)shopID;
+- (BKShopInfoForUser *)shopInfoAtIndex:(NSUInteger)index;
+- (BKShopInfoForUser *)shopInfoForShopID:(NSString *)shopID;
 - (NSArray *)shopInfosForShopIDs:(NSArray *)shopIDs;
 
 // Methods for loading new datas
@@ -44,8 +44,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 - (void)clearShopIDs;
 
 // Shop image download
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *image))completeHandler;
-- (BOOL)isDownloadingImageForShopInfo:(BKShopInfo *)shopInfo;
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(UIImage *image))completeHandler;
+- (BOOL)isDownloadingImageForShopInfo:(BKShopInfoForUser *)shopInfo;
 
 - (void)printShopIDs;
 

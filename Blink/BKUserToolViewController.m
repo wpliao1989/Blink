@@ -8,7 +8,7 @@
 
 #import "BKUserToolViewController.h"
 #import "BKAccountManager.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
@@ -216,8 +216,8 @@ enum BKUserToolSegmentationSelection {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"fromFavoriteShopDetailSegue"]) {
-        if ([sender isKindOfClass:[BKShopInfo class]]) {
-            BKShopInfo *shopInfo = sender;
+        if ([sender isKindOfClass:[BKShopInfoForUser class]]) {
+            BKShopInfoForUser *shopInfo = sender;
             BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
             NSString *shopID = shopInfo.sShopID;
             shopDetailViewController.shopID = shopID;
@@ -255,7 +255,7 @@ enum BKUserToolSegmentationSelection {
     
     if(tableView == self.favoriteShopTableView) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+        BKShopInfoForUser *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
         [self configureShopListCell:cell withShopInfo:theShopInfo];
         return cell;
     }
@@ -273,7 +273,7 @@ enum BKUserToolSegmentationSelection {
     if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
         return;
     }
-    BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+    BKShopInfoForUser *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
     
     if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
         
@@ -288,7 +288,7 @@ enum BKUserToolSegmentationSelection {
     if(tableView == self.favoriteShopTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"cell"]) {
-            BKShopInfo *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+            BKShopInfoForUser *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
             [self performSegueWithIdentifier:@"fromFavoriteShopDetailSegue" sender:theShopInfo];
         }    
     }

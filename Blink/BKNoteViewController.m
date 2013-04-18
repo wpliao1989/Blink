@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *background;
 @property (strong, nonatomic) IBOutlet UITextView *noteText;
-@property (strong, nonatomic) BKShopInfo *shopInfo;
+@property (strong, nonatomic) BKShopInfoForUser *shopInfo;
 - (IBAction)saveButtonPressed:(id)sender;
 
 @end
@@ -23,7 +23,7 @@
 
 @synthesize shopInfo = _shopInfo;
 
-- (BKShopInfo *)shopInfo {
+- (BKShopInfoForUser *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
 }
 

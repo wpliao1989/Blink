@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BKScrollableViewController.h"
 
-@class BKShopInfo;
+@class BKShopInfoForUser;
 @class BKOrder;
 
 @interface BKOrderConfirmViewController : BKScrollableViewController<UITableViewDataSource, UITableViewDelegate>

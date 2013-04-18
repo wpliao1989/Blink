@@ -11,7 +11,7 @@
 #import "BKAPIManager.h"
 #import "BKOrderForSending.h"
 #import "BKOrderContentForSending.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 
 #import "BKTestCenter.h"
 
@@ -33,9 +33,9 @@
 
 @interface BKOrderManager ()
 
-@property (strong, nonatomic) BKShopInfo *shopInfo;
+@property (strong, nonatomic) BKShopInfoForUser *shopInfo;
 
-- (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo;
+- (BOOL)isDifferentShop:(BKShopInfoForUser *)anotherShopInfo;
 - (void)ifNoContentLeftThenClear;
 
 @end
@@ -55,7 +55,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return _order;
 }
 
-- (void)setShopInfo:(BKShopInfo *)shopInfo {
+- (void)setShopInfo:(BKShopInfoForUser *)shopInfo {
     if (shopInfo != _shopInfo) {
         self.order.shopID = shopInfo.sShopID;
     }
@@ -123,7 +123,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma mark - Order content operations
 
-- (BOOL)isDifferentShop:(BKShopInfo *)anotherShopInfo {
+- (BOOL)isDifferentShop:(BKShopInfoForUser *)anotherShopInfo {
     return (self.shopInfo != nil) && (![self.shopInfo.sShopID isEqualToString:anotherShopInfo.sShopID]);
 }
 
@@ -131,7 +131,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return self.shopInfo != nil;
 }
 
-- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
+- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(NSInteger, BOOL))completeHandler {
 //    NSLog(@"%@", self.shopInfo);
 //    NSLog(@"%@", shopInfo);
     
@@ -164,7 +164,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 //    [self.order modifyOrderContentQuantity:quantity AtIndex:index];
 //}
 
-- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo {
+- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfoForUser *)shopInfo {
 //    NSLog(@"%@", self.shopInfo.shopID);
 //    NSLog(@"%@", shopInfo.shopID);
     
@@ -183,14 +183,14 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 #pragma mark - Total price / Note
 
-- (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo {
+- (NSString *)noteForShopInfo:(BKShopInfoForUser *)shopInfo {
     if ([self isDifferentShop:shopInfo]) {
         return nil;
     }
     return self.order.note;
 }
 
-- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo{
+- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfoForUser *)shopInfo{
     if ([self isDifferentShop:shopInfo]) {
         return NO;
     }
@@ -200,7 +200,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     return YES;
 }
 
-- (NSNumber *)totalPriceForShop:(BKShopInfo *)shopInfo {
+- (NSNumber *)totalPriceForShop:(BKShopInfoForUser *)shopInfo {
     if ([self isDifferentShop:shopInfo]) {
         return @(0);
     }

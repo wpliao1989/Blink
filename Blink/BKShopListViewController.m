@@ -11,7 +11,7 @@
 #import "BKShopInfoManager.h"
 #import "BKShopDetailViewController.h"
 #import "BKOrderManager.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKShopListCell.h"
 #import "MKMapView+AnnotationOperation.h"
@@ -81,7 +81,7 @@
 - (void)reloadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter;
 - (void)reloadDefault;
 - (void)updateMapViewRegion;
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo;
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo;
 
 - (void)locationDidChange;
 - (void)locationBecameAvailable;
@@ -201,8 +201,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"shopDetailSegue"]) {
-        if ([sender isKindOfClass:[BKShopInfo class]]) {
-            BKShopInfo *shopInfo = sender;
+        if ([sender isKindOfClass:[BKShopInfoForUser class]]) {
+            BKShopInfoForUser *shopInfo = sender;
             //NSInteger selectedIndex = [self.shopListTableView indexPathForSelectedRow].row;
             BKShopDetailViewController *shopDetailViewController = segue.destinationViewController;
             //        shopDetailViewController.navigationItem.title = [[BKShopInfoManager sharedBKShopInfoManager] shopNameAtIndex:selectedIndex];
@@ -373,7 +373,7 @@
 ////    [self saveTestShopInfosWithShopIDs:nil];
 //}
 
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo {
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo {
     [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:shopInfo completeHandler:^(UIImage *image) {
         
         NSUInteger indexForShop = [[BKShopInfoManager sharedBKShopInfoManager] indexForShopID:shopInfo.sShopID];
@@ -448,7 +448,7 @@
     }
     else {
         BKShopListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        BKShopInfoForUser *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
         [self configureShopListCell:cell withShopInfo:theShopInfo];
         
 //        NSLog(@"shopID :%@", theShopInfo.shopID);
@@ -481,7 +481,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[tableView cellForRowAtIndexPath:indexPath].reuseIdentifier isEqualToString:@"cell"]) {
-        BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+        BKShopInfoForUser *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
         [self performSegueWithIdentifier:@"shopDetailSegue" sender:shopInfo];
     }
 }
@@ -490,7 +490,7 @@
     if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
         return;
     }
-    BKShopInfo *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+    BKShopInfoForUser *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
     
     NSLog(@"will display cell at row:%d", indexPath.row);
     NSLog(@"cell image: %@", cell.imageView.image);
@@ -521,8 +521,8 @@
 #pragma mark - Mapview delegate
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    if ([view.annotation isKindOfClass:[BKShopInfo class]]) {
-        BKShopInfo *shopInfo = view.annotation;
+    if ([view.annotation isKindOfClass:[BKShopInfoForUser class]]) {
+        BKShopInfoForUser *shopInfo = view.annotation;
         [self performSegueWithIdentifier:@"shopDetailSegue" sender:shopInfo];
     }    
 }
@@ -530,7 +530,7 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
         UIImageView *imageView = (UIImageView *)(view.leftCalloutAccessoryView);
-        BKShopInfo *shopInfo = view.annotation;
+        BKShopInfoForUser *shopInfo = view.annotation;
         if (shopInfo.pictureImage == nil) {
             imageView.image = [self defaultPicture];
             [self downloadImageForShopInfo:shopInfo];
@@ -685,7 +685,7 @@
     NSArray *visibleIndexPaths = [self.shopListTableView indexPathsForVisibleRows];
     NSMutableArray *visibleAnnotations = [NSMutableArray array];
     for (NSIndexPath *indexpath in visibleIndexPaths) {
-        BKShopInfo *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexpath.row];
+        BKShopInfoForUser *shopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexpath.row];
         [visibleAnnotations addObject:shopInfo];
     }
     

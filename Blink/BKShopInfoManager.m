@@ -7,7 +7,7 @@
 //
 
 #import "BKShopInfoManager.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKAPIManager.h"
 #import "BKSearchParameter.h"
 
@@ -72,26 +72,26 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 }
 
 - (NSString *)shopNameAtIndex:(NSUInteger)index {
-    return ((BKShopInfo *)[self.shopInfoDictionary objectForKey:[self.shopIDs objectAtIndex:index]]).name;
+    return ((BKShopInfoForUser *)[self.shopInfoDictionary objectForKey:[self.shopIDs objectAtIndex:index]]).name;
 }
 
 - (NSString *)shopIDAtIndex:(NSUInteger)index {
     return [self.shopIDs objectAtIndex:index];
 }
 
-- (BKShopInfo *)shopInfoAtIndex:(NSUInteger)index {
+- (BKShopInfoForUser *)shopInfoAtIndex:(NSUInteger)index {
     NSLog(@"ShopInfoAtIndex: [self.shopIDs objectAtIndex:index]: %@", [self.shopIDs objectAtIndex:index]);
     return [self.shopInfoDictionary objectForKey:[self.shopIDs objectAtIndex:index]];
 }
 
-- (BKShopInfo *)shopInfoForShopID:(NSString *)shopID {
+- (BKShopInfoForUser *)shopInfoForShopID:(NSString *)shopID {
     return [self.shopInfoDictionary objectForKey:shopID];
 }
 
 - (NSArray *)shopInfosForShopIDs:(NSArray *)shopIDs {
     NSMutableArray *result = [NSMutableArray array];
     for (NSString *theShopID in shopIDs) {
-        BKShopInfo *theShopInfo = [self shopInfoForShopID:theShopID];
+        BKShopInfoForUser *theShopInfo = [self shopInfoForShopID:theShopID];
         if (theShopInfo) {
             [result addObject:theShopInfo];
         }
@@ -160,12 +160,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     
     if ([self.shopInfoDictionary objectForKey:shopID] == nil) {
         NSLog(@"Add new shop info for key %@", shopID);
-        BKShopInfo *newShopInfo = [[BKShopInfo alloc] initWithData:rawData];
+        BKShopInfoForUser *newShopInfo = [[BKShopInfoForUser alloc] initWithData:rawData];
         newShopInfo.sShopID = shopID;
         [self.shopInfoDictionary setObject:newShopInfo forKey:shopID];
     }
     else {
-        BKShopInfo *oldShopInfo = [self.shopInfoDictionary objectForKey:shopID];
+        BKShopInfoForUser *oldShopInfo = [self.shopInfoDictionary objectForKey:shopID];
         NSLog(@"Replace shop info for key %@", shopID);
 //        NSLog(@"oldShopInfo.name: %@", oldShopInfo.name);
 //        NSLog(@"newShopInfo.name: %@", [rawData objectForKey:@"name"]);
@@ -195,7 +195,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 #pragma mark - Shop image download
 
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
     [self.activeImageDownloads setObject:shopInfo forKey:shopInfo.sShopID];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:shopInfo.pictureURL];
@@ -212,7 +212,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
     }];
 }
 
-- (BOOL)isDownloadingImageForShopInfo:(BKShopInfo *)shopInfo {
+- (BOOL)isDownloadingImageForShopInfo:(BKShopInfoForUser *)shopInfo {
     return [self.activeImageDownloads objectForKey:shopInfo.sShopID] != nil;
 }
 

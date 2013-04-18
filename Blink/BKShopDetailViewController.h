@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "BKScrollableViewController.h"
 
-@class BKShopInfo;
+@class BKShopInfoForUser;
 
 @interface BKShopDetailViewController : BKScrollableViewController
 

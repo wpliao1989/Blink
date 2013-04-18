@@ -7,7 +7,7 @@
 //
 #import "BKAPIManager.h"
 #import "BKOrderForSending.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "NSMutableArray+Sort.h"
 #import "BKSearchParameter.h"
 
@@ -779,7 +779,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSMutableArray *array = [NSMutableArray array];
     for (NSString *sortCriteria in self.sortCriteriaKeys) {
         //NSLog(@"sortCriteria: %@", sortCriteria);
-        [array addObject:[BKShopInfo localizedTypeStringForType:sortCriteria]];
+        [array addObject:[BKShopInfoForUser localizedTypeStringForType:sortCriteria]];
     }
     self.localizedSortCriteria = [NSArray arrayWithArray:array];
 }

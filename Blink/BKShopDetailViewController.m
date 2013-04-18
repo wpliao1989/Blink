@@ -8,7 +8,7 @@
 
 #import "BKShopDetailViewController.h"
 #import "BKMainPageViewController.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKShopInfoManager.h"
 #import "BKMenuViewController.h"
 #import "BKMakeOrderViewController.h"
@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (IBAction)takeAwayButtonPressed:(id)sender;
 - (IBAction)addFavoriteShopButtonPressed:(id)sender;
 
-@property (nonatomic, strong) BKShopInfo *shopInfo;
+@property (nonatomic, strong) BKShopInfoForUser *shopInfo;
 @property (strong, nonatomic) UIImage *shopImage; // Keep a strong pointer to prevent image from dealloc
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 @synthesize shopInfo = _shopInfo;
 
-- (BKShopInfo *)shopInfo {
+- (BKShopInfoForUser *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
 }
 

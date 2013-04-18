@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+ShopListCell.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKShopListCell.h"
 #import "BKShopInfoManager.h"
 #import "NSNumber+NullNumber.h"
@@ -30,7 +30,7 @@
     return [NSString stringWithFormat:@"距離%d公里", (NSInteger)kmValue];
 }
 
-- (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo {
+- (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfoForUser *)shopInfo {
     if (shopInfo.pictureImage == nil) {
         cell.imageView.image = [self defaultPicture];
     }
@@ -65,7 +65,7 @@
     }
 }
 
-- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo {
+- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfoForUser *)shopInfo {
     NSMutableArray *strings = [NSMutableArray array];
     NSString *deliverCostString = [self stringForDeliverCostAndServiceOfShopInfo:shopInfo];
     NSString *distanceString = [self stringForDistance:shopInfo.distance];
@@ -78,7 +78,7 @@
     return [strings componentsJoinedByString:@"，"];
 }
 
-- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo {
+- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfoForUser *)shopInfo {
     static NSString *freeDelivery = @"免費外送";
     static NSString *chargeDelivery = @"自費外送";
     NSString *minPirce = [self currencyStringForPrice:shopInfo.minPrice];
@@ -99,7 +99,7 @@
     }
 }
 
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler {
     [[BKShopInfoManager sharedBKShopInfoManager] downloadImageForShopInfo:shopInfo completeHandler:completeHandler];
 }
 

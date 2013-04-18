@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class BKShopInfo;
+@class BKShopInfoForUser;
 @class BKShopListCell;
 
 @interface UIViewController (ShopListCell)
 
 - (NSString *)stringForDistance:(NSNumber *)distance;
-- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfo *)shopInfo;
-- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfo *)shopInfo;
-- (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfo *)shopInfo;
-- (void)downloadImageForShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler;
+- (NSString *)stringForDeliveryCostAndDistanceLabelOfShopInfo:(BKShopInfoForUser *)shopInfo;
+- (NSString *)stringForDeliverCostAndServiceOfShopInfo:(BKShopInfoForUser *)shopInfo;
+- (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfoForUser *)shopInfo;
+- (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(UIImage *))completeHandler;
 - (void)setImageView:(UIImageView *)imageView withImage:(UIImage *)image;
 
 @end

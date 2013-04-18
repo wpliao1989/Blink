@@ -16,7 +16,7 @@
 #import "BKOrderContentForSending.h"
 #import "BKMenuItemForReceiving.h"
 #import "BKItemSelectButton.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKShopInfoManager.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "BKOrderForSending.h"
@@ -63,7 +63,7 @@ NSInteger quantityComponent = 0;
 @property (strong, nonatomic) IBOutlet UIPickerView *quantityPicker;
 @property (strong, nonatomic) IBOutlet UIDatePicker *timePicker;
 
-@property (strong, nonatomic) BKShopInfo *shopInfo;
+@property (strong, nonatomic) BKShopInfoForUser *shopInfo;
 @property (strong, readonly, nonatomic) NSArray *menu;
 @property (strong, nonatomic) NSArray *quantityLevels;
 @property (strong, nonatomic) BKMenuItemForReceiving *selectedMenuItem;
@@ -154,7 +154,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     return _notEnoughContentAlert;
 }
 
-- (BKShopInfo *)shopInfo {
+- (BKShopInfoForUser *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
 }
 

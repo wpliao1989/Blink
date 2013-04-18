@@ -7,7 +7,7 @@
 //
 
 #import "BKTestCenter.h"
-#import "BKShopInfo.h"
+#import "BKShopInfoForUser.h"
 #import "BKMenuItemForReceiving.h"
 #import "BKOrderManager.h"
 #import "BKOrderContentForSending.h"

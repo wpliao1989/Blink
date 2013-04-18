@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class BKShopInfo;
+@class BKShopInfoForUser;
 
 @interface BKMakeOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
 

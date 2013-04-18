@@ -11,7 +11,7 @@
 
 @class BKOrderForSending;
 @class BKOrderContentForSending;
-@class BKShopInfo;
+@class BKShopInfoForUser;
 
 #ifndef NS_ENUM
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
@@ -41,22 +41,22 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKOrderManager)
 // ------------------------------------------------------------------
 // Order content
 // ------------------------------------------------------------------
-- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfo *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
+- (BOOL)addNewOrderContent:(BKOrderContentForSending *)content forShopInfo:(BKShopInfoForUser *)shopInfo completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;
 - (BKOrderContentForSending *)orderContentAtIndex:(NSInteger)index;
 //- (void)modifyOrderContentQuantity:(NSNumber *)quantity AtIndex:(NSInteger)index;
-- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfo *)shopInfo;
+- (NSUInteger)numberOfOrderContentsForShopInfo:(BKShopInfoForUser *)shopInfo;
 
 // ------------------------------------------------------------------
 // Note
 // ------------------------------------------------------------------
-- (NSString *)noteForShopInfo:(BKShopInfo *)shopInfo;
-- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfo *)shopInfo; // return YES for successful saving, NO otherwise
+- (NSString *)noteForShopInfo:(BKShopInfoForUser *)shopInfo;
+- (BOOL)saveNote:(NSString *)theNote forShopInfo:(BKShopInfoForUser *)shopInfo; // return YES for successful saving, NO otherwise
 
 // ------------------------------------------------------------------
 // Info
 // ------------------------------------------------------------------
-- (NSNumber *)totalPriceForShop:(BKShopInfo *)shopInfo;
+- (NSNumber *)totalPriceForShop:(BKShopInfoForUser *)shopInfo;
 - (NSString *)shopName;
 - (NSString *)shopID;
 
