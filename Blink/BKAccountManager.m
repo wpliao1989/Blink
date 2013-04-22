@@ -218,11 +218,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone completionHandler:(void (^)(BOOL, NSError *))completeHandler {
     [[BKAPIManager sharedBKAPIManager] editUserName:name address:address email:email phone:phone token:self.userToken completionHandler:^(id data, NSError *error) {
         if (data != nil) {
-            self.data = @{kBKUserName : name,
-                          kBKUserAddress : address,
-                          kBKUserEMail : email,
-                          kBKUserPhone : phone,
-                          kBKUserToken : self.userToken};
+            NSMutableDictionary *newData = [NSMutableDictionary dictionaryWithDictionary:self.data];
+            [newData setObject:name forKey:kBKUserName];
+            [newData setObject:address forKey:kBKUserAddress];
+            [newData setObject:email forKey:kBKUserEMail];
+            [newData setObject:phone forKey:kBKUserPhone];
+            self.data = [NSDictionary dictionaryWithDictionary:newData];
         }
         completeHandler(data != nil, error);
     }];

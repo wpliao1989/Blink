@@ -177,7 +177,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
 
 - (void)ifNoContentLeftThenClear {
     if (([self.order numberOfOrderContents] == 0) && ([self.order.note length] == 0)) {
+        NSString *method = self.order.method;
         [self clear];
+        self.order.method = method;
     }
 }
 

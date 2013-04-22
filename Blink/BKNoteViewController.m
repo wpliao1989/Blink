@@ -75,7 +75,10 @@
     CGSize oldSize = self.view.frame.size;
     CGFloat padding = 5.0f;
     
-    CGRect newFrame = CGRectMake(oldOrigin.x, keyboardFrame.origin.y - self.view.frame.size.height - padding, oldSize.width, oldSize.height);
+    CGRect newFrame = CGRectMake(oldOrigin.x,
+                                 keyboardFrame.origin.y - self.view.frame.size.height - padding,
+                                 oldSize.width,
+                                 oldSize.height);
     
     [UIView animateWithDuration:[[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
         self.view.frame = newFrame;
@@ -89,7 +92,8 @@
 }
 
 - (void)saveButtonPressed:(id)sender {
-    if ([[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo]) {
+    if ([[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text
+                                            forShopInfo:self.shopInfo]) {
         [self.delegate confirmButtonPressed:self];
     }
     else {

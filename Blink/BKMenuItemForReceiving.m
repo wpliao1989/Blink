@@ -178,6 +178,10 @@ NSString *const BKMenuNullString = @"null";
     return _picURL;
 }
 
+- (id)init {
+    return [self initWithData:nil];
+}
+
 - (id)initWithData:(NSDictionary *)data  {
     self = [super init];
     if (self) {

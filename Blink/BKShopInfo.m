@@ -219,6 +219,10 @@ NSString *const BKShopInfoEmptyString = @"";
 
 #pragma mark - Data
 
+- (id)init {
+    return [self initWithData:nil];
+}
+
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {

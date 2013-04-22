@@ -57,6 +57,7 @@ enum BKUserToolSegmentationSelection {
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userPhoneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userAddressTextField;
+@property (weak, nonatomic) IBOutlet UITextField *userEmailTextField;
 
 @property (strong, nonatomic) AKSegmentedControl *segmentedControl;
 
@@ -90,6 +91,7 @@ enum BKUserToolSegmentationSelection {
 - (void)setUserEmail:(NSString *)userEmail {
     _userEmail = userEmail;
     //self.userEmailLabel.text = userEmail;
+    self.userEmailTextField.text = userEmail;
 }
 
 - (void)setUserPhone:(NSString *)userPhone {
@@ -369,8 +371,11 @@ enum BKUserToolSegmentationSelection {
     else if (textField == self.userAddressTextField) {
         self.userAddress = textField.text;
     }
+    else if (textField == self.userEmailTextField) {
+        self.userEmail = textField.text;
+    }
     
-    NSLog(@"name:%@, phone:%@, address:%@", self.userName, self.userPhone, self.userAddress);
+    NSLog(@"name:%@, phone:%@, address:%@, email:%@", self.userName, self.userPhone, self.userAddress, self.userEmail);
 }
 
 #pragma mark - IBActions

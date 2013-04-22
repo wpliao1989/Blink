@@ -778,7 +778,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     self.localizedSortCriteria = [BKShopInfo localizedShopTypes];
 }
 
-
 @end
 
 @implementation BKAPIManager (Favorite)

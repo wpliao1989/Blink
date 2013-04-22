@@ -325,8 +325,24 @@
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="4ws-j9-dxb"/>
                                                 </connections>
                                             </textField>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XsX-wO-ng5">
+                                                <rect key="frame" x="20" y="212" width="42" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="7pR-9x-gIT">
+                                                <rect key="frame" x="70" y="208" width="230" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Mpb-6J-6KN" id="VM0-bV-pRB"/>
+                                                </connections>
+                                            </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="98B-gq-1N7">
-                                                <rect key="frame" x="49" y="211" width="222" height="33"/>
+                                                <rect key="frame" x="49" y="259" width="222" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" title="會員登入" image="fix.png">
@@ -341,7 +357,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="k3P-nU-eGi">
-                                                <rect key="frame" x="49" y="265" width="222" height="33"/>
+                                                <rect key="frame" x="49" y="300" width="222" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" title="會員登入" image="fix_password.png">
@@ -418,6 +434,7 @@
                         <outlet property="userAddressTextField" destination="GE9-eW-ctu" id="SLJ-fy-188"/>
                         <outlet property="userDataModificationView" destination="Lb3-9i-uK7" id="d2s-3k-cQv"/>
                         <outlet property="userEmailLabel" destination="Q1D-JS-eII" id="nIz-J8-mAh"/>
+                        <outlet property="userEmailTextField" destination="7pR-9x-gIT" id="kPU-Yp-SJh"/>
                         <outlet property="userNameLabel" destination="gVB-zT-yld" id="w7t-Ef-lWg"/>
                         <outlet property="userNameTextField" destination="MI0-sq-x8X" id="q1W-21-GiZ"/>
                         <outlet property="userPhoneTextField" destination="yzW-8y-4Dw" id="TrV-0f-uvj"/>
@@ -873,6 +890,12 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5qp-RB-Rs8">
+                                        <rect key="frame" x="52" y="324" width="54" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="N5x-xX-JyX">
                                         <rect key="frame" x="114" y="130" width="155" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -914,6 +937,14 @@
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="HeI-Tx-fy9"/>
                                         </connections>
                                     </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="G1m-Yi-ntl">
+                                        <rect key="frame" x="114" y="320" width="155" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Ciy-ss-NAw" id="Ebx-pp-k4Y"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -942,6 +973,12 @@
                     <connections>
                         <outlet property="scrollView" destination="KJz-nx-FD2" id="NpC-2V-E6d"/>
                         <outlet property="titleBackground" destination="Q0M-g6-ukm" id="Jsb-dx-fZG"/>
+                        <outlet property="userAccountTextField" destination="N5x-xX-JyX" id="JUd-CU-gqI"/>
+                        <outlet property="userAddressTextField" destination="7Vr-B1-o7d" id="nNH-mD-5bx"/>
+                        <outlet property="userEmailTextField" destination="G1m-Yi-ntl" id="zwD-iT-fZu"/>
+                        <outlet property="userNameTextField" destination="FuD-vG-0dh" id="L1D-zG-8Ar"/>
+                        <outlet property="userPasswordTextField" destination="b4S-O0-fDu" id="QOS-hH-s62"/>
+                        <outlet property="userPhoneTextField" destination="bwh-Vo-Hg3" id="alj-GY-OzQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCM-T6-2hH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2345,7 +2382,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="57" height="38"/>
+        <image name="close.png" width="29" height="29"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
@@ -2516,6 +2553,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="action" name="confirmRegistrationButtonPressed:"/>
                 <relationship kind="outlet" name="titleBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userAccountTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userAddressTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userEmailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userPasswordTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userPhoneTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="BKScrollableViewController" superclassName="UIViewController">
@@ -2586,6 +2629,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="userAddressTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="userDataModificationView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="userEmailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userEmailTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userNameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="userPhoneTextField" candidateClass="UITextField"/>
