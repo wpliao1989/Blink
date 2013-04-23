@@ -69,8 +69,13 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    return [[FBSession activeSession] handleOpenURL:url];
-}
+    NSLog(@"open url:%@", url);
+//    return [[FBSession activeSession] handleOpenURL:url];
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -103,6 +108,7 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    [[FBSession activeSession] close];
 }
 
 - (void)saveContext

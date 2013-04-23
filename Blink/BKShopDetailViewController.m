@@ -15,6 +15,8 @@
 #import "UIViewController+BKBaseViewController.h"
 #import "BKOrderManager.h"
 #import "BKAccountManager+Favorite.h"
+#import "AppDelegate.h"
+#import "NSString+QueryParser.h"
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -364,5 +366,314 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self setShopMinDeliveryLabel:nil];
     [self setShopPic:nil];
     [super viewDidUnload];
+}
+@end
+
+#import "UIViewController+SharedString.h"
+
+NSString *const kBKFacebookPublishPermission = @"publish_actions";
+NSString *const kBKFacebookShareDialogPostID = @"postId";
+NSString *const kBKFacebookFeedDialogPostID = @"post_id";
+NSString *const kBKFacebookPostSucceed = @"分享成功！";
+
+@interface BKShopDetailViewController (Facebook)
+
+- (IBAction)facebookButtonPressed:(UIButton *)sender;
+
+- (NSArray *)permissions;
+- (FBShareDialogParams *)dialogParams;
+
+- (NSDictionary *)parameterForFeedDialogFromParams:(FBShareDialogParams *)params;
+
+// Publish methods
+- (BOOL)publishWithOSIntegratedShareDialog;
+- (void)publishWithWebDialog;
+
+//- (void)choosePostMethod;
+//- (void)publishStory;
+
+@end
+
+@implementation BKShopDetailViewController (Facebook)
+
+- (void)showAlert:(NSString *) alertMsg {
+    if (![alertMsg isEqualToString:@""]) {
+        [[[UIAlertView alloc] initWithTitle:[self titleForAlertView]
+                                    message:alertMsg
+                                   delegate:nil
+                          cancelButtonTitle:[self confirmButtonTitleForAlertView]
+                          otherButtonTitles:nil] show];
+    }
+}
+
+- (NSString *) checkPostId:(NSDictionary *)results {
+    NSString *message = @"Posted successfully.";
+    // Share dialog
+    NSString *postId = results[kBKFacebookShareDialogPostID];
+    if (!postId) {
+        // Feed dialog
+        postId = results[kBKFacebookFeedDialogPostID];
+    }
+    if (postId) {
+        message = [NSString stringWithFormat:@"Posted story, id: %@", postId];
+    }
+    return message;
+}
+
+- (NSString *)checkErrorMessage:(NSError *)error {
+    NSString *errorMessage = @"";
+    if (error.fberrorShouldNotifyUser ||
+        error.fberrorCategory == FBErrorCategoryPermissions ||
+        error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        errorMessage = error.fberrorUserMessage;
+    } else {
+        errorMessage = @"網路發生錯誤，請稍候再試";
+    }
+    return errorMessage;
+}
+
+- (NSArray *)permissions {
+    return @[kBKFacebookPublishPermission];
+}
+
+- (FBShareDialogParams *)dialogParams {
+    FBShareDialogParams *result = [[FBShareDialogParams alloc] init];
+    result.name = @"Link name";
+    result.caption = @"Link caption";
+    result.description = @"Link description";
+    result.link = [NSURL URLWithString:self.shopInfo.shopURL];
+    result.picture = [NSURL URLWithString:@"https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png"];
+    
+    return result;
+}
+
+- (NSDictionary *)parameterForFeedDialogFromParams:(FBShareDialogParams *)params {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    if (params.name) {
+        [result setObject:params.name forKey:@"name"];
+    }
+    
+    if (params.caption) {
+        [result setObject:params.caption forKey:@"caption"];
+    }
+    
+    if (params.description) {
+        [result setObject:params.description forKey:@"description"];
+    }
+    
+    if (params.link) {
+        [result setObject:[params.link absoluteString] forKey:@"link"];
+    }
+    
+    if (params.picture) {
+        [result setObject:[params.picture absoluteString] forKey:@"picture"];
+    }
+    
+    return [NSDictionary dictionaryWithDictionary:result];
+}
+
+- (BOOL)publishWithOSIntegratedShareDialog {
+    NSLog(@"self.shopInfo.image = %@", self.shopInfo.pictureImage);
+    return [FBDialogs
+            presentOSIntegratedShareDialogModallyFrom:self
+            initialText:@""
+            image:nil
+            url:[self dialogParams].link
+            handler:^(FBOSIntegratedShareDialogResult result, NSError *error) {
+                // Only show the error if it is not due to the dialog
+                // not being supported, i.e. code = 7, otherwise ignore
+                // because our fallback will show the share view controller.
+                if (error && [error code] == 7) {
+                    return;
+                }
+                if (error) {
+                    [self showAlert:[self checkErrorMessage:error]];
+                } else if (result == FBNativeDialogResultSucceeded) {
+                    [self showAlert:kBKFacebookPostSucceed];
+                }
+            }];
+}
+
+- (void)publishWithWebDialog {
+    
+    // Put together the dialog parameters
+    NSDictionary *params = [self parameterForFeedDialogFromParams:[self dialogParams]];
+    
+    // Invoke the dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         if (error) {
+             // Error launching the dialog or publishing a story.
+             [self showAlert:[self checkErrorMessage:error]];
+         }
+         else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 // User clicked the "x" icon
+                 NSLog(@"User canceled story publishing.");
+             }
+             else {
+                 // Handle the publish feed callback
+                 NSDictionary *urlParams = [[resultURL query] queryDictionary];
+                 if (![urlParams valueForKey:kBKFacebookFeedDialogPostID]) {
+                     // User clicked the Cancel button
+                     NSLog(@"User canceled story publishing.");
+                 } else {
+                     // User clicked the Share button
+                     //[self showAlert:[self checkPostId:urlParams]];
+                     [self showAlert:kBKFacebookPostSucceed];
+                 }
+             }
+         }
+     }];
+}
+
+- (IBAction)facebookButtonPressed:(UIButton *)sender {
+    
+    // First attempt: Publish using the iOS6 OS Share dialog
+    BOOL canShareiOS6 = [FBDialogs canPresentOSIntegratedShareDialogWithSession:nil];
+    if (canShareiOS6) {
+        [self publishWithOSIntegratedShareDialog];
+    }
+    
+    // Second fallback: Publish using the feed dialog
+    if (!canShareiOS6) {
+        [self publishWithWebDialog];
+    }
+    
+    return;
+    
+//    if (appDelegate.session == nil) {
+//        appDelegate.session = [[FBSession alloc] init];
+//    }
+//    
+//    NSLog(@"session:%@", appDelegate.session);
+//    FBShareDialogParams *p = [[FBShareDialogParams alloc] init];
+//    p.link = [NSURL URLWithString:@"http://www.google.com"];
+//    BOOL canShareFB = [FBDialogs canPresentShareDialogWithParams:p];
+//    //BOOL canShareiOS6 = [FBDialogs canPresentOSIntegratedShareDialogWithSession:nil];
+//    NSLog(@"canShareFB:%@", canShareFB ? @"YES" : @"NO");
+//    NSLog(@"canShareiOS6:%@", canShareiOS6 ? @"YES" : @"NO");
+//    if (!appDelegate.session.isOpen) {
+//        
+//        if (appDelegate.session.state != FBSessionStateCreated) {
+//            // Create a new, logged out session.
+//            appDelegate.session = [[FBSession alloc] init];
+//        }        
+//        
+//        [appDelegate.session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+//            
+//            //NSLog(@"session:%@, status:%u, error:%@", session, status, error);
+//            if (session.isOpen) {
+//                //[FBSession setActiveSession:session];
+//                NSLog(@"Open success!");
+//                NSLog(@"canShareFB:%@", canShareFB ? @"YES" : @"NO");
+//                NSLog(@"canShareiOS6:%@", canShareiOS6 ? @"YES" : @"NO");
+//                [self choosePostMethod];
+//            }
+//            else if (error != nil) {
+//                NSLog(@"Error:%@", error);
+//            }
+//            else {
+//                appDelegate.session = nil;
+//                NSLog(@"Close success!");
+//            }
+//        }];
+//    }
+//    else {
+//        [self choosePostMethod];
+//    }
+}
+
+//- (void) performPublishAction:(void (^)(void)) action {
+//    
+//    // we defer request for permission to post to the moment of post, then we check for the permission
+//    if ([FBSession.activeSession.permissions indexOfObject:kBKFacebookPublishPermission] == NSNotFound) {
+//        // if we don't already have the permission, then we request it now
+//        [FBSession.activeSession requestNewPublishPermissions:[self permissions]
+//                                              defaultAudience:FBSessionDefaultAudienceFriends
+//                                            completionHandler:^(FBSession *session, NSError *error) {
+//                                                if (!error) {
+//                                                    action();
+//                                                }
+//                                                //For this example, ignore errors (such as if user cancels).
+//                                            }];
+//    } else {
+//        action();
+//    }
+//    
+//}
+
+//- (void)choosePostMethod {
+//    
+//    // First attempt: Publish using the iOS6 OS Share dialog
+//    BOOL displayedNativeDialog = [self publishWithOSIntegratedShareDialog];
+//    return;
+//    if (!displayedNativeDialog) {
+//        // Next try to post using Facebook's iOS6 integration
+//        
+//        
+//        if (!displayedNativeDialog) {
+//            // Lastly, fall back on a request for permissions and a direct post using the Graph API
+//            [self performPublishAction:^{
+//                NSString *message = [NSString stringWithFormat:@"Updating status for %@ at %@", @"User", [NSDate date]];
+//                [self publishStory];
+//            }];
+//        }
+//    }
+//}
+//
+//- (void)publishStory
+//{
+//    NSMutableDictionary *postParams =  [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+//     @"https://developers.facebook.com/ios", @"link",
+//     @"https://developers.facebook.com/attachment/iossdk_logo.png", @"picture",
+//     @"Facebook SDK for iOS", @"name",
+//     @"Build great social apps and get more installs.", @"caption",
+//     @"The Facebook SDK for iOS makes it easier and faster to develop Facebook integrated iOS apps.", @"description",
+//     nil];
+//    [FBRequestConnection
+//     startWithGraphPath:@"me/feed"
+//     parameters:postParams
+//     HTTPMethod:@"POST"
+//     completionHandler:^(FBRequestConnection *connection,
+//                         id result,
+//                         NSError *error) {
+//         NSString *alertText;
+//         if (error) {
+//             alertText = [NSString stringWithFormat:
+//                          @"error: domain = %@, code = %d, %@",
+//                          error.domain, error.code, error.localizedDescription];
+//         } else {
+//             alertText = [NSString stringWithFormat:
+//                          @"Posted action, id: %@",
+//                          [result objectForKey:@"id"]];
+//         }
+//         // Show the result in an alert
+//         [[[UIAlertView alloc] initWithTitle:@"Result"
+//                                     message:alertText
+//                                    delegate:self
+//                           cancelButtonTitle:@"OK!"
+//                           otherButtonTitles:nil]
+//          show];
+//     }];
+//}
+
+@end
+
+@interface BKShopDetailViewController (GooglePlus)
+
+- (IBAction)googlePlusButtonPressed:(UIButton *)sender;
+
+
+@end
+
+@implementation BKShopDetailViewController (GooglePlus)
+
+
+
+- (IBAction)googlePlusButtonPressed:(UIButton *)sender {
 }
 @end

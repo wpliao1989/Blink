@@ -19,6 +19,7 @@
 #import "BKShopInfoForUser.h"
 #import "BKShopInfoManager.h"
 #import "UIViewController+BKBaseViewController.h"
+#import "UIViewController+SharedString.h"
 #import "BKOrderForSending.h"
 
 #import "BKTestCenter.h"
@@ -135,21 +136,33 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 - (UIAlertView *)orderExistAlert {
     if (_orderExistAlert == nil) {
-        _orderExistAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"刪除", nil];
+        _orderExistAlert = [[UIAlertView alloc] initWithTitle:[self titleForAlertView]
+                                                      message:nil
+                                                     delegate:self
+                                            cancelButtonTitle:[self cancelButtonTitleForAlertView]
+                                            otherButtonTitles:[self deleteButtonTitleForAlertView], nil];
     }
     return _orderExistAlert;
 }
 
 - (UIAlertView *)inValidSelectionAlert {
     if (_inValidSelectionAlert == nil) {
-        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:nil delegate:self cancelButtonTitle:@"確定" otherButtonTitles: nil];
+        _inValidSelectionAlert = [[UIAlertView alloc] initWithTitle:[self titleForAlertView]
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:[self confirmButtonTitleForAlertView]
+                                                  otherButtonTitles: nil];
     }
     return _inValidSelectionAlert;
 }
 
 - (UIAlertView *)notEnoughContentAlert {
     if (_notEnoughContentAlert == nil) {
-        _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:@"Blink" message:@"請至少選擇一項商品" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
+        _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:[self titleForAlertView]
+                                                            message:@"請至少選擇一項商品"
+                                                           delegate:nil
+                                                  cancelButtonTitle:[self confirmButtonTitleForAlertView]
+                                                  otherButtonTitles:nil];
     }
     return _notEnoughContentAlert;
 }

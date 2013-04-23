@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="qAp-R1-fPW">
     <dependencies>
+        <deployment version="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
@@ -2238,8 +2239,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 <state key="highlighted" backgroundImage="f_press.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="facebookButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="1nn-ZH-BLE"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gFj-3J-NLd">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gFj-3J-NLd">
                                                 <rect key="frame" x="174" y="0.0" width="142" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -2250,6 +2254,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 <state key="highlighted" backgroundImage="g_press.png">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="googlePlusButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="elR-Iz-6sc"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2382,7 +2389,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="29" height="29"/>
+        <image name="close.png" width="16" height="16"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
@@ -2571,6 +2578,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addFavoriteShopButtonPressed:"/>
+                <relationship kind="action" name="facebookButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="googlePlusButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="menuButtonPressed:"/>
                 <relationship kind="action" name="orderDeliverButtonPressed:"/>
                 <relationship kind="action" name="takeAwayButtonPressed:"/>
@@ -2652,7 +2661,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <inferredMetricsTieBreakers>
         <segue reference="Fqf-f2-bQo"/>
         <segue reference="b53-zt-ROB"/>
-        <segue reference="cvb-pK-M3T"/>
+        <segue reference="qSY-7S-ko2"/>
         <segue reference="0Oj-LE-aah"/>
     </inferredMetricsTieBreakers>
 </document>

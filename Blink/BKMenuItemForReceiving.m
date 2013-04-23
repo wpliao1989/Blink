@@ -185,7 +185,7 @@ NSString *const BKMenuNullString = @"null";
 - (id)initWithData:(NSDictionary *)data  {
     self = [super init];
     if (self) {
-        self.data = data;
+        _data = data;
     }
     return self;
 }

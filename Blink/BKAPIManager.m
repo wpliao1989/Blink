@@ -472,6 +472,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 - (void)loadData:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataCompleteHandler)completeHandler {
     
+#warning Should call |handleAPIResponse:| here but does not do this for the time being
     serviceCompleteHandler handler = ^(NSURLResponse *response, id data, NSError *error) {
          NSString *const kShops = @"shop";
         [self handleLoadDataResponse:response data:data error:error dataKey:kShops completeHandler:completeHandler];
