@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "BKAPIManager.h"
 #import "BKTestCenter.h"
+#import "GPPSignIn.h"
 
 @implementation AppDelegate
 
@@ -23,6 +24,8 @@
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
+    static NSString * const kClientID = @"672580207888.apps.googleusercontent.com";
+    [GPPSignIn sharedInstance].clientID = kClientID;
     
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"775724ff"];
     

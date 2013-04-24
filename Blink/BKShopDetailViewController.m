@@ -17,6 +17,7 @@
 #import "BKAccountManager+Favorite.h"
 #import "AppDelegate.h"
 #import "NSString+QueryParser.h"
+#import "NSURL+ModifyURL.h"
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -382,6 +383,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
 - (NSArray *)permissions;
 - (FBShareDialogParams *)dialogParams;
+- (NSString *)initialText;
 
 - (NSDictionary *)parameterForFeedDialogFromParams:(FBShareDialogParams *)params;
 
@@ -396,7 +398,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
 @implementation BKShopDetailViewController (Facebook)
 
-- (void)showAlert:(NSString *) alertMsg {
+- (void)showAlert:(NSString *)alertMsg {
     if (![alertMsg isEqualToString:@""]) {
         [[[UIAlertView alloc] initWithTitle:[self titleForAlertView]
                                     message:alertMsg
@@ -406,7 +408,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
     }
 }
 
-- (NSString *) checkPostId:(NSDictionary *)results {
+- (NSString *)checkPostId:(NSDictionary *)results {
     NSString *message = @"Posted successfully.";
     // Share dialog
     NSString *postId = results[kBKFacebookShareDialogPostID];
@@ -447,6 +449,10 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
     return result;
 }
 
+- (NSString *)initialText {
+    return @"";
+}
+
 - (NSDictionary *)parameterForFeedDialogFromParams:(FBShareDialogParams *)params {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     
@@ -477,9 +483,9 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
     NSLog(@"self.shopInfo.image = %@", self.shopInfo.pictureImage);
     return [FBDialogs
             presentOSIntegratedShareDialogModallyFrom:self
-            initialText:@""
+            initialText:[self initialText]
             image:nil
-            url:[self dialogParams].link
+            url:[NSURL URLWithString:@"http://www.google.com"]
             handler:^(FBOSIntegratedShareDialogResult result, NSError *error) {
                 // Only show the error if it is not due to the dialog
                 // not being supported, i.e. code = 7, otherwise ignore
@@ -499,9 +505,10 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
     
     // Put together the dialog parameters
     NSDictionary *params = [self parameterForFeedDialogFromParams:[self dialogParams]];
+    NSLog(@"params:%@", params);
     
     // Invoke the dialog
-    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+    [FBWebDialogs presentFeedDialogModallyWithSession:[FBSession activeSession]
                                            parameters:params
                                               handler:
      ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
@@ -516,7 +523,9 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
              }
              else {
                  // Handle the publish feed callback
+                 NSLog(@"resultURL:%@, query:%@", resultURL, [resultURL query]);
                  NSDictionary *urlParams = [[resultURL query] queryDictionary];
+                 NSLog(@"urlParams:%@", urlParams);
                  if (![urlParams valueForKey:kBKFacebookFeedDialogPostID]) {
                      // User clicked the Cancel button
                      NSLog(@"User canceled story publishing.");
@@ -531,6 +540,8 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 }
 
 - (IBAction)facebookButtonPressed:(UIButton *)sender {
+    [self publishWithWebDialog];
+    return;
     
     // First attempt: Publish using the iOS6 OS Share dialog
     BOOL canShareiOS6 = [FBDialogs canPresentOSIntegratedShareDialogWithSession:nil];
@@ -663,6 +674,8 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
 @end
 
+#import "GPPShare.h"
+
 @interface BKShopDetailViewController (GooglePlus)
 
 - (IBAction)googlePlusButtonPressed:(UIButton *)sender;
@@ -672,8 +685,17 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
 @implementation BKShopDetailViewController (GooglePlus)
 
-
-
 - (IBAction)googlePlusButtonPressed:(UIButton *)sender {
+
+    id<GPPShareBuilder> shareBuilder = [[GPPShare sharedInstance] shareDialog];
+    
+    // This line will fill out the title, description, and thumbnail of the item
+    // you're sharing based on the URL you included.
+    [shareBuilder setURLToShare:[self dialogParams].link];
+    
+    [shareBuilder setPrefillText:[self initialText]];
+    
+    [shareBuilder open];
+    
 }
 @end
