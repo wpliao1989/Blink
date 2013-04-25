@@ -74,6 +74,12 @@ FOUNDATION_EXPORT NSString *const BKShopInfoEmptyString;
 
 @end
 
+FOUNDATION_EXPORT NSString *const BKShopInfoServiceTakeout;
+FOUNDATION_EXPORT NSString *const BKShopInfoServiceFreeDeliver;
+FOUNDATION_EXPORT NSString *const BKShopInfoServiceTakeoutAndDeliver;
+FOUNDATION_EXPORT NSString *const BKShopInfoServiceChargeDeliver;
+FOUNDATION_EXPORT NSString *const BKShopInfoServiceNone;
+
 @interface BKShopInfo (ServiceAndType)
 
 - (BOOL)isServiceFreeDelivery;

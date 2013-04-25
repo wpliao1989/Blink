@@ -168,6 +168,14 @@ NSString *const BKShopInfoEmptyString = @"";
     return object;
 }
 
+- (BOOL)isProvidingReceipt {
+    id object = self.data[kBKShopIsProvidingReceipt];
+    if ([object isNullOrNil] || ![object isNumber]) {
+        return NO;
+    }
+    return [object boolValue];
+}
+
 - (NSString *)type {
     id object = self.data[kBKShopType];
     if ([object isNullOrNil] || ![object isString]) {
