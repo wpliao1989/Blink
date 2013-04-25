@@ -176,6 +176,14 @@ NSString *const BKShopInfoEmptyString = @"";
     return [object boolValue];
 }
 
+- (NSString *)cooperation {
+    id object = self.data[kBKShopCoWorkChannel];
+    if ([object isNullOrNil] || ![object isString]) {
+        return BKShopInfoEmptyString;
+    }
+    return object;
+}
+
 - (NSString *)type {
     id object = self.data[kBKShopType];
     if ([object isNullOrNil] || ![object isString]) {
@@ -250,7 +258,7 @@ NSString *const BKShopInfoEmptyString = @"";
 - (id)initWithData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        _data = data;
+        _data = [data copy];
     }
     return self;
 }
