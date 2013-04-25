@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) FBSession *session;
 
+@property (strong, nonatomic) NSString *deviceToken;
+
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

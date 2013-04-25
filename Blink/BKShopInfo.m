@@ -12,6 +12,9 @@
 #import "NSNumber+NullNumber.h"
 #import "NSMutableArray+Sort.h"
 
+NSString *const kBKShopID = @"shopID";
+NSString *const kBKSShopID = @"sShopID";
+
 NSString *const kBKShopName = @"name";
 NSString *const kBKShopMenu = @"menu";
 NSString *const kBKShopPhone = @"phone";
@@ -21,7 +24,7 @@ NSString *const kBKShopLongitude = @"lng";
 NSString *const kBKShopLatitude = @"lat";
 NSString *const kBKShopDistance = @"distance";
 NSString *const kBKShopURL = @"url";
-NSString *const kBKShopType = @"type";
+NSString *const kBKShopType = @"commerceType";
 NSString *const kBKShopScore = @"score";
 NSString *const kBKShopServices = @"service";
 NSString *const kBKShopIsProvidingReceipt = @"withReceipt";
@@ -45,6 +48,8 @@ NSString *const BKShopInfoEmptyString = @"";
 
 @synthesize data = _data;
 
+@synthesize sShopID = _shopID;
+
 @synthesize name = _name;
 @synthesize menu = _menu;
 @synthesize phone = _phone;
@@ -64,6 +69,17 @@ NSString *const BKShopInfoEmptyString = @"";
 @synthesize pictureURL = _pictureURL;
 
 #pragma mark - Shop basic infos
+
+- (NSString *)sShopID {
+    id object = self.data[kBKSShopID];
+    if ([object isNullOrNil] || ![object isString]) {
+        object = self.data[kBKShopID];
+        if ([object isNullOrNilOrNotString]) {
+            return BKShopInfoEmptyString;
+        }
+    }
+    return object;
+}
 
 - (NSString *)name {
     id object = self.data[kBKShopName];

@@ -39,6 +39,7 @@
 		424495BE1721271A00C84F5D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BD1721271A00C84F5D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A833172683380019FA68 /* UIViewController+SharedString.m */; };
 		4255A83717269ABA0019FA68 /* NSURL+ModifyURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A83617269ABA0019FA68 /* NSURL+ModifyURL.m */; };
+		4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298DE271727E43D00D1E6DB /* NSData+PushToken.m */; };
 		42A811ED17276FE900BD7F27 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A811EC17276FE900BD7F27 /* FacebookSDK.framework */; };
 		42A8139A1727C4B700BD7F27 /* GTLBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A8133C1727C4B700BD7F27 /* GTLBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		42A8139B1727C4B700BD7F27 /* GTLBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A8133E1727C4B700BD7F27 /* GTLBatchQuery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -403,6 +404,8 @@
 		4255A833172683380019FA68 /* UIViewController+SharedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SharedString.m"; sourceTree = "<group>"; };
 		4255A83517269ABA0019FA68 /* NSURL+ModifyURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ModifyURL.h"; sourceTree = "<group>"; };
 		4255A83617269ABA0019FA68 /* NSURL+ModifyURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ModifyURL.m"; sourceTree = "<group>"; };
+		4298DE271727E43D00D1E6DB /* NSData+PushToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+PushToken.m"; path = "../../../Category/NSData+PushToken.m"; sourceTree = "<group>"; };
+		4298DE281727E43D00D1E6DB /* NSData+PushToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+PushToken.h"; path = "../../../Category/NSData+PushToken.h"; sourceTree = "<group>"; };
 		42A811EC17276FE900BD7F27 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		42A8133B1727C4B700BD7F27 /* GTLBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLBase64.h; sourceTree = "<group>"; };
 		42A8133C1727C4B700BD7F27 /* GTLBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLBase64.m; sourceTree = "<group>"; };
@@ -1043,6 +1046,8 @@
 				4255A8311726807E0019FA68 /* Managed by Jingo */,
 				42100232171E4BA400EE476E /* Formatter */,
 				42100214171C0BC300EE476E /* Managed by BlinkIPad */,
+				4298DE271727E43D00D1E6DB /* NSData+PushToken.m */,
+				4298DE281727E43D00D1E6DB /* NSData+PushToken.h */,
 				42A978D1170B219E00494658 /* UIButton+ChangeTitle.h */,
 				42A978C9170B219E00494658 /* UIButton+ChangeTitle.m */,
 				42A978CA170B219E00494658 /* NSObject+NullObject.h */,
@@ -1952,6 +1957,7 @@
 				42A813BF1727C4B700BD7F27 /* GTMOAuth2ViewControllerTouch.m in Sources */,
 				42A813C11727C4B700BD7F27 /* GTMObjC2Runtime.m in Sources */,
 				42A813C21727C4B700BD7F27 /* OpenInChromeController.m in Sources */,
+				4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2050,8 +2056,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "537860E5-84ED-42D4-9099-C0DA58257912";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537860E5-84ED-42D4-9099-C0DA58257912";
+				PROVISIONING_PROFILE = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2080,8 +2086,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "537860E5-84ED-42D4-9099-C0DA58257912";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537860E5-84ED-42D4-9099-C0DA58257912";
+				PROVISIONING_PROFILE = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+FOUNDATION_EXPORT NSString *const kBKShopID;
+FOUNDATION_EXPORT NSString *const kBKSShopID;
+
 FOUNDATION_EXPORT NSString *const kBKShopName;
 FOUNDATION_EXPORT NSString *const kBKShopMenu;
 FOUNDATION_EXPORT NSString *const kBKShopPhone;
@@ -34,6 +37,8 @@ FOUNDATION_EXPORT NSString *const BKShopInfoEmptyString;
 @interface BKShopInfo : NSObject
 
 @property (strong, nonatomic) NSDictionary *data;
+
+@property (strong, nonatomic) NSString *sShopID;
 
 @property (strong, nonatomic) NSString *name;
 // Menu is an array of dictionaries(keys: UUID, name, price)

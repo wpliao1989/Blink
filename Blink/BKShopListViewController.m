@@ -47,6 +47,8 @@
 //
 //@end
 
+NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
+
 @interface BKShopListViewController ()
 
 - (IBAction)mapButtonPressed:(id)sender;
@@ -73,6 +75,8 @@
 
 - (void)saveTestShopInfosWithShopIDs:(NSArray *)shopIDs;
 
+// Current search method
+@property (nonatomic) BKSearchOption currentSearchOption;
 // Methods for reloading data based on list criteria
 //- (void)reloadDataAccordingToListCriteria:(BKListCriteria)criteria;
 - (void)reloadDataUsingListWithActionSheetIndex:(NSUInteger)index;
@@ -80,6 +84,7 @@
 - (void)reloadDataUsingSearchWithShopName:(NSString *)shopName;
 - (void)reloadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter;
 - (void)reloadDefault;
+- (void)loadMoreData;
 - (void)updateMapViewRegion;
 - (void)downloadImageForShopInfo:(BKShopInfoForUser *)shopInfo;
 
@@ -244,40 +249,71 @@
 #pragma mark - Reload Data
 
 - (void)reloadDataUsingListWithActionSheetIndex:(NSUInteger)index {
+    self.currentSearchOption = BKSearchOptionList;
     self.searchParameter.criteria = index;
     [self reloadDataUsing:BKSearchOptionList parameter:self.searchParameter];
 }
 
 - (void)reloadDataUsingSortWithActionSheetIndex:(NSUInteger)index {
+    self.currentSearchOption = BKSearchOptionSort;
     self.searchParameter.criteria = index;
     [self reloadDataUsing:BKSearchOptionSort parameter:self.searchParameter];
 }
 
 - (void)reloadDataUsingSearchWithShopName:(NSString *)shopName {
+    self.currentSearchOption = BKSearchOptionSearch;
     self.searchParameter.shopName = shopName;
     [self reloadDataUsing:BKSearchOptionSearch parameter:self.searchParameter];    
 }
 
 - (void)reloadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter{
-    
+    // Reset tableView and mapView
     [[BKShopInfoManager sharedBKShopInfoManager] clearShopIDs];
     [self.shopListTableView reloadData];
     [self.shopListMapView removeAnnotations:self.shopListMapView.annotations withoutUser:YES];
     
-    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method parameter:parameter completeHandler:^(BOOL success) {
+    // Reset offset to nil
+    parameter.offset = nil;
+    
+    // Load new data
+    [self loadDataUsing:method parameter:parameter];
+}
+
+- (void)reloadDefault {
+    [self reloadDataUsingListWithActionSheetIndex:0];
+}
+
+- (void)loadMoreData {
+    if (![self.searchParameter.offset isEqualToString:kOffsetKeyReachEnd]) {
+        [self loadDataUsing:self.currentSearchOption parameter:self.searchParameter];
+    }
+}
+
+// Helper method for calling BKShopInfoManager's | loadDataOption: parameter: completeHandler: |
+- (void)loadDataUsing:(BKSearchOption)method parameter:(BKSearchParameter *)parameter {
+    [[BKShopInfoManager sharedBKShopInfoManager] loadDataOption:method parameter:parameter completeHandler:^(BOOL success, NSString *key) {
         NSLog([[BKAPIManager sharedBKAPIManager] isLoadingData]? @"API is loading data" : @"API is NOT loading data");
         
-        [self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        // Update tableView
+        [self.shopListTableView reloadData];
+        //[self.shopListTableView reloadSections:[[NSIndexSet alloc] initWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        
+        // Update mapView
         [self.shopListMapView addAnnotations:[[BKShopInfoManager sharedBKShopInfoManager] annotations]];
         NSLog(@"map annotations: %@", self.shopListMapView.annotations);
         if (self.shopListMapView.hidden == NO) {
             [self updateMapViewRegion];
         }
+        
+        // Save offset key
+        if (key) {
+            self.searchParameter.offset = key;
+        }
+        else {
+            self.searchParameter.offset = kOffsetKeyReachEnd;
+        }
+        
     }];
-}
-
-- (void)reloadDefault {
-    [self reloadDataUsingListWithActionSheetIndex:0];
 }
 
 #pragma mark - Utility methods
@@ -512,6 +548,9 @@
 //        }];
     }
     
+    if (indexPath.row == [[BKShopInfoManager sharedBKShopInfoManager] shopCount] - 1) {
+        [self loadMoreData];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

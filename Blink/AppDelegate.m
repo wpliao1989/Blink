@@ -10,6 +10,7 @@
 #import "BKAPIManager.h"
 #import "BKTestCenter.h"
 #import "GPPSignIn.h"
+#import "NSData+PushToken.h"
 
 @implementation AppDelegate
 
@@ -24,10 +25,13 @@
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
-    static NSString * const kClientID = @"672580207888.apps.googleusercontent.com";
-    [GPPSignIn sharedInstance].clientID = kClientID;
     
-    [BugSenseController sharedControllerWithBugSenseAPIKey:@"775724ff"];
+    //
+    [self initGooglePlus];
+    
+    [self initBugSense];
+    
+    [self registerForPushNotification];
     
     [self customizeNavigationBar];    
 
@@ -36,16 +40,7 @@
     
     [BKTestCenter testMethods];
     
-    [self.window makeKeyAndVisible];
-    
-    UIImageView *demoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 226, 128)];
-    demoView.image = [UIImage imageNamed:@"demo"];
-    demoView.center = self.window.center;
-    demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    
-    
-    [self.window addSubview:demoView];
-    NSLog(@"window subviews: %@", self.window.subviews);
+    [self addDemoView];
     
     return YES;
 }
@@ -66,6 +61,52 @@
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"title.png"] forBarMetrics:UIBarMetricsDefault];
 //    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+}
+
+- (void)registerForPushNotification {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
+    [self removeBadge];
+}
+
+- (void)removeBadge {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+}
+
+- (void)initGooglePlus {
+    static NSString * const kClientID = @"672580207888.apps.googleusercontent.com";
+    [GPPSignIn sharedInstance].clientID = kClientID;
+}
+
+- (void)initBugSense {
+    [BugSenseController sharedControllerWithBugSenseAPIKey:@"775724ff"];
+}
+
+- (void)addDemoView {
+    [self.window makeKeyAndVisible];
+    
+    UIImageView *demoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 226, 128)];
+    demoView.image = [UIImage imageNamed:@"demo"];
+    demoView.center = self.window.center;
+    demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    
+    [self.window addSubview:demoView];
+    NSLog(@"window subviews: %@", self.window.subviews);
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"receive token: %@", deviceToken);
+    self.deviceToken = [deviceToken stringInHexForPushToken];
+    NSLog(@"string: %@", self.deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"fail to register notification, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"did receive notification!");
+    [self removeBadge];
 }
 
 - (BOOL)application:(UIApplication *)application

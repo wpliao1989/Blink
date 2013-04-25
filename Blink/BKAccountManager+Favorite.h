@@ -10,6 +10,6 @@
 
 @interface BKAccountManager (Favorite)
 
-- (void)addUserFavoriteShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler;
+- (void)addUserFavoriteShopID:(NSString *)shopID completeHandler:(completeHandler)completeHandler;
 
 @end

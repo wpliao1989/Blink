@@ -181,7 +181,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @implementation BKAccountManager (UserTool)
 
-- (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler {
+- (void)getUserFavoriteShopsCompleteHandler:(completeHandler)completeHandler {
     BKSearchParameter *parameter = [[BKSearchParameter alloc] init];
     parameter.token = self.userToken;
     [[BKShopInfoManager sharedBKShopInfoManager] loadUserFavoriteShopsParameter:parameter completeHandler:^(NSArray *shopInfos) {        
@@ -191,7 +191,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
     }];
 }
 
-- (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler {
+- (void)getUserOrdersCompleteHandler:(completeHandler)completeHandler {
     [[BKAPIManager sharedBKAPIManager] getOrderWithToken:self.userToken completionHandler:^(id data, NSError *error) {
         //NSLog(@"data = %@", data);
         if (data != nil) {

@@ -33,7 +33,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 //- (void)loadDataWithListCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
 //- (void)loadDataWithSortCriteria:(NSInteger)criteria completeHandler:(loadDataComplete)completeHandler;
 - (void)loadDataOption:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataComplete)completeHandler;
-- (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler;
+- (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(completeHandler)completeHandler;
 
 // Use this method to change current displaying shops in shoplist view controller
 - (void)updateShopIDs:(NSArray *)shopIDs;

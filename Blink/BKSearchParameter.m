@@ -15,7 +15,7 @@
             self.criteria,
             self.shopName,
             self.token,
-            [self.offset stringValue],
+            self.offset,
             [self.qNum stringValue],
             self.method,
             self.city,

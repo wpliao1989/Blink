@@ -91,7 +91,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self configureBottomSection];
     [self configureScrollView];
     
-    [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID completeHandler:^(BOOL success) {
+    [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID
+                                                          completeHandler:^(BOOL success) {
         if (success) {
             self.scrollView.userInteractionEnabled = YES;
             [self initShop];

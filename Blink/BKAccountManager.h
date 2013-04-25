@@ -42,8 +42,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 @interface BKAccountManager (UserTool)
 
-- (void)getUserFavoriteShopsCompleteHandler:(loadDataComplete)completeHandler;
-- (void)getUserOrdersCompleteHandler:(loadDataComplete)completeHandler;
+- (void)getUserFavoriteShopsCompleteHandler:(completeHandler)completeHandler;
+- (void)getUserOrdersCompleteHandler:(completeHandler)completeHandler;
 - (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone completionHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 - (void)editUserPWD:(NSString *)password completionHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 - (BOOL)isPasswordMatch:(NSString *)password;

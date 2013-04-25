@@ -19,7 +19,7 @@
 /// For User favorite shops
 @property (strong, nonatomic) NSString *token;
 
-@property (strong, nonatomic) NSNumber *offset;
+@property (strong, nonatomic) NSString *offset;
 @property (strong, nonatomic) NSNumber *qNum;
 @property (strong, nonatomic) NSString *method;
 @property (strong, nonatomic) NSString *city;

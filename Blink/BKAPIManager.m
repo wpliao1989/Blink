@@ -10,6 +10,7 @@
 #import "BKShopInfoForUser.h"
 #import "NSMutableArray+Sort.h"
 #import "BKSearchParameter.h"
+#import "NSObject+NullObject.h"
 
 // Notification keys
 NSString *const kBKLocationDidChangeNotification = @"kBKLocationDidChangeNotification";
@@ -450,11 +451,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 //        NSLog(@"type is %@, class is %@", dict[type], [dict[type] class]);
 //    }
     
+    NSString *const kOffSetKey = @"key";
+    NSString *offset = data[kOffSetKey];
+    if ([offset isNullOrNil] || ![offset isString]) {
+        offset = nil;
+    }
+    //NSLog(@"offset:%@, class:%@", offset, [offset class]);
+    
     NSArray *shopRawDatas = data[key];
     self.isLoadingData = NO;
     
     if (shopRawDatas.count == 0) {        
-        completeHandler(@[], @[]);
+        completeHandler(@[], @[], offset);
     }
     else {
         NSMutableArray *shopIDs = [NSMutableArray array];
@@ -466,7 +474,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                 [shopIDs addObject:dict[kBKShopID]];
             }        
         }
-        completeHandler([NSArray arrayWithArray:shopIDs], shopRawDatas);
+        completeHandler([NSArray arrayWithArray:shopIDs], shopRawDatas, offset);
     }
 }
 
@@ -587,13 +595,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     [result addEntriesFromDictionary:@{
                           kLatitude : latitude,
-                         kLongitude : longitude,
-                            //kMethod : method != nil ? method : [NSNull null],
-                              //kCity : city != nil ? city : [NSNull null],
-                          //kDistrict : district != nil ? district : [NSNull null],
-                            //kOffSet : offset != nil ? kOffSet : [NSNull null],
-                              //kQNum : qNum != nil ? qNum : [NSNull null]
+                         kLongitude : longitude
      }];
+    
+    if (method) {
+        [result setObject:method forKey:kMethod];
+    }
+    
+    if (city) {
+        [result setObject:city forKey:kCity];
+    }
+    
+    if (district) {
+        [result setObject:district forKey:kDistrict];
+    }
+    
+    if (offset) {
+        [result setObject:offset forKey:kOffSet];
+    }
+    
+    if (qNum) {
+        [result setObject:qNum forKey:kQNum];
+    }
     
     return [NSDictionary dictionaryWithDictionary:result];
 }

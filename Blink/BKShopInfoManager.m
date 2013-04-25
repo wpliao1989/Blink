@@ -124,14 +124,28 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 //}
 
 - (void)loadDataOption:(BKSearchOption)option parameter:(BKSearchParameter *)parameter completeHandler:(loadDataComplete)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] loadData:option parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
-        self.shopIDs = shopIDs;
+    
+    BOOL isLoadingMoreData = parameter.offset != nil;
+    
+    [[BKAPIManager sharedBKAPIManager] loadData:option
+                                      parameter:parameter
+                                completeHandler:^(NSArray *shopIDs, NSArray *rawDatas, NSString *key) {
+        
+        if (isLoadingMoreData) {
+            NSMutableArray *newShopIDs = [self.shopIDs mutableCopy];
+            [newShopIDs addObjectsFromArray:shopIDs];
+            self.shopIDs = [NSArray arrayWithArray:newShopIDs];
+        }
+        else {
+            self.shopIDs = shopIDs;
+        }
+        
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
-        completeHandler(YES);
+        completeHandler(YES, key);
     }];
 }
 
-- (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(loadDataComplete)completeHandler {
+- (void)loadShopDetailDataShopID:(NSString *)shopID completeHandler:(completeHandler)completeHandler {
     [[BKAPIManager sharedBKAPIManager] shopDetailWithShopID:shopID completionHandler:^(id data, NSError *error) {
         
         NSLog(@"Shop detail:%@", data);
@@ -246,8 +260,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKShopInfoManager)
 
 @implementation BKShopInfoManager (UserFavorite)
 
-- (void)loadUserFavoriteShopsParameter:(BKSearchParameter *)parameter completeHandler:(loadUserFavCompleteHandler)completeHandler {
-    [[BKAPIManager sharedBKAPIManager] loadData:BKSearchOptionUserFavorite parameter:parameter completeHandler:^(NSArray *shopIDs, NSArray *rawDatas) {
+- (void)loadUserFavoriteShopsParameter:(BKSearchParameter *)parameter
+                       completeHandler:(loadUserFavCompleteHandler)completeHandler {
+    [[BKAPIManager sharedBKAPIManager] loadData:BKSearchOptionUserFavorite
+                                      parameter:parameter
+                                completeHandler:^(NSArray *shopIDs, NSArray *rawDatas, NSString *key) {
         [self addShopInfosWithRawDatas:rawDatas forShopIDs:shopIDs];
         //NSLog(@"33333 :%@", self.shopInfoDictionary);
         NSArray *shopInfos = [self shopInfosForShopIDs:shopIDs];
