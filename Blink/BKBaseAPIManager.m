@@ -25,7 +25,7 @@ NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
 NSString *const BKWrongResultMessage = @"";
 
 // Custom error message key
-NSString *const kBKErrorMessage = @"kBKErrorMessage";
+//NSString *const kBKErrorMessage = @"kBKErrorMessage";
 
 @interface BKBaseAPIManager (Internal)
 
@@ -77,7 +77,11 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler {
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
-    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES isAsynchronous:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [self service:apiName
+           method:@"POST"
+         postData:encodedPostBody
+      contentType:nil  
+    useJSONDecode:YES isAsynchronous:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 //        NSLog(@"callAPI, data:%@", data);
 //        self.isLoadingData = NO;
         completeHandler(response, data, error);
@@ -87,7 +91,13 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
 - (void)callSynchronousAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler {
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
     NSLog(@"postBody = %@", [[NSString alloc] initWithData:encodedPostBody encoding:NSUTF8StringEncoding]);
-    [self service:apiName method:@"POST" postData:encodedPostBody useJSONDecode:YES isAsynchronous:YES completionHandler:completeHandler];
+    [self service:apiName
+           method:@"POST"
+         postData:encodedPostBody
+      contentType:nil
+    useJSONDecode:YES
+   isAsynchronous:YES
+completionHandler:completeHandler];
 }
 
 - (void)handleAPIResponse:(NSURLResponse *)response data:(id)data error:(NSError *)error customWrongResultError:(NSError *)customError completeHandler:(apiCompleteHandler)handler {
@@ -99,13 +109,14 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
     //NSLog(@"error = %@", error);
     
     if (error != nil || statusCode != 200) {
-//        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
         NSLog(@"Localized description:%@", error.localizedDescription);
         NSLog(@"Failure reason:%@", error.localizedFailureReason);
         NSLog(@"Recovery option:%@", error.localizedRecoveryOptions);
         NSLog(@"Recovery suggestion:%@", error.localizedRecoverySuggestion);
-        NSString *localizedDescription = error.localizedDescription != nil ? error.localizedDescription : BKNetworkNotRespondingMessage;
-        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : localizedDescription}];
+        //NSString *localizedDescription = error.localizedDescription != nil ? error.localizedDescription : BKNetworkNotRespondingMessage;
+        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork
+                                               code:0
+                                           userInfo:error.userInfo];
         handler(nil, BKError);
     }
     else if (![self isCorrectResult:data]) {
@@ -114,7 +125,9 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
             wrongResultError = customError;
         }
         else {
-            wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage : BKErrorDomainWrongResult}];
+            wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongResult
+                                                   code:BKErrorWrongResultGeneral
+                                               userInfo:error.userInfo];
         }
         handler(nil, wrongResultError);
     }
@@ -149,6 +162,30 @@ NSString *const kBKErrorMessage = @"kBKErrorMessage";
         return YES;
     }
     return NO;
+}
+
+@end
+
+@implementation BKBaseAPIManager (Addition)
+
+- (NSString *)generateBoundaryString
+{
+    CFUUIDRef       uuid;
+    CFStringRef     uuidStr;
+    NSString *      result;
+    
+    uuid = CFUUIDCreate(NULL);
+    assert(uuid != NULL);
+    
+    uuidStr = CFUUIDCreateString(NULL, uuid);
+    assert(uuidStr != NULL);
+    
+    result = [NSString stringWithFormat:@"Boundary-%@", uuidStr];
+    
+    CFRelease(uuidStr);
+    CFRelease(uuid);
+    
+    return result;
 }
 
 @end

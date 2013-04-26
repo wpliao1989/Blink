@@ -21,7 +21,13 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(OSConnectionManager)
 
 -(NSURLRequest *) defaultHTTPRequestWithPath:(NSString *)path;
 //- (id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON completionHandler:(asynchronousCompleteHandler) completeHandler;
-- (void)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON isAsynchronous:(BOOL)isAsynchronous completionHandler:(serviceCompleteHandler) completeHandler;
+- (void)service:(NSString *)service
+         method:(NSString *)method
+       postData:(NSData *)postData
+    contentType:(NSString *)contentType
+  useJSONDecode:(BOOL)useJSON
+ isAsynchronous:(BOOL)isAsynchronous
+completionHandler:(serviceCompleteHandler) completeHandler;
 -(NSString *)specifyStrFromDict:(NSDictionary *)dict withDiv:(NSString *)div;
 
 @end

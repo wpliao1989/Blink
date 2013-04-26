@@ -14,5 +14,6 @@
 - (NSString *)confirmButtonTitleForAlertView;
 - (NSString *)cancelButtonTitleForAlertView;
 - (NSString *)deleteButtonTitleForAlertView;
+- (void)showAlert:(NSString *)alertMsg;
 
 @end

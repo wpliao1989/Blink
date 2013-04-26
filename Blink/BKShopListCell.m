@@ -19,6 +19,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(20, 10, 60, 60);
+    //self.imageView.layer.cornerRadius = 8.0f;
+    //[self.imageView.layer setMasksToBounds:YES];
 }
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

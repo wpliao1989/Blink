@@ -26,4 +26,14 @@
     return @"刪除";
 }
 
+- (void)showAlert:(NSString *)alertMsg {
+    if (![alertMsg isEqualToString:@""]) {
+        [[[UIAlertView alloc] initWithTitle:[self titleForAlertView]
+                                    message:alertMsg
+                                   delegate:nil
+                          cancelButtonTitle:[self confirmButtonTitleForAlertView]
+                          otherButtonTitles:nil] show];
+    }
+}
+
 @end

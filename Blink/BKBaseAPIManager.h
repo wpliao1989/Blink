@@ -28,3 +28,9 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 - (BOOL)isCorrectResult:(id)data;
 
 @end
+
+@interface BKBaseAPIManager (Addition)
+
+- (NSString *)generateBoundaryString;
+
+@end

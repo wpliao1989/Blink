@@ -17,7 +17,6 @@
 #import "BKAccountManager+Favorite.h"
 #import "AppDelegate.h"
 #import "NSString+QueryParser.h"
-#import "NSURL+ModifyURL.h"
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -161,6 +160,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     if (self.shopInfo.pictureImage != nil) {
         [self.shopPic setImage:self.shopInfo.pictureImage];
         self.shopImage = self.shopInfo.pictureImage;
+        //self.shopPic.layer.cornerRadius = 8.0f;
+        //[self.shopPic.layer setMasksToBounds:YES];
         //    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
         //    [self.shopPic.layer setBorderWidth:3];
     }
@@ -178,6 +179,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 }
 
 - (void)configureIntroSection {
+    
     // Set background image
     UIImage *backgroundImage = [[UIImage imageNamed:@"introduce"] resizableImageWithCapInsets:UIEdgeInsetsMake(70, 60, 70, 60)];
     [self.introduceSectionBackground setImage:backgroundImage];
@@ -237,7 +239,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     
     if (self.hudviewType == BKHUDViewTypeShopDetailDownload) {
-        failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{kBKErrorMessage:@"伺服器錯誤"}]);
+        failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey:@"伺服器錯誤"}]);
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -246,7 +248,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     }
     else if (self.hudviewType == BKHUDViewTypeAddUserFavorite) {
         if ([BKAccountManager sharedBKAccountManager].isLogin == NO) {
-            failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{kBKErrorMessage:@"請先登入"}]);
+            failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:@"請先登入"}]);
         }
         else {
             [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
@@ -256,7 +258,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
                 }
                 else {
                     NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
-                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{kBKErrorMessage:@"新增失敗..."}]);
+                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:@"新增失敗..."}]);
                 }
             }];
         }        
@@ -398,16 +400,6 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 @end
 
 @implementation BKShopDetailViewController (Facebook)
-
-- (void)showAlert:(NSString *)alertMsg {
-    if (![alertMsg isEqualToString:@""]) {
-        [[[UIAlertView alloc] initWithTitle:[self titleForAlertView]
-                                    message:alertMsg
-                                   delegate:nil
-                          cancelButtonTitle:[self confirmButtonTitleForAlertView]
-                          otherButtonTitles:nil] show];
-    }
-}
 
 - (NSString *)checkPostId:(NSDictionary *)results {
     NSString *message = @"Posted successfully.";

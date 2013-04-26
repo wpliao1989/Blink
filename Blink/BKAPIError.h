@@ -13,7 +13,7 @@ FOUNDATION_EXPORT NSString *const BKErrorDomainNetwork;
 FOUNDATION_EXPORT NSString *const BKErrorDomainWrongResult;
 //FOUNDATION_EXPORT NSString *const BKErrorDomainWrongUserNameOrPassword;
 //FOUNDATION_EXPORT NSString *const BKErrorDomainWrongOrder;
-FOUNDATION_EXPORT NSString *const kBKErrorMessage;
+//FOUNDATION_EXPORT NSString *const kBKErrorMessage;
 
 #ifndef NS_ENUM
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type

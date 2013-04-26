@@ -285,7 +285,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"帳號或密碼錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"帳號或密碼錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
 //        if (error != nil) {
@@ -309,7 +309,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary = @{kToken : token};
     [self callAPI:@"logout" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"Token錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"Token錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -331,7 +331,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           };
     [self callAPI:@"user_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"修改個人資料錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"修改個人資料錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -345,7 +345,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           };
     [self callAPI:@"pwd_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"修改密碼錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"修改密碼錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -357,7 +357,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     NSDictionary *parameterDictionary = @{kToken : token};
     [self callAPI:@"follow" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"訂單下載錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:@"訂單下載錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -669,7 +669,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{kBKErrorMessage:@"訂單錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:@"訂單錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -684,7 +684,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     self.isLoadingData = YES;
     
-    [self service:@"info" method:@"GET" postData:nil useJSONDecode:YES isAsynchronous:YES completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [self service:@"info"
+           method:@"GET"
+         postData:nil
+      contentType:nil
+    useJSONDecode:YES
+   isAsynchronous:YES
+completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         NSLog(@"response = %@", response);
         NSLog(@"data = %@", data);
         NSLog(@"error = %@", error);
@@ -810,7 +816,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary = @{kToken : token, kBKSShopID : sShopID};
     [self callAPI:@"fav_add" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"新增錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"新增錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];

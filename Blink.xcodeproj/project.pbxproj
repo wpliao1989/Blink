@@ -38,8 +38,9 @@
 		424495BC1721271200C84F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		424495BE1721271A00C84F5D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BD1721271A00C84F5D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A833172683380019FA68 /* UIViewController+SharedString.m */; };
-		4255A83717269ABA0019FA68 /* NSURL+ModifyURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A83617269ABA0019FA68 /* NSURL+ModifyURL.m */; };
 		4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298DE271727E43D00D1E6DB /* NSData+PushToken.m */; };
+		42A2317C172A2B1100B01C00 /* NSURL+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A2317B172A2B1100B01C00 /* NSURL+Additions.m */; };
+		42A2317E172A4B7F00B01C00 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42A2317D172A4B7F00B01C00 /* FacebookSDKResources.bundle */; };
 		42A811ED17276FE900BD7F27 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A811EC17276FE900BD7F27 /* FacebookSDK.framework */; };
 		42A8139A1727C4B700BD7F27 /* GTLBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A8133C1727C4B700BD7F27 /* GTLBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		42A8139B1727C4B700BD7F27 /* GTLBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A8133E1727C4B700BD7F27 /* GTLBatchQuery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -402,10 +403,11 @@
 		4255A83017267FD30019FA68 /* NSString+QueryParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryParser.m"; sourceTree = "<group>"; };
 		4255A832172683380019FA68 /* UIViewController+SharedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SharedString.h"; sourceTree = "<group>"; };
 		4255A833172683380019FA68 /* UIViewController+SharedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SharedString.m"; sourceTree = "<group>"; };
-		4255A83517269ABA0019FA68 /* NSURL+ModifyURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ModifyURL.h"; sourceTree = "<group>"; };
-		4255A83617269ABA0019FA68 /* NSURL+ModifyURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ModifyURL.m"; sourceTree = "<group>"; };
 		4298DE271727E43D00D1E6DB /* NSData+PushToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+PushToken.m"; path = "../../../Category/NSData+PushToken.m"; sourceTree = "<group>"; };
 		4298DE281727E43D00D1E6DB /* NSData+PushToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+PushToken.h"; path = "../../../Category/NSData+PushToken.h"; sourceTree = "<group>"; };
+		42A2317A172A2B1100B01C00 /* NSURL+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Additions.h"; sourceTree = "<group>"; };
+		42A2317B172A2B1100B01C00 /* NSURL+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Additions.m"; sourceTree = "<group>"; };
+		42A2317D172A4B7F00B01C00 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		42A811EC17276FE900BD7F27 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		42A8133B1727C4B700BD7F27 /* GTLBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLBase64.h; sourceTree = "<group>"; };
 		42A8133C1727C4B700BD7F27 /* GTLBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLBase64.m; sourceTree = "<group>"; };
@@ -1066,8 +1068,8 @@
 				CE847A8116EF1D3000CB75CB /* UIViewController+BKBaseViewController.m */,
 				421001FA17183EAD00EE476E /* NSNumber+NullNumber.h */,
 				421001FB17183EAD00EE476E /* NSNumber+NullNumber.m */,
-				4255A83517269ABA0019FA68 /* NSURL+ModifyURL.h */,
-				4255A83617269ABA0019FA68 /* NSURL+ModifyURL.m */,
+				42A2317A172A2B1100B01C00 /* NSURL+Additions.h */,
+				42A2317B172A2B1100B01C00 /* NSURL+Additions.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1157,6 +1159,7 @@
 		CE7A78C116B760610072519F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42A2317D172A4B7F00B01C00 /* FacebookSDKResources.bundle */,
 				42A811EC17276FE900BD7F27 /* FacebookSDK.framework */,
 				424495BD1721271A00C84F5D /* Social.framework */,
 				424495BA1721270100C84F5D /* libsqlite3.dylib */,
@@ -1841,6 +1844,7 @@
 				42100213171BA44100EE476E /* fix.png in Resources */,
 				42100225171E468400EE476E /* BKMenuListCell.xib in Resources */,
 				42A813C01727C4B700BD7F27 /* GTMOAuth2ViewTouch.xib in Resources */,
+				42A2317E172A4B7F00B01C00 /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1916,7 +1920,6 @@
 				42100246171E723F00EE476E /* BKMenuItem+PriceEnabled.m in Sources */,
 				42163200171EAF7D00BD84D1 /* BKShopInfo.m in Sources */,
 				4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */,
-				4255A83717269ABA0019FA68 /* NSURL+ModifyURL.m in Sources */,
 				42A8139A1727C4B700BD7F27 /* GTLBase64.m in Sources */,
 				42A8139B1727C4B700BD7F27 /* GTLBatchQuery.m in Sources */,
 				42A8139C1727C4B700BD7F27 /* GTLBatchResult.m in Sources */,
@@ -1958,6 +1961,7 @@
 				42A813C11727C4B700BD7F27 /* GTMObjC2Runtime.m in Sources */,
 				42A813C21727C4B700BD7F27 /* OpenInChromeController.m in Sources */,
 				4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */,
+				42A2317C172A2B1100B01C00 /* NSURL+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

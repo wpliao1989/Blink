@@ -93,7 +93,7 @@
         }];
     }
     else {
-        NSError *error = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{kBKErrorMessage : @"密碼錯誤"}];
+        NSError *error = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"密碼錯誤"}];
         failBlock(error);
     }
 }

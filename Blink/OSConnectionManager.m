@@ -57,7 +57,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
     return request;
 }
 
-- (void)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON isAsynchronous:(BOOL)isAsynchronous completionHandler:(serviceCompleteHandler)completeHandler{
+- (void)service:(NSString *)service
+         method:(NSString *)method
+       postData:(NSData *)postData
+    contentType:(NSString *)contentType
+  useJSONDecode:(BOOL)useJSON
+ isAsynchronous:(BOOL)isAsynchronous
+completionHandler:(serviceCompleteHandler)completeHandler{
     
     NSMutableURLRequest *request;
     
@@ -73,6 +79,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(OSConnectionManager)
         request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
         [request setHTTPMethod:method];
         [request setHTTPBody:postData];
+    }
+    
+    if (contentType) {
+        [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
     }
     request = [self modifyOriginalRequest:request];    
     

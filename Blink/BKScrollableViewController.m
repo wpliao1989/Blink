@@ -172,7 +172,7 @@
         });
     } failBlock:^(NSError *error) {
         self.HUD.mode = MBProgressHUDModeText;
-        self.HUD.labelText = error.userInfo[kBKErrorMessage];
+        self.HUD.labelText = error.localizedDescription;
 //        if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
 //            self.HUD.labelText = @"帳號或密碼錯誤";
 //        }
