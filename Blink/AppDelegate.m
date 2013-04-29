@@ -12,6 +12,8 @@
 #import "GPPSignIn.h"
 #import "NSData+PushToken.h"
 
+NSString *const pushTokenDidBecomeAvailableNotification = @"com.flyingman.pushTokenDidBecomeAvailableNotification";
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -98,6 +100,7 @@
     NSLog(@"receive token: %@", deviceToken);
     self.deviceToken = [deviceToken stringInHexForPushToken];
     NSLog(@"string: %@", self.deviceToken);
+    [[NSNotificationCenter defaultCenter] postNotificationName:pushTokenDidBecomeAvailableNotification object:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -105,7 +108,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"did receive notification!");
+    NSLog(@"did receive notification! userInfo:%@", userInfo);
     [self removeBadge];
 }
 

@@ -31,7 +31,7 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" id="NTj-Qw-0Bk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="mTz-Ov-z04">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="365"/>
@@ -2389,7 +2389,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="57" height="38"/>
+        <image name="close.png" width="29" height="29"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>

@@ -9,6 +9,8 @@
 #import "OSConnectionManager.h"
 #import "BKAPIError.h"
 
+FOUNDATION_EXPORT NSString *const kToken;
+
 typedef void (^apiCompleteHandler)(id data, NSError *error);
 
 @interface BKBaseAPIManager : OSConnectionManager
@@ -32,5 +34,6 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 @interface BKBaseAPIManager (Addition)
 
 - (NSString *)generateBoundaryString;
+- (void)sendPushToken:(NSString *)pushToken userToken:(NSString *)userToken completeHandler:(apiCompleteHandler)handler;
 
 @end

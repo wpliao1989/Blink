@@ -436,7 +436,8 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
     result.name = @"Link name";
     result.caption = @"Link caption";
     result.description = @"Link description";
-    result.link = [NSURL URLWithString:self.shopInfo.shopURL];
+    //result.link = [NSURL URLWithString:self.shopInfo.shopURL];
+    result.link = [NSURL URLWithString:@"http://www.google.com"];
     result.picture = [NSURL URLWithString:@"https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png"];
     
     return result;
@@ -682,7 +683,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
     id<GPPShareBuilder> shareBuilder = [[GPPShare sharedInstance] shareDialog];
     
-    [shareBuilder setContentDeepLinkID:@"com.flyingman.Blink"];
+    //[shareBuilder setContentDeepLinkID:@"com.flyingman.Blink"];
     // This line will fill out the title, description, and thumbnail of the item
     // you're sharing based on the URL you included.
     [shareBuilder setURLToShare:[self dialogParams].link];

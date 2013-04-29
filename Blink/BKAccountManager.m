@@ -12,6 +12,7 @@
 #import "NSObject+NullObject.h"
 #import "BKSearchParameter.h"
 #import "BKOrderForReceiving.h"
+#import "AppDelegate.h"
 
 #import "BKTestCenter.h"
 
@@ -145,12 +146,36 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
             // fetch user order history
 #warning check for correct result
             self.isLogin = YES;
+            
+            // Send push token
+            if (appDelegate.deviceToken) {
+                [self sendPushToken];
+            }
+            else {
+                NSLog(@"Push token does not exist!");
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(sendPushToken)
+                                                             name:pushTokenDidBecomeAvailableNotification
+                                                           object:nil];
+            }
+            
             completeHandler(YES, error);
         }        
         else {
             completeHandler(NO, error);
         }        
     }];
+}
+
+- (void)sendPushToken {
+    
+    if (self.userToken) {
+        [[BKAPIManager sharedBKAPIManager] sendPushToken:appDelegate.deviceToken userToken:self.userToken completeHandler:^(id data, NSError *error) {
+            NSLog(@"Send push token data:%@, error:%@", data, error);
+        }];
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:pushTokenDidBecomeAvailableNotification object:nil];    
 }
 
 - (void)saveUserPreferedAccount:(NSString *)account password:(NSString *)password {

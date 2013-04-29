@@ -188,4 +188,17 @@ completionHandler:completeHandler];
     return result;
 }
 
+- (void)sendPushToken:(NSString *)pushToken userToken:(NSString *)userToken completeHandler:(apiCompleteHandler)handler{
+    NSString *const pushTokenKey = @"regID";
+    NSString *const deviceTypeKey = @"deviceType";
+    NSString *const kDevice = @"ios";
+    
+    NSDictionary *parameterDictionary = @{kToken : userToken, pushTokenKey : pushToken, deviceTypeKey : kDevice};
+    
+    [self callAPI:@"push" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    [self handleAPIResponse:response data:data error:error customWrongResultError:nil completeHandler:handler
+     ];
+}];
+}
+
 @end

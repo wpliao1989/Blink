@@ -12,6 +12,8 @@
 
 #define appDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
+FOUNDATION_EXPORT NSString *const pushTokenDidBecomeAvailableNotification;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

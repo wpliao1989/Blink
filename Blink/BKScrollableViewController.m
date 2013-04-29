@@ -67,8 +67,8 @@
     }
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    CGRect scrollViewFrameInWindowCoordinate = [self.scrollView convertRect:self.scrollView.frame toView:nil];
+
+    CGRect scrollViewFrameInWindowCoordinate = [self.scrollView convertRect:self.scrollView.bounds toView:nil];
     CGFloat scrollViewBottomY = CGRectGetMaxY(scrollViewFrameInWindowCoordinate);
     CGFloat windowBottomY = CGRectGetMaxY(self.view.window.frame);
     CGFloat bottomPaddling = windowBottomY - scrollViewBottomY;
@@ -85,6 +85,7 @@
     //NSLog(@"!!!!!!!!! rect = %@", NSStringFromCGRect(scrollViewFrameInWindowCoordinate));
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height - bottomPaddling, 0.0);
+    NSLog(@"%@", NSStringFromUIEdgeInsets(contentInsets));
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
     
