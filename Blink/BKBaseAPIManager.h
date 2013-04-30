@@ -36,4 +36,6 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 - (NSString *)generateBoundaryString;
 - (void)sendPushToken:(NSString *)pushToken userToken:(NSString *)userToken completeHandler:(apiCompleteHandler)handler;
 
+- (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
+
 @end

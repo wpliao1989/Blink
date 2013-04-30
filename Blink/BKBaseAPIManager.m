@@ -223,9 +223,23 @@ completionHandler:completeHandler];
     NSDictionary *parameterDictionary = @{kToken : userToken, pushTokenKey : pushToken, deviceTypeKey : kDevice};
     
     [self callAPI:@"push" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-    [self handleAPIResponse:response data:data error:error customWrongResultError:nil completeHandler:handler
-     ];
-}];
+        [self handleAPIResponse:response data:data error:error customWrongResultError:nil completeHandler:handler
+         ];
+    }];
+}
+
+- (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
+    NSString *kNewPWD = @"newpwd";
+    
+    NSDictionary *parameterDictionary = @{kToken : token,
+                                          kNewPWD : [self encodePWD:password]
+                                          };
+    [self callAPI:@"pwd_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"修改密碼錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
 }
 
 @end

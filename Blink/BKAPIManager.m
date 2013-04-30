@@ -326,20 +326,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     }];
 }
 
-- (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
-    NSString *kNewPWD = @"newpwd";
-    
-    NSDictionary *parameterDictionary = @{kToken : token,
-                                          kNewPWD : [self encodePWD:password]
-                                          };
-    [self callAPI:@"pwd_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"修改密碼錯誤"}];
-        
-        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
-    }];
-}
-
 #pragma mark - User orders
 
 - (void)getOrderWithToken:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {

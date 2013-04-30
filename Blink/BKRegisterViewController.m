@@ -119,22 +119,22 @@
     [super textFieldDidEndEditing:textField];
     
     if (textField == self.userAccountTextField) {
-        self.userAccount = textField.text;
+        self.userAccount = [textField.text cleanString];
     }
     else if (textField == self.userPasswordTextField) {
         self.userPassword = textField.text;
     }
     else if (textField == self.userNameTextField) {
-        self.userName = textField.text;
+        self.userName = [textField.text cleanString];
     }
     else if (textField == self.userPhoneTextField) {
-        self.userPhone = textField.text;
+        self.userPhone = [textField.text cleanString];
     }
     else if (textField == self.userAddressTextField) {
-        self.userAddress = textField.text;
+        self.userAddress = [textField.text cleanString];
     }
     else if (textField == self.userEmailTextField) {
-        self.userEmail = textField.text;
+        self.userEmail = [textField.text cleanString];
     }
     
     NSLog(@"account:%@, pwd:%@, name:%@, phone:%@, address:%@, email:%@", self.userAccount, self.userPassword, self.userName, self.userPhone, self.userAddress, self.userEmail);

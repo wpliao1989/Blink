@@ -27,7 +27,7 @@ NSString *const kBKUserPreferedPassword = @"kBKUserPreferedPassword";
 NSString *const kBKUserPreferedIsSaving = @"kBKUserPreferedIsSaving";
 
 NSString *const BKLoggingMessage = @"登入中...";
-NSString *const BKLoginSuccessMessage = @"登入成功!";
+NSString *const BKLoginSuccessMessage = @"登入成功！";
 //NSString *const kBKErrorMessage = @"kBKErrorMessage";
 //NSString *const kBKLoginFailed = @"Login failed...";
 
@@ -54,14 +54,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 @synthesize userPreferedAccount = _userPreferedAccount;
 @synthesize userPreferedPassword = _userPreferedPassword;
 @synthesize isSavingPreferences = _isSavingPreferences;
-
-//- (NSArray *)favoriteShopIDs {
-//    if (_favoriteShops == nil) {
-//#warning Test favorite shop infos
-//        _favoriteShops = [BKTestCenter testFavoriteShopInfos];
-//    }
-//    return _favoriteShops;
-//}
 
 - (NSString *)userToken {
     id object = [self.data objectForKey:kBKUserToken];

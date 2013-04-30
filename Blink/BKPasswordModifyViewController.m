@@ -99,6 +99,7 @@
 }
 
 - (IBAction)modifyPasswordButtonPressed:(id)sender {
+    [self.activeResponder resignFirstResponder];
     [self showHUDViewWithMessage:@"修改中..."];
 }
 
