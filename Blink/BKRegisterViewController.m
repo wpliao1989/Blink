@@ -10,6 +10,9 @@
 #import "BKAccountManager.h"
 #import "UIViewController+BKBaseViewController.h"
 #import "NSString+Numeric.h"
+#import "UIViewController+SharedCustomizedUI.h"
+#import "BKAPIManager.h"
+#import "UIViewController+SharedString.h"
 
 @interface BKRegisterViewController ()
 
@@ -75,7 +78,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
+    [self.titleBackground setImage:[self titleImage]];
 }
 
 #pragma mark - Text field
@@ -126,15 +129,44 @@
 }
 
 - (IBAction)confirmRegistrationButtonPressed:(id)sender {
-//    [[BKAccountManager sharedBKAccountManager] loginWithAccount:@"Flyingman" password:@"fly123" CompleteHandler:^(BOOL success, NSError *error) {      
-//        if (success) {
-//            [self dismissViewControllerAnimated:YES completion:^{
-//                
-//            }];
-//        }
-//        else {
-//            NSLog(@"login failed!");
-//        }
-//    }];
+    [self.activeResponder resignFirstResponder];
+    
+    if (self.userAccount == nil) {
+        [self showAlert:@"請填入帳號"];
+        return;
+    }
+    
+    if (self.userPassword == nil) {
+        [self showAlert:@"請填入密碼"];
+        return;
+    }
+    
+    if (self.userEmail == nil) {
+        [self showAlert:@"請填入email"];
+        return;
+    }
+    
+    [self showHUDViewWithMessage:@"註冊中..."];
 }
+
+#pragma mark - HUD view
+
+- (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
+    
+    [[BKAPIManager sharedBKAPIManager] registerAccount:self.userAccount password:self.userPassword email:self.userEmail completeHandler:^(id data, NSError *error) {
+        NSLog(@"Register account data:%@, error:%@", data, error);
+        if (data) {
+            successBlock(@"註冊成功!");
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self performSegueWithIdentifier:@"registerToActivationSegue" sender:self];
+            });            
+        }
+        else {
+            failBlock(error);
+        }
+    }];
+}
+
 @end

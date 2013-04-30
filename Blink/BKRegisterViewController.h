@@ -9,14 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BKScrollableViewController.h"
 
-//@protocol BKRegisterViewControllerDelegate <NSObject>
-//
-//- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack;
-//
-//@end
-
 @interface BKRegisterViewController : BKScrollableViewController
 
-//@property (nonatomic, weak) id<BKRegisterViewControllerDelegate> delegate;
 
 @end

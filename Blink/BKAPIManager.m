@@ -30,6 +30,11 @@ NSString *const kDistrict = @"district";
 // Post keys
 NSString *const kToken = @"token";
 
+// User
+NSString *const kUserName = @"username";
+NSString *const kPWD = @"password";
+NSString *const kEmail = @"email";
+
 @interface NSData (JSONValue)
 
 - (id) JSONValue;
@@ -279,8 +284,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 #pragma mark - Login, Logout
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password completionHandler:(apiCompleteHandler)completeHandler {
-    NSString *const kUserName = @"username";
-    NSString *const kPWD = @"password";
     
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
@@ -288,20 +291,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
         NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"帳號或密碼錯誤"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
-//        if (error != nil) {
-//            NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:0 userInfo:@{kBKErrorMessage : BKNetworkNotRespondingMessage}];
-//            completeHandler(nil, BKError);
-//        }
-////        else if ([self isCorrectResult:data]) {
-////            completeHandler(data, nil);
-////        }
-//        else if ([self isWrongResult:data]) {            
-//            NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongUserNameOrPassword code:0 userInfo:];
-//            completeHandler(nil, wrongResultError);
-//        }
-//        else {
-//            completeHandler(data, nil);
-//        }
+
     }];
 }
 
@@ -318,10 +308,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 #pragma mark - User info
 
 - (void)editUserName:(NSString *)name address:(NSString *)address email:(NSString *)email phone:(NSString *)phone token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler {
-    NSString *kName = @"name";
-    NSString *kPhone = @"phone";
-    NSString *kAddress = @"address";
-    NSString *kEmail = @"email";
+    NSString *const kName = @"name";
+    NSString *const kPhone = @"phone";
+    NSString *const kAddress = @"address";
     
     NSDictionary *parameterDictionary = @{kToken : token,
                                           kName : name,
@@ -817,6 +806,20 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
     [self callAPI:@"fav_add" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
         NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"新增錯誤"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
+@end
+
+@implementation BKAPIManager (Register)
+
+- (void)registerAccount:(NSString *)account password:(NSString *)password email:(NSString *)email completeHandler:(apiCompleteHandler)completeHandler {
+    NSDictionary *parameterDictionary = @{kUserName : account, kPWD : [self encodePWD:password], kEmail : email};
+    [self callAPI:@"regist" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"帳號或email重覆"}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];

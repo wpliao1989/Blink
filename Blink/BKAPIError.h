@@ -23,7 +23,8 @@ FOUNDATION_EXPORT NSString *const BKErrorDomainWrongResult;
 typedef NS_ENUM(NSUInteger, BKErrorWrongResult) {
     BKErrorWrongResultGeneral = 0,
     BKErrorWrongResultUserNameOrPassword = 1,
-    BKErrorWrongResultOrder = 2
+    BKErrorWrongResultOrder = 2,
+    BKErrorWrongResultAccountNotActivated = 3
 };
 
 // For API complete handler

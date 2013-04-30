@@ -26,8 +26,8 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 
 // Response check
 - (BOOL)isWrongResult:(id)data;
-
 - (BOOL)isCorrectResult:(id)data;
+- (BOOL)isAccountNotActivatedResult:(id)data;
 
 @end
 

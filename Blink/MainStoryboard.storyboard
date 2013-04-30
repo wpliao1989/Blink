@@ -752,6 +752,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="JWt-HF-Esv" kind="push" identifier="loginToActivationSegue" id="fl4-aM-ISf"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="記憶密碼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8IU-uI-wPi">
                                         <rect key="frame" x="29" y="244" width="75" height="21"/>
@@ -831,7 +834,7 @@
             </objects>
             <point key="canvasLocation" x="2334" y="1350"/>
         </scene>
-        <!--Register View Controller - 註冊-->
+        <!--Register View Controller - 會員註冊-->
         <scene sceneID="deN-BR-H1A">
             <objects>
                 <viewController id="Ciy-ss-NAw" customClass="BKRegisterViewController" sceneMemberID="viewController">
@@ -844,17 +847,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Q0M-g6-ukm">
-                                        <rect key="frame" x="0.0" y="-1" width="320" height="365"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="364"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="密碼" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VZK-e6-MWq">
                                         <rect key="frame" x="52" y="172" width="54" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KHl-j1-SJc">
-                                        <rect key="frame" x="52" y="210" width="54" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -865,34 +862,22 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="26n-Qb-67R">
-                                        <rect key="frame" x="124" y="367" width="73" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="26n-Qb-67R">
+                                        <rect key="frame" x="0.0" y="366" width="320" height="45"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="確認送出">
+                                        <state key="normal" image="send2.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
+                                        <state key="highlighted" image="send2_press.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="confirmRegistrationButtonPressed:" destination="Ciy-ss-NAw" eventType="touchUpInside" id="kUe-JC-eIM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="電話" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V52-9P-f9e">
-                                        <rect key="frame" x="52" y="248" width="54" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EO3-61-LdE">
-                                        <rect key="frame" x="52" y="286" width="54" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5qp-RB-Rs8">
-                                        <rect key="frame" x="52" y="324" width="54" height="21"/>
+                                        <rect key="frame" x="52" y="210" width="54" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -908,40 +893,15 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="b4S-O0-fDu">
                                         <rect key="frame" x="114" y="168" width="155" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="ofb-70-CCj"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="FuD-vG-0dh">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="G1m-Yi-ntl">
                                         <rect key="frame" x="114" y="206" width="155" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Ciy-ss-NAw" id="fXD-44-wzB"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bwh-Vo-Hg3">
-                                        <rect key="frame" x="114" y="244" width="155" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Ciy-ss-NAw" id="RTb-Pe-RYr"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="7Vr-B1-o7d">
-                                        <rect key="frame" x="114" y="282" width="155" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Ciy-ss-NAw" id="HeI-Tx-fy9"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="G1m-Yi-ntl">
-                                        <rect key="frame" x="114" y="320" width="155" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="Ebx-pp-k4Y"/>
                                         </connections>
@@ -951,7 +911,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="註冊" id="yvu-WN-4Kc">
+                    <navigationItem key="navigationItem" title="會員註冊" id="yvu-WN-4Kc">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="naT-1b-jED">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kXd-wk-fu0">
                                 <rect key="frame" x="5" y="4" width="50" height="36"/>
@@ -980,11 +940,139 @@
                         <outlet property="userNameTextField" destination="FuD-vG-0dh" id="L1D-zG-8Ar"/>
                         <outlet property="userPasswordTextField" destination="b4S-O0-fDu" id="QOS-hH-s62"/>
                         <outlet property="userPhoneTextField" destination="bwh-Vo-Hg3" id="alj-GY-OzQ"/>
+                        <segue destination="JWt-HF-Esv" kind="push" identifier="registerToActivationSegue" id="xDX-rD-OQg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCM-T6-2hH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KHl-j1-SJc">
+                    <rect key="frame" x="0.0" y="0.0" width="54" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="電話" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V52-9P-f9e">
+                    <rect key="frame" x="0.0" y="0.0" width="54" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EO3-61-LdE">
+                    <rect key="frame" x="0.0" y="0.0" width="54" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="FuD-vG-0dh">
+                    <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="Ciy-ss-NAw" id="fXD-44-wzB"/>
+                    </connections>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bwh-Vo-Hg3">
+                    <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                    <connections>
+                        <outlet property="delegate" destination="Ciy-ss-NAw" id="RTb-Pe-RYr"/>
+                    </connections>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="7Vr-B1-o7d">
+                    <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="Ciy-ss-NAw" id="HeI-Tx-fy9"/>
+                    </connections>
+                </textField>
             </objects>
             <point key="canvasLocation" x="2840" y="1350"/>
+        </scene>
+        <!--Account Activation View Controller - 會員註冊-->
+        <scene sceneID="t8g-lD-2CR">
+            <objects>
+                <viewController id="JWt-HF-Esv" customClass="BKAccountActivationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RFu-Qv-HYM">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="zSW-Z1-qdx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="365"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="帳號尚未認證" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jzm-mM-ilE">
+                                <rect key="frame" x="109" y="137" width="102" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="請至E-mail收取認證信" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yfs-cn-c9D">
+                                <rect key="frame" x="74" y="169" width="173" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.3411764706" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="j4O-13-lfM">
+                                <rect key="frame" x="49" y="234" width="222" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="resend.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="resend-click.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Xwg-Fc-dtL">
+                                <rect key="frame" x="49" y="281" width="222" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="Confirm.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Confirm-click.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonPressed:" destination="DyK-JR-YIz" eventType="touchUpInside" id="1g5-g5-nO3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="會員註冊" id="vsv-2C-tEj">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="G3v-Rb-WpW">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8kK-Dq-vD3">
+                                <rect key="frame" x="5" y="4" width="50" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                                <state key="normal" image="back.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="back_press.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="JWt-HF-Esv" eventType="touchUpInside" id="ofX-aZ-vnj"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="titleBackground" destination="zSW-Z1-qdx" id="xQF-ZE-JPf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KBC-DJ-BEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2840" y="2004"/>
         </scene>
         <!--Note View Controller-->
         <scene sceneID="iP9-b3-45o">
@@ -2369,6 +2457,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         </scene>
     </scenes>
     <resources>
+        <image name="Confirm-click.png" width="222" height="33"/>
+        <image name="Confirm.png" width="222" height="33"/>
         <image name="a4.png" width="139" height="32"/>
         <image name="a4_press.png" width="139" height="32"/>
         <image name="a5.png" width="139" height="32"/>
@@ -2389,7 +2479,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="29" height="29"/>
+        <image name="close.png" width="57" height="38"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
@@ -2429,11 +2519,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="point.png" width="273" height="2"/>
         <image name="pull.png" width="228" height="27"/>
         <image name="pull_press.png" width="228" height="27"/>
+        <image name="resend-click.png" width="222" height="33"/>
+        <image name="resend.png" width="222" height="33"/>
         <image name="search shop.png" width="116" height="34"/>
         <image name="search shop_press.png" width="116" height="34"/>
         <image name="search.png" width="320" height="46"/>
         <image name="search_press.png" width="320" height="46"/>
         <image name="send.png" width="125" height="30"/>
+        <image name="send2.png" width="320" height="46"/>
+        <image name="send2_press.png" width="320" height="46"/>
         <image name="send_press.png" width="125" height="30"/>
         <image name="shadow.png" width="305" height="11"/>
         <image name="sign in.png" width="320" height="46"/>
@@ -2445,6 +2539,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="yes_press.png" width="59" height="24"/>
     </resources>
     <classes>
+        <class className="BKAccountActivationViewController" superclassName="BKScrollableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BKAccountActivationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="titleBackground" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
         <class className="BKCustomUIViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKCustomUIViewController.h"/>
             <relationships>
@@ -2659,9 +2759,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Fqf-f2-bQo"/>
-        <segue reference="b53-zt-ROB"/>
         <segue reference="qSY-7S-ko2"/>
+        <segue reference="b53-zt-ROB"/>
+        <segue reference="Fqf-f2-bQo"/>
         <segue reference="0Oj-LE-aah"/>
+        <segue reference="fl4-aM-ISf"/>
     </inferredMetricsTieBreakers>
 </document>

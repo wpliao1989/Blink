@@ -167,9 +167,20 @@ NSString *const BKMenuNullString = @"null";
 
 - (NSURL *)picURL {
     if (_picURL == nil) {
+        // Check for two keys kBKMenuPicURL and kBKMenuPic, because engineer at
+        // mo pay tech is fucking retarded
         id object = [self.data objectForKey:kBKMenuPicURL];
+        
         if ([object isNullOrNil] || ![object isString]) {
-            _picURL = nil;
+            
+            object = [self.data objectForKey:kBKMenuPic];
+            if ([object isNullOrNil] || ![object isString]) {
+                _picURL = nil;
+            }
+            else {
+                _picURL = [NSURL URLWithString:object];
+            }
+            
         }
         else {
             _picURL = [NSURL URLWithString:object];

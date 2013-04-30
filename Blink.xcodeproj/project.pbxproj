@@ -32,12 +32,27 @@
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
 		422861B4170C6BC700E10F8E /* BKBaseAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861B3170C6BC600E10F8E /* BKBaseAPIManager.m */; };
 		422861CF170D781F00E10F8E /* BKLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861CE170D781E00E10F8E /* BKLookup.m */; };
+		4228C4E0172E636000DD38E5 /* send2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4DE172E636000DD38E5 /* send2@2x.png */; };
+		4228C4E1172E636000DD38E5 /* send2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4DF172E636000DD38E5 /* send2_press@2x.png */; };
+		4228C4E4172E638300DD38E5 /* send2_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4E2172E638300DD38E5 /* send2_press.png */; };
+		4228C4E5172E638300DD38E5 /* send2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4E3172E638300DD38E5 /* send2.png */; };
+		4228C4EB172E64C900DD38E5 /* BKAccountActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4228C4EA172E64C900DD38E5 /* BKAccountActivationViewController.m */; };
+		4228C4EE172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4228C4ED172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m */; };
+		4228C4F4172E69E400DD38E5 /* Confirm-click.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4F2172E69E400DD38E5 /* Confirm-click.png */; };
+		4228C4F5172E69E400DD38E5 /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4F3172E69E400DD38E5 /* Confirm.png */; };
+		4228C4F8172E69EC00DD38E5 /* Confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4F6172E69EC00DD38E5 /* Confirm@2x.png */; };
+		4228C4F9172E69EC00DD38E5 /* Confirm-click@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4228C4F7172E69EC00DD38E5 /* Confirm-click@2x.png */; };
 		424495B7172126E800C84F5D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495B6172126E800C84F5D /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		424495B9172126EF00C84F5D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495B8172126EE00C84F5D /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		424495BB1721270100C84F5D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BA1721270100C84F5D /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		424495BC1721271200C84F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		424495BE1721271A00C84F5D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BD1721271A00C84F5D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A833172683380019FA68 /* UIViewController+SharedString.m */; };
+		427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */; };
+		427F9199172F5D6E009F9E92 /* resend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9197172F5D6E009F9E92 /* resend@2x.png */; };
+		427F919A172F5D6E009F9E92 /* resend-click@x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9198172F5D6E009F9E92 /* resend-click@x.png */; };
+		427F919D172F5D76009F9E92 /* resend-click.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F919B172F5D76009F9E92 /* resend-click.png */; };
+		427F919E172F5D76009F9E92 /* resend.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F919C172F5D76009F9E92 /* resend.png */; };
 		4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298DE271727E43D00D1E6DB /* NSData+PushToken.m */; };
 		42A2317C172A2B1100B01C00 /* NSURL+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A2317B172A2B1100B01C00 /* NSURL+Additions.m */; };
 		42A2317E172A4B7F00B01C00 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42A2317D172A4B7F00B01C00 /* FacebookSDKResources.bundle */; };
@@ -394,6 +409,18 @@
 		422861B5170CED9100E10F8E /* BKAPIError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKAPIError.h; sourceTree = "<group>"; };
 		422861CD170D781E00E10F8E /* BKLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKLookup.h; sourceTree = "<group>"; };
 		422861CE170D781E00E10F8E /* BKLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKLookup.m; sourceTree = "<group>"; };
+		4228C4DE172E636000DD38E5 /* send2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send2@2x.png"; sourceTree = "<group>"; };
+		4228C4DF172E636000DD38E5 /* send2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send2_press@2x.png"; sourceTree = "<group>"; };
+		4228C4E2172E638300DD38E5 /* send2_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send2_press.png; sourceTree = "<group>"; };
+		4228C4E3172E638300DD38E5 /* send2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send2.png; sourceTree = "<group>"; };
+		4228C4E9172E64C900DD38E5 /* BKAccountActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKAccountActivationViewController.h; sourceTree = "<group>"; };
+		4228C4EA172E64C900DD38E5 /* BKAccountActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKAccountActivationViewController.m; sourceTree = "<group>"; };
+		4228C4EC172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SharedCustomizedUI.h"; sourceTree = "<group>"; };
+		4228C4ED172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SharedCustomizedUI.m"; sourceTree = "<group>"; };
+		4228C4F2172E69E400DD38E5 /* Confirm-click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Confirm-click.png"; sourceTree = "<group>"; };
+		4228C4F3172E69E400DD38E5 /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
+		4228C4F6172E69EC00DD38E5 /* Confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Confirm@2x.png"; sourceTree = "<group>"; };
+		4228C4F7172E69EC00DD38E5 /* Confirm-click@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Confirm-click@2x.png"; sourceTree = "<group>"; };
 		424495B6172126E800C84F5D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		424495B8172126EE00C84F5D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		424495BA1721270100C84F5D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -403,6 +430,12 @@
 		4255A83017267FD30019FA68 /* NSString+QueryParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryParser.m"; sourceTree = "<group>"; };
 		4255A832172683380019FA68 /* UIViewController+SharedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SharedString.h"; sourceTree = "<group>"; };
 		4255A833172683380019FA68 /* UIViewController+SharedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SharedString.m"; sourceTree = "<group>"; };
+		427F9194172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BKScrollableViewController+LoginFlow.h"; sourceTree = "<group>"; };
+		427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BKScrollableViewController+LoginFlow.m"; sourceTree = "<group>"; };
+		427F9197172F5D6E009F9E92 /* resend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend@2x.png"; sourceTree = "<group>"; };
+		427F9198172F5D6E009F9E92 /* resend-click@x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend-click@x.png"; sourceTree = "<group>"; };
+		427F919B172F5D76009F9E92 /* resend-click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend-click.png"; sourceTree = "<group>"; };
+		427F919C172F5D76009F9E92 /* resend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resend.png; sourceTree = "<group>"; };
 		4298DE271727E43D00D1E6DB /* NSData+PushToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+PushToken.m"; path = "../../../Category/NSData+PushToken.m"; sourceTree = "<group>"; };
 		4298DE281727E43D00D1E6DB /* NSData+PushToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+PushToken.h"; path = "../../../Category/NSData+PushToken.h"; sourceTree = "<group>"; };
 		42A2317A172A2B1100B01C00 /* NSURL+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Additions.h"; sourceTree = "<group>"; };
@@ -879,6 +912,8 @@
 				4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */,
 				4255A832172683380019FA68 /* UIViewController+SharedString.h */,
 				4255A833172683380019FA68 /* UIViewController+SharedString.m */,
+				4228C4EC172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.h */,
+				4228C4ED172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m */,
 			);
 			name = Formatter;
 			sourceTree = "<group>";
@@ -1022,6 +1057,8 @@
 			children = (
 				42B2665C1705D3D600183C6A /* BKScrollableViewController.h */,
 				42B2665D1705D3D600183C6A /* BKScrollableViewController.m */,
+				427F9194172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.h */,
+				427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */,
 			);
 			name = BaseViewController;
 			sourceTree = "<group>";
@@ -1237,16 +1274,20 @@
 			isa = PBXGroup;
 			children = (
 				42A978A2170AAB2800494658 /* BaseViewController */,
+				CE7A78ED16B764AD0072519F /* BKLoginViewController.h */,
+				CE7A78EE16B764AD0072519F /* BKLoginViewController.m */,
 				CE7A78FC16B79C8E0072519F /* BKRegisterViewController.h */,
 				CE7A78FD16B79C8E0072519F /* BKRegisterViewController.m */,
 				CE7A78F016B766CD0072519F /* BKUserToolViewController.h */,
 				CE7A78F116B766CD0072519F /* BKUserToolViewController.m */,
+				42100201171B9E6100EE476E /* BKPasswordModifyViewController.h */,
+				42100202171B9E6100EE476E /* BKPasswordModifyViewController.m */,
+				4228C4E9172E64C900DD38E5 /* BKAccountActivationViewController.h */,
+				4228C4EA172E64C900DD38E5 /* BKAccountActivationViewController.m */,
 				CE7A78E616B762210072519F /* BKMainPageViewController.h */,
 				CE7A78E716B762210072519F /* BKMainPageViewController.m */,
 				CE7A78E916B762410072519F /* BKShopListViewController.h */,
 				CE7A78EA16B762410072519F /* BKShopListViewController.m */,
-				CE7A78ED16B764AD0072519F /* BKLoginViewController.h */,
-				CE7A78EE16B764AD0072519F /* BKLoginViewController.m */,
 				CEC0188616BBC86D00886331 /* BKShopDetailViewController.h */,
 				CEC0188716BBC86D00886331 /* BKShopDetailViewController.m */,
 				CE7F8A6516BF883E00BD4D85 /* BKMakeOrderViewController.h */,
@@ -1257,8 +1298,6 @@
 				CE805B9B16C3A51B0040095F /* BKMenuViewController.m */,
 				CE805BAA16C3A9210040095F /* BKNoteViewController.h */,
 				CE805BAB16C3A9210040095F /* BKNoteViewController.m */,
-				42100201171B9E6100EE476E /* BKPasswordModifyViewController.h */,
-				42100202171B9E6100EE476E /* BKPasswordModifyViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1363,6 +1402,12 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				427F919B172F5D76009F9E92 /* resend-click.png */,
+				427F919C172F5D76009F9E92 /* resend.png */,
+				4228C4F2172E69E400DD38E5 /* Confirm-click.png */,
+				4228C4F3172E69E400DD38E5 /* Confirm.png */,
+				4228C4E2172E638300DD38E5 /* send2_press.png */,
+				4228C4E3172E638300DD38E5 /* send2.png */,
 				4210020C171BA44100EE476E /* fix_password_press.png */,
 				4210020D171BA44100EE476E /* fix_password.png */,
 				4210020E171BA44100EE476E /* fix_press.png */,
@@ -1467,6 +1512,12 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				427F9197172F5D6E009F9E92 /* resend@2x.png */,
+				427F9198172F5D6E009F9E92 /* resend-click@x.png */,
+				4228C4F6172E69EC00DD38E5 /* Confirm@2x.png */,
+				4228C4F7172E69EC00DD38E5 /* Confirm-click@2x.png */,
+				4228C4DE172E636000DD38E5 /* send2@2x.png */,
+				4228C4DF172E636000DD38E5 /* send2_press@2x.png */,
 				42100204171BA40800EE476E /* fix_password_press@2x.png */,
 				42100205171BA40800EE476E /* fix_password@2x.png */,
 				42100206171BA40800EE476E /* fix_press@2x.png */,
@@ -1845,6 +1896,18 @@
 				42100225171E468400EE476E /* BKMenuListCell.xib in Resources */,
 				42A813C01727C4B700BD7F27 /* GTMOAuth2ViewTouch.xib in Resources */,
 				42A2317E172A4B7F00B01C00 /* FacebookSDKResources.bundle in Resources */,
+				4228C4E0172E636000DD38E5 /* send2@2x.png in Resources */,
+				4228C4E1172E636000DD38E5 /* send2_press@2x.png in Resources */,
+				4228C4E4172E638300DD38E5 /* send2_press.png in Resources */,
+				4228C4E5172E638300DD38E5 /* send2.png in Resources */,
+				4228C4F4172E69E400DD38E5 /* Confirm-click.png in Resources */,
+				4228C4F5172E69E400DD38E5 /* Confirm.png in Resources */,
+				4228C4F8172E69EC00DD38E5 /* Confirm@2x.png in Resources */,
+				4228C4F9172E69EC00DD38E5 /* Confirm-click@2x.png in Resources */,
+				427F9199172F5D6E009F9E92 /* resend@2x.png in Resources */,
+				427F919A172F5D6E009F9E92 /* resend-click@x.png in Resources */,
+				427F919D172F5D76009F9E92 /* resend-click.png in Resources */,
+				427F919E172F5D76009F9E92 /* resend.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +2025,9 @@
 				42A813C21727C4B700BD7F27 /* OpenInChromeController.m in Sources */,
 				4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */,
 				42A2317C172A2B1100B01C00 /* NSURL+Additions.m in Sources */,
+				4228C4EB172E64C900DD38E5 /* BKAccountActivationViewController.m in Sources */,
+				4228C4EE172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m in Sources */,
+				427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "BKScrollableViewController.h"
 #import "MBProgressHUD.h"
 #import "BKAccountManager.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 @interface BKScrollableViewController()
 
@@ -25,7 +26,7 @@
     
     // Customize scroll view
     if (![self isUsingOwnScrollview]) {
-        [self.scrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+        [self.scrollView setBackgroundColor:[self viewBackgoundColor]];
     }    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];

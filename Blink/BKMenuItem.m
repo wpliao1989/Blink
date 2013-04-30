@@ -16,6 +16,7 @@ NSString *const kBKMenuPrice = @"price";
 NSString *const kBKMenuIce = @"ice";
 NSString *const kBKMenuSweetness = @"sweetness";
 NSString *const kBKMenuDetail = @"detail";
+NSString *const kBKMenuPic = @"pic";
 
 NSString *const kBKMenuPriceMedium = @"Medium";
 NSString *const kBKMenuPriceLarge = @"Large";

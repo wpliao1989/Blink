@@ -11,6 +11,8 @@
 #import "BKRegisterViewController.h"
 #import "MBProgressHUD.h"
 #import "BKAPIError.h"
+#import "UIViewController+SharedCustomizedUI.h"
+#import "BKScrollableViewController+LoginFlow.h"
 
 @interface BKLoginViewController ()
 
@@ -78,7 +80,7 @@
         self.userPassword = [BKAccountManager sharedBKAccountManager].userPreferedPassword;
     }
     
-    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];
+    [self.titleBackground setImage:[self titleImage]];
 //    self.isSavingPreferencesSwitch.onImage = [UIImage imageNamed:@"Default.png"];
 //    self.isSavingPreferencesSwitch.offImage = [UIImage imageNamed:@"37x-Checkmark.png"];
 }
@@ -88,74 +90,51 @@
     [BKAccountManager sharedBKAccountManager].isSavingPreferences = self.isSavingPreferencesSwitch.on;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Custom login method
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
-    [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
-        if (success) {
-            [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
+    [self loginWithAccount:self.userAccount password:self.userPassword successBlock:successBlock failBlock:failBlock errorHandler:^(NSError *error) {
+        if ([error.domain isEqualToString:BKErrorDomainWrongResult] &&
+            (error.code == BKErrorWrongResultAccountNotActivated)) {
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self dismissViewControllerAnimated:YES completion:^{}];
+                [self performSegueWithIdentifier:@"loginToActivationSegue" sender:self];
             });
-            successBlock(BKLoginSuccessMessage);
-        }
-        else {
-            if ([error.domain isEqualToString:BKErrorDomainWrongResult] && (error.code == BKErrorWrongResultUserNameOrPassword)) {
-                [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
-            }
-            failBlock(error);
         }
     }];
+//    [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
+//        if (success) {
+//            [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
+//            double delayInSeconds = 1.0;
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                [self dismissViewControllerAnimated:YES completion:^{}];
+//            });
+//            successBlock(BKLoginSuccessMessage);
+//        }
+//        else {
+//            if ([error.domain isEqualToString:BKErrorDomainWrongResult] &&
+//                (error.code == BKErrorWrongResultUserNameOrPassword)) {
+//                [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
+//            }
+//            else if ([error.domain isEqualToString:BKErrorDomainWrongResult] &&
+//                     (error.code == BKErrorWrongResultAccountNotActivated)) {
+//                double delayInSeconds = 1.0;
+//                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                    [self performSegueWithIdentifier:@"loginToActivationSegue" sender:self];
+//                });
+//            }
+//            failBlock(error);
+//        }
+//    }];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)loginButtonPressed:(id)sender {
     [self showHUDViewWithMessage:BKLoggingMessage];
-    return;
-    
-//    [self.activeResponder resignFirstResponder];
-//    
-////    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-//    [self.navigationController.view addSubview:self.HUD];
-//    self.HUD.delegate = self;
-//    self.HUD.labelText = BKLoggingMessage;
-//    [self.HUD show:YES];
-//    
-//    [[BKAccountManager sharedBKAccountManager] loginWithAccount:self.userAccount password:self.userPassword CompleteHandler:^(BOOL success, NSError *error) {
-//        if (success) {
-//            self.HUD.mode = MBProgressHUDModeText;
-//            self.HUD.labelText = BKLoginSuccessMessage;
-//            double delayInSeconds = 1.0;
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                [self dismissViewControllerAnimated:YES completion:^{}];
-//                [self.HUD hide:YES];
-//            });            
-//            [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:self.userPassword];
-//        }
-//        else {
-//            self.HUD.mode = MBProgressHUDModeText;
-//            if ([error.domain isEqualToString:BKErrorDomainWrongUserNameOrPassword]) {
-//                [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:self.userAccount password:nil];
-//                self.HUD.labelText = @"帳號或密碼錯誤";
-//            }
-//            else {
-//                self.HUD.labelText = @"網路無回應";
-//            }                        
-//            [self.HUD hide:YES afterDelay:1.0];
-//        }        
-////        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-//    }];
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {
@@ -174,19 +153,6 @@
 //        registerViewController.delegate = self;
 //    }    
 }
-
-//- (void)dismissPresentedViewController:(UIViewController *)sender backToRootViewController:(BOOL)isGoingBack {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//    if (isGoingBack) {
-//        [self.navigationController popToRootViewControllerAnimated:NO];
-//    }
-//}
-
-//- (void)hudWasHidden:(MBProgressHUD *)hud {
-//    NSLog(@"hudWasHidden");
-//    [self.HUD removeFromSuperview];
-//    self.HUD = nil;
-//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];

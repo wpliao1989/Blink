@@ -13,6 +13,7 @@ FOUNDATION_EXPORT NSString *const kBKMenuPrice;
 FOUNDATION_EXPORT NSString *const kBKMenuIce;
 FOUNDATION_EXPORT NSString *const kBKMenuSweetness;
 FOUNDATION_EXPORT NSString *const kBKMenuDetail;
+FOUNDATION_EXPORT NSString *const kBKMenuPic;
 
 FOUNDATION_EXPORT NSString *const kBKMenuPriceMedium;
 FOUNDATION_EXPORT NSString *const kBKMenuPriceLarge;
@@ -29,6 +30,8 @@ FOUNDATION_EXPORT NSString *const kBKMenuPriceSmall;
 @property (strong, nonatomic) NSDictionary *price;
 
 @property (strong, nonatomic) NSString *detail;
+
+@property (strong, nonatomic) NSURL *picURL;
 
 - (NSNumber *)priceForSize:(NSString *)size;
 + (id)menuItemForMenuItem:(BKMenuItem *)item;
