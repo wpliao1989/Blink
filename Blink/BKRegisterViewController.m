@@ -13,6 +13,8 @@
 #import "UIViewController+SharedCustomizedUI.h"
 #import "BKAPIManager.h"
 #import "UIViewController+SharedString.h"
+#import "BKAccountActivationViewController.h"
+#import "NSString+Additions.h"
 
 @interface BKRegisterViewController ()
 
@@ -81,6 +83,16 @@
     [self.titleBackground setImage:[self titleImage]];
 }
 
+#pragma mark - Prepare for segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"registerToActivationSegue"]) {
+        BKAccountActivationViewController *aavc = segue.destinationViewController;
+        aavc.userAccount = self.userAccount;
+        aavc.userPassword = self.userPassword;
+    }
+}
+
 #pragma mark - Text field
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -131,7 +143,7 @@
 - (IBAction)confirmRegistrationButtonPressed:(id)sender {
     [self.activeResponder resignFirstResponder];
     
-    if (self.userAccount == nil) {
+    if ([self.userAccount hasNoContent]) {
         [self showAlert:@"請填入帳號"];
         return;
     }
@@ -141,7 +153,7 @@
         return;
     }
     
-    if (self.userEmail == nil) {
+    if ([self.userEmail hasNoContent]) {
         [self showAlert:@"請填入email"];
         return;
     }

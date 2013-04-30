@@ -13,6 +13,7 @@
 #import "BKAPIError.h"
 #import "UIViewController+SharedCustomizedUI.h"
 #import "BKScrollableViewController+LoginFlow.h"
+#import "BKAccountActivationViewController.h"
 
 @interface BKLoginViewController ()
 
@@ -61,15 +62,6 @@
     self.userPasswordTextField.text = userPassword;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -88,6 +80,16 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [BKAccountManager sharedBKAccountManager].isSavingPreferences = self.isSavingPreferencesSwitch.on;
+}
+
+#pragma mark - Prepare for segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"loginToActivationSegue"]) {
+        BKAccountActivationViewController *aavc = segue.destinationViewController;
+        aavc.userAccount = self.userAccount;
+        aavc.userPassword = self.userPassword;
+    }
 }
 
 #pragma mark - Custom login method
@@ -147,12 +149,7 @@
     }];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"registrationSegue"]) {
-//        BKRegisterViewController *registerViewController = segue.destinationViewController;
-//        registerViewController.delegate = self;
-//    }    
-}
+#pragma mark - Text field
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];

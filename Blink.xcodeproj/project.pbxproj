@@ -53,6 +53,7 @@
 		427F919A172F5D6E009F9E92 /* resend-click@x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9198172F5D6E009F9E92 /* resend-click@x.png */; };
 		427F919D172F5D76009F9E92 /* resend-click.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F919B172F5D76009F9E92 /* resend-click.png */; };
 		427F919E172F5D76009F9E92 /* resend.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F919C172F5D76009F9E92 /* resend.png */; };
+		427F91A4172F73A4009F9E92 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F91A3172F73A4009F9E92 /* NSString+Additions.m */; };
 		4298DE291727E43D00D1E6DB /* NSData+PushToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298DE271727E43D00D1E6DB /* NSData+PushToken.m */; };
 		42A2317C172A2B1100B01C00 /* NSURL+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A2317B172A2B1100B01C00 /* NSURL+Additions.m */; };
 		42A2317E172A4B7F00B01C00 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42A2317D172A4B7F00B01C00 /* FacebookSDKResources.bundle */; };
@@ -436,6 +437,8 @@
 		427F9198172F5D6E009F9E92 /* resend-click@x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend-click@x.png"; sourceTree = "<group>"; };
 		427F919B172F5D76009F9E92 /* resend-click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend-click.png"; sourceTree = "<group>"; };
 		427F919C172F5D76009F9E92 /* resend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resend.png; sourceTree = "<group>"; };
+		427F91A2172F73A3009F9E92 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		427F91A3172F73A4009F9E92 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		4298DE271727E43D00D1E6DB /* NSData+PushToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+PushToken.m"; path = "../../../Category/NSData+PushToken.m"; sourceTree = "<group>"; };
 		4298DE281727E43D00D1E6DB /* NSData+PushToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+PushToken.h"; path = "../../../Category/NSData+PushToken.h"; sourceTree = "<group>"; };
 		42A2317A172A2B1100B01C00 /* NSURL+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Additions.h"; sourceTree = "<group>"; };
@@ -1107,6 +1110,8 @@
 				421001FB17183EAD00EE476E /* NSNumber+NullNumber.m */,
 				42A2317A172A2B1100B01C00 /* NSURL+Additions.h */,
 				42A2317B172A2B1100B01C00 /* NSURL+Additions.m */,
+				427F91A2172F73A3009F9E92 /* NSString+Additions.h */,
+				427F91A3172F73A4009F9E92 /* NSString+Additions.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2028,6 +2033,7 @@
 				4228C4EB172E64C900DD38E5 /* BKAccountActivationViewController.m in Sources */,
 				4228C4EE172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m in Sources */,
 				427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */,
+				427F91A4172F73A4009F9E92 /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

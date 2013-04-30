@@ -75,6 +75,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 @interface BKAPIManager (Register)
 
 - (void)registerAccount:(NSString *)account password:(NSString *)password email:(NSString *)email completeHandler:(apiCompleteHandler)completeHandler;
+- (void)resendActivationLetterToAccount:(NSString *)account password:(NSString *)password completeHandler:(apiCompleteHandler)completeHandler;
 
 @end
 

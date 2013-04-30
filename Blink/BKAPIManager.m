@@ -825,4 +825,13 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
     }];
 }
 
+- (void)resendActivationLetterToAccount:(NSString *)account password:(NSString *)password completeHandler:(apiCompleteHandler)completeHandler {
+    NSDictionary *parameterDictionary = @{kUserName : account, kPWD : [self encodePWD:password]};
+    [self callAPI:@"resendActivation" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey : @"發送失敗"}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
 @end

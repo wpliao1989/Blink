@@ -22,7 +22,7 @@ NSString *const BKErrorDomainWrongResult = @"com.flyingman.BKErrorDomainWrongRes
 NSString *const BKErrorDomainNetwork = @"com.flyingman.BKErrorDomainNetwork";
 
 // Localized string for display
-NSString *const BKNetworkNotRespondingMessage = @"網路無回應";
+NSString *const BKNetworkNotRespondingMessage = @"伺服器無回應";
 NSString *const BKWrongResultMessage = @"";
 
 // Custom error message key
@@ -116,9 +116,17 @@ completionHandler:completeHandler];
         NSLog(@"Recovery option:%@", error.localizedRecoveryOptions);
         NSLog(@"Recovery suggestion:%@", error.localizedRecoverySuggestion);
         //NSString *localizedDescription = error.localizedDescription != nil ? error.localizedDescription : BKNetworkNotRespondingMessage;
-        NSError *BKError = [NSError errorWithDomain:BKErrorDomainNetwork
-                                               code:0
-                                           userInfo:error.userInfo];
+        NSError *BKError; 
+        // Status code is not 200
+        if (error == nil) {
+            BKError = [NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey : BKNetworkNotRespondingMessage}];
+        }
+        else {
+            BKError = [NSError errorWithDomain:BKErrorDomainNetwork
+                                          code:BKErrorWrongResultGeneral
+                                      userInfo:error.userInfo];
+        }
+        
         handler(nil, BKError);
     }
     else if (![self isCorrectResult:data]) {

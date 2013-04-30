@@ -17,7 +17,9 @@
                failBlock:(failBlock)failBlock
             errorHandler:(void (^)(NSError *))errorHandler {
     
-    [[BKAccountManager sharedBKAccountManager] loginWithAccount:account password:password CompleteHandler:^(BOOL success, NSError *error) {
+    [[BKAccountManager sharedBKAccountManager] loginWithAccount:account
+                                                       password:password
+                                                CompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
             [[BKAccountManager sharedBKAccountManager] saveUserPreferedAccount:account
                                                                       password:password];
