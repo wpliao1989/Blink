@@ -14,6 +14,7 @@
 #import "UIViewController+Formatter.h"
 #import "UIViewController+MenuCell.h"
 #import "BKMenuListCell.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 @interface BKMenuViewController ()
 
@@ -56,7 +57,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKShopDetailViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2]).homeButton;
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.view setBackgroundColor:[self viewBackgoundColor]];
 }
 
 #pragma mark - Table view data source

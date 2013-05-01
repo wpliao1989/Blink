@@ -86,7 +86,7 @@
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     [[BKAccountManager sharedBKAccountManager] editUserPWD:self.userNewPWD completionHandler:^(BOOL success, NSError *error) {
         if (success) {
-            successBlock(@"修改成功！");
+            successBlock(NSLocalizedString(@"Modification succeeded!", @"修改成功！"));
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -103,11 +103,11 @@
     [self.activeResponder resignFirstResponder];
     
     if (![self isOldPWDandNewPWDValid]) {
-        [self showAlert:kWrongPasswordMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your password", @"")];
         return;
     }
     
-    [self showHUDViewWithMessage:@"修改中..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Modidying...", @"修改中...")];
 }
 
 @end

@@ -28,7 +28,7 @@
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self dismissViewControllerAnimated:YES completion:^{}];
             });
-            successBlock(BKLoginSuccessMessage);
+            successBlock(NSLocalizedString(@"Login succeeded!", @"登入成功！"));
         }
         else {
             if ([error.domain isEqualToString:BKErrorDomainWrongResult] &&

@@ -89,8 +89,7 @@ NSString *const pushTokenDidBecomeAvailableNotification = @"com.flyingman.pushTo
     UIImageView *demoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 226, 128)];
     demoView.image = [UIImage imageNamed:@"demo"];
     demoView.center = self.window.center;
-    demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    
+    demoView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;    
     
     [self.window addSubview:demoView];
     NSLog(@"window subviews: %@", self.window.subviews);

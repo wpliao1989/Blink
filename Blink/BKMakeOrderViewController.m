@@ -21,6 +21,7 @@
 #import "UIViewController+BKBaseViewController.h"
 #import "UIViewController+SharedString.h"
 #import "BKOrderForSending.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 #import "BKTestCenter.h"
 
@@ -114,10 +115,6 @@ NSInteger quantityComponent = 0;
 
 @end
 
-static NSString *noSelectableItem = @"無可選擇項目";
-//static NSString *iceUnselected = @"冰量";
-//static NSString *sweetnessUnselected = @"糖量";
-
 @implementation BKMakeOrderViewController
 
 @synthesize orderContent = _orderContent;
@@ -159,7 +156,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 - (UIAlertView *)notEnoughContentAlert {
     if (_notEnoughContentAlert == nil) {
         _notEnoughContentAlert = [[UIAlertView alloc] initWithTitle:[self titleForAlertView]
-                                                            message:@"請至少選擇一項商品"
+                                                            message:NSLocalizedString(@"Please pick at least one item", @"請至少選擇一項商品")
                                                            delegate:nil
                                                   cancelButtonTitle:[self confirmButtonTitleForAlertView]
                                                   otherButtonTitles:nil];
@@ -218,15 +215,6 @@ static NSString *noSelectableItem = @"無可選擇項目";
 
 #pragma mark - View controller life cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -234,7 +222,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //    [self addHomeButton];    
     [self initSettings];
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.view setBackgroundColor:[self viewBackgoundColor]];
     [self.background setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
 }
 
@@ -352,8 +340,8 @@ static NSString *noSelectableItem = @"無可選擇項目";
 #pragma mark - String for price and delivery cost label
 
 - (NSString *)stringForTotalPrice:(NSNumber *)totalPrice {
-    static NSString *preString = @"總金額：";
-    static NSString *postString = @"元";
+    NSString *preString = NSLocalizedString(@"Total:", @"總金額：");
+    NSString *postString = NSLocalizedString(@"dollar", @"元");
     NSString *result = [[preString stringByAppendingString:[totalPrice stringValue]] stringByAppendingString:postString];
     return result;
 }
@@ -365,12 +353,13 @@ static NSString *noSelectableItem = @"無可選擇項目";
     double costD = [cost doubleValue];
     
     NSString *costString = [NSString stringWithFormat:@"%0.0f", costD];
+    NSString *dollarString = NSLocalizedString(@"dollar", @"");
     
     if (totalPriceD >= costD) {
-        return [NSString stringWithFormat:@"已達最低外送價格：%@元", costString];
+        return [NSString stringWithFormat:@"%@：%@%@", NSLocalizedString(@"Reached min price", @"已達最低外送價格"), costString, dollarString];
     }
     else {
-        return [NSString stringWithFormat:@"最低外送價格：%@元", costString];
+        return [NSString stringWithFormat:@"%@：%@%@", NSLocalizedString(@"Min Price",@"最低外送價格"),costString, dollarString];
     }
 }
 
@@ -530,7 +519,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
     }  
     label.textAlignment = NSTextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
-    label.text = noSelectableItem;
+    label.text = NSLocalizedString(@"No item", "");
     
     if (pickerView == self.itemPicker) {
         
@@ -608,7 +597,7 @@ static NSString *noSelectableItem = @"無可選擇項目";
 //                NSLog(@"1");
                 self.selectedIceLevel = nil;
                 [self.iceAndSweetnessButton setEnabled:NO];
-                [self changeButtonTitleButton:self.iceAndSweetnessButton title:noSelectableItem];
+                [self changeButtonTitleButton:self.iceAndSweetnessButton title:NSLocalizedString(@"No item", "")];
             }
             else {
 //                NSLog(@"2");
@@ -640,11 +629,11 @@ static NSString *noSelectableItem = @"無可選擇項目";
     }
     else {
         [self.itemButton setEnabled:NO];
-        [self changeButtonTitleButton:self.itemButton title:noSelectableItem];
+        [self changeButtonTitleButton:self.itemButton title:NSLocalizedString(@"No item", "")];
         [self.iceAndSweetnessButton setEnabled:NO];
-        [self changeButtonTitleButton:self.iceAndSweetnessButton title:noSelectableItem];
+        [self changeButtonTitleButton:self.iceAndSweetnessButton title:NSLocalizedString(@"No item", "")];
         [self.sizeAndQuantityButton setEnabled:NO];
-        [self changeButtonTitleButton:self.sizeAndQuantityButton title:noSelectableItem];
+        [self changeButtonTitleButton:self.sizeAndQuantityButton title:NSLocalizedString(@"No item", "")];
     }
 }
 
@@ -760,10 +749,10 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)inValidMessage {
-    static NSString *itemNotSelected = @"尚未選擇商品";
-    static NSString *iceNotSelected = @"尚未選擇冰量";
-    static NSString *sweetnessNotSelected = @"尚未選擇糖量";
-    static NSString *changeLine = @"\n";
+    NSString *const itemNotSelected = NSLocalizedString(@"Please pick at least one item", @"");
+    NSString *const iceNotSelected = NSLocalizedString(@"Please pick an ice setting", @"尚未選擇冰量");
+    NSString *const sweetnessNotSelected = NSLocalizedString(@"Please pick a sweetness setting", @"尚未選擇糖量");
+    NSString *const changeLine = @"\n";
     
     NSString *result = @"";
     
@@ -798,7 +787,11 @@ static NSString *noSelectableItem = @"無可選擇項目";
 }
 
 - (NSString *)orderExistsMessage {
-    return [NSString stringWithFormat:@"有尚未發送的訂單\n商店名: %@\n%@", [[BKOrderManager sharedBKOrderManager] shopName], @"要把訂單刪除嗎?"];
+    return [NSString stringWithFormat:@"%@\n%@: %@\n%@",
+            NSLocalizedString(@"Unfinished order exists", @"有尚未發送的訂單"),
+            NSLocalizedString(@"Shop name", @"商店名"),
+            [[BKOrderManager sharedBKOrderManager] shopName],
+            NSLocalizedString(@"Delete order?", @"要把訂單刪除嗎？")];
 }
 
 #pragma mark - Button title update

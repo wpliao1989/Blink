@@ -128,7 +128,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     if ([segue.identifier isEqualToString:@"menuSegue"]) {
         BKMenuViewController *menuVC = segue.destinationViewController;
 //        menuVC.navigationItem.title = [self.shopInfo.name stringByAppendingString:@"的菜單"];
-        menuVC.navigationItem.title = @"菜單";
+        menuVC.navigationItem.title = NSLocalizedString(@"Menu", @"菜單 title for menu vc");
         menuVC.menu = self.shopInfo.menu;
     }
     else if ([segue.identifier isEqualToString:@"makeOrderSegue"]) {
@@ -239,7 +239,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     
     if (self.hudviewType == BKHUDViewTypeShopDetailDownload) {
-        failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey:@"伺服器錯誤"}]);
+        failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Server failure", @"伺服器錯誤")}]);
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -248,17 +248,17 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     }
     else if (self.hudviewType == BKHUDViewTypeAddUserFavorite) {
         if ([BKAccountManager sharedBKAccountManager].isLogin == NO) {
-            failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:@"請先登入"}]);
+            failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Please login first", @"請先登入")}]);
         }
         else {
             [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
                 if (success) {
                     NSLog(@"Add user favorite success! shopID:%@", self.shopID);
-                    successBlock(@"新增成功!");
+                    successBlock(NSLocalizedString(@"Adding succedded!", @"新增成功!"));
                 }
                 else {
                     NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
-                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:@"新增失敗..."}]);
+                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Adding failed", @"新增失敗")}]);
                 }
             }];
         }        
@@ -271,7 +271,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 #pragma mark - Price string
 
 - (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost {
-    return [NSString stringWithFormat:@"最低外送價：%@", [self currencyStringForPrice:cost]];
+    NSString *minPriceString = NSLocalizedString(@"Min Price", @"最低外送價");
+    return [NSString stringWithFormat:@"%@：%@", minPriceString,[self currencyStringForPrice:cost]];
 }
 
 #pragma mark - Currency formatter
@@ -362,7 +363,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 - (IBAction)addFavoriteShopButtonPressed:(id)sender {
     self.hudviewType = BKHUDViewTypeAddUserFavorite;
-    [self showHUDViewWithMessage:@"新增中..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Adding...", @"新增中...")];
 }
 - (void)viewDidUnload {
     [self setShopURL:nil];
@@ -378,7 +379,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 NSString *const kBKFacebookPublishPermission = @"publish_actions";
 NSString *const kBKFacebookShareDialogPostID = @"postId";
 NSString *const kBKFacebookFeedDialogPostID = @"post_id";
-NSString *const kBKFacebookPostSucceed = @"分享成功！";
+//NSString *const kBKFacebookPostSucceed = @"分享成功！";
 
 @interface BKShopDetailViewController (Facebook)
 
@@ -402,7 +403,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
 @implementation BKShopDetailViewController (Facebook)
 
 - (NSString *)checkPostId:(NSDictionary *)results {
-    NSString *message = @"Posted successfully.";
+    NSString *message = NSLocalizedString(@"Posted successfully", @"分享成功！");
     // Share dialog
     NSString *postId = results[kBKFacebookShareDialogPostID];
     if (!postId) {
@@ -410,7 +411,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
         postId = results[kBKFacebookFeedDialogPostID];
     }
     if (postId) {
-        message = [NSString stringWithFormat:@"Posted story, id: %@", postId];
+        message = [NSString stringWithFormat:@"%@, id: %@", message, postId];
     }
     return message;
 }
@@ -422,7 +423,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
         error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
         errorMessage = error.fberrorUserMessage;
     } else {
-        errorMessage = @"網路發生錯誤，請稍候再試";
+        errorMessage = NSLocalizedString(@"Connection failure, please try later", @"網路發生錯誤，請稍候再試");
     }
     return errorMessage;
 }
@@ -490,7 +491,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
                 if (error) {
                     [self showAlert:[self checkErrorMessage:error]];
                 } else if (result == FBNativeDialogResultSucceeded) {
-                    [self showAlert:kBKFacebookPostSucceed];
+                    [self showAlert:NSLocalizedString(@"Posted successfully", @"")];
                 }
             }];
 }
@@ -526,7 +527,7 @@ NSString *const kBKFacebookPostSucceed = @"分享成功！";
                  } else {
                      // User clicked the Share button
                      //[self showAlert:[self checkPostId:urlParams]];
-                     [self showAlert:kBKFacebookPostSucceed];
+                     [self showAlert:NSLocalizedString(@"Posted successfully", @"")];
                  }
              }
          }

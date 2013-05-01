@@ -27,6 +27,7 @@
 #import "UIViewController+ShopListCell.h"
 #import "NSString+Additions.h"
 #import "UIViewController+SharedString.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 @interface BKUserToolViewController ()
 
@@ -121,7 +122,11 @@ enum BKUserToolSegmentationSelection {
 
 - (UIActionSheet *)logoutActionSheet {
     if (_logoutActionSheet == nil) {
-        _logoutActionSheet = [[UIActionSheet alloc] initWithTitle:@"確定登出?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"登出" otherButtonTitles:nil];
+        _logoutActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Logging out?", @"確定登出?")
+                                                         delegate:self
+                                                cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
+                                           destructiveButtonTitle:NSLocalizedString(@"Logout", @"登出")
+                                                otherButtonTitles:nil];
         [_logoutActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     }
     return _logoutActionSheet;
@@ -137,7 +142,7 @@ enum BKUserToolSegmentationSelection {
     [self initUserInfo];
     
     [self initSegmentedControl];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.view setBackgroundColor:[self viewBackgoundColor]];
     
     [self.favoriteShopTableView registerNib:[UINib nibWithNibName:@"BKShopListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"cell"];
     [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];    
@@ -421,36 +426,36 @@ enum BKUserToolSegmentationSelection {
     [self.activeResponder resignFirstResponder];
     
     if ([self.userName hasNoContent]) {
-        [self showAlert:kNoUserNameMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your name", @"請輸入姓名")];
         return;
     }
     
     if ([self.userPhone hasNoContent]) {
-        [self showAlert:kNoPhoneMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your phone numeber", @"請輸入電話")];
         return;
     }
     
     if ([self.userAddress hasNoContent]) {
-        [self showAlert:kNoAddressMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your address", @"請輸入地址")];
         return;
     }
     
     if ([self.userEmail hasNoContent]) {
-        [self showAlert:kNoEmailMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your email", @"")];
         return;
     }
     else if (![self.userEmail isEmailFormat]) {
-        [self showAlert:kWrongEmailFormatMessage];
+        [self showAlert:NSLocalizedString(@"Email format is incorrect", @"")];
         return;
     } 
     
-    [self showHUDViewWithMessage:@"修改中..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Modidying...", @"")];
 }
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     [[BKAccountManager sharedBKAccountManager] editUserName:self.userName address:self.userAddress email:self.userEmail phone:self.userPhone completionHandler:^(BOOL success, NSError *error) {
         if (success) {
-            successBlock(@"修改成功!");
+            successBlock(NSLocalizedString(@"Modification succeeded!", @""));
         }
         else {
             failBlock(error);

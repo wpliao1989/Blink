@@ -16,8 +16,7 @@
 #import "UIButton+ChangeTitle.h"
 #import "BKSearchParameter.h"
 #import "BKShopListViewController.h"
-
-NSString *noSelectableItem = @"無可選擇項目";
+#import "UIViewController+SharedCustomizedUI.h"
 
 @interface BKMainPageViewController ()
 
@@ -123,7 +122,7 @@ NSString *noSelectableItem = @"無可選擇項目";
 //    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:nil]];
     [self setUpPickers];
     [self setUpSegmentedControl];
-    [self.titleBackground setImage:[[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)]];    
+    [self.titleBackground setImage:[self titleImage]];
     
     // Register notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverInfoDidUpdate) name:kBKServerInfoDidUpdateNotification object:nil];
@@ -220,7 +219,7 @@ NSString *noSelectableItem = @"無可選擇項目";
     }
     label.textAlignment = NSTextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
-    label.text = noSelectableItem;
+    label.text = NSLocalizedString(@"No item", @"無可選擇項目");
     
     if (pickerView == self.cityPicker) {
         if ([self hasSelectableCity]) {

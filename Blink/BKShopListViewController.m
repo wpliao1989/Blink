@@ -20,6 +20,7 @@
 #import "BKSearchParameter.h"
 #import "UIViewController+Formatter.h"
 #import "UIViewController+ShopListCell.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 #import "BKTestCenter.h"
 
@@ -119,12 +120,12 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
 
 - (UIActionSheet *)listActionSheet {
     if (_listActionSheet == nil) {
-        _listActionSheet = [[UIActionSheet alloc] initWithTitle:@"排序" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        _listActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Ordering", @"排序") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
         NSArray *listCriterias = [BKAPIManager sharedBKAPIManager].localizedListCriteria;
         for (NSString *theCriteria in listCriterias) {
             [_listActionSheet addButtonWithTitle:theCriteria];
         }
-        _listActionSheet.cancelButtonIndex = [_listActionSheet addButtonWithTitle:@"取消"];
+        _listActionSheet.cancelButtonIndex = [_listActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
         [_listActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     }
     return _listActionSheet;
@@ -132,12 +133,12 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
 
 - (UIActionSheet *)sortActionSheet {
     if (_sortActionSheet == nil) {       
-        _sortActionSheet = [[UIActionSheet alloc] initWithTitle:@"分類" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        _sortActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Sort", @"分類") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
         NSArray *sortCriterias = [BKAPIManager sharedBKAPIManager].localizedSortCriteria;        
         for (NSString *theCriteria in sortCriterias) {
             [_sortActionSheet addButtonWithTitle:theCriteria];
         }
-        _sortActionSheet.cancelButtonIndex = [_sortActionSheet addButtonWithTitle:@"取消"];
+        _sortActionSheet.cancelButtonIndex = [_sortActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
         [_sortActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     }    
     return _sortActionSheet;
@@ -173,7 +174,7 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
 
 - (void)setUpCustomAppearance {
     [self.bottomToolBar setBackgroundImage:[UIImage imageNamed:@"under"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    [self.mainContentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.mainContentView setBackgroundColor:[self viewBackgoundColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

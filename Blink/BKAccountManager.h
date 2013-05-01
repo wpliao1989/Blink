@@ -10,10 +10,6 @@
 #import "CWLSynthesizeSingleton.h"
 #import "BKAPIError.h"
 
-FOUNDATION_EXPORT NSString *const BKLoggingMessage;
-FOUNDATION_EXPORT NSString *const BKLoginSuccessMessage;
-//FOUNDATION_EXPORT NSString *const kBKLoginFailed;
-
 @interface BKAccountManager : NSObject
 
 CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)

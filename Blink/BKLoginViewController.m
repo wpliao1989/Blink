@@ -136,7 +136,7 @@
 #pragma mark - IBActions
 
 - (IBAction)loginButtonPressed:(id)sender {
-    [self showHUDViewWithMessage:BKLoggingMessage];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Logging in...", @"登入中...")];
 }
 
 - (IBAction)registrationButtonPressed:(id)sender {

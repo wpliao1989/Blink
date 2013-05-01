@@ -151,25 +151,25 @@
     [self.activeResponder resignFirstResponder];
     
     if ([self.userAccount hasNoContent]) {
-        [self showAlert:kNoAccountMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your account", @"請填入帳號")];
         return;
     }
     
     if (self.userPassword == nil) {
-        [self showAlert:kNoPasswordMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your password", @"請填入密碼")];
         return;
     }
     
     if ([self.userEmail hasNoContent]) {
-        [self showAlert:kNoEmailMessage];
+        [self showAlert:NSLocalizedString(@"Please enter your email", @"請填入email")];
         return;
     }
     else if (![self.userEmail isEmailFormat]) {
-        [self showAlert:kWrongEmailFormatMessage];
+        [self showAlert:NSLocalizedString(@"Email format is incorrect", @"請輸入完整email格式")];
         return;
     }
     
-    [self showHUDViewWithMessage:@"註冊中..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Registering...", @"註冊中...")];
 }
 
 #pragma mark - HUD view
@@ -179,7 +179,7 @@
     [[BKAPIManager sharedBKAPIManager] registerAccount:self.userAccount password:self.userPassword email:self.userEmail completeHandler:^(id data, NSError *error) {
         NSLog(@"Register account data:%@, error:%@", data, error);
         if (data) {
-            successBlock(@"註冊成功!");
+            successBlock(NSLocalizedString(@"Registration succeeded!", @"註冊成功!"));
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

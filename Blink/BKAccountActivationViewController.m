@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     if (self.HUDViewType == BKHUDViewTypeResendActivationLetter) {
         [[BKAPIManager sharedBKAPIManager] resendActivationLetterToAccount:self.userAccount password:self.userPassword completeHandler:^(id data, NSError *error) {
             if (data) {
-                successBlock(@"發送成功！");
+                successBlock(NSLocalizedString(@"Email sent!", @"發送成功！"));
             }
             else {
                 failBlock(error);
@@ -77,12 +77,12 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 - (IBAction)resendActivationButtonPressed:(id)sender {
     self.HUDViewType = BKHUDViewTypeResendActivationLetter;
-    [self showHUDViewWithMessage:@"寄送認證信至信箱..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Send email...", @"寄送認證信至信箱...")];
 }
 
 - (IBAction)activatedButtonPressed:(id)sender {
     self.HUDViewType = BKHUDViewTypeActivated;
-    [self showHUDViewWithMessage:BKLoggingMessage];    
+    [self showHUDViewWithMessage:NSLocalizedString(@"Logging in...", @"")];
 }
 
 - (IBAction)backButtonPressed:(id)sender {

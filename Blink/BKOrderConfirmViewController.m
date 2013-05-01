@@ -17,6 +17,7 @@
 #import "BKOrderForSending.h"
 #import "BKOrderForReceiving.h"
 #import "BKOrderContent.h"
+#import "UIViewController+SharedCustomizedUI.h"
 
 @interface BKOrderConfirmViewController ()
 
@@ -96,7 +97,7 @@
     [self initUserInfos];
     [self setUpLabels];
     [self setUpButtons];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]]];
+    [self.view setBackgroundColor:[self viewBackgoundColor]];
     [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
 }
 
@@ -177,7 +178,7 @@
     [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {
         if (success) {
             [[BKOrderManager sharedBKOrderManager] clear];
-            successBlock(@"訂購成功!");
+            successBlock(NSLocalizedString(@"Order succeeded!", @"訂購成功！"));
             double delayInSeconds = 1.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -196,7 +197,7 @@
 - (IBAction)orderConfirmButtonPressed:(id)sender {
 #warning Poping method should be changed to popToViewController
     [[BKOrderManager sharedBKOrderManager] setUserToken:((BKOrderForSending *)self.order).userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
-    [self showHUDViewWithMessage:@"送出中..."];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Sending order...", @"訂購中...")];
 //    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 //    [self.navigationController.view addSubview:self.HUD];
 //    self.HUD.delegate = self;

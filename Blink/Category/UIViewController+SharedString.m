@@ -8,32 +8,22 @@
 
 #import "UIViewController+SharedString.h"
 
-NSString *const kNoUserNameMessage = @"請輸入姓名";
-NSString *const kNoAccountMessage = @"請填入帳號";
-NSString *const kNoPasswordMessage = @"請填入密碼";
-NSString *const kWrongPasswordMessage = @"密碼錯誤";
-NSString *const kPasswordNotTheSameMessage = @"請填入相同密碼";
-NSString *const kNoEmailMessage = @"請填入email";
-NSString *const kWrongEmailFormatMessage = @"請輸入完整email格式";
-NSString *const kNoAddressMessage = @"請輸入地址";
-NSString *const kNoPhoneMessage = @"請輸入電話";
-
 @implementation UIViewController (SharedString)
 
 - (NSString *)titleForAlertView {
-    return @"Blink";
+    return NSLocalizedString(@"Blink", @"Alert title");
 }
 
 - (NSString *)confirmButtonTitleForAlertView {
-    return @"確定";
+    return NSLocalizedString(@"OK", @"確定 Confirm button title for alert view");
 }
 
 - (NSString *)cancelButtonTitleForAlertView {
-    return @"取消";
+    return NSLocalizedString(@"Cancel", @"取消 Cancel button title for alert view");
 }
 
 - (NSString *)deleteButtonTitleForAlertView {
-    return @"刪除";
+    return NSLocalizedString(@"Delete", @"刪除 Delete button title for alert view");
 }
 
 - (void)showAlert:(NSString *)alertMsg {

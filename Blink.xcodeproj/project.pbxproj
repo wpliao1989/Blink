@@ -27,6 +27,7 @@
 		42100238171E4C8200EE476E /* UIViewController+ShopListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100237171E4C8200EE476E /* UIViewController+ShopListCell.m */; };
 		4210023B171E4CF000EE476E /* UIViewController+UserOrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */; };
 		42100246171E723F00EE476E /* BKMenuItem+PriceEnabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 42100245171E723F00EE476E /* BKMenuItem+PriceEnabled.m */; };
+		42115B4A1730A9C100A70761 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42115B491730A9C100A70761 /* Localizable.strings */; };
 		42163200171EAF7D00BD84D1 /* BKShopInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 421631FF171EAF7D00BD84D1 /* BKShopInfo.m */; };
 		422861AD170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AC170BEEBF00E10F8E /* MKMapView+AnnotationOperation.m */; };
 		422861B0170C24CE00E10F8E /* NSString+MKCoordinateRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 422861AF170C24CD00E10F8E /* NSString+MKCoordinateRegion.m */; };
@@ -399,6 +400,7 @@
 		4210023A171E4CF000EE476E /* UIViewController+UserOrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UserOrderListCell.m"; sourceTree = "<group>"; };
 		42100244171E723F00EE476E /* BKMenuItem+PriceEnabled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BKMenuItem+PriceEnabled.h"; sourceTree = "<group>"; };
 		42100245171E723F00EE476E /* BKMenuItem+PriceEnabled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BKMenuItem+PriceEnabled.m"; sourceTree = "<group>"; };
+		42115B491730A9C100A70761 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		421631FE171EAF7D00BD84D1 /* BKShopInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = BKShopInfo.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		421631FF171EAF7D00BD84D1 /* BKShopInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BKShopInfo.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		422861AB170BEEBF00E10F8E /* MKMapView+AnnotationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+AnnotationOperation.h"; sourceTree = "<group>"; };
@@ -1271,6 +1273,7 @@
 				42A978B1170AD77500494658 /* IceDictionary.plist */,
 				42A978B3170AD7B400494658 /* SweetnessDictionary.plist */,
 				42B3DC2B1714F9EE00A16A13 /* SizeDictionary.plist */,
+				42115B491730A9C100A70761 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1913,6 +1916,7 @@
 				427F919A172F5D6E009F9E92 /* resend-click@x.png in Resources */,
 				427F919D172F5D76009F9E92 /* resend-click.png in Resources */,
 				427F919E172F5D76009F9E92 /* resend.png in Resources */,
+				42115B4A1730A9C100A70761 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
