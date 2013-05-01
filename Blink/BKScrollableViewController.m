@@ -13,8 +13,6 @@
 
 @interface BKScrollableViewController()
 
-@property (strong, nonatomic) MBProgressHUD *HUD;
-
 @end
 
 @implementation BKScrollableViewController

@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BKAPIError.h"
 
+@class MBProgressHUD;
+
 @interface BKScrollableViewController : UIViewController<UITextFieldDelegate>
+
+@property (strong, nonatomic) MBProgressHUD *HUD;
 
 @property (strong, nonatomic) UIView *activeResponder;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

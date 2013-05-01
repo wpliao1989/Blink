@@ -9,6 +9,7 @@
 #import "BKPasswordModifyViewController.h"
 #import "BKAccountManager.h"
 #import "BKAPIError.h"
+#import "UIViewController+SharedString.h"
 
 @interface BKPasswordModifyViewController ()
 
@@ -55,6 +56,12 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)initUI {
+    self.userOldPWD = @"";
+    self.userNewPWD = @"";
+    self.userNewPWDConfirm = @"";
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];
     
@@ -77,29 +84,29 @@
 }
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
-    if ([self isOldPWDandNewPWDValid]) {
-        [[BKAccountManager sharedBKAccountManager] editUserPWD:self.userNewPWD completionHandler:^(BOOL success, NSError *error) {
-            if (success) {
-                successBlock(@"修改成功！");
-                double delayInSeconds = 1.0;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [self.navigationController popViewControllerAnimated:YES];
-                });
-            }
-            else {
-                failBlock(error);
-            }
-        }];
-    }
-    else {
-        NSError *error = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"密碼錯誤"}];
-        failBlock(error);
-    }
+    [[BKAccountManager sharedBKAccountManager] editUserPWD:self.userNewPWD completionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            successBlock(@"修改成功！");
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }
+        else {
+            failBlock(error);
+        }
+    }];
 }
 
 - (IBAction)modifyPasswordButtonPressed:(id)sender {
     [self.activeResponder resignFirstResponder];
+    
+    if (![self isOldPWDandNewPWDValid]) {
+        [self showAlert:kWrongPasswordMessage];
+        return;
+    }
+    
     [self showHUDViewWithMessage:@"修改中..."];
 }
 

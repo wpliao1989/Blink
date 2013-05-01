@@ -25,6 +25,8 @@
 #import "NSString+Numeric.h"
 #import "UIViewController+UserOrderListCell.h"
 #import "UIViewController+ShopListCell.h"
+#import "NSString+Additions.h"
+#import "UIViewController+SharedString.h"
 
 @interface BKUserToolViewController ()
 
@@ -363,16 +365,16 @@ enum BKUserToolSegmentationSelection {
     [super textFieldDidEndEditing:textField];
     
     if (textField == self.userNameTextField) {
-        self.userName = textField.text;
+        self.userName = [textField.text cleanString];
     }
     else if (textField == self.userPhoneTextField) {
-        self.userPhone = textField.text;
+        self.userPhone = [textField.text cleanString];
     }
     else if (textField == self.userAddressTextField) {
-        self.userAddress = textField.text;
+        self.userAddress = [textField.text cleanString];
     }
     else if (textField == self.userEmailTextField) {
-        self.userEmail = textField.text;
+        self.userEmail = [textField.text cleanString];
     }
     
     NSLog(@"name:%@, phone:%@, address:%@, email:%@", self.userName, self.userPhone, self.userAddress, self.userEmail);
@@ -416,6 +418,32 @@ enum BKUserToolSegmentationSelection {
 }
 
 - (IBAction)confirmEditUserInfoButtonPressed:(id)sender {
+    [self.activeResponder resignFirstResponder];
+    
+    if ([self.userName hasNoContent]) {
+        [self showAlert:kNoUserNameMessage];
+        return;
+    }
+    
+    if ([self.userPhone hasNoContent]) {
+        [self showAlert:kNoPhoneMessage];
+        return;
+    }
+    
+    if ([self.userAddress hasNoContent]) {
+        [self showAlert:kNoAddressMessage];
+        return;
+    }
+    
+    if ([self.userEmail hasNoContent]) {
+        [self showAlert:kNoEmailMessage];
+        return;
+    }
+    else if (![self.userEmail isEmailFormat]) {
+        [self showAlert:kWrongEmailFormatMessage];
+        return;
+    } 
+    
     [self showHUDViewWithMessage:@"修改中..."];
 }
 

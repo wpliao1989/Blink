@@ -15,6 +15,7 @@ NSString *const kBKAPIResult = @"result";
 NSString *const kBKAPIResultCorrect = @"1";
 NSString *const kBKAPIResultWrong = @"0";
 NSString *const kBKAPIResultAccountNotActivated = @"-1";
+NSString *const kBKAPIResultAccountNotValidated = @"-2";
 
 NSString *const BKErrorDomainWrongResult = @"com.flyingman.BKErrorDomainWrongResult";
 //NSString *const BKErrorDomainWrongUserNameOrPassword = @"kBKWrongUserNameOrPassword";
@@ -131,7 +132,7 @@ completionHandler:completeHandler];
     }
     else if (![self isCorrectResult:data]) {
         
-        if ([self isAccountNotActivatedResult:data]) {
+        if ([self isAccountNotActivatedResult:data] || [self isAccountNotValidatedResult:data]) {
             NSError *wrongResultError = [NSError errorWithDomain:BKErrorDomainWrongResult
                                                             code:BKErrorWrongResultAccountNotActivated
                                                         userInfo:@{NSLocalizedDescriptionKey : @"帳號尚未認證"}];
@@ -186,6 +187,13 @@ completionHandler:completeHandler];
 
 - (BOOL)isAccountNotActivatedResult:(id)data {
     if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultAccountNotActivated]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isAccountNotValidatedResult:(id)data {
+    if (data != nil && [data isKindOfClass:[NSDictionary class]] && [[data objectForKey:kBKAPIResult] isEqualToString:kBKAPIResultAccountNotValidated]) {
         return YES;
     }
     return NO;

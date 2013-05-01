@@ -59,11 +59,11 @@
     [self resignFirstResponder];
 }
 
--(BOOL)canBecomeFirstResponder{
+- (BOOL)canBecomeFirstResponder{
     return YES;
 }
 
--(BOOL)becomeFirstResponder{
+- (BOOL)becomeFirstResponder{
 //    NSLog(@"becomeFirstResponder");
     return [super becomeFirstResponder];
 }

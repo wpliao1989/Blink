@@ -81,6 +81,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self.titleBackground setImage:[self titleImage]];
+    [self initUI];    
+}
+
+- (void)initUI {
+    self.userAccount = @"";
+    self.userPassword = @"";
+    self.userEmail = @"";
 }
 
 #pragma mark - Prepare for segue
@@ -144,17 +151,21 @@
     [self.activeResponder resignFirstResponder];
     
     if ([self.userAccount hasNoContent]) {
-        [self showAlert:@"請填入帳號"];
+        [self showAlert:kNoAccountMessage];
         return;
     }
     
     if (self.userPassword == nil) {
-        [self showAlert:@"請填入密碼"];
+        [self showAlert:kNoPasswordMessage];
         return;
     }
     
     if ([self.userEmail hasNoContent]) {
-        [self showAlert:@"請填入email"];
+        [self showAlert:kNoEmailMessage];
+        return;
+    }
+    else if (![self.userEmail isEmailFormat]) {
+        [self showAlert:kWrongEmailFormatMessage];
         return;
     }
     

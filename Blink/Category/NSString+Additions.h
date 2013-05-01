@@ -12,5 +12,6 @@
 
 - (NSString *)cleanString;
 - (BOOL)hasNoContent;
+- (BOOL)isEmailFormat;
 
 @end
