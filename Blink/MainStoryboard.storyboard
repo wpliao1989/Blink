@@ -2222,6 +2222,21 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <action selector="addFavoriteShopButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="zhY-66-6Kg"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nz1-IQ-qFC">
+                                                <rect key="frame" x="181" y="231" width="119" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" backgroundImage="add-2.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted" backgroundImage="add_press2.png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deleteFavoriteShopButtonPressed:" destination="mgw-hS-r6z" eventType="touchUpInside" id="sg8-QW-yqP"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" clipsSubviews="YES" contentMode="left" text="日本料理" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1gd-T2-E2g">
                                                 <rect key="frame" x="163" y="72" width="130" height="24"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
@@ -2397,7 +2412,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addFavoriteShopButton" destination="JhI-Bj-kpz" id="J9f-0D-IgM"/>
                         <outlet property="bottomSection" destination="hyq-xD-is9" id="ua2-zy-nm5"/>
+                        <outlet property="deleteFavoriteShopButton" destination="nz1-IQ-qFC" id="FN1-OZ-VZr"/>
                         <outlet property="homeButton" destination="VZ8-MU-Tpj" id="9mn-6J-fwg"/>
                         <outlet property="introSection" destination="RbL-xj-QGV" id="fNB-dM-eHu"/>
                         <outlet property="introduceSectionBackground" destination="nHW-gg-oe8" id="zfH-JY-Gkc"/>
@@ -2467,8 +2484,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="a4_press.png" width="139" height="32"/>
         <image name="a5.png" width="139" height="32"/>
         <image name="a5_press.png" width="139" height="32"/>
+        <image name="add-2.png" width="119" height="24"/>
         <image name="add.png" width="119" height="24"/>
         <image name="add_press.png" width="119" height="24"/>
+        <image name="add_press2.png" width="119" height="24"/>
         <image name="ahome.png" width="288" height="87"/>
         <image name="b1.png" width="90" height="29"/>
         <image name="b1_press.png" width="90" height="29"/>
@@ -2483,7 +2502,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="57" height="38"/>
+        <image name="close.png" width="29" height="29"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
@@ -2684,12 +2703,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BKShopDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addFavoriteShopButtonPressed:"/>
+                <relationship kind="action" name="deleteFavoriteShopButtonPressed:"/>
                 <relationship kind="action" name="facebookButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="googlePlusButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="menuButtonPressed:"/>
                 <relationship kind="action" name="orderDeliverButtonPressed:"/>
                 <relationship kind="action" name="takeAwayButtonPressed:"/>
+                <relationship kind="outlet" name="addFavoriteShopButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="bottomSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="deleteFavoriteShopButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="homeButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="introSection" candidateClass="UIView"/>
                 <relationship kind="outlet" name="introduceSectionBackground" candidateClass="UIImageView"/>

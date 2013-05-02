@@ -599,7 +599,8 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
     {
         // if an existing pin view was not available, create one
         MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
-                                              initWithAnnotation:annotation reuseIdentifier:annotationViewID];
+                                              initWithAnnotation:annotation
+                                              reuseIdentifier:annotationViewID];
         customPinView.pinColor = MKPinAnnotationColorPurple;
         customPinView.animatesDrop = YES;
         customPinView.canShowCallout = YES;

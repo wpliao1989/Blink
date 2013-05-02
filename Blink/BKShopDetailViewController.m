@@ -20,7 +20,8 @@
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
-    BKHUDViewTypeAddUserFavorite = 2
+    BKHUDViewTypeAddUserFavorite = 2,
+    BKHUDViewTypeDeleteUserFavorite = 3
 };
 
 @interface BKShopDetailViewController ()
@@ -29,6 +30,9 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (IBAction)orderDeliverButtonPressed:(id)sender;
 - (IBAction)takeAwayButtonPressed:(id)sender;
 - (IBAction)addFavoriteShopButtonPressed:(id)sender;
+- (IBAction)deleteFavoriteShopButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addFavoriteShopButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteFavoriteShopButton;
 
 @property (nonatomic, strong) BKShopInfoForUser *shopInfo;
 @property (strong, nonatomic) UIImage *shopImage; // Keep a strong pointer to prevent image from dealloc
@@ -112,7 +116,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(self.isMovingToParentViewController?@"is being push":@"not being push");
+    //NSLog(self.isMovingToParentViewController?@"is being push":@"not being push");
+    [self initFavoriteButtons];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -152,6 +157,12 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     self.shopIntro.text = self.shopInfo.shopDescription;
     self.shopURL.text = self.shopInfo.shopURL;
     self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.minPrice];
+}
+
+- (void)initFavoriteButtons {
+    BOOL isUserFavorite = [[BKAccountManager sharedBKAccountManager] isUserFavoriteShop:self.shopInfo];
+    self.addFavoriteShopButton.hidden = isUserFavorite;
+    self.deleteFavoriteShopButton.hidden = !isUserFavorite;
 }
 
 - (void)configureShopImage {
@@ -246,12 +257,12 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
             [self.navigationController popViewControllerAnimated:YES];
         });
     }
-    else if (self.hudviewType == BKHUDViewTypeAddUserFavorite) {
+    else if (self.hudviewType == BKHUDViewTypeAddUserFavorite || self.hudviewType == BKHUDViewTypeDeleteUserFavorite) {
         if ([BKAccountManager sharedBKAccountManager].isLogin == NO) {
             failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Please login first", @"請先登入")}]);
         }
         else {
-            [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:^(BOOL success) {
+            completeHandler addHandler = ^(BOOL success) {
                 if (success) {
                     NSLog(@"Add user favorite success! shopID:%@", self.shopID);
                     successBlock(NSLocalizedString(@"Adding succedded!", @"新增成功!"));
@@ -260,8 +271,28 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
                     NSLog(@"Add user favorite failed! shopID:%@", self.shopID);
                     failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Adding failed", @"新增失敗")}]);
                 }
-            }];
-        }        
+                [self initFavoriteButtons];
+            };
+            
+            completeHandler deleteHandler = ^(BOOL success) {
+                if (success) {
+                    NSLog(@"Delete user favorite success! shopID:%@", self.shopID);
+                    successBlock(NSLocalizedString(@"Deleted!", @""));
+                }
+                else {
+                    NSLog(@"Delete user favorite failed! shopID:%@", self.shopID);
+                    failBlock([NSError errorWithDomain:BKErrorDomainNetwork code:BKErrorDomainWrongResult userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Deletion failed", @"")}]);
+                }
+                [self initFavoriteButtons];
+            };            
+            
+            if (self.hudviewType == BKHUDViewTypeAddUserFavorite) {
+                [[BKAccountManager sharedBKAccountManager] addUserFavoriteShopID:self.shopID completeHandler:addHandler];
+            }
+            else if (self.hudviewType == BKHUDViewTypeDeleteUserFavorite) {
+                [[BKAccountManager sharedBKAccountManager] deleteUserFavoriteShopID:self.shopID completeHandler:deleteHandler];
+            }        
+        }
     }
     else {
         failBlock(nil);
@@ -365,13 +396,23 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     self.hudviewType = BKHUDViewTypeAddUserFavorite;
     [self showHUDViewWithMessage:NSLocalizedString(@"Adding...", @"新增中...")];
 }
+
+- (IBAction)deleteFavoriteShopButtonPressed:(id)sender {
+    NSLog(@"Delete favorite!");
+    self.hudviewType = BKHUDViewTypeDeleteUserFavorite;
+    [self showHUDViewWithMessage:NSLocalizedString(@"Deleting...", @"")];
+}
+
 - (void)viewDidUnload {
     [self setShopURL:nil];
     [self setUrlAndIntroSeperator:nil];
     [self setShopMinDeliveryLabel:nil];
     [self setShopPic:nil];
+    [self setDeleteFavoriteShopButton:nil];
+    [self setAddFavoriteShopButton:nil];
     [super viewDidUnload];
 }
+
 @end
 
 #import "UIViewController+SharedString.h"

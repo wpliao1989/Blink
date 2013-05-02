@@ -263,6 +263,17 @@ NSString *const BKShopInfoEmptyString = @"";
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[BKShopInfo class]]) {
+        return NO;
+    }
+    return [self.sShopID isEqualToString:((BKShopInfo *)object).sShopID];
+}
+
+- (id)copy {
+    return [[BKShopInfo alloc] initWithData:self.data];
+}
+
 - (void)updateWithData:(NSDictionary *)data {
     self.data = data;
     self.menu = nil;

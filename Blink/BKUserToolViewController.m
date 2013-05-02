@@ -194,9 +194,12 @@ enum BKUserToolSegmentationSelection {
 - (void)configureFavoriteShops {
     if (self.userFavoriteShops == nil) {
         [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^(BOOL success) {
-            NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
+            //NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
             [self.favoriteShopTableView reloadData];
         }];
+    }
+    else {
+        [self.favoriteShopTableView reloadData];
     }
 }
 

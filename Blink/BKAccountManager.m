@@ -124,29 +124,24 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
             self.data = data;            
             self.pwd = pwd;
             NSLog(@"Login success! Data:%@", data);
-            // fetch user favorite shop IDs
-            //        self.favoriteShopIDs = @[@"4000", @"5000", @"6000"];
-            //        NSArray *testFavShops = [BKTestCenter testFavoriteShops];
-            //        for (int i = 0; i < self.favoriteShopIDs.count; i++) {
-            //            [[BKShopInfoManager sharedBKShopInfoManager] addShopInfoWithRawData:[testFavShops objectAtIndex:i] forShopID:[self.favoriteShopIDs objectAtIndex:i]];
-            //        }
-            // fetch user order history
-#warning check for correct result
-            self.isLogin = YES;
-            
-            // Send push token
-            if (appDelegate.deviceToken) {
-                [self sendPushToken];
-            }
-            else {
-                NSLog(@"Push token does not exist!");
-                [[NSNotificationCenter defaultCenter] addObserver:self
-                                                         selector:@selector(sendPushToken)
-                                                             name:pushTokenDidBecomeAvailableNotification
-                                                           object:nil];
-            }
-            
-            completeHandler(YES, error);
+            // fetch user favorite shops
+            [self getUserFavoriteShopsCompleteHandler:^(BOOL success) {
+                self.isLogin = YES;
+                
+                // Send push token
+                if (appDelegate.deviceToken) {
+                    [self sendPushToken];
+                }
+                else {
+                    NSLog(@"Push token does not exist!");
+                    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                             selector:@selector(sendPushToken)
+                                                                 name:pushTokenDidBecomeAvailableNotification
+                                                               object:nil];
+                }
+                
+                completeHandler(YES, error);
+            }];            
         }        
         else {
             completeHandler(NO, error);
@@ -250,6 +245,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (BOOL)isPasswordMatch:(NSString *)password {
     NSLog(@"self.password = %@, compared to %@", self.pwd, password);
     return [password isEqualToString:self.pwd];
+}
+
+- (BOOL)isUserFavoriteShop:(id)shopInfo {
+    BOOL result = NO;
+    
+    if (self.isLogin) {
+        result = [self.userFavoriteShops indexOfObject:shopInfo] != NSNotFound;
+    }
+    
+    return result;
 }
 
 @end

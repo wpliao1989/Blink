@@ -48,6 +48,10 @@
 		424495BB1721270100C84F5D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BA1721270100C84F5D /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		424495BC1721271200C84F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		424495BE1721271A00C84F5D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BD1721271A00C84F5D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		424EDFC31732013500AE80DB /* add_press2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC11732013500AE80DB /* add_press2@2x.png */; };
+		424EDFC41732013500AE80DB /* add-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC21732013500AE80DB /* add-2@2x.png */; };
+		424EDFC71732014000AE80DB /* add_press2.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC51732014000AE80DB /* add_press2.png */; };
+		424EDFC81732014000AE80DB /* add-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC61732014000AE80DB /* add-2.png */; };
 		4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A833172683380019FA68 /* UIViewController+SharedString.m */; };
 		427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */; };
 		427F9199172F5D6E009F9E92 /* resend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9197172F5D6E009F9E92 /* resend@2x.png */; };
@@ -428,6 +432,10 @@
 		424495B8172126EE00C84F5D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		424495BA1721270100C84F5D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		424495BD1721271A00C84F5D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		424EDFC11732013500AE80DB /* add_press2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_press2@2x.png"; sourceTree = "<group>"; };
+		424EDFC21732013500AE80DB /* add-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-2@2x.png"; sourceTree = "<group>"; };
+		424EDFC51732014000AE80DB /* add_press2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_press2.png; sourceTree = "<group>"; };
+		424EDFC61732014000AE80DB /* add-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-2.png"; sourceTree = "<group>"; };
 		4255A82E172639D10019FA68 /* Blink copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Blink copy-Info.plist"; path = "/Users/WeiPingLiao/Desktop/Projects/Blink/Blink copy-Info.plist"; sourceTree = "<absolute>"; };
 		4255A82F17267FD30019FA68 /* NSString+QueryParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+QueryParser.h"; sourceTree = "<group>"; };
 		4255A83017267FD30019FA68 /* NSString+QueryParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryParser.m"; sourceTree = "<group>"; };
@@ -1410,6 +1418,8 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				424EDFC51732014000AE80DB /* add_press2.png */,
+				424EDFC61732014000AE80DB /* add-2.png */,
 				427F919B172F5D76009F9E92 /* resend-click.png */,
 				427F919C172F5D76009F9E92 /* resend.png */,
 				4228C4F2172E69E400DD38E5 /* Confirm-click.png */,
@@ -1520,6 +1530,8 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				424EDFC11732013500AE80DB /* add_press2@2x.png */,
+				424EDFC21732013500AE80DB /* add-2@2x.png */,
 				427F9197172F5D6E009F9E92 /* resend@2x.png */,
 				427F9198172F5D6E009F9E92 /* resend-click@x.png */,
 				4228C4F6172E69EC00DD38E5 /* Confirm@2x.png */,
@@ -1917,6 +1929,10 @@
 				427F919D172F5D76009F9E92 /* resend-click.png in Resources */,
 				427F919E172F5D76009F9E92 /* resend.png in Resources */,
 				42115B4A1730A9C100A70761 /* Localizable.strings in Resources */,
+				424EDFC31732013500AE80DB /* add_press2@2x.png in Resources */,
+				424EDFC41732013500AE80DB /* add-2@2x.png in Resources */,
+				424EDFC71732014000AE80DB /* add_press2.png in Resources */,
+				424EDFC81732014000AE80DB /* add-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

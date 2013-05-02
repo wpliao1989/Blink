@@ -288,7 +288,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"帳號或密碼錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Wrong account or email", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
 
@@ -320,7 +320,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
                                           };
     [self callAPI:@"user_edit" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"修改個人資料錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Modification failed", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -332,7 +332,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     NSDictionary *parameterDictionary = @{kToken : token};
     [self callAPI:@"follow" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:@"訂單下載錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Download order record failed", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -644,7 +644,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     
     [self callAPI:@"order" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:@"訂單錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultOrder userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Order failed", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -791,7 +791,17 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
     NSDictionary *parameterDictionary = @{kToken : token, kBKSShopID : sShopID};
     [self callAPI:@"fav_add" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"新增錯誤"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Adding succedded!", @"")}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
+    }];
+}
+
+- (void)deleteUserFavoriteWithToken:(NSString *)token sShopID:(NSString *)sShopID completeHandler:(apiCompleteHandler)completeHandler {
+    NSDictionary *parameterDictionary = @{kToken : token, kBKSShopID : sShopID};
+    [self callAPI:@"fav_del" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Adding failed", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -805,7 +815,7 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
     NSDictionary *parameterDictionary = @{kUserName : account, kPWD : [self encodePWD:password], kEmail : email};
     [self callAPI:@"regist" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : @"帳號或email重覆"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Account or email used", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
@@ -814,7 +824,7 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
 - (void)resendActivationLetterToAccount:(NSString *)account password:(NSString *)password completeHandler:(apiCompleteHandler)completeHandler {
     NSDictionary *parameterDictionary = @{kUserName : account, kPWD : [self encodePWD:password]};
     [self callAPI:@"resendActivation" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey : @"發送失敗"}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultGeneral userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Sending failed", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
