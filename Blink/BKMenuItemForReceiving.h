@@ -16,8 +16,6 @@ FOUNDATION_EXPORT NSString *const kBKMenuUUID;
 
 - (id)initWithData:(NSDictionary *)data;
 
-//@property (strong, nonatomic) NSNumber *UUID;
-@property (strong, nonatomic, readonly) NSString *UUID;
 @property (strong, nonatomic) NSArray *localizedIceLevels; // Use this for display
 @property (strong, nonatomic) NSArray *localizedSweetnessLevels; // Use this for display
 @property (strong, nonatomic) NSArray *localizedSizeLevels;

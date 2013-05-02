@@ -21,6 +21,7 @@ FOUNDATION_EXPORT NSString *const kBKMenuPriceSmall;
 
 @interface BKMenuItem : NSObject
 
+@property (strong, nonatomic) NSString *UUID;
 @property (strong, nonatomic) NSString *name;
 
 @property (strong, nonatomic) NSArray *iceLevels;

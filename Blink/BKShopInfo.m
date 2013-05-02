@@ -227,7 +227,7 @@ NSString *const BKShopInfoEmptyString = @"";
 - (NSNumber *)deliverCost {
     id object = self.data[kBKShopDeliverCost];
     if ([object isNullOrNil] || ![object isNumber]) {
-        return @(-1);
+        return @(0);
     }
     return object;
 }
@@ -236,7 +236,7 @@ NSString *const BKShopInfoEmptyString = @"";
     id object = self.data[kBKShopMinPrice];
     NSLog(@"minprice:%@, class:%@", object, [object class]);
     if ([object isNullOrNil] || ![object isNumber]) {
-        return @(-1);
+        return @(0);
     }
     return object;
 }
