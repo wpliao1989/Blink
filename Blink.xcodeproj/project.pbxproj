@@ -2131,8 +2131,8 @@
 		CE7A78E216B760610072519F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: jia chian shie (K6CXGF2L3Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jia chian shie (K6CXGF2L3Z)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Han-Chien Yang (UUWXJ79C6J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Han-Chien Yang (UUWXJ79C6J)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2152,8 +2152,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
+				PROVISIONING_PROFILE = "57FD0D7A-17DB-4FDC-947C-E6F9FA68B696";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57FD0D7A-17DB-4FDC-947C-E6F9FA68B696";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2162,8 +2162,8 @@
 		CE7A78E316B760610072519F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: jia chian shie (K6CXGF2L3Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jia chian shie (K6CXGF2L3Z)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Han-Chien Yang (UUWXJ79C6J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Han-Chien Yang (UUWXJ79C6J)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Downloads\"",
@@ -2182,8 +2182,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "71AB6C60-00FA-4D0C-8FB6-1CC550484847";
+				PROVISIONING_PROFILE = "57FD0D7A-17DB-4FDC-947C-E6F9FA68B696";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57FD0D7A-17DB-4FDC-947C-E6F9FA68B696";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
