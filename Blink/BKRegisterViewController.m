@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *userAccountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *userPasswordConfirmTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userPhoneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userAddressTextField;
@@ -30,6 +31,7 @@
 
 @property (strong, nonatomic) NSString *userAccount;
 @property (strong, nonatomic) NSString *userPassword;
+@property (strong, nonatomic) NSString *userPasswordConfirm;
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
 @property (strong, nonatomic) NSString *userAddress;
@@ -41,39 +43,45 @@
 
 @synthesize userAccount = _userAccount;
 @synthesize userPassword = _userPassword;
+@synthesize userPasswordConfirm = _userPasswordConfirm;
 @synthesize userName = _userName;
 @synthesize userPhone = _userPhone;
 @synthesize userAddress = _userAddress;
 @synthesize userEmail = _userEmail;
 
 - (void)setUserAccount:(NSString *)userAccount {
-    _userAccount = userAccount;
-    self.userAccountTextField.text = userAccount;
+    _userAccount = [userAccount copy];
+    self.userAccountTextField.text = _userAccount;
 }
 
 - (void)setUserPassword:(NSString *)userPassword {
-    _userPassword = userPassword;
-    self.userPasswordTextField.text = userPassword;
+    _userPassword = [userPassword copy];
+    self.userPasswordTextField.text = _userPassword;
+}
+
+- (void)setUserPasswordConfirm:(NSString *)userPasswordConfirm {
+    _userPasswordConfirm = [userPasswordConfirm copy];
+    self.userPasswordConfirmTextField.text = _userPasswordConfirm;
 }
 
 - (void)setUserName:(NSString *)userName {
-    _userName = userName;
-    self.userNameTextField.text = userName;
+    _userName = [userName copy];
+    self.userNameTextField.text = _userName;
 }
 
 - (void)setUserPhone:(NSString *)userPhone {
-    _userPhone = userPhone;
-    self.userPhoneTextField.text = userPhone;
+    _userPhone = [userPhone copy];
+    self.userPhoneTextField.text = _userPhone;
 }
 
 - (void)setUserAddress:(NSString *)userAddress {
-    _userAddress = userAddress;
-    self.userAddressTextField.text = userAddress;
+    _userAddress = [userAddress copy];
+    self.userAddressTextField.text = _userAddress;
 }
 
 - (void)setUserEmail:(NSString *)userEmail {
-    _userEmail = userEmail;
-    self.userEmailTextField.text = userEmail;
+    _userEmail = [userEmail copy];
+    self.userEmailTextField.text = _userEmail;
 }
 
 - (void)viewDidLoad
@@ -87,6 +95,7 @@
 - (void)initUI {
     self.userAccount = @"";
     self.userPassword = @"";
+    self.userPasswordConfirm = @"";
     self.userEmail = @"";
 }
 
@@ -131,6 +140,9 @@
     else if (textField == self.userPasswordTextField) {
         self.userPassword = textField.text;
     }
+    else if (textField == self.userPasswordConfirmTextField) {
+        self.userPasswordConfirm = textField.text;
+    }
     else if (textField == self.userNameTextField) {
         self.userName = [textField.text cleanString];
     }
@@ -157,6 +169,10 @@
     
     if (self.userPassword == nil) {
         [self showAlert:NSLocalizedString(@"Please enter your password", @"請填入密碼")];
+        return;
+    }
+    else if (![self.userPassword isEqualToString:self.userPasswordConfirm]) {
+        [self showAlert:NSLocalizedString(@"Wrong password", @"")];
         return;
     }
     
