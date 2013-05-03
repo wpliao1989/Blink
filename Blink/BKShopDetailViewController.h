@@ -13,7 +13,7 @@
 
 @class BKShopInfoForUser;
 
-@interface BKShopDetailViewController : BKScrollableViewController
+@interface BKShopDetailViewController : BKScrollableViewController<UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSString *shopID;
 // This home button is for menu view controller

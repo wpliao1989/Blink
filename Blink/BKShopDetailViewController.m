@@ -17,6 +17,7 @@
 #import "BKAccountManager+Favorite.h"
 #import "AppDelegate.h"
 #import "NSString+QueryParser.h"
+#import "NSString+Additions.h"
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -31,32 +32,38 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (IBAction)takeAwayButtonPressed:(id)sender;
 - (IBAction)addFavoriteShopButtonPressed:(id)sender;
 - (IBAction)deleteFavoriteShopButtonPressed:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIButton *addFavoriteShopButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteFavoriteShopButton;
 
 @property (nonatomic, strong) BKShopInfoForUser *shopInfo;
 @property (strong, nonatomic) UIImage *shopImage; // Keep a strong pointer to prevent image from dealloc
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UIImageView *topSectionBackground;
-@property (strong, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
-@property (strong, nonatomic) IBOutlet UIImageView *urlAndIntroSeperator;
-@property (strong, nonatomic) IBOutlet UIImageView *shopPic;
-@property (strong, nonatomic) IBOutlet UIView *introSection;
-@property (strong, nonatomic) IBOutlet UIView *bottomSection;
-@property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopCommerceTypeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopAddressLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopPhoneLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopMinDeliveryLabel;
-@property (strong, nonatomic) IBOutlet UITextView *shopURL;
-@property (strong, nonatomic) IBOutlet UITextView *shopIntro;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *topSectionBackground;
+@property (weak, nonatomic) IBOutlet UIImageView *introduceSectionBackground;
+@property (weak, nonatomic) IBOutlet UIImageView *urlAndIntroSeperator;
+@property (weak, nonatomic) IBOutlet UIImageView *shopPic;
+@property (weak, nonatomic) IBOutlet UIImageView *receiptImageView;
+@property (weak, nonatomic) IBOutlet UIView *introSection;
+@property (weak, nonatomic) IBOutlet UIView *bottomSection;
+@property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopCommerceTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopPhoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopMinDeliveryLabel;
+@property (weak, nonatomic) IBOutlet UITextView *shopURL;
+@property (weak, nonatomic) IBOutlet UITextView *shopIntro;
 
 @property (nonatomic) BKHUDViewType hudviewType;
 
+// Phone call & native Map app
+- (IBAction)shopInfoLabelTapped:(id)sender;
+@property (strong, nonatomic) UIActionSheet *shopInfoActionSheet;
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber;
 - (NSString *)phoneNumberExtractedFromString:(NSString *)string;
+- (void)openNativeMapAppWithParameter:(NSString *)parameter;
 
 - (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost;
 - (NSString *)currencyStringForPrice:(NSNumber *)price;
@@ -72,9 +79,42 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 @implementation BKShopDetailViewController
 
 @synthesize shopInfo = _shopInfo;
+@synthesize shopInfoActionSheet = _shopInfoActionSheet;
 
 - (BKShopInfoForUser *)shopInfo {
     return [[BKShopInfoManager sharedBKShopInfoManager] shopInfoForShopID:self.shopID];
+}
+
+- (UIActionSheet *)shopInfoActionSheet {
+    if (_shopInfoActionSheet == nil) {
+        _shopInfoActionSheet =
+        [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Shop info", @"")
+                                    delegate:self
+                           cancelButtonTitle:nil
+                      destructiveButtonTitle:nil
+                           otherButtonTitles:nil];
+        
+        NSString *cleanName = [self.shopInfo.name cleanString];
+        if (cleanName && cleanName.length != 0) {
+            [_shopInfoActionSheet addButtonWithTitle:cleanName];
+        }
+        
+        NSString *cleanAddress = [self.shopInfo.address cleanString];
+        if (cleanAddress && cleanAddress.length != 0) {
+            [_shopInfoActionSheet addButtonWithTitle:cleanAddress];
+        }
+        
+        NSString *cleanPhone = [self phoneNumberExtractedFromString:self.shopInfo.phone];
+        if (cleanPhone && cleanPhone.length != 0) {
+            [_shopInfoActionSheet addButtonWithTitle:cleanPhone];
+        }       
+        
+        [_shopInfoActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+        [_shopInfoActionSheet setCancelButtonIndex:_shopInfoActionSheet.numberOfButtons-1];
+        
+        [_shopInfoActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    }
+    return _shopInfoActionSheet;
 }
 
 #pragma mark - View controller life cycle
@@ -148,6 +188,12 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 - (void)initShop {
     [self configureShopImage];
+    if (self.shopInfo.isProvidingReceipt) {
+        self.receiptImageView.image = [UIImage imageNamed:@"havecode"];
+    }
+    else {
+        self.receiptImageView.image = [UIImage imageNamed:@"nocode"];
+    }
     
     self.shopNameLabel.text = self.shopInfo.name;
     self.shopCommerceTypeLabel.text = [self.shopInfo localizedTypeString];
@@ -324,6 +370,32 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     return [currencyFormatter stringFromNumber:price];
 }
 
+#pragma mark - Action sheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet == self.shopInfoActionSheet) {
+        
+        if (buttonIndex == actionSheet.cancelButtonIndex) {
+            return;
+        }
+        
+        NSUInteger nameIndex = 0;
+        NSUInteger addressIndex = 1;
+        NSUInteger phoneIndex = 2;
+        
+        if (buttonIndex == nameIndex) {
+            [self openNativeMapAppWithParameter:self.shopInfo.name];
+        }
+        else if (buttonIndex == addressIndex) {
+            [self openNativeMapAppWithParameter:self.shopInfo.address];
+        }
+        else if (buttonIndex == phoneIndex) {
+            [self callPhoneNumberWithPhoneString:[self phoneNumberExtractedFromString:self.shopInfo.phone]];
+        }
+                
+    }
+}
+
 #pragma mark - Phone number detecting and calling
 
 - (BOOL)callPhoneNumberWithPhoneString:(NSString *)phoneNumber {
@@ -342,6 +414,11 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (NSString *)phoneNumberExtractedFromString:(NSString *)string {
     BOOL hasPlusSign = NO;
     string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (string == nil || string.length == 0) {
+        return nil;
+    }
+    
     if ([[string substringToIndex:1] isEqualToString:@"+"]) {
         hasPlusSign = YES;
     }
@@ -376,6 +453,22 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 //    }
 //}
 
+#pragma mark - Native map app
+
+- (void)openNativeMapAppWithParameter:(NSString *)parameter {
+    NSString *const maplinkString = @"http://maps.apple.com/?q=";
+    
+    if (parameter == nil || [parameter cleanString].length == 0) {
+        return;
+    }
+
+    NSURL *maplink = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", maplinkString, [parameter stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+
+    if ([[UIApplication sharedApplication] canOpenURL:maplink]) {
+        [[UIApplication sharedApplication] openURL:maplink];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)menuButtonPressed:(id)sender {
@@ -403,6 +496,12 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self showHUDViewWithMessage:NSLocalizedString(@"Deleting...", @"")];
 }
 
+- (IBAction)shopInfoLabelTapped:(id)sender {
+    NSLog(@"Shop info label tapped!"); 
+
+    [self.shopInfoActionSheet showInView:self.view];
+}
+
 - (void)viewDidUnload {
     [self setShopURL:nil];
     [self setUrlAndIntroSeperator:nil];
@@ -410,6 +509,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self setShopPic:nil];
     [self setDeleteFavoriteShopButton:nil];
     [self setAddFavoriteShopButton:nil];
+    [self setReceiptImageView:nil];
     [super viewDidUnload];
 }
 
