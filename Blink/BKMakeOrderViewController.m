@@ -641,11 +641,17 @@ NSInteger quantityComponent = 0;
     if ([self hasSelectableIce]) {
         self.selectedIceLevel = [self.selectedMenuItem.iceLevels objectAtIndex:row];
     }
+    else {
+        self.selectedIceLevel = nil;
+    }
 }
 
 - (void)updateSelectedSweetnessWithRow:(NSInteger)row {
     if ([self hasSelectableSweetness]) {
         self.selectedSweetness = [self.selectedMenuItem.sweetnessLevels objectAtIndex:row];
+    }
+    else {
+        self.selectedSweetness = nil;
     }
 }
 

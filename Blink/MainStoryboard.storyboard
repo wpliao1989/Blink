@@ -2821,9 +2821,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Fqf-f2-bQo"/>
         <segue reference="b53-zt-ROB"/>
-        <segue reference="qSY-7S-ko2"/>
+        <segue reference="Fqf-f2-bQo"/>
+        <segue reference="cvb-pK-M3T"/>
         <segue reference="0Oj-LE-aah"/>
         <segue reference="xDX-rD-OQg"/>
     </inferredMetricsTieBreakers>

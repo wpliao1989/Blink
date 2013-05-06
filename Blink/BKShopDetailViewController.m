@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self configureIntroSection];
     [self configureBottomSection];
     [self configureScrollView];
-    
+
     [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID
                                                           completeHandler:^(BOOL success) {
         if (success) {
@@ -146,8 +146,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
         else {
             self.hudviewType = BKHUDViewTypeShopDetailDownload;
             [self showHUDViewWithMessage:@""];
-        }
-    }];        
+        }                                                              
+    }];
 }
 
 - (BOOL)isUsingOwnScrollview {
