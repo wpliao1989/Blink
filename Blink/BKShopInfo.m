@@ -226,7 +226,13 @@ NSString *const BKShopInfoEmptyString = @"";
 
 - (NSNumber *)deliverCost {
     id object = self.data[kBKShopDeliverCost];
+    NSLog(@"deliveryCost:%@, class:%@", object, [object class]);
     if ([object isNullOrNil] || ![object isNumber]) {
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        NSNumber *deliveryCost = [formatter numberFromString:object];
+        if (deliveryCost) {
+            return deliveryCost;
+        }
         return @(0);
     }
     return object;

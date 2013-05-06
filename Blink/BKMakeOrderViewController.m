@@ -596,6 +596,7 @@ NSInteger quantityComponent = 0;
             if (![self hasSelectableIce] && ![self hasSelectableSweetness]) {
 //                NSLog(@"1");
                 self.selectedIceLevel = nil;
+                self.selectedSweetness = nil;
                 [self.iceAndSweetnessButton setEnabled:NO];
                 [self changeButtonTitleButton:self.iceAndSweetnessButton title:NSLocalizedString(@"No item", "")];
             }

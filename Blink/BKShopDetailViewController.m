@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "NSString+QueryParser.h"
 #import "NSString+Additions.h"
+#import "BKNotifier.h"
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -57,6 +58,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 @property (weak, nonatomic) IBOutlet UITextView *shopIntro;
 
 @property (nonatomic) BKHUDViewType hudviewType;
+
+@property (strong, nonatomic) BKNotifier *loadingNotifier;
 
 // Phone call & native Map app
 - (IBAction)shopInfoLabelTapped:(id)sender;
@@ -133,20 +136,31 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self configureIntroSection];
     [self configureBottomSection];
     [self configureScrollView];
+    
+    
+//    self.loadingNotifier = [[BKNotifier alloc] initWithTitle:@"Loading" inView:self.view];
+//    [self.loadingNotifier showAnimation:BKNotifierAnimationShowFromTop animated:NO];
+//    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//    [activityIndicator startAnimating];
+//    
+//    self.loadingNotifier.accessoryView = activityIndicator;
 
     [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID
                                                           completeHandler:^(BOOL success) {
-        if (success) {
-            self.scrollView.userInteractionEnabled = YES;
-            [self initShop];
-            [self configureIntroSection];
-            [self configureBottomSection];
-            [self configureScrollView];
-        }
-        else {
-            self.hudviewType = BKHUDViewTypeShopDetailDownload;
-            [self showHUDViewWithMessage:@""];
-        }                                                              
+                                                              if (success) {
+                                                                  self.scrollView.userInteractionEnabled = YES;
+                                                                  [self initShop];
+                                                                  [self configureIntroSection];
+                                                                  [self configureBottomSection];
+                                                                  [self configureScrollView];
+                                                              }
+                                                              else {
+                                                                  self.hudviewType = BKHUDViewTypeShopDetailDownload;
+                                                                  [self showHUDViewWithMessage:@""];
+                                                              }
+                                                              
+                                                              //[self.loadingNotifier hideIn:0 animated:YES];
+                                                              //self.loadingNotifier = nil;
     }];
 }
 

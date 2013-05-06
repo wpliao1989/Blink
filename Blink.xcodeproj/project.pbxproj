@@ -53,6 +53,8 @@
 		424EDFC71732014000AE80DB /* add_press2.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC51732014000AE80DB /* add_press2.png */; };
 		424EDFC81732014000AE80DB /* add-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC61732014000AE80DB /* add-2.png */; };
 		4255A834172683380019FA68 /* UIViewController+SharedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4255A833172683380019FA68 /* UIViewController+SharedString.m */; };
+		425E2C0417377C4A001C0D17 /* JSNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 425E2C0317377C4A001C0D17 /* JSNotifier.m */; };
+		425E2C0B17377DC3001C0D17 /* BKNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 425E2C0A17377DC3001C0D17 /* BKNotifier.m */; };
 		427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */; };
 		427F9199172F5D6E009F9E92 /* resend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9197172F5D6E009F9E92 /* resend@2x.png */; };
 		427F919A172F5D6E009F9E92 /* resend-click@x.png in Resources */ = {isa = PBXBuildFile; fileRef = 427F9198172F5D6E009F9E92 /* resend-click@x.png */; };
@@ -441,6 +443,10 @@
 		4255A83017267FD30019FA68 /* NSString+QueryParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryParser.m"; sourceTree = "<group>"; };
 		4255A832172683380019FA68 /* UIViewController+SharedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SharedString.h"; sourceTree = "<group>"; };
 		4255A833172683380019FA68 /* UIViewController+SharedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SharedString.m"; sourceTree = "<group>"; };
+		425E2C0217377C49001C0D17 /* JSNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSNotifier.h; path = "../../../Developer/JSNotifier-master/JSNotifier Sample/JSNotifier.h"; sourceTree = "<group>"; };
+		425E2C0317377C4A001C0D17 /* JSNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSNotifier.m; path = "../../../Developer/JSNotifier-master/JSNotifier Sample/JSNotifier.m"; sourceTree = "<group>"; };
+		425E2C0917377DC3001C0D17 /* BKNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKNotifier.h; sourceTree = "<group>"; };
+		425E2C0A17377DC3001C0D17 /* BKNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKNotifier.m; sourceTree = "<group>"; };
 		427F9194172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BKScrollableViewController+LoginFlow.h"; sourceTree = "<group>"; };
 		427F9195172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BKScrollableViewController+LoginFlow.m"; sourceTree = "<group>"; };
 		427F9197172F5D6E009F9E92 /* resend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resend@2x.png"; sourceTree = "<group>"; };
@@ -940,6 +946,24 @@
 			name = "Managed by Jingo";
 			sourceTree = "<group>";
 		};
+		425E2C0117377C38001C0D17 /* JSNotifier */ = {
+			isa = PBXGroup;
+			children = (
+				425E2C0217377C49001C0D17 /* JSNotifier.h */,
+				425E2C0317377C4A001C0D17 /* JSNotifier.m */,
+			);
+			name = JSNotifier;
+			sourceTree = "<group>";
+		};
+		425E2C0817377DA8001C0D17 /* BKNotifier */ = {
+			isa = PBXGroup;
+			children = (
+				425E2C0917377DC3001C0D17 /* BKNotifier.h */,
+				425E2C0A17377DC3001C0D17 /* BKNotifier.m */,
+			);
+			name = BKNotifier;
+			sourceTree = "<group>";
+		};
 		42A813391727C4B700BD7F27 /* GoogleOpenSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -1244,6 +1268,8 @@
 				CE7A78E416B7607B0072519F /* MainStoryboard.storyboard */,
 				CE7A78FB16B76AA20072519F /* CWLSynthesizeSingleton.h */,
 				CE3AAF6E16EDC734007E6A82 /* Images */,
+				425E2C0117377C38001C0D17 /* JSNotifier */,
+				425E2C0817377DA8001C0D17 /* BKNotifier */,
 				CE805BA116C3A7EA0040095F /* MJPopupViewController */,
 				CE82B62316F07C36008828CB /* AKSegmentedControl */,
 				CE793BCF16E7235F00472188 /* MBProgressHUD */,
@@ -2054,6 +2080,8 @@
 				4228C4EE172E674F00DD38E5 /* UIViewController+SharedCustomizedUI.m in Sources */,
 				427F9196172F5B25009F9E92 /* BKScrollableViewController+LoginFlow.m in Sources */,
 				427F91A4172F73A4009F9E92 /* NSString+Additions.m in Sources */,
+				425E2C0417377C4A001C0D17 /* JSNotifier.m in Sources */,
+				425E2C0B17377DC3001C0D17 /* BKNotifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
