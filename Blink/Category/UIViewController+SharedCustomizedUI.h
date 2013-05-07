@@ -12,5 +12,6 @@
 
 - (UIColor *)viewBackgoundColor;
 - (UIImage *)titleImage;
+- (UIImage *)resizableListImage;
 
 @end

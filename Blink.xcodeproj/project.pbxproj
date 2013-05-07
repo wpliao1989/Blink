@@ -48,6 +48,7 @@
 		424495BB1721270100C84F5D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BA1721270100C84F5D /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		424495BC1721271200C84F5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF12DD916B923E600EB00C3 /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		424495BE1721271A00C84F5D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 424495BD1721271A00C84F5D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		424AAA311738D36F007CCF11 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 424AAA301738D36F007CCF11 /* UIViewController+Additions.m */; };
 		424EDFC31732013500AE80DB /* add_press2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC11732013500AE80DB /* add_press2@2x.png */; };
 		424EDFC41732013500AE80DB /* add-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC21732013500AE80DB /* add-2@2x.png */; };
 		424EDFC71732014000AE80DB /* add_press2.png in Resources */ = {isa = PBXBuildFile; fileRef = 424EDFC51732014000AE80DB /* add_press2.png */; };
@@ -434,6 +435,8 @@
 		424495B8172126EE00C84F5D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		424495BA1721270100C84F5D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		424495BD1721271A00C84F5D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		424AAA2F1738D36F007CCF11 /* UIViewController+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Additions.h"; sourceTree = "<group>"; };
+		424AAA301738D36F007CCF11 /* UIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		424EDFC11732013500AE80DB /* add_press2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_press2@2x.png"; sourceTree = "<group>"; };
 		424EDFC21732013500AE80DB /* add-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-2@2x.png"; sourceTree = "<group>"; };
 		424EDFC51732014000AE80DB /* add_press2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_press2.png; sourceTree = "<group>"; };
@@ -1146,6 +1149,8 @@
 				42A2317B172A2B1100B01C00 /* NSURL+Additions.m */,
 				427F91A2172F73A3009F9E92 /* NSString+Additions.h */,
 				427F91A3172F73A4009F9E92 /* NSString+Additions.m */,
+				424AAA2F1738D36F007CCF11 /* UIViewController+Additions.h */,
+				424AAA301738D36F007CCF11 /* UIViewController+Additions.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2082,6 +2087,7 @@
 				427F91A4172F73A4009F9E92 /* NSString+Additions.m in Sources */,
 				425E2C0417377C4A001C0D17 /* JSNotifier.m in Sources */,
 				425E2C0B17377DC3001C0D17 /* BKNotifier.m in Sources */,
+				424AAA311738D36F007CCF11 /* UIViewController+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

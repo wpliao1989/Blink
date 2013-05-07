@@ -26,9 +26,6 @@
 - (void)keyBoardWillShow:(NSNotification *)notification;
 - (void)keyBoardWillHide:(NSNotification *)notification;
 
-// Helper methods
-- (CGFloat)insetHeightForView:(UIView *)view keyboardNotification:(NSNotification *)notification;
-
 @end
 
 @protocol MBProgressHUDDelegate;

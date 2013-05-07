@@ -84,6 +84,7 @@ FOUNDATION_EXPORT NSString *const BKShopInfoServiceNone;
 
 - (BOOL)isServiceFreeDelivery;
 - (BOOL)isServiceHasDeliveryCost;
+- (BOOL)serviceIncludesTakeout;
 
 - (NSString *)localizedServiceString;
 - (NSString *)localizedTypeString;

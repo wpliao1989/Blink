@@ -18,4 +18,8 @@
     return [[UIImage imageNamed:@"a1"] resizableImageWithCapInsets:UIEdgeInsetsMake(175, 158, 180, 158)];
 }
 
+- (UIImage *)resizableListImage {
+    return [[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)];
+}
+
 @end

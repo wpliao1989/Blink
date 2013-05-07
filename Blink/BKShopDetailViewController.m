@@ -53,9 +53,16 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 @property (weak, nonatomic) IBOutlet UILabel *shopAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shopPhoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shopOpenTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopDeliveryCostLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shopMinDeliveryLabel;
+@property (weak, nonatomic) IBOutlet UIButton *freeDeliveryButton;
+@property (weak, nonatomic) IBOutlet UIButton *costedDeliveryButton;
+@property (weak, nonatomic) IBOutlet UIButton *takeoutButton;
 @property (weak, nonatomic) IBOutlet UITextView *shopURL;
 @property (weak, nonatomic) IBOutlet UITextView *shopIntro;
+
+@property (nonatomic) CGPoint leftButtonCenter;
+@property (nonatomic) CGPoint rightButtonCenter;
 
 @property (nonatomic) BKHUDViewType hudviewType;
 
@@ -132,6 +139,9 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
     
     self.scrollView.userInteractionEnabled = NO;
+    self.leftButtonCenter = self.freeDeliveryButton.center;
+    self.rightButtonCenter = self.takeoutButton.center;
+    
     [self initShop];
     [self configureIntroSection];
     [self configureBottomSection];
@@ -216,7 +226,31 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     self.shopOpenTimeLabel.text = self.shopInfo.businessHours;
     self.shopIntro.text = self.shopInfo.shopDescription;
     self.shopURL.text = self.shopInfo.shopURL;
+    
+    self.shopDeliveryCostLabel.hidden = ![self.shopInfo isServiceHasDeliveryCost];
+    self.shopDeliveryCostLabel.text = [self stringForDeliveryCostLabelWithCost:self.shopInfo.deliverCost];
     self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.minPrice];
+    
+    self.freeDeliveryButton.hidden = ![self.shopInfo isServiceFreeDelivery];
+    self.costedDeliveryButton.hidden = ![self.shopInfo isServiceHasDeliveryCost];
+    self.takeoutButton.hidden = ![self.shopInfo serviceIncludesTakeout];
+    
+    self.freeDeliveryButton.center = self.leftButtonCenter;
+    self.costedDeliveryButton.center = self.leftButtonCenter;
+    self.takeoutButton.center = self.rightButtonCenter;
+    
+    CGPoint center = self.freeDeliveryButton.center;
+    center.x = self.view.center.x;
+    
+    if ([self.shopInfo isServiceHasDeliveryCost]) {
+        self.costedDeliveryButton.center = center;
+    }
+    else if ([self.shopInfo.services isEqualToString:BKShopInfoServiceFreeDeliver]) {
+        self.freeDeliveryButton.center = center;
+    }
+    else if ([self.shopInfo.services isEqualToString:BKShopInfoServiceTakeout]) {
+        self.takeoutButton.center = center;
+    }
 }
 
 - (void)initFavoriteButtons {
@@ -364,6 +398,11 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (NSString *)stringForMinDeliveryCostLabelWithCost:(NSNumber *)cost {
     NSString *minPriceString = NSLocalizedString(@"Min Price", @"最低外送價");
     return [NSString stringWithFormat:@"%@：%@", minPriceString,[self currencyStringForPrice:cost]];
+}
+
+- (NSString *)stringForDeliveryCostLabelWithCost:(NSNumber *)cost {
+    NSString *deliveryCostString = NSLocalizedString(@"Delivery Cost", @"");
+    return [NSString stringWithFormat:@"%@：%@", deliveryCostString,[self currencyStringForPrice:cost]];
 }
 
 #pragma mark - Currency formatter

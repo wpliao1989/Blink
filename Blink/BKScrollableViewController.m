@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "BKAccountManager.h"
 #import "UIViewController+SharedCustomizedUI.h"
+#import "UIViewController+Additions.h"
 
 @interface BKScrollableViewController()
 
@@ -157,22 +158,6 @@
         self.scrollView.contentInset = contentInsets;
         self.scrollView.scrollIndicatorInsets = contentInsets;
     }];    
-}
-
-#pragma mark - Helper methods
-
-- (CGFloat)insetHeightForView:(UIView *)view keyboardNotification:(NSNotification *)notification{
-    NSDictionary* info = [notification userInfo];
-    
-    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect kbFrameConverted = [view convertRect:kbFrame fromView:nil];
-    //CGSize kbSize = kbFrameConverted.size;
-    
-    CGFloat scrollViewBottomY = CGRectGetMaxY(view.bounds);
-    CGFloat kbOriginY = CGRectGetMinY(kbFrameConverted);
-    CGFloat insetHeight = scrollViewBottomY - kbOriginY;
-    
-    return insetHeight;
 }
 
 #pragma mark - Text field delegate

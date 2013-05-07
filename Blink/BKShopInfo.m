@@ -305,6 +305,10 @@ NSString *const BKShopInfoServiceNone = @"5";
     return [self.services isEqualToString:BKShopInfoServiceChargeDeliver];
 }
 
+- (BOOL)serviceIncludesTakeout {
+    return [self.services isEqualToString:BKShopInfoServiceTakeout] || [self.services isEqualToString:BKShopInfoServiceTakeoutAndDeliver];
+}
+
 - (NSString *)localizedServiceString {
     return [[[self class] serviceLookup] objectForKey:self.services];
 }
