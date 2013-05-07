@@ -11,13 +11,23 @@
 
 @class MBProgressHUD;
 
-@interface BKScrollableViewController : UIViewController<UITextFieldDelegate>
+@interface BKScrollableViewController : UIViewController<UITextFieldDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) MBProgressHUD *HUD;
 
 @property (strong, nonatomic) UIView *activeResponder;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (BOOL)isUsingOwnScrollview; // Return YES if default scorllview setting is not favorable, default is NO
+
+/*! Return No if default customization is unwanted
+ */
+- (BOOL)useDefaultCustomizationForScrollView;
+
+- (void)keyBoardWillShow:(NSNotification *)notification;
+- (void)keyBoardWillHide:(NSNotification *)notification;
+
+// Helper methods
+- (CGFloat)insetHeightForView:(UIView *)view keyboardNotification:(NSNotification *)notification;
 
 @end
 

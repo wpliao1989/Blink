@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     // Customize scroll view
-    if (![self isUsingOwnScrollview]) {
+    if ([self useDefaultCustomizationForScrollView]) {
         [self.scrollView setBackgroundColor:[self viewBackgoundColor]];
     }    
     
@@ -33,6 +33,10 @@
 
 - (BOOL)isUsingOwnScrollview {
     return NO;
+}
+
+- (BOOL)useDefaultCustomizationForScrollView {
+    return YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,15 +69,17 @@
         return;
     }
     
-    NSDictionary* info = [notification userInfo];    
+//    NSDictionary* info = [notification userInfo];    
+//    
+//    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    CGRect kbFrameConverted = [self.scrollView convertRect:kbFrame fromView:nil];
+//    //CGSize kbSize = kbFrameConverted.size;
+//    
+//    CGFloat scrollViewBottomY = CGRectGetMaxY(self.scrollView.bounds);
+//    CGFloat kbOriginY = CGRectGetMinY(kbFrameConverted);
+//    CGFloat insetHeight = scrollViewBottomY - kbOriginY;
     
-    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect kbFrameConverted = [self.scrollView convertRect:kbFrame fromView:nil];
-    //CGSize kbSize = kbFrameConverted.size;
-    
-    CGFloat scrollViewBottomY = CGRectGetMaxY(self.scrollView.bounds);
-    CGFloat kbOriginY = CGRectGetMinY(kbFrameConverted);
-    CGFloat insetHeight = scrollViewBottomY - kbOriginY;
+    CGFloat insetHeight = [self insetHeightForView:self.scrollView keyboardNotification:notification];
     
     if (insetHeight <= 0) {
         return;
@@ -153,6 +159,24 @@
     }];    
 }
 
+#pragma mark - Helper methods
+
+- (CGFloat)insetHeightForView:(UIView *)view keyboardNotification:(NSNotification *)notification{
+    NSDictionary* info = [notification userInfo];
+    
+    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect kbFrameConverted = [view convertRect:kbFrame fromView:nil];
+    //CGSize kbSize = kbFrameConverted.size;
+    
+    CGFloat scrollViewBottomY = CGRectGetMaxY(view.bounds);
+    CGFloat kbOriginY = CGRectGetMinY(kbFrameConverted);
+    CGFloat insetHeight = scrollViewBottomY - kbOriginY;
+    
+    return insetHeight;
+}
+
+#pragma mark - Text field delegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
@@ -163,6 +187,16 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeResponder = nil;
+}
+
+#pragma mark - Text view delegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.activeResponder = textView;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
     self.activeResponder = nil;
 }
 
