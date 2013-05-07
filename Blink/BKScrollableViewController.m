@@ -64,27 +64,47 @@
     if (self.scrollView == nil) {
         return;
     }
-    NSDictionary* info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-
-    CGRect scrollViewFrameInWindowCoordinate = [self.scrollView convertRect:self.scrollView.bounds toView:nil];
-    CGFloat scrollViewBottomY = CGRectGetMaxY(scrollViewFrameInWindowCoordinate);
-    CGFloat windowBottomY = CGRectGetMaxY(self.view.window.frame);
-    CGFloat bottomPaddling = windowBottomY - scrollViewBottomY;
     
-    if (windowBottomY <= 0) {
+    NSDictionary* info = [notification userInfo];    
+    
+    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect kbFrameConverted = [self.scrollView convertRect:kbFrame fromView:nil];
+    //CGSize kbSize = kbFrameConverted.size;
+    
+    CGFloat scrollViewBottomY = CGRectGetMaxY(self.scrollView.bounds);
+    CGFloat kbOriginY = CGRectGetMinY(kbFrameConverted);
+    CGFloat insetHeight = scrollViewBottomY - kbOriginY;
+    
+    if (insetHeight <= 0) {
         return;
     }
     
-    NSLog(@"keyboard will show = %@", notification.userInfo);
-    //NSLog(@"window:%@", self.view.window);
-    //NSLog(@"11111 %f", scrollViewBottomY);
-    //NSLog(@"22222 %f", windowBottomY);
-    //NSLog(@"Bottom paddling %f", bottomPaddling);
-    //NSLog(@"!!!!!!!!! rect = %@", NSStringFromCGRect(scrollViewFrameInWindowCoordinate));
+    // Get keyboard frame
+//    CGRect kbFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    CGRect kbFrameConverted = kbFrame;
+//    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+//        kbFrameConverted = CGRectMake(kbFrame.origin.x, kbFrame.origin.y, kbFrame.size.height, kbFrame.size.width);
+//    }
+//    CGSize kbSize = kbFrameConverted.size;
+//    
+//    // Get window and view frame
+//    UIView *windowView = self.view.window;
+//    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+//        CGPoint windowOrigin = self.view.window.frame.origin;
+//        CGSize windowSize = self.view.window.frame.size;
+//        windowView = [[UIView alloc] initWithFrame:CGRectMake(windowOrigin.x, windowOrigin.y, windowSize.height, windowSize.width)];
+//    }
+//    CGRect scrollViewFrameInWindowCoordinate = [self.scrollView convertRect:self.scrollView.bounds toView:windowView];
+//    CGFloat scrollViewBottomY = CGRectGetMaxY(scrollViewFrameInWindowCoordinate);
+//    CGFloat windowBottomY = CGRectGetMaxY(windowView.frame);
+//    CGFloat bottomPaddling = windowBottomY - scrollViewBottomY;
+//    
+//    if (windowBottomY <= 0) {
+//        return;
+//    }
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height - bottomPaddling, 0.0);
-    NSLog(@"%@", NSStringFromUIEdgeInsets(contentInsets));
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, insetHeight, 0.0);
+    NSLog(@"Keyboard insets %@", NSStringFromUIEdgeInsets(contentInsets));
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
     
