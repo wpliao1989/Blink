@@ -44,6 +44,8 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)confirmEditUserInfoButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *favoriteShopTableView;
+@property (weak, nonatomic) IBOutlet UIView *orderListView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingOrdersIndicatorView;
 @property (strong, nonatomic) IBOutlet UITableView *orderListTableView;
 @property (strong, nonatomic) NSArray *userFavoriteShops;
 @property (strong, nonatomic) NSArray *orderlist;
@@ -145,7 +147,7 @@ enum BKUserToolSegmentationSelection {
     [self.view setBackgroundColor:[self viewBackgoundColor]];
     
     [self.favoriteShopTableView registerNib:[UINib nibWithNibName:@"BKShopListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"cell"];
-    [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];    
+    [self.orderListTableView registerNib:[UINib nibWithNibName:@"BKUserOrderListCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderListCell"];
     
     // Set the selected view to show, and make others to hide
     [self segmentationChanged:self.segmentedControl];
@@ -211,10 +213,12 @@ enum BKUserToolSegmentationSelection {
 //            [self.orderListTableView reloadData];
 //        }];
 //    }
+    [self.loadingOrdersIndicatorView startAnimating];
     [[BKAccountManager sharedBKAccountManager] getUserOrdersCompleteHandler:^(BOOL success) {
         NSLog(success ? @"Get order success!" : @"Get order failed!");
         //NSLog(@"self.orderlist = %@", self.orderlist);
         [self.orderListTableView reloadData];
+        [self.loadingOrdersIndicatorView stopAnimating];
     }];
 }
 
@@ -395,18 +399,18 @@ enum BKUserToolSegmentationSelection {
     if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionShop){
         [self.favoriteShopTableView reloadData];
         self.favoriteShopTableView.hidden = NO;
-        self.orderListTableView.hidden = YES; 
+        self.orderListView.hidden = YES;
         self.userDataModificationView.hidden = YES;
     }
     else if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         [self.orderListTableView reloadData];
         self.favoriteShopTableView.hidden = YES;
-        self.orderListTableView.hidden = NO;
+        self.orderListView.hidden = NO;
         self.userDataModificationView.hidden = YES;        
     }    
     else if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionUserData) {
         self.favoriteShopTableView.hidden = YES;
-        self.orderListTableView.hidden = YES;
+        self.orderListView.hidden = YES;
         self.userDataModificationView.hidden = NO;        
     }
 }

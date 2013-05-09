@@ -256,16 +256,27 @@
                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="JyP-h2-fav"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="86" sectionHeaderHeight="22" sectionFooterHeight="22" id="ven-NB-Wf8">
+                            <view contentMode="scaleToFill" id="k6p-lA-m6f">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="86" sectionHeaderHeight="22" sectionFooterHeight="22" id="ven-NB-Wf8">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="contentInset" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Mpb-6J-6KN" id="lBc-Xb-7yZ"/>
+                                            <outlet property="delegate" destination="Mpb-6J-6KN" id="Ead-Cd-P1S"/>
+                                        </connections>
+                                    </tableView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="scw-lk-JiT">
+                                        <rect key="frame" x="150" y="176" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <inset key="contentInset" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Mpb-6J-6KN" id="lBc-Xb-7yZ"/>
-                                    <outlet property="delegate" destination="Mpb-6J-6KN" id="Ead-Cd-P1S"/>
-                                </connections>
-                            </tableView>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="under.png" id="GV8-mL-YrV">
                                 <rect key="frame" x="0.0" y="372" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -427,7 +438,9 @@
                     <connections>
                         <outlet property="favoriteShopTableView" destination="BkM-4H-rPx" id="VCH-aA-LpZ"/>
                         <outlet property="firstButton" destination="CBz-4o-wUZ" id="89K-IE-zci"/>
+                        <outlet property="loadingOrdersIndicatorView" destination="scw-lk-JiT" id="fnM-cY-Ewv"/>
                         <outlet property="orderListTableView" destination="ven-NB-Wf8" id="3gu-yk-PrH"/>
+                        <outlet property="orderListView" destination="k6p-lA-m6f" id="W3n-s3-NyJ"/>
                         <outlet property="scrollView" destination="w3M-6d-kjb" id="gn0-aw-Aa8"/>
                         <outlet property="secondButton" destination="VwO-Fd-WIJ" id="fXO-sd-trw"/>
                         <outlet property="segmentedControlView" destination="Q6r-Xw-eT3" id="PRu-vE-Vba"/>
@@ -2561,7 +2574,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="back.png" width="57" height="38"/>
         <image name="back_press.png" width="57" height="38"/>
         <image name="bg.png" width="320" height="480"/>
-        <image name="close.png" width="57" height="38"/>
+        <image name="close.png" width="29" height="29"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
@@ -2825,7 +2838,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="passwordModifyButtonPressed:"/>
                 <relationship kind="outlet" name="favoriteShopTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="firstButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loadingOrdersIndicatorView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="orderListTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="orderListView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="secondButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="segmentedControlView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="thirdButton" candidateClass="UIButton"/>
@@ -2853,10 +2868,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="cvb-pK-M3T"/>
         <segue reference="b53-zt-ROB"/>
         <segue reference="Fqf-f2-bQo"/>
-        <segue reference="cvb-pK-M3T"/>
+        <segue reference="fl4-aM-ISf"/>
         <segue reference="0Oj-LE-aah"/>
-        <segue reference="xDX-rD-OQg"/>
     </inferredMetricsTieBreakers>
 </document>

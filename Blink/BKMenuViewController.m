@@ -58,6 +58,15 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = ((BKShopDetailViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2]).homeButton;
     [self.view setBackgroundColor:[self viewBackgoundColor]];
+    
+//    if (self.menu.count == 0) {
+//        UILabel *noMenuItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+//        noMenuItemLabel.text = @"尚未有菜單";
+//        noMenuItemLabel.backgroundColor = [UIColor clearColor];
+//        noMenuItemLabel.textAlignment = NSTextAlignmentCenter;
+//        noMenuItemLabel.center = self.view.center;
+//        [self.view addSubview:noMenuItemLabel];
+//    }
 }
 
 #pragma mark - Table view data source

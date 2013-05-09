@@ -194,6 +194,9 @@
 - (void)showHUDViewWithMessage:(NSString *)message {
     [self.activeResponder resignFirstResponder];
     
+    if (self.navigationController.view == nil) {
+        return;
+    }
     //    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.HUD];

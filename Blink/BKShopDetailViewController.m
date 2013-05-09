@@ -437,7 +437,8 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
         NSUInteger phoneIndex = 2;
         
         if (buttonIndex == nameIndex) {
-            [self openNativeMapAppWithParameter:self.shopInfo.name];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"http://www.google.com/search?q=" stringByAppendingString:[self.shopInfo.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
+            //[self openNativeMapAppWithParameter:self.shopInfo.name];
         }
         else if (buttonIndex == addressIndex) {
             [self openNativeMapAppWithParameter:self.shopInfo.address];

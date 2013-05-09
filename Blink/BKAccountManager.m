@@ -199,6 +199,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 }
 
 - (void)getUserOrdersCompleteHandler:(completeHandler)completeHandler {
+    
+    _loadingUserOrders = YES;
+    
     [[BKAPIManager sharedBKAPIManager] getOrderWithToken:self.userToken completionHandler:^(id data, NSError *error) {
         //NSLog(@"data = %@", data);
         if (data != nil) {
@@ -219,6 +222,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
             completeHandler(NO);
         }
         
+        _loadingUserOrders = NO;        
     }];
 }
 

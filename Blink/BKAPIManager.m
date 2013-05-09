@@ -288,7 +288,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     NSDictionary *parameterDictionary = @{kUserName : userName, kPWD : [self encodePWD:password]};
     [self callAPI:@"login" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         
-        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Wrong account or email", @"")}];
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Wrong account or password", @"")}];
         
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
 

@@ -30,6 +30,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAccountManager)
 - (void)saveUserPreferedAccount:(NSString *)account password:(NSString *)password;
 
 @property (nonatomic) BOOL isLogin;
+@property (nonatomic, readonly) BOOL loadingUserOrders;
 
 - (void)loginWithAccount:(NSString *)account password:(NSString *)pwd CompleteHandler:(void (^)(BOOL success, NSError *error))completeHandler;
 - (void)logout;

@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (BOOL)isUsingOwnScrollview; // Return YES if default scorllview setting is not favorable, default is NO
 
-/*! Return No if default customization is unwanted
+/*! Return No if default customization is unwanted, default value is YES
  */
 - (BOOL)useDefaultCustomizationForScrollView;
 
