@@ -131,6 +131,10 @@
 #pragma mark - Utility methods
 
 - (void)setUpPickers {
+    if ([BKAPIManager sharedBKAPIManager].loadingServerInfo) {
+        self.cityButton.enabled = NO;
+        self.districtButton.enabled = NO;
+    }
     self.cityButton.inputView = self.cityPicker;
     NSLog(@"pickers:%@  %@", self.cityPicker, self.districtPicker);
     self.districtButton.inputView = self.districtPicker;
@@ -284,6 +288,8 @@
 
 - (void)serverInfoDidUpdate {
     NSLog(@"server info did update!");
+    self.cityButton.enabled = YES;
+    self.districtButton.enabled = YES;
     [self.cityPicker reloadAllComponents];
     [self.districtPicker reloadAllComponents];
     [self initPickerSelect];

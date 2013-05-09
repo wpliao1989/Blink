@@ -108,6 +108,12 @@ NSString *const pushTokenDidBecomeAvailableNotification = @"com.flyingman.pushTo
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"did receive notification! userInfo:%@", userInfo);
+    id badge = userInfo[@"aps"][@"badge"];
+    id alert = userInfo[@"aps"][@"alert"];
+    id sound = userInfo[@"aps"][@"sound"];
+    NSLog(@"alert:%@, class:%@", alert, [alert class]);
+    NSLog(@"badge:%@, class:%@", badge, [badge class]);
+    NSLog(@"sound:%@, class:%@", sound, [sound class]);
     [self removeBadge];
 }
 

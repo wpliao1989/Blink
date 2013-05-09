@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 
 - (IBAction)resendActivationButtonPressed:(id)sender {
     self.HUDViewType = BKHUDViewTypeResendActivationLetter;
-    [self showHUDViewWithMessage:NSLocalizedString(@"Send email...", @"寄送認證信至信箱...")];
+    [self showHUDViewWithMessage:NSLocalizedString(@"Sending email...", @"寄送認證信至信箱...")];
 }
 
 - (IBAction)activatedButtonPressed:(id)sender {

@@ -111,6 +111,24 @@
 
 #pragma mark - Text field
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.userAccountTextField) {
+        [self.userPasswordTextField becomeFirstResponder];
+        return NO;
+    }
+    else if (textField == self.userPasswordTextField) {
+        [self.userPasswordConfirmTextField becomeFirstResponder];
+        return NO;
+    }
+    else if (textField == self.userPasswordConfirmTextField) {
+        [self.userEmailTextField becomeFirstResponder];
+        return NO;
+    }
+    else {
+        return [super textFieldShouldReturn:textField];
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.userPhoneTextField) {

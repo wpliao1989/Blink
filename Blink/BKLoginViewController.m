@@ -151,6 +151,16 @@
 
 #pragma mark - Text field
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.userAccountTextField) {
+        [self.userPasswordTextField becomeFirstResponder];
+        return NO;
+    }
+    else {
+        return [super textFieldShouldReturn:textField];
+    }
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];
     

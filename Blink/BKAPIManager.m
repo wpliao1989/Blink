@@ -272,7 +272,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
 #pragma mark - OSConnectionManager overwrite
 
 - (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest {
-    [originalRequest setTimeoutInterval:10.0];
+    [originalRequest setTimeoutInterval:30.0];
     NSLog(@"timeout = %f", originalRequest.timeoutInterval);
     return originalRequest;
 }
@@ -657,7 +657,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     static NSString *kListCriteria = @"listCriteria";
 //    static NSString *kSortCriteria = @"sortCriteria";
     
-    self.isLoadingData = YES;
+    _loadingServerInfo = YES;
     
     [self service:@"info"
            method:@"GET"
@@ -690,7 +690,7 @@ completionHandler:^(NSURLResponse *response, id data, NSError *error) {
             });            
         }
         else {
-            self.isLoadingData = NO;
+            _loadingServerInfo = NO;
             [[NSNotificationCenter defaultCenter] postNotificationName:kBKServerInfoDidUpdateNotification object:nil];
         }
     }];

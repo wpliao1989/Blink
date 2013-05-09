@@ -62,6 +62,22 @@
     self.userNewPWDConfirm = @"";
 }
 
+#pragma mark - Text field delegat
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.userOldPWDTextField) {
+        [self.userNewPWDTextField becomeFirstResponder];
+        return NO;
+    }
+    else if (textField == self.userNewPWDTextField) {
+        [self.userNewPWDConfirmTextField becomeFirstResponder];
+        return NO;
+    }
+    else {
+        return [super textFieldShouldReturn:textField];
+    }
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [super textFieldDidEndEditing:textField];
     
@@ -76,6 +92,8 @@
     }
     NSLog(@"oldPWD:%@, newPWD:%@, newPWDConfirm:%@", self.userOldPWD, self.userNewPWD, self.userNewPWDConfirm);
 }
+
+#pragma mark - Modify password logic
 
 - (BOOL)isOldPWDandNewPWDValid {
     NSLog(@"Is password match:%@", [[BKAccountManager sharedBKAccountManager] isPasswordMatch:self.userOldPWD] ? @"YES": @"NO");

@@ -112,7 +112,7 @@
     //Background color
     CGRect rectangle = CGRectMake(0,0,320,40);
     CGContextAddRect(context, rectangle);
-    CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:0.800 alpha:0.750].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithRed:0.778 green:0.783 blue:0.800 alpha:0.750].CGColor);
     CGContextFillRect(context, rectangle);
     
     //First whiteColor

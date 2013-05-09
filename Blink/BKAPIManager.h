@@ -37,6 +37,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 // BOOL flag indicating whether APIManager is loading new data
 @property (nonatomic) BOOL isLoadingData;
+@property (nonatomic, readonly) BOOL loadingServerInfo;
 
 // Server info
 @property (strong, nonatomic) NSArray *cities;

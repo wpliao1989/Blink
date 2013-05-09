@@ -258,7 +258,7 @@
                             </tableView>
                             <view contentMode="scaleToFill" id="k6p-lA-m6f">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="86" sectionHeaderHeight="22" sectionFooterHeight="22" id="ven-NB-Wf8">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
@@ -314,7 +314,7 @@
                                                 <rect key="frame" x="70" y="44" width="230" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="nRS-IZ-QxP"/>
                                                 </connections>
@@ -323,7 +323,7 @@
                                                 <rect key="frame" x="70" y="98" width="230" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="gHn-F0-2Li"/>
                                                 </connections>
@@ -332,7 +332,7 @@
                                                 <rect key="frame" x="70" y="153" width="230" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="4ws-j9-dxb"/>
                                                 </connections>
@@ -348,7 +348,7 @@
                                                 <rect key="frame" x="70" y="208" width="230" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="Mpb-6J-6KN" id="VM0-bV-pRB"/>
                                                 </connections>
@@ -583,7 +583,7 @@
                                         <rect key="frame" x="119" y="43" width="181" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="slj-Ga-mnr" id="pL6-oH-Io8"/>
                                         </connections>
@@ -592,7 +592,7 @@
                                         <rect key="frame" x="119" y="97" width="181" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="slj-Ga-mnr" id="w1A-Qn-qZu"/>
                                         </connections>
@@ -601,7 +601,7 @@
                                         <rect key="frame" x="119" y="152" width="181" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="slj-Ga-mnr" id="ZR8-9K-Uxm"/>
                                         </connections>
@@ -736,7 +736,7 @@
                                         <rect key="frame" x="121" y="139" width="158" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next"/>
                                         <connections>
                                             <outlet property="delegate" destination="DyK-JR-YIz" id="bK0-Qc-qRF"/>
                                         </connections>
@@ -904,7 +904,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="N5x-xX-JyX">
                                         <rect key="frame" x="102" y="130" width="186" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="ZSN-OK-iTb"/>
                                         </connections>
@@ -912,7 +912,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="b4S-O0-fDu">
                                         <rect key="frame" x="102" y="168" width="186" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="ofb-70-CCj"/>
                                         </connections>
@@ -920,7 +920,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="pYO-lM-Fe8">
                                         <rect key="frame" x="102" y="206" width="186" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="Wwv-KD-Mp1"/>
                                         </connections>
@@ -928,7 +928,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="G1m-Yi-ntl">
                                         <rect key="frame" x="102" y="244" width="186" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="Ciy-ss-NAw" id="Ebx-pp-k4Y"/>
                                         </connections>
@@ -2501,6 +2501,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="urlAndIntroSeperator" destination="5uv-0d-Wt7" id="O0Z-Ti-nxd"/>
                         <segue destination="af5-GL-RJJ" kind="push" identifier="menuSegue" id="gbK-yU-OOx"/>
                         <segue destination="xZP-RZ-ETy" kind="push" identifier="makeOrderSegue" id="Qx8-If-flD"/>
+                        <segue destination="gZU-Sn-msS" kind="modal" identifier="shopDetailToLoginSegue" id="pY3-jy-Taa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbs-td-c22" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2870,8 +2871,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <inferredMetricsTieBreakers>
         <segue reference="cvb-pK-M3T"/>
         <segue reference="b53-zt-ROB"/>
-        <segue reference="Fqf-f2-bQo"/>
-        <segue reference="fl4-aM-ISf"/>
         <segue reference="0Oj-LE-aah"/>
+        <segue reference="pY3-jy-Taa"/>
+        <segue reference="xDX-rD-OQg"/>
     </inferredMetricsTieBreakers>
 </document>

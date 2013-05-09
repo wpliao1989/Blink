@@ -67,6 +67,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 @property (nonatomic) BKHUDViewType hudviewType;
 
 @property (strong, nonatomic) BKNotifier *loadingNotifier;
+@property (nonatomic) BOOL loadingShopDetail;
 
 // Phone call & native Map app
 - (IBAction)shopInfoLabelTapped:(id)sender;
@@ -146,15 +147,9 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [self configureIntroSection];
     [self configureBottomSection];
     [self configureScrollView];
-    
-    
-//    self.loadingNotifier = [[BKNotifier alloc] initWithTitle:@"Loading" inView:self.view];
-//    [self.loadingNotifier showAnimation:BKNotifierAnimationShowFromTop animated:NO];
-//    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//    [activityIndicator startAnimating];
-//    
-//    self.loadingNotifier.accessoryView = activityIndicator;
 
+    self.loadingShopDetail = YES;
+    
     [[BKShopInfoManager sharedBKShopInfoManager] loadShopDetailDataShopID:self.shopID
                                                           completeHandler:^(BOOL success) {
                                                               if (success) {
@@ -167,10 +162,11 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
                                                               else {
                                                                   self.hudviewType = BKHUDViewTypeShopDetailDownload;
                                                                   [self showHUDViewWithMessage:@""];
-                                                              }
+                                                              }                                                              
                                                               
-                                                              //[self.loadingNotifier hideIn:0 animated:YES];
-                                                              //self.loadingNotifier = nil;
+                                                              self.loadingShopDetail = NO;
+                                                              [self.loadingNotifier hideIn:0 animated:YES];
+                                                              self.loadingNotifier = nil;
     }];
 }
 
@@ -182,6 +178,19 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [super viewWillAppear:animated];
     //NSLog(self.isMovingToParentViewController?@"is being push":@"not being push");
     [self initFavoriteButtons];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.loadingShopDetail) {
+        self.loadingNotifier = [[BKNotifier alloc] initWithTitle:NSLocalizedString(@"Loading", @"") inView:self.view];
+        UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [activityIndicator startAnimating];
+        self.loadingNotifier.accessoryView = activityIndicator;
+        [self.loadingNotifier showAnimation:BKNotifierAnimationShowFromTop animated:NO];        
+    }
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -339,7 +348,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_small"]];
 }
 
-#pragma mark - HUD view
+#pragma mark - Shop detail download, add user favorite logic
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
     
@@ -358,7 +367,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
         else {
             completeHandler addHandler = ^(BOOL success) {
                 if (success) {
-                    NSLog(@"Add user favorite success! shopID:%@", self.shopID);
+                    NSLog(@"Add user favorite success! shopID:%@, shop info:%@", self.shopID, self.shopInfo);
                     successBlock(NSLocalizedString(@"Adding succedded!", @"新增成功!"));
                 }
                 else {
@@ -540,6 +549,11 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 }
 
 - (IBAction)addFavoriteShopButtonPressed:(id)sender {
+    if (![BKAccountManager sharedBKAccountManager].isLogin) {
+        [self performSegueWithIdentifier:@"shopDetailToLoginSegue" sender:self];
+        return;
+    }
+    
     self.hudviewType = BKHUDViewTypeAddUserFavorite;
     [self showHUDViewWithMessage:NSLocalizedString(@"Adding...", @"新增中...")];
 }
