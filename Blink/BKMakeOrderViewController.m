@@ -29,7 +29,8 @@ typedef NS_ENUM(NSInteger, BKSelectionCode) {
     BKSelectionValid = 1,
     BKSelectionItemNotSelected = 2,
     BKSelectionIceNotSelected = 3,
-    BKSelectionSweetnessNotSelected = 4
+    BKSelectionSweetnessNotSelected = 4,
+    BKSelectionSizeNotSelected = 5
 };
 
 NSInteger iceComponent = 0;
@@ -743,6 +744,9 @@ NSInteger quantityComponent = 0;
             [result addObject:[NSNumber numberWithInt:BKSelectionSweetnessNotSelected]];
 //            return BKSelectionSweetnessNotSelected;
         }
+        if (self.selectedSize == nil) {
+            [result addObject:[NSNumber numberWithInt:BKSelectionSizeNotSelected]];
+        }
     }
     
     NSLog(@"inValidSelectionCodes: %@", result);
@@ -759,6 +763,7 @@ NSInteger quantityComponent = 0;
     NSString *const itemNotSelected = NSLocalizedString(@"Please pick at least one item", @"");
     NSString *const iceNotSelected = NSLocalizedString(@"Please pick an ice setting", @"尚未選擇冰量");
     NSString *const sweetnessNotSelected = NSLocalizedString(@"Please pick a sweetness setting", @"尚未選擇糖量");
+    NSString *const sizeNotSelected = NSLocalizedString(@"Please pick a price setting", @"");
     NSString *const changeLine = @"\n";
     
     NSString *result = @"";
@@ -779,6 +784,10 @@ NSInteger quantityComponent = 0;
                 
             case BKSelectionSweetnessNotSelected:
                 result = [result stringByAppendingString:sweetnessNotSelected];  
+                break;
+                
+            case BKSelectionSizeNotSelected:
+                result = [result stringByAppendingString:sizeNotSelected];
                 break;
                 
             default:
