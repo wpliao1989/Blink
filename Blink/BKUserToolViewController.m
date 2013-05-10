@@ -43,17 +43,19 @@ enum BKUserToolSegmentationSelection {
 - (IBAction)passwordModifyButtonPressed:(id)sender;
 - (IBAction)confirmEditUserInfoButtonPressed:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UITableView *favoriteShopTableView;
+@property (weak, nonatomic) IBOutlet UIView *favoriteShopView;
+@property (weak, nonatomic) IBOutlet UITableView *favoriteShopTableView;
+@property (weak, nonatomic) IBOutlet UILabel *noFavoriteShopLabel;
 @property (weak, nonatomic) IBOutlet UIView *orderListView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingOrdersIndicatorView;
-@property (strong, nonatomic) IBOutlet UITableView *orderListTableView;
+@property (weak, nonatomic) IBOutlet UITableView *orderListTableView;
 @property (strong, nonatomic) NSArray *userFavoriteShops;
 @property (strong, nonatomic) NSArray *orderlist;
 //@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentaionControl;
-@property (strong, nonatomic) IBOutlet UIView *userDataModificationView;
-@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *userEmailLabel;
-@property (strong, nonatomic) IBOutlet UILabel *userTokenLabel;
+@property (weak, nonatomic) IBOutlet UIView *userDataModificationView;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userEmailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userTokenLabel;
 @property (strong, nonatomic) UIActionSheet *logoutActionSheet;
 @property (weak, nonatomic) IBOutlet UIView *segmentedControlView;
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
@@ -198,10 +200,12 @@ enum BKUserToolSegmentationSelection {
         [[BKAccountManager sharedBKAccountManager] getUserFavoriteShopsCompleteHandler:^(BOOL success) {
             //NSLog(@"!!!!!!!!!  %@", self.userFavoriteShops);
             [self.favoriteShopTableView reloadData];
+            self.noFavoriteShopLabel.hidden = self.userFavoriteShops.count > 0;
         }];
     }
     else {
         [self.favoriteShopTableView reloadData];
+        self.noFavoriteShopLabel.hidden = self.userFavoriteShops.count > 0;
     }
 }
 
@@ -398,18 +402,18 @@ enum BKUserToolSegmentationSelection {
     NSLog(@"segment changed!");
     if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionShop){
         [self.favoriteShopTableView reloadData];
-        self.favoriteShopTableView.hidden = NO;
+        self.favoriteShopView.hidden = NO;
         self.orderListView.hidden = YES;
         self.userDataModificationView.hidden = YES;
     }
     else if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionOrder) {
         [self.orderListTableView reloadData];
-        self.favoriteShopTableView.hidden = YES;
+        self.favoriteShopView.hidden = YES;
         self.orderListView.hidden = NO;
         self.userDataModificationView.hidden = YES;        
     }    
     else if (sender.firstSelectedIndex == BKUserToolSegmentationSelectionUserData) {
-        self.favoriteShopTableView.hidden = YES;
+        self.favoriteShopView.hidden = YES;
         self.orderListView.hidden = YES;
         self.userDataModificationView.hidden = NO;        
     }

@@ -647,8 +647,8 @@ NSString *const kBKFacebookFeedDialogPostID = @"post_id";
     result.caption = @"Link caption";
     result.description = @"Link description";
     //result.link = [NSURL URLWithString:self.shopInfo.shopURL];
-    result.link = [NSURL URLWithString:@"http://www.google.com"];
-    result.picture = [NSURL URLWithString:@"https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png"];
+    result.link = [NSURL URLWithString:@"http://blink.com.tw"];
+    result.picture = [NSURL URLWithString:@"http://blink.com.tw.mopaycdn.com/pTmp7U3kmRpT7EhrOkj9U1w9xWQ=/36x36/www.blink.com.tw/static/img/logo-og.png"];
     
     return result;
 }

@@ -32,10 +32,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.MoPayTech.pushTest</string>
+			<string>com.MoPayTech.BlinkForUsers</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.MoPayTech.pushTest</string>
+				<string>com.MoPayTech.BlinkForUsers</string>
 			</array>
 		</dict>
 	</array>
