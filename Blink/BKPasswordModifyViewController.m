@@ -17,6 +17,8 @@
 @property (strong, nonatomic) NSString *userNewPWD;
 @property (strong, nonatomic) NSString *userNewPWDConfirm;
 
+@property (weak, nonatomic) IBOutlet UIView *viewForCalculatinContentSize;
+
 @property (weak, nonatomic) IBOutlet UITextField *userOldPWDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userNewPWDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userNewPWDConfirmTextField;
@@ -47,7 +49,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.scrollView.contentSize = CGSizeMake(0, 0);
+    self.scrollView.contentSize = self.viewForCalculatinContentSize.frame.size;
 }
 
 - (void)viewDidLoad
@@ -121,7 +123,7 @@
     [self.activeResponder resignFirstResponder];
     
     if (![self isOldPWDandNewPWDValid]) {
-        [self showAlert:NSLocalizedString(@"Please enter your password", @"")];
+        [self showAlert:NSLocalizedString(@"Wrong password", @"")];
         return;
     }
     

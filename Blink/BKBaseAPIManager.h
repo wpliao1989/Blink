@@ -10,10 +10,15 @@
 #import "BKAPIError.h"
 
 FOUNDATION_EXPORT NSString *const kToken;
+FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
 typedef void (^apiCompleteHandler)(id data, NSError *error);
 
 @interface BKBaseAPIManager : OSConnectionManager
+
+@property (nonatomic, readonly) BOOL loadingServerInfo;
+@property (strong, nonatomic) NSArray *cities;
+@property (strong, nonatomic) NSDictionary *cityToRegionDict;
 
 // API calling and handling
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler;
@@ -37,5 +42,10 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 - (void)sendPushToken:(NSString *)pushToken userToken:(NSString *)userToken completeHandler:(apiCompleteHandler)handler;
 
 - (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
+
+- (void)updateServerInfo;
+- (void)updateListCriteriaWithObject:(id)listCriteriaObject;
+- (void)updateSortCriteria;
+- (BOOL)isServiceInfoValid;
 
 @end

@@ -21,8 +21,11 @@
 #import "UIViewController+Formatter.h"
 #import "UIViewController+ShopListCell.h"
 #import "UIViewController+SharedCustomizedUI.h"
+#import "ZSPinAnnotation.h"
 
 #import "BKTestCenter.h"
+
+#define UIColorFromHEXValue(hexValue) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0]
 
 //@interface UITableView (CustomAnimation)
 //
@@ -592,28 +595,33 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
     
     static NSString *annotationViewID = @"annotationViewID";
     
-    MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+    MKAnnotationView *pinView = (MKAnnotationView *)
     [mapView dequeueReusableAnnotationViewWithIdentifier:annotationViewID];
     
     if (pinView == nil)
     {
         // if an existing pin view was not available, create one
-        MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
-                                              initWithAnnotation:annotation
-                                              reuseIdentifier:annotationViewID];
-        customPinView.pinColor = MKPinAnnotationColorPurple;
-        customPinView.animatesDrop = YES;
-        customPinView.canShowCallout = YES;
+        pinView = [[MKAnnotationView alloc]
+                   initWithAnnotation:annotation
+                   reuseIdentifier:annotationViewID];
+        
+        //pinView.pinColor = MKPinAnnotationColorPurple;
+        //pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        
+        // Custom Pin Color
+        //pinView.image = [ZSPinAnnotation pinAnnotationWithColor:[self colorForAnnotation:annotation]];
         
         // add a detail disclosure button to the callout which will open a new view controller page
         //
         // note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
         //  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
         //
+        
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        customPinView.rightCalloutAccessoryView = rightButton;
-        customPinView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
-        return customPinView;
+        pinView.rightCalloutAccessoryView = rightButton;
+        pinView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
+        //return customPinView;
     }
     else
     {
@@ -624,6 +632,9 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
         UIImageView *imageView = (UIImageView *)(pinView.leftCalloutAccessoryView);
         imageView.image = nil;
     }
+    
+    // Custom Pin Color
+    pinView.image = [ZSPinAnnotation pinAnnotationWithColor:[self colorForAnnotation:annotation]];
     
     return pinView;
 }
@@ -667,6 +678,84 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
 //    self.isLocationServiceEnabled = NO;
 //    [self.shopListTableView reloadData];
 //}
+
+#pragma mark - Get custom pin color
+
+- (UIColor *)colorForAnnotation:(id<MKAnnotation>)annotaion {
+    BKShopInfo *shopInfo = annotaion;
+    NSArray *shopTypes = [BKShopInfo shopTypes];
+    
+    NSString *type = shopInfo.type;
+    
+    if ([type isEqualToString:[shopTypes objectAtIndex:0]]) {
+        return UIColorFromHEXValue(0xA0009E);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:1]]) {
+        return UIColorFromHEXValue(0xA0004E);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:2]]) {
+        return UIColorFromHEXValue(0xA00200);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:3]]) {
+        return UIColorFromHEXValue(0xA05200);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:4]]) {
+        return UIColorFromHEXValue(0x9EA000);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:5]]) {
+        return UIColorFromHEXValue(0x4EA000);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:6]]) {
+        return UIColorFromHEXValue(0x00A002);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:7]]) {
+        return UIColorFromHEXValue(0x00A052);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:8]]) {
+        return UIColorFromHEXValue(0x009EA0);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:9]]) {
+        return UIColorFromHEXValue(0x004EA0);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:10]]) {
+        return UIColorFromHEXValue(0x0200A0);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:11]]) {
+        return UIColorFromHEXValue(0x5200A0);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:12]]) {
+        return UIColorFromHEXValue(0xA0009E);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:13]]) {
+        return UIColorFromHEXValue(0xA0004E);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:14]]) {
+        return UIColorFromHEXValue(0xA00200);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:15]]) {
+        return UIColorFromHEXValue(0xA05200);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:16]]) {
+        return UIColorFromHEXValue(0x9EA000);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:17]]) {
+        return UIColorFromHEXValue(0x4EA000);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:18]]) {
+        return UIColorFromHEXValue(0x4EA000);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:19]]) {
+        return UIColorFromHEXValue(0x00A002);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:20]]) {
+        return UIColorFromHEXValue(0x00A052);
+    }
+    else if ([type isEqualToString:[shopTypes objectAtIndex:21]]) {
+        return UIColorFromHEXValue(0x009EA0);
+    }
+    
+    return [UIColor blackColor];
+}
 
 #pragma mark - Update region
 

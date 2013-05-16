@@ -19,7 +19,6 @@
 
 FOUNDATION_EXPORT NSString *const kBKLocationDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kBKLocationBecameAvailableNotification;
-FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
 #import "BKBaseAPIManager.h"
 
@@ -37,10 +36,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 
 // BOOL flag indicating whether APIManager is loading new data
 @property (nonatomic) BOOL isLoadingData;
-@property (nonatomic, readonly) BOOL loadingServerInfo;
 
 // Server info
-@property (strong, nonatomic) NSArray *cities;
 - (NSArray *)regionsForCity:(NSString *)city;
 @property (strong, nonatomic) NSArray *localizedListCriteria;
 @property (strong, nonatomic) NSArray *localizedSortCriteria;
@@ -61,8 +58,6 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 - (void)shopDetailWithShopID:(NSString *)shopID completionHandler:(apiCompleteHandler)completeHandler;
 
 - (void)orderWithData:(BKOrderForSending *)order completionHandler:(apiCompleteHandler) completeHandler;
-
-- (void)updateServerInfo;
 
 @end
 

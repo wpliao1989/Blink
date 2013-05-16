@@ -26,6 +26,8 @@ NSString *const BKErrorDomainNetwork = @"com.flyingman.BKErrorDomainNetwork";
 NSString *const BKNetworkNotRespondingMessage = @"伺服器無回應";
 NSString *const BKWrongResultMessage = @"";
 
+NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
+
 // Custom error message key
 //NSString *const kBKErrorMessage = @"kBKErrorMessage";
 
@@ -75,6 +77,17 @@ NSString *const BKWrongResultMessage = @"";
 @end
 
 @implementation BKBaseAPIManager
+
+#pragma mark - Late instantiation
+
+- (NSDictionary *)cityToRegionDict {
+    if (_cityToRegionDict == nil) {
+        _cityToRegionDict = @{};
+    }
+    return _cityToRegionDict;
+}
+
+#pragma mark - Basic APIs
 
 - (void)callAPI:(NSString *)apiName withPostBody:(NSDictionary *)postBody completionHandler:(serviceCompleteHandler)completeHandler {
     NSData *encodedPostBody = [self packedJSONWithFoundationObJect:postBody];
@@ -249,5 +262,86 @@ completionHandler:completeHandler];
         [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
 }
+
+- (void)updateServerInfo {
+    static NSString *kRegion = @"region";
+    static NSString *kListCriteria = @"listCriteria";
+    //    static NSString *kSortCriteria = @"sortCriteria";
+    
+    _loadingServerInfo = YES;
+    
+    [self service:@"info"
+           method:@"GET"
+         postData:nil
+      contentType:nil
+    useJSONDecode:YES
+   isAsynchronous:YES
+completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+    NSLog(@"response = %@", response);
+    NSLog(@"data = %@", data);
+    NSLog(@"error = %@", error);
+    
+    if ([self isCorrectResult:data]) {
+        
+        id regionObject = [data objectForKey:kRegion];
+        [self updateRegionWithObject:regionObject];
+        
+        id listCriteriaObject = [data objectForKey:kListCriteria];
+        [self updateListCriteriaWithObject:listCriteriaObject];
+        
+        [self updateSortCriteria];        
+    }
+    
+    if (![self isServiceInfoValid]) {
+        double delayInSeconds = 10.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self updateServerInfo];
+        });
+    }
+    else {
+        _loadingServerInfo = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBKServerInfoDidUpdateNotification object:nil];
+    }
+}];
+}
+
+- (void)updateRegionWithObject:(id)regionObject {
+    if (regionObject != [NSNull null] && [regionObject isKindOfClass:[NSArray class]]) {
+        NSMutableArray *cities = [NSMutableArray array];
+        NSMutableDictionary *citiesToRegionsTable = [NSMutableDictionary dictionary];
+        
+        for (NSArray *cityAndRegions in regionObject) {
+            NSString *cityName = [cityAndRegions objectAtIndex:0];
+            NSArray *regions = [cityAndRegions objectAtIndex:1];
+            
+            [cities addObject:cityName];
+            [citiesToRegionsTable setObject:regions forKey:cityName];
+        }
+        
+        self.cities = [NSArray arrayWithArray:cities];
+        self.cityToRegionDict = [NSDictionary dictionaryWithDictionary:citiesToRegionsTable];
+    }
+    //    NSLog(@"regions: %@, class: %@", regionObject, [regionObject class]);
+    //    for (id object in regionObject) {
+    //        NSLog(@"object: %@, class: %@", object, [object class]);
+    //        for (id innerObject in object) {
+    //            NSLog(@"inner object: %@, class: %@", innerObject, [innerObject class]);
+    //        }
+    //    }
+}
+
+- (void)updateListCriteriaWithObject:(id)listCriteriaObject {
+    
+}
+
+- (void)updateSortCriteria {
+    
+}
+
+- (BOOL)isServiceInfoValid {
+    return self.cities && self.cityToRegionDict;
+}
+
 
 @end
