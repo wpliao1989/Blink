@@ -25,13 +25,13 @@ NSString *const kMethod = @"method";
 NSString *const kCity = @"city";
 NSString *const kDistrict = @"district";
 
-// Post keys
-NSString *const kToken = @"token";
-
-// User
-NSString *const kUserName = @"username";
-NSString *const kPWD = @"password";
-NSString *const kEmail = @"email";
+//// Post keys
+//NSString *const kToken = @"token";
+//
+//// User
+//NSString *const kUserName = @"username";
+//NSString *const kPWD = @"password";
+//NSString *const kEmail = @"email";
 
 @interface NSData (JSONValue)
 

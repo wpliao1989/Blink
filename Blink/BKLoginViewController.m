@@ -20,6 +20,7 @@
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)registrationButtonPressed:(id)sender;
 - (IBAction)closeButtonPressed:(id)sender;
+- (IBAction)forgetPasswordButtonPressed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIImageView *titleBackground;
 @property (strong, nonatomic) IBOutlet UITextField *userAccountTextField;
@@ -147,6 +148,10 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+- (IBAction)forgetPasswordButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"fotgetPasswordSegue" sender:self];
 }
 
 #pragma mark - Text field

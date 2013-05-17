@@ -28,8 +28,10 @@ NSString *const BKWrongResultMessage = @"";
 
 NSString *const kBKServerInfoDidUpdateNotification = @"kBKServerInfoDidUpdateNotification";
 
-// Custom error message key
-//NSString *const kBKErrorMessage = @"kBKErrorMessage";
+NSString *const kToken = @"token";
+NSString *const kUserName = @"username";
+NSString *const kEmail = @"email";
+NSString *const kPWD = @"password";
 
 @interface BKBaseAPIManager (Internal)
 
@@ -246,6 +248,16 @@ completionHandler:completeHandler];
     [self callAPI:@"push" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
         [self handleAPIResponse:response data:data error:error customWrongResultError:nil completeHandler:handler
          ];
+    }];
+}
+
+- (void)forgetPasswordUserAccount:(NSString *)account email:(NSString *)email completionHandler:(apiCompleteHandler) completeHandler {
+    NSDictionary *parameterDictionary = @{kUserName : account, kEmail : email};
+    [self callAPI:@"forget" withPostBody:parameterDictionary completionHandler:^(NSURLResponse *response, id data, NSError *error) {
+        
+        NSError *customError = [NSError errorWithDomain:BKErrorDomainWrongResult code:BKErrorWrongResultUserNameOrPassword userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Wrong account or email", @"")}];
+        
+        [self handleAPIResponse:response data:data error:error customWrongResultError:customError completeHandler:completeHandler];
     }];
 }
 

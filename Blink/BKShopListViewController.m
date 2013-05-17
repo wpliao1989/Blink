@@ -608,6 +608,8 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
         //pinView.pinColor = MKPinAnnotationColorPurple;
         //pinView.animatesDrop = YES;
         pinView.canShowCallout = YES;
+        pinView.centerOffset = CGPointMake(6.5,-16);
+		pinView.calloutOffset = CGPointMake(-7.5,0);
         
         // Custom Pin Color
         //pinView.image = [ZSPinAnnotation pinAnnotationWithColor:[self colorForAnnotation:annotation]];

@@ -10,6 +10,10 @@
 #import "BKAPIError.h"
 
 FOUNDATION_EXPORT NSString *const kToken;
+FOUNDATION_EXPORT NSString *const kUserName;
+FOUNDATION_EXPORT NSString *const kEmail;
+FOUNDATION_EXPORT NSString *const kPWD;
+
 FOUNDATION_EXPORT NSString *const kBKServerInfoDidUpdateNotification;
 
 typedef void (^apiCompleteHandler)(id data, NSError *error);
@@ -41,6 +45,7 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 - (NSString *)generateBoundaryString;
 - (void)sendPushToken:(NSString *)pushToken userToken:(NSString *)userToken completeHandler:(apiCompleteHandler)handler;
 
+- (void)forgetPasswordUserAccount:(NSString *)account email:(NSString *)email completionHandler:(apiCompleteHandler) completeHandler;
 - (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
 
 - (void)updateServerInfo;

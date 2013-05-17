@@ -232,6 +232,9 @@
 		42FB9FC61744D1B4000DE4EE /* stick.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FBE1744D1B4000DE4EE /* stick.png */; };
 		42FB9FC71744D1B4000DE4EE /* stick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FBF1744D1B4000DE4EE /* stick@2x.png */; };
 		42FB9FC81744D1B4000DE4EE /* ZSPinAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FB9FC11744D1B4000DE4EE /* ZSPinAnnotation.m */; };
+		42FB9FCF1745C855000DE4EE /* bottom_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FCD1745C855000DE4EE /* bottom_press.png */; };
+		42FB9FD01745C855000DE4EE /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FCE1745C855000DE4EE /* bottom.png */; };
+		42FB9FD31745C8D7000DE4EE /* BKPasswordRetrieveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FB9FD21745C8D7000DE4EE /* BKPasswordRetrieveViewController.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
 		CE3AAFFD16EDDB05007E6A82 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD116EDDB05007E6A82 /* a2@2x.png */; };
@@ -707,6 +710,10 @@
 		42FB9FBF1744D1B4000DE4EE /* stick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stick@2x.png"; sourceTree = "<group>"; };
 		42FB9FC01744D1B4000DE4EE /* ZSPinAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSPinAnnotation.h; sourceTree = "<group>"; };
 		42FB9FC11744D1B4000DE4EE /* ZSPinAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSPinAnnotation.m; sourceTree = "<group>"; };
+		42FB9FCD1745C855000DE4EE /* bottom_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom_press.png; sourceTree = "<group>"; };
+		42FB9FCE1745C855000DE4EE /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
+		42FB9FD11745C8D7000DE4EE /* BKPasswordRetrieveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKPasswordRetrieveViewController.h; sourceTree = "<group>"; };
+		42FB9FD21745C8D7000DE4EE /* BKPasswordRetrieveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKPasswordRetrieveViewController.m; sourceTree = "<group>"; };
 		CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2_press@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD116EDDB05007E6A82 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
@@ -1375,6 +1382,8 @@
 				CE7A78F116B766CD0072519F /* BKUserToolViewController.m */,
 				42100201171B9E6100EE476E /* BKPasswordModifyViewController.h */,
 				42100202171B9E6100EE476E /* BKPasswordModifyViewController.m */,
+				42FB9FD11745C8D7000DE4EE /* BKPasswordRetrieveViewController.h */,
+				42FB9FD21745C8D7000DE4EE /* BKPasswordRetrieveViewController.m */,
 				4228C4E9172E64C900DD38E5 /* BKAccountActivationViewController.h */,
 				4228C4EA172E64C900DD38E5 /* BKAccountActivationViewController.m */,
 				CE7A78E616B762210072519F /* BKMainPageViewController.h */,
@@ -1495,6 +1504,8 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				42FB9FCD1745C855000DE4EE /* bottom_press.png */,
+				42FB9FCE1745C855000DE4EE /* bottom.png */,
 				424EDFC51732014000AE80DB /* add_press2.png */,
 				424EDFC61732014000AE80DB /* add-2.png */,
 				427F919B172F5D76009F9E92 /* resend-click.png */,
@@ -2018,6 +2029,8 @@
 				42FB9FC51744D1B4000DE4EE /* shading@2x.png in Resources */,
 				42FB9FC61744D1B4000DE4EE /* stick.png in Resources */,
 				42FB9FC71744D1B4000DE4EE /* stick@2x.png in Resources */,
+				42FB9FCF1745C855000DE4EE /* bottom_press.png in Resources */,
+				42FB9FD01745C855000DE4EE /* bottom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2143,6 +2156,7 @@
 				425E2C0B17377DC3001C0D17 /* BKNotifier.m in Sources */,
 				424AAA311738D36F007CCF11 /* UIViewController+Additions.m in Sources */,
 				42FB9FC81744D1B4000DE4EE /* ZSPinAnnotation.m in Sources */,
+				42FB9FD31745C8D7000DE4EE /* BKPasswordRetrieveViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
