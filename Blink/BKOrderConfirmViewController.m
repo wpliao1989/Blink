@@ -20,19 +20,21 @@
 #import "UIViewController+SharedCustomizedUI.h"
 #import "BKNoteViewController.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "BKModifyUserInfoViewController.h"
 
-@interface BKOrderConfirmViewController ()<BKNoteViewDelegate>
+@interface BKOrderConfirmViewController ()<BKNoteViewDelegate, BKModifyUserInfoViewControllerDelegate>
 
 - (IBAction)orderConfirmButtonPressed:(id)sender;
-@property (strong, nonatomic) IBOutlet UIImageView *backgrond;
-@property (strong, nonatomic) IBOutlet UILabel *totalPriceLabel;
-@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *userPhoneLabel;
-@property (strong, nonatomic) IBOutlet UILabel *userAddressLabel;
-@property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *serviceTypeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
-@property (strong, nonatomic) IBOutlet UIButton *orderConfirmButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgrond;
+@property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userPhoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serviceTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *orderConfirmButton;
+@property (weak, nonatomic) IBOutlet UIButton *modifyUserInfoButton;
 
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userPhone;
@@ -47,6 +49,7 @@
 - (void)setUpLabels;
 
 - (IBAction)noteButtonPressed:(id)sender;
+- (IBAction)modifyUserInfoButtonPressed:(id)sender;
 
 @end
 
@@ -95,6 +98,7 @@
 - (void)setUpButtons {
     if (self.orderIsForReview) {
         self.orderConfirmButton.hidden = YES;
+        self.modifyUserInfoButton.hidden = YES;
     }    
 }
 
@@ -188,6 +192,19 @@
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
 }
 
+#pragma mark - BKModifyUserInfoViewControllerDelegate
+
+- (void)modifyUserInfoVC:(BKModifyUserInfoViewController *)sender didFinishedModificationSavingInfo:(BOOL)savesInfo {
+    NSLog(@"did finished modification, name:%@, phone:%@, address:%@, saves info:%@", sender.userName, sender.userPhone, sender.userAddress, savesInfo ? @"YES" : @"NO");
+    self.userName = sender.userName;
+    self.userPhone = sender.userPhone;
+    self.userAddress = sender.userAddress;
+    
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideRightRight];
+    
+    [[BKAccountManager sharedBKAccountManager] editUserName:sender.userName address:sender.userAddress email:[BKAccountManager sharedBKAccountManager].userEmail phone:sender.userPhone completionHandler:^(BOOL success, NSError *error) {}];
+}
+
 #pragma mark - Send order
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
@@ -223,6 +240,17 @@
     note.noteIsEditable = NO;
     
     [self presentPopupViewController:note animationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
+- (IBAction)modifyUserInfoButtonPressed:(id)sender {
+    BKModifyUserInfoViewController *modifyVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BKModifyUserInfoViewController"];
+    [modifyVC view]; // Force viewDidLoad to fire
+    modifyVC.userName = self.userName;
+    modifyVC.userPhone = self.userPhone;
+    modifyVC.userAddress = self.userAddress;
+    modifyVC.delegate = self;
+    
+    [self presentPopupViewController:modifyVC animationType:MJPopupViewAnimationSlideRightRight];
 }
 
 @end

@@ -235,6 +235,19 @@
 		42FB9FCF1745C855000DE4EE /* bottom_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FCD1745C855000DE4EE /* bottom_press.png */; };
 		42FB9FD01745C855000DE4EE /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FCE1745C855000DE4EE /* bottom.png */; };
 		42FB9FD31745C8D7000DE4EE /* BKPasswordRetrieveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FB9FD21745C8D7000DE4EE /* BKPasswordRetrieveViewController.m */; };
+		42FB9FDA17461021000DE4EE /* Forgot your password_press@2x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FD817461021000DE4EE /* Forgot your password_press@2x.PNG */; };
+		42FB9FDF174613A1000DE4EE /* Forgot your password.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FDE174613A1000DE4EE /* Forgot your password.PNG */; };
+		42FB9FE1174613B9000DE4EE /* Forgot your password_press.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE0174613B9000DE4EE /* Forgot your password_press.PNG */; };
+		42FB9FE3174613C3000DE4EE /* Forgot your password@2x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE2174613C3000DE4EE /* Forgot your password@2x.PNG */; };
+		42FB9FE61746174B000DE4EE /* Modify@2x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE41746174B000DE4EE /* Modify@2x.PNG */; };
+		42FB9FE71746174B000DE4EE /* Modify_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE51746174B000DE4EE /* Modify_press@2x.png */; };
+		42FB9FEA17461753000DE4EE /* Modify.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE817461753000DE4EE /* Modify.PNG */; };
+		42FB9FEB17461753000DE4EE /* Modify_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FE917461753000DE4EE /* Modify_press.png */; };
+		42FB9FEE1746193E000DE4EE /* Submit.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FEC1746193E000DE4EE /* Submit.PNG */; };
+		42FB9FEF1746193E000DE4EE /* Submit_press.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FED1746193E000DE4EE /* Submit_press.PNG */; };
+		42FB9FF217461945000DE4EE /* Submit_press@2x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FF017461945000DE4EE /* Submit_press@2x.PNG */; };
+		42FB9FF317461945000DE4EE /* Submit@2x.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 42FB9FF117461945000DE4EE /* Submit@2x.PNG */; };
+		42FB9FF6174619EC000DE4EE /* BKModifyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FB9FF5174619EC000DE4EE /* BKModifyUserInfoViewController.m */; };
 		CE3AAFFB16EDDB05007E6A82 /* a1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */; };
 		CE3AAFFC16EDDB05007E6A82 /* a2_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */; };
 		CE3AAFFD16EDDB05007E6A82 /* a2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3AAFD116EDDB05007E6A82 /* a2@2x.png */; };
@@ -714,6 +727,20 @@
 		42FB9FCE1745C855000DE4EE /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		42FB9FD11745C8D7000DE4EE /* BKPasswordRetrieveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKPasswordRetrieveViewController.h; sourceTree = "<group>"; };
 		42FB9FD21745C8D7000DE4EE /* BKPasswordRetrieveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKPasswordRetrieveViewController.m; sourceTree = "<group>"; };
+		42FB9FD817461021000DE4EE /* Forgot your password_press@2x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Forgot your password_press@2x.PNG"; sourceTree = "<group>"; };
+		42FB9FDE174613A1000DE4EE /* Forgot your password.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Forgot your password.PNG"; sourceTree = "<group>"; };
+		42FB9FE0174613B9000DE4EE /* Forgot your password_press.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Forgot your password_press.PNG"; sourceTree = "<group>"; };
+		42FB9FE2174613C3000DE4EE /* Forgot your password@2x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Forgot your password@2x.PNG"; sourceTree = "<group>"; };
+		42FB9FE41746174B000DE4EE /* Modify@2x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Modify@2x.PNG"; sourceTree = "<group>"; };
+		42FB9FE51746174B000DE4EE /* Modify_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Modify_press@2x.png"; sourceTree = "<group>"; };
+		42FB9FE817461753000DE4EE /* Modify.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Modify.PNG; sourceTree = "<group>"; };
+		42FB9FE917461753000DE4EE /* Modify_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Modify_press.png; sourceTree = "<group>"; };
+		42FB9FEC1746193E000DE4EE /* Submit.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Submit.PNG; sourceTree = "<group>"; };
+		42FB9FED1746193E000DE4EE /* Submit_press.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Submit_press.PNG; sourceTree = "<group>"; };
+		42FB9FF017461945000DE4EE /* Submit_press@2x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Submit_press@2x.PNG"; sourceTree = "<group>"; };
+		42FB9FF117461945000DE4EE /* Submit@2x.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Submit@2x.PNG"; sourceTree = "<group>"; };
+		42FB9FF4174619EB000DE4EE /* BKModifyUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKModifyUserInfoViewController.h; sourceTree = "<group>"; };
+		42FB9FF5174619EC000DE4EE /* BKModifyUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKModifyUserInfoViewController.m; sourceTree = "<group>"; };
 		CE3AAFCF16EDDB05007E6A82 /* a1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a1@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD016EDDB05007E6A82 /* a2_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2_press@2x.png"; sourceTree = "<group>"; };
 		CE3AAFD116EDDB05007E6A82 /* a2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a2@2x.png"; sourceTree = "<group>"; };
@@ -1400,6 +1427,8 @@
 				CE805B9B16C3A51B0040095F /* BKMenuViewController.m */,
 				CE805BAA16C3A9210040095F /* BKNoteViewController.h */,
 				CE805BAB16C3A9210040095F /* BKNoteViewController.m */,
+				42FB9FF4174619EB000DE4EE /* BKModifyUserInfoViewController.h */,
+				42FB9FF5174619EC000DE4EE /* BKModifyUserInfoViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -1504,6 +1533,12 @@
 		CE847A7E16EF101400CB75CB /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				42FB9FEC1746193E000DE4EE /* Submit.PNG */,
+				42FB9FED1746193E000DE4EE /* Submit_press.PNG */,
+				42FB9FE817461753000DE4EE /* Modify.PNG */,
+				42FB9FE917461753000DE4EE /* Modify_press.png */,
+				42FB9FE0174613B9000DE4EE /* Forgot your password_press.PNG */,
+				42FB9FDE174613A1000DE4EE /* Forgot your password.PNG */,
 				42FB9FCD1745C855000DE4EE /* bottom_press.png */,
 				42FB9FCE1745C855000DE4EE /* bottom.png */,
 				424EDFC51732014000AE80DB /* add_press2.png */,
@@ -1618,6 +1653,12 @@
 		CE847A7F16EF107800CB75CB /* iPhone Retina */ = {
 			isa = PBXGroup;
 			children = (
+				42FB9FF017461945000DE4EE /* Submit_press@2x.PNG */,
+				42FB9FF117461945000DE4EE /* Submit@2x.PNG */,
+				42FB9FE41746174B000DE4EE /* Modify@2x.PNG */,
+				42FB9FE51746174B000DE4EE /* Modify_press@2x.png */,
+				42FB9FD817461021000DE4EE /* Forgot your password_press@2x.PNG */,
+				42FB9FE2174613C3000DE4EE /* Forgot your password@2x.PNG */,
 				424EDFC11732013500AE80DB /* add_press2@2x.png */,
 				424EDFC21732013500AE80DB /* add-2@2x.png */,
 				427F9197172F5D6E009F9E92 /* resend@2x.png */,
@@ -2031,6 +2072,18 @@
 				42FB9FC71744D1B4000DE4EE /* stick@2x.png in Resources */,
 				42FB9FCF1745C855000DE4EE /* bottom_press.png in Resources */,
 				42FB9FD01745C855000DE4EE /* bottom.png in Resources */,
+				42FB9FDA17461021000DE4EE /* Forgot your password_press@2x.PNG in Resources */,
+				42FB9FDF174613A1000DE4EE /* Forgot your password.PNG in Resources */,
+				42FB9FE1174613B9000DE4EE /* Forgot your password_press.PNG in Resources */,
+				42FB9FE3174613C3000DE4EE /* Forgot your password@2x.PNG in Resources */,
+				42FB9FE61746174B000DE4EE /* Modify@2x.PNG in Resources */,
+				42FB9FE71746174B000DE4EE /* Modify_press@2x.png in Resources */,
+				42FB9FEA17461753000DE4EE /* Modify.PNG in Resources */,
+				42FB9FEB17461753000DE4EE /* Modify_press.png in Resources */,
+				42FB9FEE1746193E000DE4EE /* Submit.PNG in Resources */,
+				42FB9FEF1746193E000DE4EE /* Submit_press.PNG in Resources */,
+				42FB9FF217461945000DE4EE /* Submit_press@2x.PNG in Resources */,
+				42FB9FF317461945000DE4EE /* Submit@2x.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2157,6 +2210,7 @@
 				424AAA311738D36F007CCF11 /* UIViewController+Additions.m in Sources */,
 				42FB9FC81744D1B4000DE4EE /* ZSPinAnnotation.m in Sources */,
 				42FB9FD31745C8D7000DE4EE /* BKPasswordRetrieveViewController.m in Sources */,
+				42FB9FF6174619EC000DE4EE /* BKModifyUserInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
