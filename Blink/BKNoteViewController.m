@@ -46,6 +46,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     self.noteText.text = self.note;
+    self.noteText.editable = self.noteIsEditable;
 //    [self.background setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
     [self.background setImage:[self resizableListImage]];
     
@@ -94,18 +95,19 @@
 }
 
 - (void)saveButtonPressed:(id)sender {
-    if ([[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text
-                                            forShopInfo:self.shopInfo]) {
-        [self.delegate confirmButtonPressed:self];
+    if (self.noteIsEditable) {
+        if ([[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text
+                                                forShopInfo:self.shopInfo]) {
+            [self.delegate confirmButtonPressed:self];
+        }
+        else {
+            [self.orderExistAlert setMessage:[self.delegate orderExistsMessage]];
+            [self.orderExistAlert show];
+        }
     }
     else {
-        [self.orderExistAlert setMessage:[self.delegate orderExistsMessage]];
-        [self.orderExistAlert show];
+        [self.delegate confirmButtonPressed:self];
     }
-//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(confirmButtonPressed:)]) {
-//        [[BKOrderManager sharedBKOrderManager] saveNote:self.noteText.text forShopInfo:self.shopInfo];
-//        [self.delegate confirmButtonPressed:self];
-//    }
 }
 
 @end

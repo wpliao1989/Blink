@@ -18,8 +18,10 @@
 #import "BKOrderForReceiving.h"
 #import "BKOrderContent.h"
 #import "UIViewController+SharedCustomizedUI.h"
+#import "BKNoteViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 
-@interface BKOrderConfirmViewController ()
+@interface BKOrderConfirmViewController ()<BKNoteViewDelegate>
 
 - (IBAction)orderConfirmButtonPressed:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *backgrond;
@@ -39,8 +41,12 @@
 - (NSString *)stringForSize:(NSString *)size quantity:(NSNumber *)quantity ice:(NSString *)ice sweetness:(NSString *)sweetness;
 - (NSString *)stringFromDate:(NSDate *)date;
 
+@property (nonatomic) BOOL orderIsForReview;
+
 - (void)initUserInfos;
 - (void)setUpLabels;
+
+- (IBAction)noteButtonPressed:(id)sender;
 
 @end
 
@@ -65,6 +71,10 @@
     self.userAddressLabel.text = userAddress;
 }
 
+- (BOOL)orderIsForReview {
+    return [self.order isKindOfClass:[BKOrderForReceiving class]];
+}
+
 - (void)initUserInfos {
     self.userName = self.order.name;
     self.userPhone = self.order.phone;
@@ -83,7 +93,7 @@
 }
 
 - (void)setUpButtons {
-    if ([self.order isKindOfClass:[BKOrderForReceiving class]]) {        
+    if (self.orderIsForReview) {
         self.orderConfirmButton.hidden = YES;
     }    
 }
@@ -98,7 +108,7 @@
     [self setUpLabels];
     [self setUpButtons];
     [self.view setBackgroundColor:[self viewBackgoundColor]];
-    [self.backgrond setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];        
+    [self.backgrond setImage:[self resizableListImage]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,6 +182,12 @@
     return cell;
 }
 
+#pragma mark - BKNoteViewDelegate
+
+- (void)confirmButtonPressed:(BKNoteViewController *)sender {
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
 #pragma mark - Send order
 
 - (void)dismissHUDSuccessBlock:(aBlock)successBlock failBlock:(failBlock)failBlock {
@@ -198,39 +214,15 @@
 #warning Poping method should be changed to popToViewController
     [[BKOrderManager sharedBKOrderManager] setUserToken:((BKOrderForSending *)self.order).userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
     [self showHUDViewWithMessage:NSLocalizedString(@"Sending order...", @"訂購中...")];
-//    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-//    [self.navigationController.view addSubview:self.HUD];
-//    self.HUD.delegate = self;
-//    self.HUD.labelText = @"送出中...";
-//    [self.HUD show:YES];
-//    
-//    [[BKOrderManager sharedBKOrderManager] sendOrderWithCompleteHandler:^(BOOL success, NSError *error) {
-//        if (success) {
-//            self.HUD.mode = MBProgressHUDModeText;
-//            self.HUD.labelText = @"訂購成功!";
-//            [[BKOrderManager sharedBKOrderManager] clear];
-//            double delayInSeconds = 1.0;
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                [self.HUD hide:YES];
-//                UIViewController *destinationVC = [self.navigationController.viewControllers objectAtIndex:2];
-//                if ([destinationVC isKindOfClass:[BKShopDetailViewController class]]) {
-//                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-//                }
-//                                                                                        
-//            });            
-//        }
-//        else {
-//            NSLog(@"Warning: order failed, error: %@", error);
-//            self.HUD.mode = MBProgressHUDModeText;
-//            if ([error.domain isEqualToString:BKErrorDomainWrongOrder]) {                
-//                self.HUD.labelText = @"訂單錯誤";
-//            }
-//            else {
-//                self.HUD.labelText = @"網路無回應";
-//            }
-//            [self.HUD hide:YES afterDelay:1.0];
-//        }
-//    }];   
 }
+
+- (IBAction)noteButtonPressed:(id)sender {
+    BKNoteViewController *note = [self.storyboard instantiateViewControllerWithIdentifier:@"BKNoteVC"];
+    note.delegate = self;
+    note.note = self.order.note;
+    note.noteIsEditable = NO;
+    
+    [self presentPopupViewController:note animationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
 @end

@@ -242,6 +242,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAccountManager)
 
 - (void)editUserPWD:(NSString *)password completionHandler:(void (^)(BOOL, NSError *))completeHandler {
     [[BKAPIManager sharedBKAPIManager] editUserPWD:password token:self.userToken completionHandler:^(id data, NSError *error) {
+        if (data != nil && self.isSavingPreferences) {
+            [self saveUserPreferedAccount:self.userPreferedAccount password:password];
+        }
         completeHandler(data != nil, error);
     }];
 }

@@ -918,17 +918,10 @@ NSInteger quantityComponent = 0;
     BKNoteViewController *note = [self.storyboard instantiateViewControllerWithIdentifier:@"BKNoteVC"];
     note.delegate = self;
     note.note = [[BKOrderManager sharedBKOrderManager] noteForShopInfo:self.shopInfo];
+    note.noteIsEditable = YES;
     note.shopID = self.shopID;
     note.orderExistAlert = self.orderExistAlert;    
-//    NSLog(@"%@", NSStringFromCGRect(note.view.frame));
-//    note.view.bounds = CGRectMake(0, 0, 300, 400);
-//    NSLog(@"%@", note);
-//    if([self respondsToSelector:@selector(presentPopupViewController:animationType:)]) {
-//        NSLog(@"YES");
-//    }
-//    else {
-//        NSLog(@"NO");
-//    }
+
     [self presentPopupViewController:note animationType:MJPopupViewAnimationSlideBottomBottom];
 }
 

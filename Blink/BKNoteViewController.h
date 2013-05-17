@@ -14,9 +14,13 @@
 
 @property (strong, nonatomic) NSString *note;
 @property (strong, nonatomic) NSString *shopID;
+
+#warning Should use delegate method for showing alert
 @property (strong, nonatomic) UIAlertView *orderExistAlert;
 
-@property (strong, nonatomic) id<BKNoteViewDelegate> delegate;
+@property (nonatomic) BOOL noteIsEditable;
+
+@property (weak, nonatomic) id<BKNoteViewDelegate> delegate;
 
 @end
 
