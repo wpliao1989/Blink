@@ -275,6 +275,12 @@ completionHandler:completeHandler];
     }];
 }
 
+#pragma mark - Get regions
+
+- (NSArray *)regionsForCity:(NSString *)city {
+    return [self.cityToRegionDict objectForKey:city];
+}
+
 - (void)updateServerInfo {
     static NSString *kRegion = @"region";
     static NSString *kListCriteria = @"listCriteria";

@@ -20,6 +20,7 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 
 @interface BKBaseAPIManager : OSConnectionManager
 
+// Server info
 @property (nonatomic, readonly) BOOL loadingServerInfo;
 @property (strong, nonatomic) NSArray *cities;
 @property (strong, nonatomic) NSDictionary *cityToRegionDict;
@@ -48,6 +49,8 @@ typedef void (^apiCompleteHandler)(id data, NSError *error);
 - (void)forgetPasswordUserAccount:(NSString *)account email:(NSString *)email completionHandler:(apiCompleteHandler) completeHandler;
 - (void)editUserPWD:(NSString *)password token:(NSString *)token completionHandler:(apiCompleteHandler)completeHandler;
 
+// Server info
+- (NSArray *)regionsForCity:(NSString *)city;
 - (void)updateServerInfo;
 - (void)updateListCriteriaWithObject:(id)listCriteriaObject;
 - (void)updateSortCriteria;

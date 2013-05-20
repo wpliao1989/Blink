@@ -253,12 +253,6 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKAPIManager)
     return self.localizedListCriteria.count > 0 && self.localizedSortCriteria.count > 0;
 }
 
-#pragma mark - Get regions
-
-- (NSArray *)regionsForCity:(NSString *)city {
-    return [self.cityToRegionDict objectForKey:city];
-}
-
 #pragma mark - OSConnectionManager overwrite
 
 - (NSMutableURLRequest *)modifyOriginalRequest:(NSMutableURLRequest *)originalRequest {

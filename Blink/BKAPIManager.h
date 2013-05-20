@@ -38,7 +38,6 @@ CWL_DECLARE_SINGLETON_FOR_CLASS(BKAPIManager)
 @property (nonatomic) BOOL isLoadingData;
 
 // Server info
-- (NSArray *)regionsForCity:(NSString *)city;
 @property (strong, nonatomic) NSArray *localizedListCriteria;
 @property (strong, nonatomic) NSArray *localizedSortCriteria;
 
