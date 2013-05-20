@@ -18,11 +18,13 @@
 #import "BKOrderForReceiving.h"
 #import "BKOrderContent.h"
 #import "UIViewController+SharedCustomizedUI.h"
+#import "UIViewController+SharedString.h"
 #import "BKNoteViewController.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "BKModifyUserInfoViewController.h"
+#import "NSString+Additions.h"
 
-@interface BKOrderConfirmViewController ()<BKNoteViewDelegate, BKModifyUserInfoViewControllerDelegate>
+@interface BKOrderConfirmViewController ()<BKNoteViewDelegate, BKModifyUserInfoViewControllerDelegate, UIAlertViewDelegate>
 
 - (IBAction)orderConfirmButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *backgrond;
@@ -44,6 +46,8 @@
 - (NSString *)stringFromDate:(NSDate *)date;
 
 @property (nonatomic) BOOL orderIsForReview;
+
+@property (strong, nonatomic) UIAlertView *invalidUserInfoAlertView;
 
 - (void)initUserInfos;
 - (void)setUpLabels;
@@ -76,6 +80,13 @@
 
 - (BOOL)orderIsForReview {
     return [self.order isKindOfClass:[BKOrderForReceiving class]];
+}
+
+- (UIAlertView *)invalidUserInfoAlertView {
+    if (_invalidUserInfoAlertView == nil) {
+        _invalidUserInfoAlertView = [[UIAlertView alloc] initWithTitle:[self titleForAlertView] message:NSLocalizedString(@"User info is incomplete", @"") delegate:self cancelButtonTitle:[self confirmButtonTitleForAlertView] otherButtonTitles:nil];
+    }
+    return _invalidUserInfoAlertView;
 }
 
 - (void)initUserInfos {
@@ -202,7 +213,17 @@
     
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideRightRight];
     
-    [[BKAccountManager sharedBKAccountManager] editUserName:sender.userName address:sender.userAddress email:[BKAccountManager sharedBKAccountManager].userEmail phone:sender.userPhone completionHandler:^(BOOL success, NSError *error) {}];
+    if (savesInfo) {
+        [[BKAccountManager sharedBKAccountManager] editUserName:sender.userName address:sender.userAddress email:[BKAccountManager sharedBKAccountManager].userEmail phone:sender.userPhone completionHandler:^(BOOL success, NSError *error) {}];
+    }
+}
+
+#pragma mark - UIAlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView == self.invalidUserInfoAlertView) {
+        [self modifyUserInfoButtonPressed:nil];
+    }
 }
 
 #pragma mark - Send order
@@ -227,7 +248,20 @@
     }];
 }
 
+- (BOOL)userInfoIsValid {
+    return (([self.userName cleanString].length > 0) &&
+            ([self.userPhone cleanString].length > 0) &&
+            ([self.userAddress cleanString].length > 0));
+}
+
+#pragma mark - IBAction
+
 - (IBAction)orderConfirmButtonPressed:(id)sender {
+    if (![self userInfoIsValid]) {
+        [self.invalidUserInfoAlertView show];
+        return;
+    }
+    
 #warning Poping method should be changed to popToViewController
     [[BKOrderManager sharedBKOrderManager] setUserToken:((BKOrderForSending *)self.order).userToken userName:self.userName userPhone:self.userPhone userAddress:self.userAddress];
     [self showHUDViewWithMessage:NSLocalizedString(@"Sending order...", @"訂購中...")];
