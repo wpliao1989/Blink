@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT NSString *const kBKOrderMethodDelivery;
+FOUNDATION_EXPORT NSString *const kBKOrderMethodTakeout;
+
 @class BKOrderContent;
 
 @interface BKOrder : NSObject
@@ -17,6 +20,7 @@
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *note;
+@property (nonatomic, strong) NSString *method;
 // Content is an array of BKOrderContent
 @property (nonatomic, strong) NSArray *content;
 @property (nonatomic, strong) NSNumber *totalPrice;

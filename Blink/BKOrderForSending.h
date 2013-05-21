@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *shopID;
 @property (nonatomic, strong) NSMutableArray *content;
-@property (nonatomic, strong) NSString *method;
 
 - (void)addNewOrderContent:(BKOrderContentForSending *)content completeHandler:(void (^)(NSInteger updatedRow, BOOL isNewItemAdded)) completeHandler;
 - (void)deleteOrderContentAtIndex:(NSInteger)index;

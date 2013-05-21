@@ -9,6 +9,9 @@
 #import "BKOrder.h"
 #import "BKOrderContent.h"
 
+NSString *const kBKOrderMethodDelivery = @"0";
+NSString *const kBKOrderMethodTakeout = @"1";
+
 @implementation BKOrder
 
 @synthesize note = _note;

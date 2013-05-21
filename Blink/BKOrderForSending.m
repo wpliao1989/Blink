@@ -11,9 +11,6 @@
 
 NSString *const kBKTotalPriceDidChangeNotification = @"kBKTotalPriceDidChangeNotification";
 
-NSString *const kBKOrderMethodDelivery = @"0";
-NSString *const kBKOrderMethodTakeout = @"1";
-
 @interface BKOrderForSending ()
 
 // Return already existed orderContent if the UUID, name, ice, sweetness are all the same, return nil otherwise
