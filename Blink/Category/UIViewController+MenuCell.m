@@ -10,6 +10,8 @@
 #import "UIViewController+Formatter.h"
 #import "BKMenuItem.h"
 #import "BKMenuListCell.h"
+#import "UIImage+Resize.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation UIViewController (MenuCell)
 
@@ -24,11 +26,19 @@
 
 - (void)configureMenuCell:(BKMenuListCell *)cell withMenuItem:(BKMenuItem *)item {
     
+    __weak BKMenuListCell *weakCell = cell;
+    
+    [cell.imageView setImageWithURL:item.picURL placeholderImage:[self defaultPicture] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {        
+//        if (image) {
+//            weakCell.imageView.image = [UIImage imageWithImage:image scaledToSize:weakCell.imageView.frame.size];
+//        }
+    }];
+    
     cell.itemNameLabel.text = item.name;
     cell.priceLabel.text = [self stringForPriceFromMenuItem:item];
     
     //NSLog(@"cell.imageView.contentMode = %d", cell.imageView.contentMode);
-    cell.imageView.image = [self defaultPicture];
+    //cell.imageView.image = [self defaultPicture];
 }
 
 @end

@@ -10,7 +10,6 @@
 #import "BKShopDetailViewController.h"
 #import "BKMenuItemForReceiving.h"
 #import "UIViewController+BKBaseViewController.h"
-#import "UIImage+Resize.h"
 #import "UIViewController+Formatter.h"
 #import "UIViewController+MenuCell.h"
 #import "BKMenuListCell.h"
@@ -95,33 +94,24 @@
     
     [self configureMenuCell:cell withMenuItem:item];
     
-//    UILabel *itemNameLabel = (UILabel *)[cell viewWithTag:1];
-//    itemNameLabel.text = item.name;
-//    
-//    //NSLog(@"cell.imageView.contentMode = %d", cell.imageView.contentMode);
-//    cell.imageView.image = [self defaultPicture];
-    
-    if (item.picImage == nil) {
-        NSLog(@"Downloading pic image");
-        NSURLRequest *request = [NSURLRequest requestWithURL:item.picURL];
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            UIImage *itemPic = [UIImage imageWithData:data];
-            if (itemPic != nil) {                
-                itemPic = [UIImage imageWithImage:itemPic scaledToSize:cell.imageView.frame.size];
-                NSLog(@"item pic = %@, size = %@", itemPic, NSStringFromCGSize(itemPic.size));
-                [self.picImageArray addObject:itemPic];
-                item.picImage = itemPic;
-                UITableViewCell *theCell = [tableView cellForRowAtIndexPath:indexPath];
-                theCell.imageView.image = itemPic;
-            }            
-        }];
-    }
-    else {
-        cell.imageView.image = item.picImage;
-    }
-    
-//    UILabel *priceLabel = (UILabel *)[cell viewWithTag:2];
-//    priceLabel.text = [self stringForPriceFromMenuItem:item];
+//    if (item.picImage == nil) {
+//        NSLog(@"Downloading pic image");
+//        NSURLRequest *request = [NSURLRequest requestWithURL:item.picURL];
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//            UIImage *itemPic = [UIImage imageWithData:data];
+//            if (itemPic != nil) {                
+//                itemPic = [UIImage imageWithImage:itemPic scaledToSize:cell.imageView.frame.size];
+//                NSLog(@"item pic = %@, size = %@", itemPic, NSStringFromCGSize(itemPic.size));
+//                [self.picImageArray addObject:itemPic];
+//                item.picImage = itemPic;
+//                UITableViewCell *theCell = [tableView cellForRowAtIndexPath:indexPath];
+//                theCell.imageView.image = itemPic;
+//            }            
+//        }];
+//    }
+//    else {
+//        cell.imageView.image = item.picImage;
+//    }
     
     return cell;
 }

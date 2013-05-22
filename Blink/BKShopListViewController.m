@@ -530,27 +530,27 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
     if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
         return;
     }
-    BKShopInfoForUser *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
-    
-    NSLog(@"will display cell at row:%d", indexPath.row);
-    NSLog(@"cell image: %@", cell.imageView.image);
-    NSLog(@"shop info image: %@", theShopInfo.pictureImage);
-    
-    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
-        
-        [self downloadImageForShopInfo:theShopInfo];
-
-        // Test image
-//        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
-//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-//            //            NSLog(@"pic response: %@", response);
-//            //            NSLog(@"pic data: %@", data);
-//            //            NSLog(@"pic error: %@", error);
-//            UIImage *pic = [UIImage imageWithData:data];
-//            cell.imageView.image = pic;
-//            theShopInfo.pictureImage = pic;
-//        }];
-    }
+//    BKShopInfoForUser *theShopInfo = [[BKShopInfoManager sharedBKShopInfoManager] shopInfoAtIndex:indexPath.row];
+//    
+//    NSLog(@"will display cell at row:%d", indexPath.row);
+//    NSLog(@"cell image: %@", cell.imageView.image);
+//    NSLog(@"shop info image: %@", theShopInfo.pictureImage);
+//    
+//    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
+//        
+//        [self downloadImageForShopInfo:theShopInfo];
+//
+//        // Test image
+////        NSURLRequest *request = [NSURLRequest requestWithURL:theShopInfo.pictureURL];
+////        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+////            //            NSLog(@"pic response: %@", response);
+////            //            NSLog(@"pic data: %@", data);
+////            //            NSLog(@"pic error: %@", error);
+////            UIImage *pic = [UIImage imageWithData:data];
+////            cell.imageView.image = pic;
+////            theShopInfo.pictureImage = pic;
+////        }];
+//    }
     
     if (indexPath.row == [[BKShopInfoManager sharedBKShopInfoManager] shopCount] - 1) {
         [self loadMoreData];
@@ -574,13 +574,16 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
     if ([view.leftCalloutAccessoryView isKindOfClass:[UIImageView class]]) {
         UIImageView *imageView = (UIImageView *)(view.leftCalloutAccessoryView);
         BKShopInfoForUser *shopInfo = view.annotation;
-        if (shopInfo.pictureImage == nil) {
-            imageView.image = [self defaultPicture];
-            [self downloadImageForShopInfo:shopInfo];
-        }
-        else {
-            imageView.image = shopInfo.pictureImage;
-        }        
+        [imageView setImageWithURL:shopInfo.pictureURL placeholderImage:[self defaultPicture] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            shopInfo.pictureImage = image;
+        }];
+//        if (shopInfo.pictureImage == nil) {
+//            imageView.image = [self defaultPicture];
+//            [self downloadImageForShopInfo:shopInfo];
+//        }
+//        else {
+//            imageView.image = shopInfo.pictureImage;
+//        }        
     }
 }
 
@@ -644,42 +647,6 @@ NSString *const kOffsetKeyReachEnd = @"com.flyingman.kOffsetKeyReachEnd";
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
     self.locateUserButton.enabled = !(mode == MKUserTrackingModeFollow);
 }
-
-//- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{
-//    NSLog(@"123");
-//}
-//
-//- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-//    NSLog(@"%@", userLocation);
-//}
-
-//#pragma mark - CLLocationManager delegate
-//
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-//    self.isLocationServiceEnabled = YES;
-//    [self.shopListTableView reloadData];
-//    
-//    CLLocation *location = [locations lastObject];
-//    NSDate *eventDate = location.timestamp;
-//    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-//    if (abs(howRecent) < 15.0) {
-//        NSLog(@"longitude: %f, latitude:%f", location.coordinate.longitude, location.coordinate.latitude);
-//        self.userCoordinate = location.coordinate;
-//        [[BKAPIManager sharedBKAPIManager] listWithListCriteria:BKListCriteriaDistant completionHandler:^(NSURLResponse *response, id data, NSError *error) {
-//            NSLog(@"%@", data);
-//            
-//            self.isLoadingNewData = NO;
-//            [self saveShopInfosWithShopIDs:data];
-//        }];
-//        [manager stopUpdatingLocation];
-//    }
-//}
-//
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-//    NSLog(@"LocationManager failed with error :%@", error);
-//    self.isLocationServiceEnabled = NO;
-//    [self.shopListTableView reloadData];
-//}
 
 #pragma mark - Get custom pin color
 

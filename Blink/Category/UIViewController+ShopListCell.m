@@ -12,6 +12,7 @@
 #import "BKShopInfoManager.h"
 #import "NSNumber+NullNumber.h"
 #import "UIViewController+Formatter.m"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @implementation UIViewController (ShopListCell)
 
@@ -31,13 +32,26 @@
 }
 
 - (void)configureShopListCell:(BKShopListCell *)cell withShopInfo:(BKShopInfoForUser *)shopInfo {
-    if (shopInfo.pictureImage == nil) {
-        cell.imageView.image = [self defaultPicture];
-    }
-    else {
-        cell.imageView.image = shopInfo.pictureImage;
-    }
     
+    [cell.imageView setImageWithURL:shopInfo.pictureURL placeholderImage:[self defaultPicture] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        if (image) {
+            shopInfo.pictureImage = image;
+        }
+    }];
+    
+//    cell.imageView.image = [self defaultPicture];
+//    if (shopInfo.pictureImage == nil) {
+//        [cell layoutIfNeeded];
+//        [cell.imageView setImageWithURL:shopInfo.pictureURL placeholderImage:[self defaultPicture] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+//            if (image) {
+//                shopInfo.pictureImage = image;
+//            }
+//            else {
+//                shopInfo.pictureImage = [self defaultPicture];
+//            }
+//        } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    }    
+  
     UIImage *backgroundImage = [UIImage imageNamed:@"list"];
     UIImage *pressImage = [UIImage imageNamed:@"list_press"];
     

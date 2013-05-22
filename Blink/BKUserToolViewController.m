@@ -289,20 +289,20 @@ enum BKUserToolSegmentationSelection {
     return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
-        return;
-    }
-    BKShopInfoForUser *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
-    
-    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
-        
-        [self downloadImageForShopInfo:theShopInfo completeHandler:^(UIImage *image) {
-            UITableViewCell *theCell = [self.favoriteShopTableView cellForRowAtIndexPath:indexPath];
-            [self setImageView:theCell.imageView withImage:image];
-        }];
-    }    
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (![cell.reuseIdentifier isEqualToString:@"cell"]) {
+//        return;
+//    }
+//    BKShopInfoForUser *theShopInfo = [self.userFavoriteShops objectAtIndex:indexPath.row];
+//    
+//    if (cell.imageView.image == nil || cell.imageView.image == [self defaultPicture]) {
+//        
+//        [self downloadImageForShopInfo:theShopInfo completeHandler:^(UIImage *image) {
+//            UITableViewCell *theCell = [self.favoriteShopTableView cellForRowAtIndexPath:indexPath];
+//            [self setImageView:theCell.imageView withImage:image];
+//        }];
+//    }    
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(tableView == self.favoriteShopTableView) {

@@ -10,20 +10,20 @@
 
 @implementation BKMenuListCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)layoutSubviews {
+    [super layoutSubviews];
+#warning Changes made here will affect both iPhone and iPad
+    CGFloat topMargin = self.bounds.size.height * 0.1;
+    CGFloat leftMargin = 10;
+    CGFloat height = self.bounds.size.height * 0.8;
+    CGFloat width = height;
+    
+    self.imageView.frame = CGRectMake(leftMargin, topMargin, width, height);
+//    float limgW =  self.imageView.image.size.width;
+//    if(limgW > 0) {
+//        self.textLabel.frame = CGRectMake(55,self.textLabel.frame.origin.y,self.textLabel.frame.size.width,self.textLabel.frame.size.height);
+//        self.detailTextLabel.frame = CGRectMake(55,self.detailTextLabel.frame.origin.y,self.detailTextLabel.frame.size.width,self.detailTextLabel.frame.size.height);
+//    }
 }
 
 @end

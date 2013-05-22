@@ -19,6 +19,8 @@
 #import "NSString+QueryParser.h"
 #import "NSString+Additions.h"
 #import "BKNotifier.h"
+#import "UIViewController+Formatter.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     BKHUDViewTypeShopDetailDownload = 1,
@@ -135,7 +137,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.    
 //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopImageDidDownload:) name:BKShopImageDidDownloadNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopImageDidDownload:) name:BKShopImageDidDownloadNotification object:nil];
     self.navigationItem.title = self.shopInfo.name;
     [self.topSectionBackground setImage:[[UIImage imageNamed:@"list_try"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 14, 67, 20)]];
     
@@ -271,26 +273,28 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
 - (void)configureShopImage {
     //    self.shopPic.image = self.shopInfo.pictureImage;
     //    NSLog(@"shop image size = %@", NSStringFromCGSize(self.shopInfo.pictureImage.size));
-    if (self.shopInfo.pictureImage != nil) {
-        [self.shopPic setImage:self.shopInfo.pictureImage];
-        self.shopImage = self.shopInfo.pictureImage;
-        //self.shopPic.layer.cornerRadius = 8.0f;
-        //[self.shopPic.layer setMasksToBounds:YES];
-        //    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
-        //    [self.shopPic.layer setBorderWidth:3];
-    }
-    else {
-        NSLog([[BKShopInfoManager sharedBKShopInfoManager] isDownloadingImageForShopInfo:self.shopInfo]?@"Yes downloading %@":@"NO not downloading %@", self.shopInfo.name);
-    }
+    [self.shopPic setImageWithURL:self.shopInfo.pictureURL placeholderImage:[self defaultPicture]];
+    
+//    if (self.shopInfo.pictureImage != nil) {
+//        [self.shopPic setImage:self.shopInfo.pictureImage];
+//        self.shopImage = self.shopInfo.pictureImage;
+//        //self.shopPic.layer.cornerRadius = 8.0f;
+//        //[self.shopPic.layer setMasksToBounds:YES];
+//        //    [self.shopPic.layer setBorderColor:[UIColor whiteColor].CGColor];
+//        //    [self.shopPic.layer setBorderWidth:3];
+//    }
+//    else {
+//        NSLog([[BKShopInfoManager sharedBKShopInfoManager] isDownloadingImageForShopInfo:self.shopInfo]?@"Yes downloading %@":@"NO not downloading %@", self.shopInfo.name);
+//    }
 }
 
-- (void)shopImageDidDownload:(NSNotification *)notification {    
-    NSDictionary *userInfo = notification.userInfo;
-    if ([userInfo objectForKey:kBKShopImageDidDownloadUserInfoShopInfo] == self.shopInfo) {
-        NSLog(@"Shop detail: image did download! %@", self.shopInfo.name);
-        [self configureShopImage];
-    }
-}
+//- (void)shopImageDidDownload:(NSNotification *)notification {
+//    NSDictionary *userInfo = notification.userInfo;
+//    if ([userInfo objectForKey:kBKShopImageDidDownloadUserInfoShopInfo] == self.shopInfo) {
+//        NSLog(@"Shop detail: image did download! %@", self.shopInfo.name);
+//        [self configureShopImage];
+//    }
+//}
 
 - (void)configureIntroSection {
     

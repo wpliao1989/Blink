@@ -23,18 +23,4 @@
     //[self.imageView.layer setMasksToBounds:YES];
 }
 
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    [super touchesBegan:touches withEvent:event];
-//    NSLog(@"touch!");
-////    NSLog(@"self.subviews: %@", self.subviews);
-//    for (UIView* view in self.subviews) {
-//        NSLog(@"view: %@", [view class]);
-//    }
-//    
-//    for (UIView *view in self.contentView.subviews) {
-//        NSLog(@"con view:%@", [view class]);
-//    }
-//    NSLog(@"label: %@", [self viewWithTag:1]);
-//}
-
 @end
