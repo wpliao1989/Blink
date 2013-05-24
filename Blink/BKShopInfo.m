@@ -302,7 +302,19 @@ NSString *const BKShopInfoServiceNone = @"5";
 }
 
 - (BOOL)isServiceHasDeliveryCost {
-    return [self.services isEqualToString:BKShopInfoServiceChargeDeliver];
+    return [BKShopInfo deliveryFeeIsRequiredForService:self.services];
+}
+
+- (BOOL)serviceHasMinDelivery {
+    return [BKShopInfo minDeliveryCostIsRequiredForService:self.services];
+}
+
++ (BOOL)deliveryFeeIsRequiredForService:(NSString *)service {
+    return [service isEqualToString:BKShopInfoServiceChargeDeliver];
+}
+
++ (BOOL)minDeliveryCostIsRequiredForService:(NSString *)service {
+    return !([service isEqualToString:BKShopInfoServiceTakeout] || [service isEqualToString:BKShopInfoServiceNone]);
 }
 
 - (BOOL)serviceIncludesTakeout {

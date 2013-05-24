@@ -240,6 +240,7 @@ typedef NS_ENUM(NSUInteger, BKHUDViewType) {
     
     self.shopDeliveryCostLabel.hidden = ![self.shopInfo isServiceHasDeliveryCost];
     self.shopDeliveryCostLabel.text = [self stringForDeliveryCostLabelWithCost:self.shopInfo.deliverCost];
+    self.shopMinDeliveryLabel.hidden = ![self.shopInfo serviceHasMinDelivery];
     self.shopMinDeliveryLabel.text = [self stringForMinDeliveryCostLabelWithCost:self.shopInfo.minPrice];
     
     self.freeDeliveryButton.hidden = ![self.shopInfo isServiceFreeDelivery];

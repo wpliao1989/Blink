@@ -121,6 +121,19 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS(BKOrderManager)
     }
 }
 
+- (BKOrderMethod)orderMethod {
+    NSString *method = self.order.method;
+    if ([method isEqualToString:kBKOrderMethodDelivery]) {
+        return BKOrderMethodDelivery;
+    }
+    else if ([method isEqualToString:kBKOrderMethodTakeout]) {
+        return BKOrderMethodTakeout;
+    }
+    else {
+        return BKOrderMethodUnknown;
+    }
+}
+
 #pragma mark - Order content operations
 
 - (BOOL)isDifferentShop:(BKShopInfoForUser *)anotherShopInfo {

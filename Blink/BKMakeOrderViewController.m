@@ -234,6 +234,7 @@ NSInteger quantityComponent = 0;
     //    NSLog(@"string value is %@", [[[BKOrderManager sharedBKOrderManager] totalPrice] stringValue]);
     self.shopNameLabel.text = self.shopInfo.name;
     self.totalPrice.text = [self stringForTotalPrice:[[BKOrderManager sharedBKOrderManager] totalPriceForShop:self.shopInfo]];
+    self.minDeliveryCostLabel.hidden = [[BKOrderManager sharedBKOrderManager] orderMethod] == BKOrderMethodTakeout;
     self.minDeliveryCostLabel.text = [self stringForDeliveryCostLabelCost:self.shopInfo.minPrice];
     
     [self initButtons];

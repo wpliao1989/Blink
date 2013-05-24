@@ -78,7 +78,10 @@ completionHandler:(serviceCompleteHandler)completeHandler{
     }else{
         request= (NSMutableURLRequest *)[self defaultHTTPRequestWithPath:[NSString stringWithFormat:@"%@",service]];
         [request setHTTPMethod:method];
-        [request setHTTPBody:postData];
+        NSString *postBodyString = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        postBodyString = [self encodeToPercentEscapeString:postBodyString];
+        [request setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
+        NSLog(@"Post data:%@", postBodyString);
     }
     
     if (contentType) {
@@ -109,6 +112,16 @@ completionHandler:(serviceCompleteHandler)completeHandler{
         }
         completeHandler(response, data, error);
     }   
+}
+
+// Encode a string to embed in an URL.
+- (NSString *)encodeToPercentEscapeString:(NSString *)string {
+    return (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                            (CFStringRef) string,
+                                            NULL,
+                                            (CFStringRef) @"+",
+                                            kCFStringEncodingUTF8));
 }
 
 //- (id)service:(NSString *)service method:(NSString *)method postData:(NSData *)postData useJSONDecode:(BOOL)useJSON completionHandler:(serviceCompleteHandler) completeHandler{
