@@ -2844,7 +2844,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="bg.png" width="320" height="480"/>
         <image name="bottom.png" width="231" height="38"/>
         <image name="bottom_press.png" width="231" height="38"/>
-        <image name="close.png" width="57" height="38"/>
+        <image name="close.png" width="29" height="29"/>
         <image name="close_press.png" width="57" height="38"/>
         <image name="f.png" width="142" height="35"/>
         <image name="f_press.png" width="142" height="35"/>
